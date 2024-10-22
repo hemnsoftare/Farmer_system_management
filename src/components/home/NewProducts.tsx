@@ -2,121 +2,143 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaStar } from "react-icons/fa";
-import { MdNavigateNext } from "react-icons/md";
-import { Productsprops } from "../../../type";
-import { HiOutlineShoppingCart } from "react-icons/hi";
+import { MdDelete, MdOutlineShoppingCart } from "react-icons/md";
+import { ProductFormInput, Productsprops } from "@/type";
 import { CiHeart } from "react-icons/ci";
+import { useUser } from "@clerk/nextjs";
+import { FaRegEdit } from "react-icons/fa";
 
 const NewProducts = ({
-  data,
+  item,
   title,
+  itemDb,
 }: {
-  title: string;
-  data: Productsprops[];
+  title?: string;
+  item?: Productsprops;
+  itemDb?: ProductFormInput;
 }) => {
   const [state, setState] = useState<number[]>([]);
-
+  const { user } = useUser();
   const handlef = (index: number) => {
     setState((prevState) => {
       const exists = prevState.some((item) => item === index);
       if (exists) {
-        // Remove the item if it exists
         return prevState.filter((item) => item !== index);
       } else {
-        // Add the item if it doesn't exist
         return [...prevState, index];
       }
     });
   };
-
-  return (
-    <div className="flex flex-col gap-8">
-      {/* top */}
-      <div className="flex justify-between border-b-4 pb-4 border-neutral-400">
-        <h3 className="text-[32px] text-black">{title}</h3>
-        <Link href={"/"} className="text-[16px] flex gap-2">
-          view all <MdNavigateNext />
-        </Link>
-      </div>
-
-      {/* card */}
-      <div className="flex items-center xl:gap-8 xl:justify-center justify-between">
-        {data.map((item, index) => {
-          const exists = state.some((f) => f === index);
-          const f = exists ? "bg-blue-500" : "";
-          return (
-            <div
-              key={item.name}
-              className="flex gap-5 flex-col group relative w-[23%] xl:w-[20%] items-center lg:h-[400px] justify-center h-[347px] rounded-md shadow-gray-400 shadow-md hover:shadow-lg p-4"
-            >
-              <div className="relative">
-                {item.persentageDiscount && (
-                  <p className="absolute group-hover:opacity-0 z-10 duration-300 transition-all left-0 top-4 bg-secondary-100 px-3 py-1 rounded-r-full text-secondary-400 text-sm">
-                    -{item.persentageDiscount} $
-                  </p>
-                )}
-
-                <CiHeart
-                  className={`object-cover opacity-0 ${f} z-10 group-hover:opacity-100 duration-300 xl:scale-[1.2] transition-all absolute top-4 left-4`}
-                  onClick={() => handlef(index)}
-                />
-
-                <Image
-                  src={item.image}
-                  alt="image"
-                  width={217}
-                  height={161}
-                  className="bg-rose-600 overflow-hidden w-[217px] h-[161px] group-hover:transform group-hover:scale-[1.1] scale-[1] duration-300 transition-all"
-                />
-                {item.color && (
-                  <div className="flex group-hover:opacity-0 duration-300 transition-all flex-col gap-1 absolute top-12 right-2">
-                    {item.color.map((color, index) => {
-                      if (index < 3)
-                        return (
-                          <span
-                            key={color}
-                            className="w-4 h-4 rounded-full"
-                            style={{ backgroundColor: color }}
-                          ></span>
-                        );
-                      else if (index === 3) {
-                        return (
-                          <span
-                            key={index}
-                            className="rounded-full w-4 h-4 text-center"
-                          >
-                            +
-                          </span>
-                        );
-                      }
-                    })}
-                  </div>
-                )}
-              </div>
-              <div className="flex gap-10 h-fit w-full flex-col">
-                <hr className="h-[2px] bg-gradient-to-r from-white via-slate-500 to-white border-0" />
-                <h3 className="text-[16px] h-[53px] overflow-hidden text-primary-500 font-light">
-                  {item.name}
-                </h3>
-                <div className="flex justify-between relative -mb-8 items-center">
-                  {item.discount && (
-                    <span className="line-through absolute -top-4 text-sm left-0 text-neutral-600">
-                      ${item.discount}
+  if (itemDb) console.log(itemDb.colors);
+  const product: ProductFormInput | undefined = itemDb;
+  if (product) {
+    return (
+      <Link
+        href={
+          title !== "dashboard"
+            ? `/products/${product.category}/${product.id}`
+            : "#"
+        }
+        key={product.name}
+        className={` ${
+          title === "sale" && "bg-white "
+        } flex gap-5 border border-neutral-100 overflow-hidden flex-col group relative w-full items-center justify-center duration-300 transition-all rounded-lg shadow-gray-200 shadow-md hover:shadow-lg p-4`}
+      >
+        <div className="relative flex items-center justify-center w-full">
+          {user && title !== "dashboard" && (
+            <CiHeart
+              color="black"
+              className={`opacity-0 w-7 h-7 z-10 group-hover:opacity-100 duration-300 transition-all absolute top-0 left-0`}
+              onClick={() => handlef(product.price)}
+            />
+          )}
+          <Image
+            src={product?.bigimageUrl}
+            alt="image"
+            width={217}
+            height={161}
+            className="overflow-hidden w-[217px] h-[161px] group-hover:transform group-hover:scale-[1.03] scale-[1] duration-300 transition-all"
+          />
+          {product.colors && (
+            <div className="flex group-hover:opacity-0 duration-300 transition-all flex-col gap-1 absolute top-12 -right-3">
+              {product.colors.map((color: any, index: number) => {
+                if (index < 3)
+                  return (
+                    <span
+                      key={color.name}
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: color.color }}
+                    ></span>
+                  );
+                else if (index === 3) {
+                  return (
+                    <span
+                      key={index}
+                      className="rounded-full w-4 h-4 text-center"
+                    >
+                      +
                     </span>
-                  )}
-                  <span>{item.price}$</span>
-                  <span className="flex items-center justify-center gap-1">
-                    {item.pointStart} <FaStar />
-                  </span>
-                </div>
-              </div>
+                  );
+                }
+              })}
             </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+          )}
+        </div>
+        <div className="flex gap-2 w-full flex-col">
+          <hr className="h-[2px] bg-gradient-to-r from-white via-slate-500 to-white border-0" />
+          <h3
+            className={`lg:text-12 md:text-10 ${
+              title === "sale" || title === "dashboard"
+                ? "h-[14px]"
+                : "h-[53px]"
+            }  overflow-hidden text-primary-500 font-light`}
+          >
+            {product.name}
+          </h3>
+          <div className="w-full h-[33px]">
+            {user && title !== "dashboard" && (
+              <button className="w-full group border opacity-0 hidden rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all text-black hover:text-primary items-center group-hover:flex justify-center gap-2">
+                <MdOutlineShoppingCart className="text-black group-hover:text-primary" />{" "}
+                <span>Add to Cart</span>
+              </button>
+            )}
+            <div
+              className={` ${
+                !user || title === "dashboard"
+                  ? "opacity-100"
+                  : " group-hover:opacity-0 opacity-100 group-hover:hidden"
+              } flex relative   text-black   mt-3 justify-between`}
+            >
+              {product.discount && (
+                <span className="line-through absolute -top-4 text-sm left-0   text-neutral-600">
+                  $234.234
+                </span>
+              )}
+              <span className="z-10">{product.price}$</span>
+              {product.isDiscount && (
+                <p className=" group-hover:opacity-0 -mr-5  bg-gradient-to-r to-transparent from-red-300 z-10 duration-300 transition-all  top-4 px-3 py-1 rounded-l-full text-secondary-500 text-sm">
+                  -{product?.discount} $
+                </p>
+              )}
+              {title === "dashboard" && (
+                <div className="flex items-center justify-between gap-2">
+                  <button>
+                    <FaRegEdit color="blue" size={20} />
+                  </button>
+                  <button>
+                    <MdDelete color="red" size={24} />
+                  </button>
+                </div>
+              )}
+              {/* <span className="flex items-center justify-center gap-1">
+              {item.pointStart} <FaStar color="yollow" />
+            </span> */}
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
+  }
 };
 
 export default NewProducts;

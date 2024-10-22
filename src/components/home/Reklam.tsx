@@ -3,75 +3,62 @@ import React from "react";
 
 const Reklam = () => {
   return (
-    <div className="flex items-center justify-center gap-3">
-      {/* left  */}
-      <div className="flex  relative p-8 overflow-hidden rounded-lg w-[70%]  bg-gradient-to-tl from-[20%] from-[#B0E9C9] via-[#1FB6CF] to-[#1975B9] justify-start bg-red-200 h-[420px] gap-8">
+    <div className="flex items-start  justify-center gap-3 h-[400px]">
+      {" "}
+      {/* Added h-screen */}
+      {/* left */}
+      <div className="flex  bg-gradient-to-br from-[#1975B9] relative via-[#30BCCE] to-[#B0E9C9]  lg:max-w-[600px] xl:max-w-[700px] p-3 bg-blue-300 rounded-lg h-full overflow-hidden">
         <Image
           src={"/circal.png"}
           alt="image"
-          width={118}
-          height={118}
-          className="absolute -bottom-[20px] -right-6"
+          width={200}
+          height={200}
+          className="size-[200px] absolute -top-1/2 left-1/2"
         />
-        <Image
-          src={"/circal.png"}
-          alt="image"
-          width={118}
-          height={118}
-          className="absolute -top-[59px] right-[50%]"
-        />{" "}
-        <Image
-          src={"/circal.png"}
-          alt="image"
-          width={118}
-          height={118}
-          className="absolute top-[59px] -left-[107px]"
-        />
-        <div className="  flex-col basis-1/2 flex justify-between ">
-          <h1 className="flex gap-1 font-medium text-[24px] items-center">
-            <span className="text-black">Iphone</span>{" "}
-            <span className="text-white"> 15 Sotries</span>
-          </h1>
+        <div className="flex w-full flex-col items-start  justify-between gap-2">
+          <h2 className="font-bold p-2 text-2xl">
+            {" "}
+            {/* Updated text-20 to text-2xl */}
+            Iphone <span className="text-white"> 15 Series</span>
+          </h2>
           <Image
-            src={"5iphone.svg"}
-            alt="imaeg"
-            width={378}
-            height={2882}
-            className="object-cover"
+            src={"/5iphone.svg"}
+            alt="image "
+            width={300}
+            height={300}
+            className="size-[280px] "
           />
         </div>
-        <div className="flex  basis-1/2 items-start  justify-start gap-[29px] flex-col">
-          <div className="flex items-center justify-start gap-2">
-            {" "}
-            <button className="bg-transparent border-black/100 flex-col flex  p-2 md:p-1 box-content items-center justify-center border-2 rounded-lg ">
-              <span className="font-semibold">8</span> <span> Days</span>
+        <main className="flex w-full items-start justify-start py-10 flex-col ">
+          <div className="flex items-center mx-4 justify-start gap-3">
+            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-18">8</span>
+              <span>Days</span>
             </button>{" "}
-            <button className="bg-transparent border-black/100 flex-col flex  p-2 md:p-1 box-content  items-center justify-center border-2 rounded-lg ">
-              <span className="font-semibold">8</span> <span> Days</span>
+            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-18">8</span>
+              <span>Days</span>
             </button>{" "}
-            <button className="bg-transparent border-black/100 flex-col flex  p-2 md:p-1 box-content items-center justify-center border-2 rounded-lg ">
-              <span className="font-semibold">8</span> <span> Days</span>
-            </button>
-            <button className="bg-transparent border-black/100 flex-col flex  p-2 md:p-1 box-content items-center justify-center border-2 rounded-lg ">
-              <span className="font-semibold">8</span> <span> Days</span>
+            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-18">8</span>
+              <span>Days</span>
+            </button>{" "}
+            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-18">8</span>
+              <span>Days</span>
             </button>
           </div>
-          <div className="flex items-start  flex-col justify-start">
-            <h2 className="font-semibold text-start">
-              It feels good to be the first
-            </h2>
-            <p className="text-neutral-900  pl-3  ">
+          <div className="flex flex-col items-start mt-12 justify-start  ">
+            <h1 className="font-bold text-20">It feels good to be the first</h1>
+            <p className="text-neutral-700 text-14 px-4">
               Get ready for the future of smartphones.Experience innovation like
               never before. Stay tuned for the big iPhone 15 pre-sale.
             </p>
           </div>
-          <button className="bg-[#0C68F4] self-center hover:bg-blue-900 duration-300 transition-all px-4 py-2 text-white rounded-lg">
-            Register Now
-          </button>
-        </div>
+        </main>{" "}
       </div>
       {/* right side */}
-      <div className="flex flex-col bg-[#005690] h-[420px] overflow-hidden rounded-lg w-[444px] relative justify-between py-8  items-center">
+      <div className="flex flex-col bg-[#005690] h-full overflow-hidden rounded-lg w-[400px] relative justify-between py-8 items-center">
         <Image
           src={"shape1.svg"}
           alt=""
@@ -79,29 +66,31 @@ const Reklam = () => {
           height={102}
           className="object-cover absolute top-0 left-0"
         />
-        <h1 className="text-[#FCC870]  text-[24px]">play station 5</h1>
-        <div className="flex gap-0 items-center pl-12 mt-16 justify-center">
-          <h3 className="text-20 z-[1] text-[#005690]">
-            Digital Edition + 2TB
-          </h3>
+        <Image
+          src={"shape1.svg"}
+          alt=""
+          width={110}
+          height={102}
+          className="object-cover absolute transform rotate-[180deg] bottom-0 right-0"
+        />
+        <h1 className="text-[#FCC870] xl:text-center lg:text-end md:text-end w-full px-4 text-2xl">
+          {" "}
+          {/* Updated text-[24px] to text-2xl */}
+          play station 5
+        </h1>
+        <div className="flex  flex-col gap-3 items-center pl-2 w-full mt-16 justify-center">
           <Image
             src={"ps53.svg"}
             alt=""
-            width={210}
-            height={169}
-            className="object-cover z-[1]"
+            width={190}
+            height={139}
+            className=" w-[190px] h-[130px] z-[1]"
           />
+          <h3 className="text-20 text-center font-bold w-full z-[1] text-[#FCC870]">
+            {" "}
+            Digital Edition + 2TB
+          </h3>
         </div>
-        <button className="bg-[#0C68F4] z-[1] hover:bg-blue-900 duration-300 self-start transition-all px-9 ml-12 py-2 text-white rounded-lg">
-          Buy now
-        </button>
-        <Image
-          src={"shape2.svg"}
-          alt=""
-          width={566}
-          height={332}
-          className="object-cover absolute bottom-0 right-0 -z-[0] left-0"
-        />
       </div>
     </div>
   );

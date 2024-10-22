@@ -3,6 +3,7 @@ import BlogCol from "./blogCol";
 import Link from "next/link";
 import { MdNavigateNext } from "react-icons/md";
 import BlogRow from "./BlogRow";
+import { blogs } from "@/app/util/data";
 
 const Blog = () => {
   return (
@@ -14,7 +15,7 @@ const Blog = () => {
         </Link>
       </div>
       <div className="flex w-full gap-4 justify-center items-center">
-        <BlogCol />
+        <BlogCol blog={blogs[0]} />
 
         <div className="flex flex-col gap-4">
           <BlogRow />

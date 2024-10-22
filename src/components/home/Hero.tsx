@@ -1,26 +1,33 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
   return (
-    <div className="flex overflow-hidden mt-3 -z-50 justify-between">
-      <div className="flex basis-1/2 flex-col py-12 items-start  gap-12">
-        <h1 className="text-5xl font-bold capitalize text-primary-700">
+    <div className="flex mt-12 items-center w-full justify-between ">
+      <div className="flex md:w-[300px]  justify-center flex-col py-4 h-full items-center gap-8">
+        <h1 className="lg:text-35 xl:text-45 md:text-29 font-bold capitalize text-primary-700">
           Tech Heim
         </h1>
-        <h3 className=" font-[500] text-2xl">
+        <h3 className="font-[500]  text-center w-full md:text-22 lg:text-28">
           &quot;Join
           <span className="text-secondary"> the digital revolution&quot;</span>
         </h3>
-        <button className="capitalize zoom-in-100 md:px-12 bg-secondary text-white px-24 hover:bg-secondary-600 py-4 rounded-lg mt-auto">
-          explore more
-        </button>
+        <br />
+
+        <br />
+
+        <Link href={"#newProducts"} className="transition-all duration-300">
+          <button className="capitalize -mb-6 hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-16 bg-secondary text-white px-8 py-4 rounded-lg mt-auto">
+            explore more
+          </button>
+        </Link>
       </div>
 
       <Image
         src={"hero.svg"}
         alt="image hero"
-        className="   basis-1/2 "
+        className="mr-0 xl:w-[60%] self-end lg:w-[55%] md:w-[60%] "
         width={628}
         height={400}
       />

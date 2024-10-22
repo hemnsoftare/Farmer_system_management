@@ -37,12 +37,12 @@ const Catagory = () => {
     },
   ];
   return (
-    <div className="flex gap-6 items-center flex-wrap justify-center">
+    <div className="flex xl:gap-6 items-center lg:gap-3 md:gap-2 flex-wrap justify-center">
       {catagory.map((item) => (
         <Link
           key={item.path}
           href={item.path}
-          className="2xl:w-[284px] lg:w-[170px] md:w-[120px] hover:shadow-blue-200 hover:shadow-lg duration-200 transition-all hover:transform hover:scale-[1.08] flex flex-col rounded-lg shadow-md border gap-4 border-slate-100 items-center justify-between px-6 py-4"
+          className="2xl:w-[284px] lg:w-[140px] md:w-[100px] hover:shadow-blue-200 hover:shadow-lg duration-200 transition-all hover:transform hover:scale-[1.08] flex flex-col rounded-lg shadow-md border gap-4 border-slate-100 items-center justify-between md:px-2 lg:px-6 py-4"
         >
           <Image
             alt="image"
@@ -51,7 +51,9 @@ const Catagory = () => {
             height={148}
             className="object-cover"
           />
-          <h3 className="capitalize text-sm ">{item.name}</h3>
+          <h3 className="capitalize lg:text-sm  text-center  md:text-10 w-full ">
+            {item.name}
+          </h3>
         </Link>
       ))}
     </div>

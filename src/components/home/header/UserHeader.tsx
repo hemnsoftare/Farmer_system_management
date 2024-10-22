@@ -13,10 +13,15 @@ import { BsHandbag } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { SlLogout } from "react-icons/sl";
-import { user } from "@/util/data";
-import { userProps } from "../../../../type";
+import { user } from "@/app/util/data";
+import { userProps } from "@/type";
+import { LogOut } from "lucide-react";
+import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
+import { User } from "@clerk/nextjs/server";
+
 const UserHeader = () => {
   const userInfo: userProps = user;
+  const { user: userin } = useUser();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none border-none">
@@ -34,10 +39,10 @@ const UserHeader = () => {
           <CgProfile className="w-[20px] h-[20px]" />
           <div className="flex gap-0 items-start justify-center flex-col">
             <span className="capitalize text-blue-800 text-[12px] ">
-              {userInfo.name}
+              {userin?.fullName}
             </span>
             <span className=" text-[10px] cursor-pointer hover:text-blue-700 hover:underline underline-offset-4 ">
-              {userInfo.email}
+              {userin?.primaryEmailAddress?.emailAddress}
             </span>
           </div>
         </DropdownMenuLabel>
@@ -55,8 +60,7 @@ const UserHeader = () => {
           <span className="capitalize text-[12px] ">Payments</span>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex items-center gap-2 hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          <SlLogout />
-          <span className="capitalize text-[12px] ">log out </span>
+          <SignOutButton> LOG OUT</SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

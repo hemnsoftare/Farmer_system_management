@@ -1,10 +1,10 @@
-import { servies } from "@/util/data";
+import { servies } from "@/app/util/data";
 import Image from "next/image";
 import React from "react";
 
 const Servies = () => {
   return (
-    <div className="flex items-center  justify-between">
+    <div className="flex items-center mb-3  justify-between">
       {servies.map((item) => {
         return (
           <div
@@ -16,7 +16,7 @@ const Servies = () => {
               alt="imae"
               width={30}
               height={33}
-              className="object-fill group-hover:scale-[1.2] duration-300"
+              className="object-fill group-hover:scale-[1.07] duration-300"
             />
             <span className="md:text-[10px] lg:text-[15px] group-hover:translate-x-6 duration-300 group-hover:text-primary-400 group-hover:scale-[1.2]">
               {" "}

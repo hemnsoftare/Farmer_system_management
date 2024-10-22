@@ -16,10 +16,10 @@ const CreateAcount = () => {
           alt="user"
           width={24}
           height={24}
-          className="object-cover"
+          className="lg:w-[24px]  md:w-[15px] lg:h-[24px] md:h-[15px]"
         />
       </DialogTrigger>
-      <DialogContent className="px-[30px] flex flex-col items-center gap-3 justify-center">
+      <DialogContent className="px-[30px] md:scale-[0.7]  lg:scale-[1] flex flex-col items-center gap-3 justify-center">
         <Tabs defaultValue="login" className="w-[400px] rounded-none">
           <TabsList className="flex items-center  w-full mb-3   justify-center ">
             <TabsTrigger
