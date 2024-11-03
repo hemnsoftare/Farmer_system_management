@@ -1,13 +1,14 @@
 "use client";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
 import React, { useCallback, useEffect, useState } from "react";
-import { newProdcuts } from "@/app/util/data";
+import { newProdcuts } from "@/util/data";
 import HeaderDilter from "@/components/products/HeaderFilter";
 import FilterItem from "@/components/products/FilterItem";
 import NewProducts from "@/components/home/NewProducts";
 import { ProductFormInput, typeFilter } from "../../../../type";
 import Filtered from "@/components/products/Filter";
 import { getProducts } from "@/lib/action/uploadimage";
+import { useSelector } from "react-redux";
 
 const MyComponent = ({ params }: { params: { catagory: string } }) => {
   const [selected, setSelected] = useState(params.catagory.replace("%20", " "));
@@ -18,6 +19,8 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
     price: [1, 1000],
   });
   const [products, setproducts] = useState<ProductFormInput[]>([]);
+  const state = useSelector((state) => state);
+  console.log(state);
   const isEqual = (a: typeFilter, b: typeFilter) => {
     // console.log(a, b);
     return JSON.stringify(a) === JSON.stringify(b);

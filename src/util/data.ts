@@ -19,7 +19,7 @@ import {
   propsMenuItem,
   serviesProps,
   userProps,
-} from "../../type";
+} from "../type";
 
 import { IconType } from "react-icons";
 import { FaUser, FaTrash, FaGift, FaHome } from "react-icons/fa";

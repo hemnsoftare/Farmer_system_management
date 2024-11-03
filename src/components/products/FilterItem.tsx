@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { Switch } from "../ui/switch";
 import { catagoryProps, typeFilter } from "@/type";
-import { filterItems } from "@/app/util/data";
+import { filterItems } from "@/util/data";
 import { Slider } from "@nextui-org/react";
 import { cn } from "@/lib/utils";
 import {
@@ -12,7 +12,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { app } from "../../../config/firebaseConfig";
+import { app } from "../../config/firebaseConfig";
 import FilterSection from "./FilterSection ";
 
 const FilterItem = ({

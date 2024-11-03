@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Sort } from "@/app/util/data";
+import { Sort } from "@/util/data";
 const HeaderDilter = () => {
   return (
     <div className="flex justify-between items-center">

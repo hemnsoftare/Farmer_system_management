@@ -8,6 +8,7 @@ import NewProducts from "@/components/home/NewProducts";
 import Reklam from "@/components/home/Reklam";
 import Sales from "@/components/home/Sales";
 import Servies from "@/components/home/Servies";
+import { app } from "@/config/firebaseConfig";
 import { ProductFormInput } from "@/type";
 import {
   collection,
@@ -19,7 +20,6 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
-import { app } from "../../config/firebaseConfig";
 
 export default function Home() {
   const [productNew, setproductNew] = useState<ProductFormInput[]>([]);
@@ -27,6 +27,7 @@ export default function Home() {
 
   const db = getFirestore(app);
   useEffect(() => {
+    console.log("in effect");
     const getdata = async (col: string) => {
       const q = await query(collection(db, "Products"), orderBy(col, "desc"));
       const qsanpshot = await getDocs(q);
@@ -52,7 +53,7 @@ export default function Home() {
           className="flex transition-all duration-300  justify-between w-full border-b-4 pb-4 border-neutral-400"
         >
           <h3 className="text-[32px] text-black">New products</h3>
-          <Link href={"/view_all?type=New"} className="text-[16px] flex gap-2">
+          <Link href={"/viewAll?type=New"} className="text-[16px] flex gap-2">
             view all <MdNavigateNext />
           </Link>
         </div>
@@ -65,7 +66,7 @@ export default function Home() {
         <div className="flex justify-between border-b-4 w-full pb-4 border-neutral-400">
           <h3 className="text-[32px] text-black">best salery</h3>
           <Link
-            href={"/view_all?type=numberSale "}
+            href={"/viewAll?type=numberSale "}
             className="text-[16px] flex gap-2"
           >
             view all <MdNavigateNext />

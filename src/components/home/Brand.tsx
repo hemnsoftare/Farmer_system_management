@@ -1,4 +1,4 @@
-import { brand } from "@/app/util/data";
+import { brand } from "@/util/data";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

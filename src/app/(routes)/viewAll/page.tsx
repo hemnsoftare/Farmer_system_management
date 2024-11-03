@@ -1,7 +1,7 @@
 "use client";
 import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
-import { newProdcuts } from "@/app/util/data";
+import { newProdcuts } from "@/util/data";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
@@ -12,7 +12,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { app } from "../../../../config/firebaseConfig";
+import { app } from "../../../config/firebaseConfig";
 import { ProductFormInput } from "@/type";
 const Page = () => {
   const searchparams = useSearchParams();

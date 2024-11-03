@@ -6,9 +6,9 @@ import { ProductFormInput } from "@/type";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 import React, { useState, useEffect } from "react";
-import { app } from "../../../../../../config/firebaseConfig";
+import { app } from "../../../../../config/firebaseConfig";
 import { getproductByCategory } from "@/lib/action/uploadimage";
-
+import { useDispatch, useSelector } from "react-redux";
 const SingleProduct = ({
   params,
 }: {
@@ -18,16 +18,14 @@ const SingleProduct = ({
   const [smilierProducts, setsmilierProducts] = useState<ProductFormInput[]>(
     []
   );
+  // const state = useSelector((state) => stat);
+
   const db = getFirestore(app);
   useEffect(() => {
     const getProduct = async () => {
       console.log(params.productsId.replaceAll("%20", " "));
       const refdoc = await getDoc(
-        doc(
-          db,
-          "Products",
-          params.productsId.replaceAll("%20", " ").trim() + " "
-        )
+        doc(db, "Products", params.productsId.replaceAll("%20", " ").trim())
       );
       console.log(refdoc.data());
       setproduct(refdoc.data() as ProductFormInput);

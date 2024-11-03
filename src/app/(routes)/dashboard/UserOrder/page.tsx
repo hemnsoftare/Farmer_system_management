@@ -1,5 +1,5 @@
 "use client";
-import { carts } from "@/app/util/data";
+import { carts } from "@/util/data";
 import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { cont } from "../ConTextData";

@@ -14,6 +14,9 @@ import {
   useAuth,
   useUser,
 } from "@clerk/nextjs";
+import { IoCartOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { ItemCartProps } from "@/type/globals";
 const Header = () => {
   const [isopenCart, setisopenCart] = useState(false);
   const [isOpenSearch, setisOpenSearch] = useState(false);
@@ -21,7 +24,10 @@ const Header = () => {
   const { isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
   const isAdmin = user?.publicMetadata?.role === "admin";
-
+  const cartItems = useSelector(
+    (state: { cart: ItemCartProps[] }) => state.cart || []
+  );
+  const totalItems = cartItems.length;
   return (
     <div className="flex relative items-center pt-4 justify-between">
       {/* logo */}
@@ -85,14 +91,15 @@ const Header = () => {
           height={24}
           className="lg:w-[24px]  md:w-[15px] lg:h-[24px] md:h-[15px] "
         /> */}
-        <Image
-          onClick={() => setisopenCart(!isopenCart)}
-          src={"/bag.svg"}
-          alt="bag"
-          width={24}
-          height={24}
-          className="lg:w-[24px]  md:w-[15px] lg:h-[24px] md:h-[15px] "
-        />
+        <p className="relative">
+          <IoCartOutline
+            className="lg:w-[24px] relative  md:w-[15px] lg:h-[24px] md:h-[15px] "
+            onClick={() => setisopenCart(!isopenCart)}
+          ></IoCartOutline>
+          <span className="text-7 font-semibold rounded-full p-1 absolute bg-blue-700 text-white -bottom-1 -right-1">
+            {totalItems}
+          </span>
+        </p>
         <SignedOut>
           <span>
             <span className="text-primary">
@@ -112,7 +119,7 @@ const Header = () => {
     */}
       </div>
       {user && isopenCart && (
-        <CartHeader onclose={() => setisopenCart(false)} />
+        <CartHeader items={cartItems} onclose={() => setisopenCart(false)} />
       )}
       {isOpenSearch && (
         <Search isopen={isOpenSearch} onclose={() => setisOpenSearch(false)} />

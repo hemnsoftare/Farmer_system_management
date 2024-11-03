@@ -1,13 +1,13 @@
 "use client";
 import { uploadImage } from "@/lib/action/uploadimage";
 import { catagoryProps } from "../../../../type";
-import { colors as availableColors } from "@/app/util/data";
+import { colors as availableColors } from "@/util/data";
 import Image from "next/image";
 import React, { FormEvent, useRef, useState } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
-import { app } from "../../../../../config/firebaseConfig";
+import { app } from "../../../../config/firebaseConfig";
 
 const ModalCategory = () => {
   const [openSelectedColors, setOpenSelectedColors] = useState(false);

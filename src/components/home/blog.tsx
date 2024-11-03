@@ -3,7 +3,7 @@ import BlogCol from "./blogCol";
 import Link from "next/link";
 import { MdNavigateNext } from "react-icons/md";
 import BlogRow from "./BlogRow";
-import { blogs } from "@/app/util/data";
+import { blogs } from "@/util/data";
 
 const Blog = () => {
   return (

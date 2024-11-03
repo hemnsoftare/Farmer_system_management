@@ -1,5 +1,4 @@
 "use client";
-import { categories } from "@/app/util/data";
 import React, { useEffect, useRef, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import InputCheckout from "@/components/Cart/InputCheckout";
@@ -13,10 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
-import { app } from "../../../../../config/firebaseConfig";
+import { app } from "../../../../config/firebaseConfig";
 import { getFireBase, uploadImage } from "@/lib/action/uploadimage";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { string } from "zod";
 
 const Page = () => {
   const [selectedcolor, setselectedcolor] = useState<
@@ -51,7 +49,7 @@ const Page = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data: ProductFormInput = {
-      name: formData.get("name") as string,
+      name: formData.get("name")?.toString().trim() as string,
       price: parseFloat(formData.get("price") as string),
       brand: formData.get("brand") as string,
       colors: selectedcolor,
@@ -68,9 +66,10 @@ const Page = () => {
       isDiscount: formData.get("discount") ? true : false,
       discount: formData.get("discount")
         ? parseFloat(formData.get("discount") as string)
-        : undefined,
+        : 0,
     };
     console.log(data);
+
     await setDoc(doc(db, "Products", data.name), data)
       .then((res) => {
         console.log("save data");
@@ -99,9 +98,12 @@ const Page = () => {
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    console.log("handleSmallImageChange");
     const updatedImages = [...smallImageFile];
     const file = e.target.files?.[0];
+    console.log(file);
     if (file) {
+      console.log(" in if ");
       try {
         const linkimageurl = await uploadImage(file); // Upload small image
         setimageSmallUrl((prev) => [...prev, linkimageurl]); // Store URL in state

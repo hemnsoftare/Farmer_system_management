@@ -29,14 +29,13 @@ const NewProducts = ({
       }
     });
   };
-  if (itemDb) console.log(itemDb.colors);
   const product: ProductFormInput | undefined = itemDb;
   if (product) {
     return (
       <Link
         href={
           title !== "dashboard"
-            ? `/products/${product.category}/${product.id}`
+            ? `/products/${product.category}/${product.name}`
             : "#"
         }
         key={product.name}
@@ -115,7 +114,7 @@ const NewProducts = ({
                 </span>
               )}
               <span className="z-10">{product.price}$</span>
-              {product.isDiscount && (
+              {product.discount && product.discount > 0 && (
                 <p className=" group-hover:opacity-0 -mr-5  bg-gradient-to-r to-transparent from-red-300 z-10 duration-300 transition-all  top-4 px-3 py-1 rounded-l-full text-secondary-500 text-sm">
                   -{product?.discount} $
                 </p>

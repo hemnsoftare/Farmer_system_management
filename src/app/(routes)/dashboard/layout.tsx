@@ -1,5 +1,5 @@
 "use client";
-import { menuItems } from "@/app/util/data"; // Adjust the path to menuItems
+import { menuItems } from "@/util/data"; // Adjust the path to menuItems
 import Image from "next/image";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";

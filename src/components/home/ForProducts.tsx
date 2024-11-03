@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoChevronBack } from "react-icons/io5";
 import { MdNavigateNext } from "react-icons/md";
 import NewProducts from "./NewProducts";
-import { newProdcuts } from "@/app/util/data";
+import { newProdcuts } from "@/util/data";
 import { ProductFormInput } from "@/type";
 
 const ForProducts = ({ products }: { products?: ProductFormInput[] }) => {

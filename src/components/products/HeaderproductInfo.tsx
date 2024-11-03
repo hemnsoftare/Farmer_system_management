@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiShop } from "react-icons/ci";
 import { GoVerified } from "react-icons/go";
 import { TbTruckDelivery } from "react-icons/tb";
 import { ProductInfoProps } from "@/type";
+import { useDispatch, useSelector } from "react-redux";
+import { updateItem } from "@/lib/action/Order";
+import { GrRadialSelected } from "react-icons/gr";
 
 const HeaderproductInfo = ({
   productinfos,
+  onQuantity,
+  quantity,
+  onSelectedColor,
+  selectedColor,
 }: {
+  quantity: number;
+  selectedColor: string;
+  onSelectedColor: (item: { name: string; color: string }) => void;
   productinfos?: ProductInfoProps;
+  onQuantity: (type: "increase" | "decrease") => void;
 }) => {
+  console.log(selectedColor);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  console.log(state);
   return (
     <>
       <h2 className="font-bold">{productinfos?.name}</h2>
@@ -34,10 +49,15 @@ const HeaderproductInfo = ({
         <div className="flex gap-2 items-center justify-center">
           {productinfos?.colors.map((item) => (
             <div
+              onClick={() => onSelectedColor(item)}
               key={item.color}
               style={{ backgroundColor: item.color }}
-              className="w-4 h-4 rounded-full duration-300 hover:scale-[1.1] border-2 "
-            />
+              className="w-5 h-5 flex items-center justify-center border-black/20 rounded-full duration-300 hover:scale-[1.1] border-2 "
+            >
+              {selectedColor === item.name && (
+                <GrRadialSelected className="w-3 h-3" />
+              )}
+            </div>
           ))}
         </div>
       </div>
@@ -66,11 +86,25 @@ const HeaderproductInfo = ({
             <span className="font-serif">{productinfos?.price}</span>$
           </span>
           <span className="flex items-center gap-2">
-            <span className="font-semibold text-18">-</span>
+            <button
+              onClick={() => {
+                onQuantity("decrease");
+              }}
+              className="font-semibold text-18"
+            >
+              -
+            </button>
             <span className="px-3 py-[2px] rounded-lg bg-secondary-400 hover:bg-secondary-600 text-white">
-              0
+              {quantity}
             </span>
-            <span className="font-semibold text-18">+</span>
+            <button
+              onClick={() => {
+                onQuantity("increase");
+              }}
+              className="font-semibold text-18"
+            >
+              +
+            </button>
           </span>
         </span>
         {productinfos?.discount && (

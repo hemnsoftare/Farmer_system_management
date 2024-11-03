@@ -13,7 +13,7 @@ import { BsHandbag } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { SlLogout } from "react-icons/sl";
-import { user } from "@/app/util/data";
+import { user } from "@/util/data";
 import { userProps } from "@/type";
 import { LogOut } from "lucide-react";
 import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";

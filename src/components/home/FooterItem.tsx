@@ -3,7 +3,7 @@ import React from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPhoneVolume } from "react-icons/fa6";
-import { footer } from "@/app/util/data";
+import { footer } from "@/util/data";
 const FooterItem = () => {
   return (
     <div className="flex justify-between flex-1 mr-6   items-center lg:gap-8 md:gap-4">

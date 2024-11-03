@@ -1,6 +1,6 @@
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
-import { app } from "../../../../config/firebaseConfig";
+import { app } from "../../../config/firebaseConfig";
 
 export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log("Received POST request");

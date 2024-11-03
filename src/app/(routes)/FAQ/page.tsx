@@ -1,5 +1,5 @@
 "use client";
-import { faq } from "@/app/util/data";
+import { faq } from "@/util/data";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FAQProps } from "../../../type";

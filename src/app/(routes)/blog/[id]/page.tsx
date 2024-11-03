@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { BlogColProps } from "../../../../type";
-import { blogs } from "@/app/util/data";
+import { blogs } from "@/util/data";
 import Image from "next/image";
 import { LiaCommentDots } from "react-icons/lia";
 import { AiOutlineLike } from "react-icons/ai";

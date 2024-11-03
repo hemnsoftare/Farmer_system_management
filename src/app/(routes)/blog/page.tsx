@@ -2,7 +2,7 @@
 import BlogVideo from "@/components/blog/BlogVideo";
 import BlogCol from "@/components/home/blogCol";
 import BlogRow from "@/components/home/BlogRow";
-import { blogs } from "@/app/util/data";
+import { blogs } from "@/util/data";
 import Link from "next/link";
 import React from "react";
 const BlogPage = () => {

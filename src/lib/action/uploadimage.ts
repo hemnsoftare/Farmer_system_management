@@ -1,5 +1,5 @@
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { app, storage } from "../../../config/firebaseConfig";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import {
   collection,
   doc,
@@ -10,6 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 import { catagoryProps, ProductFormInput, typeFilter } from "@/type";
+import { app, storage } from "@/config/firebaseConfig";
 
 const db = getFirestore(app);
 // Function to upload the image
@@ -19,6 +20,7 @@ export async function uploadImage(file: File): Promise<string> {
     const storageRef = ref(storage, `images/${file.name}`);
 
     // Upload the file
+    console.log("in handle upload image ");
     const snapshot = await uploadBytes(storageRef, file);
 
     // Get the download URL

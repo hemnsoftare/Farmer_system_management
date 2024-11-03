@@ -1,4 +1,4 @@
-import { newProdcuts } from "@/app/util/data";
+import { newProdcuts } from "@/util/data";
 import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
 import React from "react";

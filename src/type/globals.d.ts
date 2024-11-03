@@ -10,3 +10,11 @@ declare global {
     };
   }
 }
+export interface ItemCartProps {
+  name: string;
+  discount?: number;
+  price: number;
+  colors: { name: string; color: string };
+  quantity: number;
+  image: string;
+}

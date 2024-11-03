@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { newProdcuts } from "@/app/util/data";
+import { newProdcuts } from "@/util/data";
 
 import { GrFormNextLink } from "react-icons/gr";
 import { IoArrowBackOutline } from "react-icons/io5";
@@ -16,7 +16,7 @@ import {
   QuerySnapshot,
   where,
 } from "firebase/firestore";
-import { app } from "../../../config/firebaseConfig";
+import { app } from "../../config/firebaseConfig";
 import { ProductFormInput } from "@/type";
 
 const Sales = () => {
@@ -49,7 +49,7 @@ const Sales = () => {
         <h2>Shop Now!</h2>
         <br />
         <button className="mt-auto bg-blue-500 z-30 hover:bg-blue-700 text-white mb-3 font-bold py-2 px-12 rounded">
-          <Link href={"/view_all?type=discount"}> View All</Link>
+          <Link href={"/viewAll?type=discount"}> View All</Link>
         </button>
       </div>
       <div className="grid w-[80%] gap-3 items-center   grid-cols-4 justify-center">

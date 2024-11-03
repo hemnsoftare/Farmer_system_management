@@ -1,4 +1,4 @@
-import { servies } from "@/app/util/data";
+import { servies } from "@/util/data";
 import Image from "next/image";
 import React from "react";
 

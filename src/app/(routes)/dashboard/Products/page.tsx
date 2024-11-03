@@ -1,6 +1,6 @@
 import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
-import { newProdcuts } from "@/app/util/data";
+import { newProdcuts } from "@/util/data";
 import Link from "next/link";
 import React from "react";
 import { MdAddCircleOutline } from "react-icons/md";
