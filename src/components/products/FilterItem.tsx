@@ -1,10 +1,9 @@
+"use client";
 import React, { memo, useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { Switch } from "../ui/switch";
 import { catagoryProps, typeFilter } from "@/type";
-import { filterItems } from "@/util/data";
 import { Slider } from "@nextui-org/react";
-import { cn } from "@/lib/utils";
 import {
   collection,
   getDocs,
@@ -14,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { app } from "../../config/firebaseConfig";
 import FilterSection from "./FilterSection ";
-
+import { cn } from "@/lib/utils";
 const FilterItem = ({
   onFilter,
   filters,
@@ -66,10 +65,11 @@ const FilterItem = ({
     if (filters) {
       setColor(filters.color || []);
       setBrand(filters.brand || []);
-      setDiscount(filters.discount === false ? false : true);
+      setDiscount(filters.discount);
       setPrice(filters.price || [200, 300]);
     }
   }, [filters]);
+
   useEffect(() => {
     const getdata = async () => {
       // console.log(selected, "]]]]]]]]]]]");
@@ -93,7 +93,6 @@ const FilterItem = ({
           // console.log("No matching documents found.");
         } else {
           querySnapShot.forEach((doc) => {
-            console.log("Document data:", doc.data());
             setcategory(doc.data() as catagoryProps);
           });
         }
@@ -104,13 +103,14 @@ const FilterItem = ({
 
     getdata();
   }, [selected, db]);
+
   useEffect(() => {
     const filter: typeFilter = { brand, color, discount, price };
     // console.log(".........");
     // console.log(filter);
     onFilter(filter);
   }, [color, discount, brand, price, onFilter]);
-
+  console.log(discount);
   return (
     <div className="flex flex-col w-full items-center justify-start">
       <FilterSection
@@ -157,17 +157,57 @@ const FilterItem = ({
           } duration-300 w-[85%] relative transition-all mt-2`}
         >
           {/* React Range Slider */}
-          <div className="flex text-12 my-5 justify-between items-center">
+          {/* <div className="flex text-12 my-5 justify-between items-center">
             {" "}
-            <span>price range </span>{" "}
-            <span>
+            <span className="text-14">price range </span>{" "}
+            <span className="text-14 ">
               {price[0]}$ - {price[1]}${" "}
             </span>{" "}
-          </div>
+          </div> */}
           <div>
             <Slider
               size="lg"
-              maxValue={1000}
+              label="Price Range"
+              maxValue={100000}
+              step={100}
+              defaultValue={price}
+              onChange={handleSliderChange}
+              formatOptions={{ style: "currency", currency: "USD" }}
+              classNames={{
+                base: "w-full gap-3", // Ensure width is full or increased
+                filler:
+                  "bg-gradient-to-r from-pink-300 to-cyan-300 dark:from-pink-600 dark:to-cyan-800",
+                track: "h-3 bg-gray-300 dark:bg-gray-600", // Add track styling
+              }}
+              renderThumb={({ index, ...props }) => (
+                <div
+                  {...props}
+                  className="group p-1 top-1/2 bg-background border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
+                >
+                  <span
+                    className={cn(
+                      "transition-transform bg-gradient-to-br shadow-small rounded-full w-5 h-5 block group-data-[dragging=true]:scale-80",
+                      index === 0
+                        ? "from-pink-200 to-pink-500 dark:from-pink-400 dark:to-pink-600" // first thumb
+                        : "from-cyan-200 to-cyan-600 dark:from-cyan-600 dark:to-cyan-800" // second thumb
+                    )}
+                  />
+                </div>
+              )}
+            />
+            {/* <Slider
+              label="Price Range"
+              step={50}
+              minValue={0}
+              maxValue={100000}
+              defaultValue={price}
+              onChange={handleSliderChange}
+              formatOptions={{ style: "currency", currency: "USD" }}
+              className="max-w-md "
+            /> */}
+            {/* <Slider
+              size="lg"
+              maxValue={100000}
               step={10}
               defaultValue={price}
               formatOptions={{ style: "currency", currency: "USD" }}
@@ -192,9 +232,9 @@ const FilterItem = ({
                   />
                 </div>
               )}
-            />
+            /> */}
             {/* Display the selected price range */}
-            <div className=" absolute -bottom-[2px] transform scale-x-[1.2] -translate-x-1 rounded-2xl w-full -z-10 h-[34px] left-0 bg-slate-100"></div>
+            {/* <div className=" absolute -bottom-[16px]  transform scale-x-[1.2] -translate-x-1 rounded-2xl w-full -z-50 h-[34px] left-0 bg-slate-100"></div> */}
           </div>
         </div>
       </div>

@@ -321,11 +321,10 @@ const categories: Category[] = [
   { name: "accessories", icon: RiSettings3Line },
 ];
 
-const Sort = [
-  { key: "featured", label: "Featured" },
-  { key: "price_asc", label: "Price: Ascending" },
-  { key: "price_desc", label: "Price: Descending" },
-  { key: "new_arrivals", label: "New Arrivals" },
+const Sort: { key: string; label: "new" | "priceB" | "priceA" }[] = [
+  { key: "newest", label: "new" },
+  { key: "Price: Low to High", label: "priceA" },
+  { key: "Price: High to Low", label: "priceB" },
 ];
 
 const filterItems: FilterProps[] = [

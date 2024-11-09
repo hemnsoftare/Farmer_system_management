@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { CiShop } from "react-icons/ci";
 import { GoVerified } from "react-icons/go";
@@ -6,7 +7,6 @@ import { ProductInfoProps } from "@/type";
 import { useDispatch, useSelector } from "react-redux";
 import { updateItem } from "@/lib/action/Order";
 import { GrRadialSelected } from "react-icons/gr";
-
 const HeaderproductInfo = ({
   productinfos,
   onQuantity,
@@ -107,7 +107,7 @@ const HeaderproductInfo = ({
             </button>
           </span>
         </span>
-        {productinfos?.discount && (
+        {productinfos?.discount !== 0 && (
           <span>
             <span>discount : </span>{" "}
             <span className="font-serif">{productinfos?.discount}%</span>
@@ -115,7 +115,20 @@ const HeaderproductInfo = ({
         )}
         <span>
           <span>total price : </span>{" "}
-          <span className="font-serif">129,122.2$</span>
+          <span>
+            <span className="font-serif">
+              {productinfos?.price
+                ? productinfos.discount && productinfos.discount !== 0
+                  ? (
+                      quantity *
+                      productinfos.price *
+                      (1 - productinfos.discount / 100)
+                    ).toFixed(2)
+                  : (quantity * productinfos.price).toFixed(2)
+                : "0.00"}
+              $
+            </span>
+          </span>
         </span>
       </span>
     </>

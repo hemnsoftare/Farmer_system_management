@@ -4,6 +4,13 @@
 html {
   scroll-behavior: smooth;
 }
+/* styles/globals.css */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 
 @layer base {
   :root {
@@ -71,8 +78,12 @@ html {
   }
 }
 .overflow-y {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
+}
+.overflow-x {
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 .scrollbeaty {
   scrollbar-width: thin; /* Firefox */

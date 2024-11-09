@@ -4,7 +4,7 @@ import { Switch } from "@/components/ui/switch";
 import InputCheckout from "@/components/Cart/InputCheckout";
 import { catagoryProps, ProductFormInput } from "../../../../type";
 import Image from "next/image";
-import ImageSmallInput from "../_components/ImageSmallInput";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +12,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
-import { app } from "../../../../config/firebaseConfig";
+import { app } from "@/config/firebaseConfig";
 import { getFireBase, uploadImage } from "@/lib/action/uploadimage";
 import { IoMdArrowDropdown } from "react-icons/io";
+import ImageSmallInput from "@/components/ImageSmallInput";
 
 const Page = () => {
   const [selectedcolor, setselectedcolor] = useState<

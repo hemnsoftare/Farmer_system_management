@@ -20,24 +20,34 @@ const FormCheckout = ({
         label="full name"
         name="fullName"
         placeholder="hemn software"
+        error={errors.fullName}
       />
       <InputCheckout
+        type="number"
         label="phone number "
         name="phoneNumber"
         placeholder="+964 750 226 7967"
+        error={errors.phoneNumber}
       />
       <InputCheckout
         label="street name "
         name="streetName"
         placeholder="enter your street"
+        error={errors.streetName}
       />
       <div className="flex items-center justify-center gap-2">
         {" "}
-        <InputCheckout label="city" name="city" placeholder="erbile" />
+        <InputCheckout
+          label="city"
+          name="city"
+          placeholder="erbile"
+          error={errors.city}
+        />
         <InputCheckout
           label="Select region"
           name="Select_region"
           placeholder="Select region"
+          error={errors.Select_region}
         />
       </div>
       <div className="relative w-full group flex items-start  flex-col">
@@ -56,10 +66,12 @@ const FormCheckout = ({
           } outline-none placeholder:text-neutral-300 group-focus-within:placeholder:text-blue-500 focus:border-blue-600 shadow-inner border-2  rounded-lg text-blue-500 px-5 py-2 w-full focus:shadow-blue-100 shadow-neutral-100`}
         />
         <IoIosCloseCircleOutline className="absolute scale-[1.05] right-5 top-[15px]" />
-        <p className="text-red-700 ml-2 text-12 text-shadow-lg"></p>
+        <p className="text-red-700 ml-2 text-12 text-shadow-lg">
+          {errors.note}
+        </p>
       </div>
       <p className="flex px-4 items-center gap-3">
-        <input type="checkbox" id="accept" name="accept" />{" "}
+        <input required type="checkbox" id="accept" name="accept" />{" "}
         <label htmlFor="accept">I am the recipient of my order</label>
       </p>
       <div className="flex w-full items-center gap-3">

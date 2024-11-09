@@ -1,14 +1,14 @@
 "use client";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
-import React, { useCallback, useEffect, useState } from "react";
-import { newProdcuts } from "@/util/data";
+import React, { useEffect, useState } from "react";
 import HeaderDilter from "@/components/products/HeaderFilter";
 import FilterItem from "@/components/products/FilterItem";
 import NewProducts from "@/components/home/NewProducts";
 import { ProductFormInput, typeFilter } from "../../../../type";
 import Filtered from "@/components/products/Filter";
 import { getProducts } from "@/lib/action/uploadimage";
-import { useSelector } from "react-redux";
+import Link from "next/link";
+import { Loader } from "@/app/loader";
 
 const MyComponent = ({ params }: { params: { catagory: string } }) => {
   const [selected, setSelected] = useState(params.catagory.replace("%20", " "));
@@ -19,47 +19,75 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
     price: [1, 1000],
   });
   const [products, setproducts] = useState<ProductFormInput[]>([]);
-  const state = useSelector((state) => state);
-  console.log(state);
-  const isEqual = (a: typeFilter, b: typeFilter) => {
-    // console.log(a, b);
-    return JSON.stringify(a) === JSON.stringify(b);
-  };
-  const handleFilter = useCallback((filter: typeFilter) => {
-    // console.log(isEqual(filter, filterProducts));
-    if (isEqual(filter, filterProducts)) {
-      return null;
-    } else {
+  const [sortBy, setsortBy] = useState<string>("new");
+  const [load, setload] = useState(true);
+
+  const isEqual = (a: typeFilter, b: typeFilter) =>
+    JSON.stringify(a) === JSON.stringify(b);
+
+  const handleFilter = (filter: typeFilter) => {
+    if (!isEqual(filter, filterProducts)) {
       setFilterProducts(filter);
     }
-  }, []);
-  // console.log(filterProducts);
+  };
+
   const handelDelete = (type: string, item: string) => {
-    let update: string[] = [];
+    let updatedFilter: any = filterProducts;
+
     if (type === "brand") {
-      update = (filterProducts.brand as string[]).filter(
+      updatedFilter.brand = filterProducts.brand.filter(
         (brand) => brand !== item
       );
-    }
-    if (type === "color") {
-      update = (filterProducts.color as string[]).filter(
+    } else if (type === "color") {
+      updatedFilter.color = filterProducts.color.filter(
         (color) => color !== item
       );
+    } else if (type === "discount") {
+      updatedFilter.discount = false;
     }
 
-    setFilterProducts({ ...filterProducts, [type]: update });
+    setFilterProducts({ ...updatedFilter });
+    setSelected(selected + " "); // Trigger a refresh
   };
 
   useEffect(() => {
-    const getdata = async () => {
-      const productsDaa = await getProducts(filterProducts, selected);
-      setproducts(productsDaa);
+    // Effect to fetch products whenever filters or selected category changes
+    const getData = async () => {
+      setload(true);
+      try {
+        const productsData = await getProducts(
+          filterProducts,
+          selected.trim(),
+          sortBy
+        );
+        setproducts(productsData);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setload(false);
+      }
     };
-    getdata();
-  }, [filterProducts, selected]);
+    getData();
+  }, [filterProducts, selected, sortBy]);
+
+  // useEffect(() => {
+  //   // Effect to reset filters whenever selected category changes
+  //   setFilterProducts({
+  //     brand: [],
+  //     color: [],
+  //     discount: false,
+  //     price: [1, 1000],
+  //   });
+  // }, [selected]);
+
   return (
     <div className="flex flex-col w-full gap-5 pt-5 ">
-      <p className="text-16 py-6"> home &gt; products</p>
+      <p className="text-16 py-6">
+        <Link href={"/"} className="hover:text-blue-800 hover:underline">
+          home
+        </Link>
+        &gt; products
+      </p>
       <CatagoryProducts
         handleSelected={(name) => {
           setSelected(name);
@@ -67,19 +95,37 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
             brand: [],
             color: [],
             discount: false,
-            price: [1, 100],
+            price: [1, 1000],
           });
         }}
         catagory={params.catagory}
       />
-      <HeaderDilter />
+      <HeaderDilter
+        length={products.length}
+        selectedSortBy={(item) => {
+          setsortBy(item);
+        }}
+        onClear={() => {
+          setSelected(selected + " ");
+          setFilterProducts({
+            brand: [],
+            color: [],
+            discount: false,
+            price: [1, 1000],
+          });
+        }}
+      />
       <div className="flex items-center duration-300 transition-all animate-in flex-wrap text-12 justify-start gap-3 w-full ">
         <Filtered
           type="color"
           onDelete={handelDelete}
           item={filterProducts.color}
         />
-        <Filtered type="discount" item={filterProducts.discount} />
+        <Filtered
+          type="discount"
+          item={filterProducts.discount}
+          onDelete={handelDelete}
+        />
         <Filtered type="price" item={filterProducts.price} />
         <Filtered
           type="brand"
@@ -89,7 +135,6 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
       </div>
       <div className="grid grid-cols-4 gap-2">
         <div className="">
-          {" "}
           <FilterItem
             key={selected}
             selected={selected}
@@ -97,11 +142,19 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
             onFilter={handleFilter}
           />
         </div>
-        <div className="col-span-3 grid lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
-          {products.map((item) => (
-            <NewProducts key={item.name} itemDb={item} title="catagory" />
-          ))}
-        </div>
+        {load ? (
+          <Loader />
+        ) : products.length > 0 ? (
+          <div className="col-span-3 grid lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
+            {products.map((item) => (
+              <NewProducts key={item.name} itemDb={item} title="catagory" />
+            ))}
+          </div>
+        ) : (
+          <h2 className="font-bold flex items-center justify-center col-span-3 text-30 text-center w-full ">
+            No products available
+          </h2>
+        )}
       </div>
       <br />
     </div>
@@ -109,3 +162,178 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
 };
 
 export default MyComponent;
+
+// "use client";
+// import CatagoryProducts from "@/components/products/CatagoryProducts";
+// import React, { useEffect, useState } from "react";
+// import HeaderDilter from "@/components/products/HeaderFilter";
+// import FilterItem from "@/components/products/FilterItem";
+// import NewProducts from "@/components/home/NewProducts";
+// import { ProductFormInput, typeFilter } from "../../../../type";
+// import Filtered from "@/components/products/Filter";
+// import { getProducts } from "@/lib/action/uploadimage";
+// import Link from "next/link";
+// import { Loader } from "@/app/loader";
+
+// const MyComponent = ({ params }: { params: { catagory: string } }) => {
+//   const [selected, setSelected] = useState(params.catagory.replace("%20", " "));
+//   const [filterProducts, setFilterProducts] = useState<typeFilter>({
+//     brand: [],
+//     color: [],
+//     discount: false,
+//     price: [1, 1000],
+//   });
+//   const [products, setproducts] = useState<ProductFormInput[]>([]);
+//   const [sortBy, setsortBy] = useState<string>("new");
+//   const [load, setload] = useState(true);
+//   const isEqual = (a: typeFilter, b: typeFilter) => {
+//     // console.log(a, b);
+//     return JSON.stringify(a) === JSON.stringify(b);
+//   };
+//   const handleFilter = (filter: typeFilter) => {
+//     // console.log(isEqual(filter, filterProducts));
+//     console.log(filter.discount, filterProducts.discount);
+//     if (isEqual(filter, filterProducts)) {
+//       // console.log(filter);
+
+//       return null;
+//     } else {
+//       // console.log(filter);
+//       setFilterProducts(filter);
+//     }
+//   };
+//   // console.log(filterProducts);
+//   // console.log(filterProducts);
+//   const handelDelete = (type: string, item: string) => {
+//     let update: any = [];
+//     if (type === "brand") {
+//       update = (filterProducts.brand as string[]).filter(
+//         (brand) => brand !== item
+//       );
+//     }
+//     if (type === "color") {
+//       update = (filterProducts.color as string[]).filter(
+//         (color) => color !== item
+//       );
+//     }
+//     if (type === "discount") {
+//       update = false;
+//     }
+//     setSelected(selected + " ");
+//     setFilterProducts({ ...filterProducts, [type]: update });
+//   };
+
+//   useEffect(() => {
+//     const getdata = async () => {
+//       setload(true); // Set loading to true at the start of data fetching
+//       try {
+//         const productsDaa = await getProducts(
+//           filterProducts,
+//           selected.trim(),
+//           sortBy
+//         );
+//         setproducts(productsDaa); // Set the fetched data to products state
+//       } catch (error) {
+//         console.error("Error fetching products:", error); // Handle any errors if necessary
+//       } finally {
+//         setload(false); // Set loading to false after data is fetched
+//       }
+//     };
+//     getdata();
+//   }, [
+//     filterProducts.brand,
+//     filterProducts.color,
+//     filterProducts.discount,
+//     filterProducts.price,
+//     filterProducts,
+//     selected,
+//     sortBy,
+//   ]);
+// useEffect(() => {
+//   setFilterProducts({
+//     brand: [],
+//     color: [],
+//     discount: false,
+//     price: [1, 1000],
+//   });
+
+// }, [selected]);
+//   console.log(filterProducts);
+//   return (
+//     <div className="flex flex-col w-full gap-5 pt-5 ">
+//       <p className="text-16 py-6">
+//         <Link href={"/"} className="hover:text-blue-800 hover:underline">
+//           home
+//         </Link>
+//         &gt; products
+//       </p>
+//       <CatagoryProducts
+//         handleSelected={(name) => {
+//           setSelected(name + " ");
+//         }}
+//         catagory={params.catagory}
+//       />
+//       <HeaderDilter
+//         length={products.length}
+//         selectedSortBy={(item) => {
+//           console.log("in onclick");
+//           setsortBy(item);
+//         }}
+//         onClear={() => {
+//           setSelected(selected + " ");
+//           setFilterProducts({
+//             brand: [],
+//             color: [],
+//             discount: false,
+//             price: [1, 1000],
+//           });
+//         }}
+//       />
+//       <div className="flex items-center duration-300 transition-all animate-in flex-wrap text-12 justify-start gap-3 w-full ">
+//         <Filtered
+//           type="color"
+//           onDelete={handelDelete}
+//           item={filterProducts.color}
+//         />
+//         <Filtered
+//           type="discount"
+//           item={filterProducts.discount}
+//           onDelete={handelDelete}
+//         />
+//         <Filtered type="price" item={filterProducts.price} />
+//         <Filtered
+//           type="brand"
+//           onDelete={handelDelete}
+//           item={filterProducts.brand}
+//         />
+//       </div>
+//       <div className="grid grid-cols-4 gap-2">
+//         <div className="">
+//           <FilterItem
+//             key={selected}
+//             selected={selected}
+//             filters={filterProducts}
+//             onFilter={handleFilter}
+//           />
+//         </div>
+//         {load ? (
+//           <Loader />
+//         ) : products.length > 0 ? (
+//           <div className="col-span-3 grid lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
+//             {products.map((item) => (
+//               <NewProducts key={item.name} itemDb={item} title="catagory" />
+//             ))}
+//           </div>
+//         ) : (
+//           <h2 className="font-bold fle items-center justify-center col-span-3 text-30 bg-red-50 text-center w-full ">
+//             have not product
+//           </h2>
+//         )}
+//         {/* <Loader /> */}
+//       </div>
+//       <br />
+//     </div>
+//   );
+// };
+
+// export default MyComponent;

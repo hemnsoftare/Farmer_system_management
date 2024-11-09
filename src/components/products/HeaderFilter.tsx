@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -7,34 +8,56 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Sort } from "@/util/data";
-const HeaderDilter = () => {
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+const HeaderDilter = ({
+  selectedSortBy,
+  onClear,
+  length,
+}: {
+  selectedSortBy: (sort: string) => void;
+  onClear: () => void;
+  length: number;
+}) => {
+  const [state, setstate] = useState("newest");
   return (
     <div className="flex justify-between items-center">
       <span className="flex gap-5 items-center">
-        <span className="font-semibold">Filters (123) </span>
-        <button className="text-primary">Clear Filter</button>
+        <span className="font-semibold">Filters ({length})</span>
+        <button
+          onClick={onClear}
+          className="text-primary px-3 py-1 hover:bg-blue-200 duration-300 transition-all"
+        >
+          Clear Filter
+        </button>
       </span>
-      <span className="flex items-center gap-1 ">
-        <span className="text-14">Sort by </span>
-        <Select>
-          <SelectTrigger className="w-[170px] text-10 ring-0 outline-none">
-            <SelectValue
-              className="text-9     text-red-600 "
-              placeholder="Featured"
-            />
-          </SelectTrigger>
-          <SelectContent className="bg-white ">
+      <span className="flex items-center gap-1">
+        <span className="text-18">Sort by : </span>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="text-18 text-start px-2 border-e outline-none w-[200px]">
+            {state}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
             {Sort.map((item) => (
-              <SelectItem
+              <DropdownMenuItem
                 className="text-10 hover:bg-slate-100 duration-300 transition-all"
-                value={item.key}
+                onClick={() => {
+                  setstate(item.key);
+                  selectedSortBy(item.label);
+                }}
                 key={item.key}
               >
-                {item.label}
-              </SelectItem>
+                {item.key}
+              </DropdownMenuItem>
             ))}
-          </SelectContent>
-        </Select>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </span>
     </div>
   );

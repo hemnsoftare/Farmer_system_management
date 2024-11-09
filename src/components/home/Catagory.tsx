@@ -7,32 +7,32 @@ const Catagory = () => {
   const catagory: { name: string; image: string; path: string }[] = [
     {
       name: "accessoiries",
-      image: "Catagory_accessories.svg",
+      image: "/a.png",
       path: "accessoiries",
     },
     {
       name: "camera",
-      image: "Catagory_camera.svg",
+      image: "/c.png",
       path: "camera",
     },
     {
       name: "laptop",
-      image: "Catagory_laptop.svg",
+      image: "/l.png",
       path: "laptop",
     },
     {
       name: "smart phone",
-      image: "Catagory_smartPhone.svg",
+      image: "/s.png",
       path: "smartPhone",
     },
     {
       name: "gaming",
-      image: "Catagory_gaming.svg",
+      image: "/g.png",
       path: "gaming",
     },
     {
       name: "smart watch",
-      image: "Catagory_smartWatch.svg",
+      image: "/sw.png",
       path: "smartWatch",
     },
   ];

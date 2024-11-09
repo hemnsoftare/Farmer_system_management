@@ -74,7 +74,7 @@ interface FilterProps {
 
 interface typeFilter {
   color: string[];
-  discount: any;
+  discount: boolean;
   brand: string[];
   price: number[];
 }
@@ -100,8 +100,8 @@ interface errorCheckOutProps {
   phoneNumber: string;
   streetName: string;
   city: string;
-  recipientName: string;
-  phoneNumberAnother: string;
+  Select_region: string;
+  note: string;
 }
 
 interface propsMenuItem {
@@ -158,4 +158,41 @@ export type {
   propsMenuItem,
   ProductFormInput,
   catagoryProps,
+};
+
+export type UserType = {
+  id: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  fullName: string | null;
+  username: string;
+  emailAddresses?: { emailAddress: string }[]; // Array of objects with emailAddress field
+  primaryEmailAddressId?: string;
+};
+
+export interface ItemCartProps {
+  name: string;
+  discount?: number;
+  price: number;
+  colors: { name: string; color: string }; // Keep it simple
+  quantity: number;
+  image: string; // Ensure this is a valid string URL
+}
+
+export type OrderType = {
+  id?: string;
+  userId: string; // Clerk's user ID or Firebase UID
+  fullName: string; // Full name of the user
+  phoneNumber: string; // User's contact phone number
+  address: {
+    streetName: string; // User's street address
+    city: string; // User's city
+    region: string; // User-selected region
+  };
+  email: { emailAddress: string }[]; // Keep this as an array of objects
+  orderItems: ItemCartProps[]; // Ensure this is an array of simple objects
+  orderDate: Date; // Use Timestamp for Firestore compatibility
+  totalAmount: number; // Total cost for the order
+  totaldiscountPrice: number;
+  note?: string; // Optional notes provided by the user
 };

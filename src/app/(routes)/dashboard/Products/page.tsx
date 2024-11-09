@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import ModalCategory from "../_components/ModalCategory";
+import ModalCategory from "@/components/ModalCategory";
 
 const page = () => {
   return (

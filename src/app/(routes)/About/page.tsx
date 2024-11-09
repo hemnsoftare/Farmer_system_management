@@ -1,11 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Page = () => {
   return (
     <div className="flex w-full px-40 flex-col gap-4 ">
       <h2>
-        home &gt;{" "}
+        <Link href={"/"} className="hover:text-blue-800 hover:underline">
+          home
+        </Link>
+        &gt;{" "}
         <span className="text-blue-600 underline underline-offset-4">
           {" "}
           about us

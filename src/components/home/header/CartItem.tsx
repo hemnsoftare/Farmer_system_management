@@ -2,12 +2,13 @@
 import React from "react";
 import Image from "next/image";
 import { TbTruckDelivery } from "react-icons/tb";
-import { MdOutlineVerified } from "react-icons/md";
+import { MdDeleteOutline, MdOutlineVerified } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 import { Cart } from "@/type";
-import { ItemCartProps } from "@/type/globals";
+import { ItemCartProps } from "@/type";
 import { useDispatch } from "react-redux";
-import { updateItem } from "@/lib/action/Order";
+import { removeItem, updateItem } from "@/lib/action/Order";
+import { useToast } from "@/hooks/use-toast";
 const CartItem = ({
   item,
   type,
@@ -15,6 +16,8 @@ const CartItem = ({
   type?: "headerItem";
   item: ItemCartProps;
 }) => {
+  const { toast } = useToast();
+
   const dispatch = useDispatch();
   return (
     <div
@@ -65,7 +68,40 @@ const CartItem = ({
             $ {item.price * item.quantity}
           </p>
           <div className="flex  items-center  px-5 gap-2">
-            <GoTrash color="red" />
+            <GoTrash
+              onClick={() => {
+                toast({
+                  title: "Remove ",
+                  description: (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "red",
+                      }}
+                    >
+                      <MdDeleteOutline
+                        color="red"
+                        style={{ marginRight: "8px" }}
+                      />
+                      <span>Remove Product in Cart</span>
+                    </div>
+                  ),
+                  style: {
+                    backgroundColor: "#fef7f7",
+                    color: "red",
+                    borderColor: "red",
+                    borderWidth: "2px",
+                    borderRadius: "10px",
+                    padding: "8px",
+                  },
+                });
+                dispatch(
+                  removeItem({ name: item.name, color: item.colors.color })
+                );
+              }}
+              color="red"
+            />
             <button
               onClick={() =>
                 dispatch(

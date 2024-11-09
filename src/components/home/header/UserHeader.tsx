@@ -47,18 +47,7 @@ const UserHeader = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex items-center gap-2 hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          <BsHandbag />
-          <span className="capitalize text-[12px] ">Orders</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-2 hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          <AiOutlineHeart />{" "}
-          <span className="capitalize text-[12px] ">Wish List</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-2 hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          <RiMoneyDollarCircleLine />
-          <span className="capitalize text-[12px] ">Payments</span>
-        </DropdownMenuItem>
+
         <DropdownMenuItem className="flex items-center gap-2 hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <SignOutButton> LOG OUT</SignOutButton>
         </DropdownMenuItem>

@@ -33,17 +33,18 @@ const Filtered = ({
             )
         )}
       {type === "price" && item[0] !== "" && (
-        <div className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg border-black w-[120px] justify-between">
+        <div className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg border-black w-fit justify-between">
           <span>
-            {" "}
-            {item[0]} - {item[1]}
+            Price : {item[0]} - {item[1]}
           </span>
-          <IoMdCloseCircleOutline className="w-4 h-4" />
         </div>
       )}
-      {type === "discount" && item === "true" ? (
-        <div className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg border-black w-[120px] justify-between">
-          <span> {item && "discounted"}</span>
+      {type === "discount" && item === true ? (
+        <div
+          onClick={() => onDelete && onDelete("discount", "d")}
+          className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg border-black w-[120px] justify-between"
+        >
+          <span> {item && "Discounted"}</span>
           <IoMdCloseCircleOutline className="w-4 h-4" />
         </div>
       ) : null}

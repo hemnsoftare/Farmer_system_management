@@ -1,16 +1,21 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   getFirestore,
+  orderBy,
   query,
+  setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
-import { catagoryProps, ProductFormInput, typeFilter } from "@/type";
+import { catagoryProps, ProductFormInput, typeFilter, UserType } from "@/type";
 import { app, storage } from "@/config/firebaseConfig";
+import { OrderType } from "@/type";
 
 const db = getFirestore(app);
 // Function to upload the image
@@ -20,13 +25,11 @@ export async function uploadImage(file: File): Promise<string> {
     const storageRef = ref(storage, `images/${file.name}`);
 
     // Upload the file
-    console.log("in handle upload image ");
     const snapshot = await uploadBytes(storageRef, file);
 
     // Get the download URL
     const downloadURL = await getDownloadURL(snapshot.ref);
 
-    console.log("Image uploaded successfully:", downloadURL);
     return downloadURL;
   } catch (error) {
     console.error("Error uploading image:", error);
@@ -43,10 +46,9 @@ export const getFireBase = async (dbName: string): Promise<catagoryProps[]> => {
 };
 export const getProducts = async (
   filter: typeFilter,
-  categoroy: string
+  categoroy: string,
+  sortBy: string
 ): Promise<ProductFormInput[]> => {
-  console.log("in get products");
-  console.log();
   const conditions: any[] = []; // Array to hold query conditions
 
   // Add brand condition if filter.brand is provided and not empty
@@ -67,20 +69,24 @@ export const getProducts = async (
   conditions.push(where("price", "<=", filter.price[1])); // Set maximum price
   conditions.push(where("category", "==", categoroy));
   // Build the query with dynamic conditions
-  const q = query(collection(db, "Products"), ...conditions);
+  console.log(conditions);
+  const q = query(
+    collection(db, "Products"),
+    ...conditions,
+    orderBy(
+      sortBy === "new" ? "date" : "price",
+      sortBy === "new" ? "asc" : sortBy === "priceA" ? "asc" : "desc"
+    )
+  );
 
   const product: ProductFormInput[] | null = [];
   const qsanpshot = await getDocs(q);
-  console.log(qsanpshot);
   qsanpshot.forEach((item) => {
-    console.log("object");
-    console.log(item);
     product.push({
       ...(item.data() as ProductFormInput),
       id: item.id as string,
     });
   });
-  console.log(product);
   return product;
 };
 
@@ -99,4 +105,79 @@ export const getproductByCategory = async (
   });
 
   return products;
+};
+
+export const setUser = async (user: UserType) => {
+  // Sanitize the user data for Firestore
+  const sanitizedUser = {
+    id: user.id,
+    firstName: user.firstName || "",
+    lastName: user.lastName || "",
+    fullName: user.fullName || "",
+    username: user.username || "",
+    emailAddresses:
+      user.emailAddresses?.map((email) => email.emailAddress) || [],
+    primaryEmailAddressId: user.primaryEmailAddressId || "",
+  };
+
+  await setDoc(doc(db, "user", user.id), sanitizedUser)
+    .then(() => console.log("User saved"))
+    .catch((error) => console.error("Error saving user", error));
+};
+
+export const setOrder = async (order: OrderType): Promise<string> => {
+  type quantity = { name: string; quantitiy: number }[];
+  let update: quantity = [];
+  order.orderItems.map((item) => {
+    let sum = 0;
+    order.orderItems.filter((orderitem) =>
+      orderitem.name === item.name ? (sum += orderitem.quantity) : null
+    );
+    let itemupdate = { name: item.name, quantitiy: sum };
+    if (!update.some((itemupdateed) => itemupdateed.name === item.name)) {
+      update.push(itemupdate);
+    }
+  });
+  console.log(update);
+  try {
+    // Pass the orders object directly to addDoc
+    const refSet = await addDoc(collection(db, "order"), {
+      address: {
+        city: order.address.city || "",
+        region: order.address.region || "",
+        streetName: order.address.streetName || "",
+      },
+      // email: order.email.length > 0 ? order.email : [{ emailAddress: "" }], // Ensure it’s an array
+      fullName: order.fullName || "",
+      orderDate: new Date(),
+      orderItems: order.orderItems.map((item) => ({
+        name: item.name || "",
+        discount: item.discount || 0,
+        price: item.price || 0,
+        colors: {
+          name: item.colors.name || "",
+          color: item.colors.color || "",
+        },
+        quantity: item.quantity || 0,
+        image: item.image || "",
+      })),
+      phoneNumber: order.phoneNumber || "",
+      totalAmount: order.totalAmount || 0,
+      totaldiscountPrice: order.totaldiscountPrice || 0,
+      userId: order.userId || "",
+      note: order.note || "",
+    });
+    update.map(async (item) => {
+      const getitem = await getDoc(doc(db, "Products", item.name));
+      const currentNumberSale = getitem.exists() && getitem.data().numberSale;
+      await updateDoc(doc(db, "Products", item.name), {
+        numberSale: item.quantitiy + currentNumberSale,
+      }).then((res) => console.log("update in number sale"));
+    });
+
+    return refSet.id; // Return the document ID
+  } catch (error) {
+    console.error("Error saving order:", error);
+    throw error; // Rethrow the error for further handling
+  }
 };

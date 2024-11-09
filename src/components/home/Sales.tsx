@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { newProdcuts } from "@/util/data";
 
 import { GrFormNextLink } from "react-icons/gr";
 import { IoArrowBackOutline } from "react-icons/io5";
@@ -13,13 +12,13 @@ import {
   getDocs,
   getFirestore,
   query,
-  QuerySnapshot,
   where,
 } from "firebase/firestore";
 import { app } from "../../config/firebaseConfig";
 import { ProductFormInput } from "@/type";
-
+import { Loader } from "@/app/loader";
 const Sales = () => {
+  const [load, setload] = useState(true);
   const [start, setStart] = useState(0);
   const [products, setproducts] = useState<ProductFormInput[]>([]);
   const db = getFirestore(app);
@@ -27,22 +26,22 @@ const Sales = () => {
     const getdata = async () => {
       const q = query(collection(db, "Products"), where("discount", ">", 0));
       const querysnapshot = await getDocs(q);
-      console.log("++++++++++++++++++++++++++++++++++++++++++++");
       querysnapshot.forEach((item) => {
         setproducts((pre) => [...pre, item.data() as ProductFormInput]);
-        console.log(item.data());
       });
+      setload(false);
     };
     getdata();
   }, [db]);
+
   return (
     <div className="flex bg-primary-500 h-full w-full py-3 pb-7  px-3  items-center justify-center shadow-blue-950 shadow-md relative rounded-md text-white gap-4">
       <Image
-        src={"/salesShape.svg"}
+        src={"/shape.png"}
         width={400}
         height={400}
         alt="image"
-        className="absolute left-0 z-10 -top-5"
+        className="absolute left-0 z-[0] -top-5"
       />
       <div className="flex w-[20%] z-20 text-white items-center  flex-col gap-3 ">
         <h1 className="text-white mt-8 font-bold text-23 ">Products On Sale</h1>
@@ -52,11 +51,20 @@ const Sales = () => {
           <Link href={"/viewAll?type=discount"}> View All</Link>
         </button>
       </div>
-      <div className="grid w-[80%] gap-3 items-center   grid-cols-4 justify-center">
-        {products.slice(start, 4 + start).map((item) => (
-          <NewProducts key={item.name} itemDb={item} title="sale" />
-        ))}
-      </div>
+      {load && (
+        <div className="flex items-center justify-center gap-4">
+          <Loader />
+          <Loader />
+          <Loader />
+        </div>
+      )}
+      {!load && (
+        <div className="grid w-[80%] gap-3 items-center   grid-cols-4 justify-center">
+          {products.slice(start, 4 + start).map((item) => (
+            <NewProducts key={item.name} itemDb={item} title="sale" />
+          ))}
+        </div>
+      )}
       <div className="flex items-center gap-4 absolute bottom-1 right-3">
         <IoArrowBackOutline
           color="white"
@@ -68,7 +76,7 @@ const Sales = () => {
           onClick={() =>
             setStart((pre) => (pre >= products.length - 4 ? pre : pre + 1))
           }
-          className="hover:bg-slate-50/15 bg-red-500 duration-300 scale-[1.4]"
+          className="hover:bg-slate-50/15  duration-300 scale-[1.4]"
         />
       </div>
     </div>

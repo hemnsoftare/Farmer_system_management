@@ -1,6 +1,6 @@
+"use client";
 import { FaChevronDown } from "react-icons/fa";
 import React, { useState } from "react";
-
 interface FilterSectionProps {
   title: string;
   items: { name: string; color: string }[] | string[];

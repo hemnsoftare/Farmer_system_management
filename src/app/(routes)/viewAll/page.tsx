@@ -1,75 +1,89 @@
 "use client";
 import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
-import { newProdcuts } from "@/util/data";
-import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   collection,
   getDocs,
   getFirestore,
+  limit,
   orderBy,
   query,
   where,
 } from "firebase/firestore";
-import { app } from "../../../config/firebaseConfig";
+import { app } from "@/config/firebaseConfig";
 import { ProductFormInput } from "@/type";
-const Page = () => {
-  const searchparams = useSearchParams();
-  const type = searchparams.get("type");
+
+const Page = ({ params }: { params: { type: string } }) => {
+  const type = params.type;
   const db = getFirestore(app);
-  const [products, setproducts] = useState<ProductFormInput[]>([]);
-  const [selectedCategory, setselectedCategory] = useState("");
+  const [products, setProducts] = useState<ProductFormInput[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
   useEffect(() => {
-    const getdata = async (col: string) => {
-      if (col !== "discount")
-        var q = selectedCategory
+    const getData = async (col: string) => {
+      let q;
+      if (col !== "discount") {
+        q = selectedCategory
           ? query(
               collection(db, "Products"),
               where("category", "==", selectedCategory),
-              orderBy(col, "desc")
+              orderBy(col, "desc"),
+              limit(30)
             )
           : query(collection(db, "Products"), orderBy(col, "desc"));
-      else {
-        console.log(type);
-        var q = selectedCategory
+      } else {
+        q = selectedCategory
           ? query(
               collection(db, "Products"),
               where("category", "==", selectedCategory),
-              where("isDiscount", "==", true)
+              where("isDiscount", "==", true),
+              limit(30)
             )
-          : query(collection(db, "Products"), where("isDiscount", "==", true));
+          : query(
+              collection(db, "Products"),
+              where("isDiscount", "==", true),
+              limit(30)
+            );
       }
-      const qsanpshot = await getDocs(q);
-      qsanpshot.forEach((item) => {
-        setproducts((pre) => [...pre, item.data() as ProductFormInput]);
+
+      const snapshot = await getDocs(q);
+      const fetchedProducts: ProductFormInput[] = [];
+      snapshot.forEach((item) => {
+        fetchedProducts.push(item.data() as ProductFormInput);
       });
+      setProducts(fetchedProducts);
     };
+
     if (type === "New") {
-      getdata("date");
+      getData("date");
     } else if (type === "discount") {
-      getdata("discount");
+      getData("discount");
     } else {
-      getdata("numberSale");
+      getData("numberSale");
     }
-  }, [selectedCategory]);
+  }, [db, type, selectedCategory]); // Add 'db' and 'type' to dependencies
+
   return (
     <div className="flex items-center w-full py-8 gap-3 justify-center flex-col">
-      <h1 className=" self-start text-30 my-3 font-semibold">
-        last {newProdcuts.length < 30 ? newProdcuts.length : "30"} {type}{" "}
-        products
+      <h1 className="self-start text-30 my-3 font-semibold">
+        Last {products.length < 30 ? products.length : "30"} {type} products
       </h1>
       <CatagoryProducts
         handleSelected={(name) => {
-          setproducts([]);
-          setselectedCategory(name);
+          setProducts([]);
+          setSelectedCategory(name);
         }}
       />
-      <div className="grid  lg:grid-cols-4 md:grid-cols-3 w-full items-center justify-center ">
-        {products.map((item) => (
-          <NewProducts key={item.name} itemDb={item} />
-        ))}
-      </div>
+      {products.length > 0 ? (
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 w-full items-center justify-center">
+          {products.map((item) => (
+            <NewProducts key={item.name} itemDb={item} />
+          ))}
+        </div>
+      ) : (
+        <h1 className="text-30 font-black my-[200px]">have not product</h1>
+      )}
     </div>
   );
 };

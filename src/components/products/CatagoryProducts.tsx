@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { getFireBase } from "@/lib/action/uploadimage";
 import { catagoryProps } from "@/type";
 import Image from "next/image";
+import { Skeleton } from "../ui/skeleton";
 
 const CatagoryProducts = ({
   catagory,
@@ -17,16 +18,28 @@ const CatagoryProducts = ({
     (catagory && catagory.replace("%20", " ")) || ""
   );
   const [category, setcategory] = useState<catagoryProps[]>([]);
+  const [loadCategory, setloadCategory] = useState(true);
+
   useEffect(() => {
     const getdata = async () => {
       // console.log("header products aaaaa");
       const cate: catagoryProps[] = await getFireBase("category");
       // console.log(cate[0]);
+      setloadCategory(false);
       setcategory(cate);
       // console.log(selected, cate);
     };
     getdata();
   }, [catagory]);
+  if (loadCategory)
+    return (
+      <div className="flex w-full justify-center gap-4">
+        {" "}
+        <Skeleton className="h-[50px] bg-neutral-500 w-[100px]" />
+        <Skeleton className="h-[50px] bg-neutral-500 w-[100px]" />
+        <Skeleton className="h-[50px] bg-neutral-500 w-[100px]" />
+      </div>
+    );
   return (
     <div className="flex lg:gap-4 md:gap-3 flex-wrap justify-center items-center w-full">
       {category.map((item) => (

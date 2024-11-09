@@ -10,11 +10,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { z } from "zod";
-import NotSuccess from "@/components/Cart/NotSuccess";
 import Success from "@/components/Cart/success";
 import FormCheckout from "@/components/Cart/FormCheckout";
-import { useSelector } from "react-redux";
-import { ItemCartProps } from "@/type/globals";
+import { useDispatch, useSelector } from "react-redux";
+import { ItemCartProps, OrderType } from "@/type";
+import { setOrder } from "@/lib/action/uploadimage";
+import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
+import { removeAll } from "@/lib/action/Order";
+import Plunk from "@plunk/node";
+import { Email } from "@/emails";
+import { render } from "@react-email/render";
+
+import { toast } from "@/hooks/use-toast";
+import { BsFillCartXFill } from "react-icons/bs";
 
 const Page = () => {
   const cartItems = useSelector(
@@ -27,16 +35,20 @@ const Page = () => {
     discount: 0,
     totalPrice: 0,
   });
-  const totalItems = cartItems.length;
+  const dispatch = useDispatch();
+  const plunk = new Plunk(process.env.NEXT_PUBLIC_PLUNK_API_KEY || "");
+
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const [showNotSuccess, setShowNotSuccess] = useState(false);
+  const { user } = useUser();
+  const [order, setorder] = useState<OrderType>();
   const [error, seterror] = useState({
     fullName: "",
     phoneNumber: "",
     streetName: "",
     city: "",
-    recipientName: "",
-    phoneNumberAnother: "",
+    Select_region: "",
+    note: "",
   });
   console.log(error);
   const formSchema = z.object({
@@ -44,55 +56,97 @@ const Page = () => {
     phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
     streetName: z.string().min(1, "Street name is required"),
     city: z.string().min(1, "City is required"),
-    recipientName: z.string().optional(),
-    phoneNumberAnother: z.string().optional(),
+    Select_region: z.string(),
+    note: z.string().optional(),
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const datafrom = new FormData(e.currentTarget);
     const data = Object.fromEntries(datafrom.entries());
     console.log(data);
     const validate = formSchema.safeParse(data);
 
-    if (validate.success) {
+    if (validate.success && user) {
       setShowSuccess(true);
-      // Clear errors if validation is successful
-      seterror({
-        fullName: "",
-        phoneNumber: "",
-        streetName: "",
-        city: "",
-        recipientName: "",
-        phoneNumberAnother: "",
-      });
+      const orders: OrderType = {
+        address: {
+          city: (data.city as string) || "", // Cast to string if needed
+          region: (data.Select_region as string) || "", // Cast to string if needed
+          streetName: (data.streetName as string) || "", // Cast to string if needed
+        },
+        totaldiscountPrice: totalPrice.discount || 0,
+        email: user.emailAddresses || [],
+        fullName: user.fullName || "", // Ensure user is defined
+        orderDate: new Date(), // Current date and time
+        orderItems: cartItems || [], // Default to an empty array if cartItems is undefined
+        phoneNumber: (data.phoneNumber as string) || "", // Cast to string if needed
+        totalAmount: totalPrice?.totalPrice || 0, // Default to 0 if totalPrice is not defined
+        userId: user?.id || "", // Ensure user is defined
+        note: data.note ? (data.note as string) : undefined, // Use undefined if no note is provided
+      };
+
+      sendEmail({ ...orders });
+      const id = await setOrder(orders);
+      setorder({ ...orders, id });
+      dispatch(removeAll());
     } else {
       // Initialize an empty error object with all properties as empty strings
-      setShowNotSuccess(true);
+      // setShowNotSuccess(true);
       const errors: {
         fullName: string;
         phoneNumber: string;
         streetName: string;
         city: string;
-        recipientName: string;
-        phoneNumberAnother: string;
+        Select_region: string;
+        note: string;
       } = {
         fullName: "",
         phoneNumber: "",
         streetName: "",
         city: "",
-        recipientName: "",
-        phoneNumberAnother: "",
+        Select_region: "",
+        note: "",
       };
 
-      validate.error.errors.forEach((error) => {
-        const fieldName = error.path[0] as keyof typeof errors;
-        errors[fieldName] = error.message;
-      });
+      validate.error &&
+        validate.error.errors.forEach((error) => {
+          const fieldName = error.path[0] as keyof typeof errors;
+          errors[fieldName] = error.message;
+        });
 
       seterror(errors);
     }
   };
+
+  const sendEmail = async (orderDetails: OrderType) => {
+    // Await the render function to ensure emailHtml is a string
+    const emailHtml = await render(<Email order={orderDetails} />);
+    const recipientEmail = orderDetails.email[0]?.emailAddress;
+
+    // Check if email is a valid string
+    if (typeof recipientEmail !== "string" || recipientEmail.trim() === "") {
+      console.log("Error: Recipient email is not a valid string.");
+      return;
+    }
+
+    // Send the email using plunk.emails.send
+    plunk.emails
+      .send({
+        to: recipientEmail.trim(), // Trim the recipient email
+        subject: "Order Confirmation",
+        body: emailHtml, // Use the awaited emailHtml string
+      })
+      .then((res) => {
+        toast({ title: "Email sent successfully" });
+      })
+      .catch((error) => {
+        toast({ title: "Email send failed" });
+        console.error("Error sending email:", error);
+      });
+  };
+
   useEffect(() => {
     const totalPriceitem = cartItems.reduce(
       (accumulator, item) => accumulator + item.price * item.quantity,
@@ -115,7 +169,7 @@ const Page = () => {
     <div className="fled py-8 flex-col  justify-center px-2 items-center">
       <div className="m-3text-18">
         <span>Home &gt;</span>{" "}
-        <span className="underline underline-offset-4 text-primary"> Cart</span>
+        <span className=" bgpri  bgpri-offset-4 text-primary"> Cart</span>
       </div>
       {/* header  */}
       {/* <header className="flex mx-auto relative w-fit py-5 self-center items-center gap-20 justify-center">
@@ -158,8 +212,62 @@ const Page = () => {
             </span>
           </p>
           <div className="w-full text-center">
-            <Dialog>
-              <DialogTrigger className="w-full py-2 px-6 hover:bg-blue-700 duration-300 transition-all bg-primary text-white rounded-lg">
+            <Dialog
+              onOpenChange={() =>
+                seterror({
+                  fullName: "",
+                  phoneNumber: "",
+                  streetName: "",
+                  city: "",
+                  Select_region: "",
+                  note: "",
+                })
+              }
+            >
+              <DialogTrigger
+                // disabled={!user && cartItems.length < 1}
+                onClick={(e) => {
+                  if (!user) {
+                    e.preventDefault(); // Prevents the dialog from opening
+                    toast({
+                      title: "You need an account to proceed",
+                      description: (
+                        <div className="flex gap-2">
+                          <SignInButton>
+                            <button className="text-white px-3 py-1 rounded-lg  bg-primary ">
+                              Sign In
+                            </button>
+                          </SignInButton>
+                          <SignUpButton>
+                            <button className="text-blue-50   bg-orange-500 rounded-lg px-3 py-1 ">
+                              Sign Up
+                            </button>
+                          </SignUpButton>
+                        </div>
+                      ),
+                    });
+                  } else if (cartItems.length < 1) {
+                    e.preventDefault(); // Prevents the dialog from opening
+                    toast({
+                      description: (
+                        <div className="flex text-red-600 text-14 items-center px-2 font-bold gap-2">
+                          <BsFillCartXFill color="red" />{" "}
+                          <p> have not product in cart</p>
+                        </div>
+                      ),
+                      style: {
+                        backgroundColor: "#fef2f2",
+                        color: "red", // Red color for error
+                        borderColor: "red",
+                        borderWidth: "2px",
+                        borderRadius: "4px",
+                        padding: "8px",
+                      },
+                    });
+                  }
+                }}
+                className="w-full py-2 px-6 hover:bg-blue-700 duration-300 transition-all bg-primary text-white rounded-lg"
+              >
                 Proceed to checkout
               </DialogTrigger>
               <DialogContent className="md:scale-[0.8] h-fit lg:scale-[0.8]">
@@ -167,11 +275,12 @@ const Page = () => {
                   {!showSuccess && !showNotSuccess && (
                     <DialogTitle>Address details</DialogTitle>
                   )}
-                  {showNotSuccess && (
-                    <NotSuccess onClose={() => setShowNotSuccess(false)} />
-                  )}
+
                   {showSuccess && !showNotSuccess && (
-                    <Success onClose={() => setShowSuccess(false)} />
+                    <Success
+                      order={order}
+                      onClose={() => setShowSuccess(false)}
+                    />
                   )}
                   {!showSuccess && !showNotSuccess && (
                     <FormCheckout errors={error} handleSubmit={handleSubmit} />

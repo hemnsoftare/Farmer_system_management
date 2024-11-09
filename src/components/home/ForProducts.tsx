@@ -5,59 +5,67 @@ import { MdNavigateNext } from "react-icons/md";
 import NewProducts from "./NewProducts";
 import { newProdcuts } from "@/util/data";
 import { ProductFormInput } from "@/type";
+import { Loader } from "@/app/loader";
 
-const ForProducts = ({ products }: { products?: ProductFormInput[] }) => {
+const ForProducts = ({
+  products,
+  load,
+}: {
+  load?: boolean;
+  products?: ProductFormInput[];
+}) => {
   const [startProducts, setStartProducts] = useState(0);
-  const [limt, setLimt] = useState(5);
+  const [limit, setLimit] = useState(5);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768 && window.innerWidth < 1024) {
-        setLimt(4);
+        setLimit(4);
       } else {
-        setLimt(5);
+        setLimit(5);
       }
     };
+
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const maxProducts = products ? products.length : newProdcuts.length;
+
+  const handleNext = () => {
+    if (startProducts + limit < maxProducts) {
+      setStartProducts((prev) => Math.min(prev + 1, maxProducts - limit));
+    }
+  };
+
+  const handlePrev = () => {
+    if (startProducts > 0) {
+      setStartProducts((prev) => Math.max(prev - 1, 0));
+    }
+  };
+  if (load)
+    return (
+      <div className="flex mt-4 justify-between items-center gap-4">
+        <Loader />
+
+        <Loader />
+
+        <Loader />
+
+        <Loader />
+      </div>
+    );
   return (
-    <div className="grid w-full  lg:grid-cols-5 md:grid-cols-4 grid-rows-1 bg-blue-10 gap-3 relative px-2 justify-between items-center">
-      <MdNavigateNext
-        className="absolute z-10 top-[50%] rounded-full hover:bg-slate-300 duration-300 w-5 h-5 -right-3"
-        onClick={() =>
-          setStartProducts(
-            startProducts <= newProdcuts.length - 4
-              ? startProducts + 1
-              : startProducts
-          )
-        }
-      />
-      <IoChevronBack
-        aria-disabled={newProdcuts.length <= startProducts}
-        className="absolute z-10 top-[50%] rounded-full hover:bg-slate-300 duration-300 w-5 h-5 -left-3"
-        onClick={() =>
-          setStartProducts(startProducts === 0 ? 0 : startProducts - 1)
-        }
-      />
+    <div className="grid mt-3 w-full lg:grid-cols-5 md:grid-cols-4 grid-rows-1 bg-blue-10 gap-3 relative px-2 justify-between items-center">
       {products &&
         products
-          .slice(startProducts, limt + startProducts)
+          .slice(startProducts, startProducts + limit)
           .map((product) => (
             <NewProducts
               key={product.price}
               title="single_product"
               itemDb={product}
-            />
-          ))}
-      {!products &&
-        newProdcuts
-          .slice(startProducts, limt + startProducts)
-          .map((product) => (
-            <NewProducts
-              key={product.price}
-              title="single_product"
-              item={product}
             />
           ))}
     </div>

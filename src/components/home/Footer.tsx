@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import FooterItem from "./FooterItem";
 import {
@@ -10,8 +11,12 @@ import { MdNavigateNext } from "react-icons/md";
 import { LuTwitter } from "react-icons/lu";
 import { RiCopyrightLine } from "react-icons/ri";
 import { SignUpButton } from "@clerk/nextjs";
-
+import { usePathname } from "next/navigation";
 const Footer = () => {
+  const pathName = usePathname();
+  if (pathName.startsWith("/si") && pathName.includes("dashboard")) {
+    return;
+  }
   return (
     <>
       <div

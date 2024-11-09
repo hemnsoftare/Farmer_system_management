@@ -4,25 +4,32 @@ import { TiShoppingCart } from "react-icons/ti";
 import CartItem from "./CartItem";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { ItemCartProps } from "@/type/globals";
-
+import { ItemCartProps } from "@/type";
+import { loadCartFromLocalStorage } from "@/lib/action/Order";
 const CartHeader = ({
   onclose,
   items,
 }: {
   items: ItemCartProps[];
-  onclose: () => void;
+  onclose?: () => void;
 }) => {
   const cartItems = useSelector((state: { cart: ItemCartProps[] }) => {
-    return state.cart || [];
+    return state.cart;
   });
   const [total, setTotal] = useState(cartItems.length);
+  const [grandTotal, setGrandTotal] = useState(0);
 
   useEffect(() => {
-    // Update the total count whenever cartItems change
-    setTotal(cartItems.length);
+    const qua = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    console.log(qua);
+    setTotal(qua);
+    const calculatedGrandTotal = cartItems.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    setGrandTotal(calculatedGrandTotal);
   }, [cartItems]);
-  console.log(cartItems);
+
   return (
     <>
       <div
@@ -32,7 +39,13 @@ const CartHeader = ({
       <div className="flex gap-4 z-50 h-fit overflow-hidden absolute top-full bg-gray-50 px-4 pb-3 shadow-md right-0 flex-col items-start justify-start">
         <p className="mt-3 w-full flex items-center justify-between">
           <span>{total} items</span>
-          <span className="hover:underline cursor-pointer">view all</span>
+          <Link
+            href="/Cart"
+            onClick={onclose}
+            className="hover:underline cursor-pointer"
+          >
+            view all
+          </Link>
         </p>
         <div
           className={`flex flex-col ${
@@ -50,9 +63,13 @@ const CartHeader = ({
         <div className="flex w-full items-center">
           <p className="flex flex-col px-2 pr-4">
             <span className="text-14">Grand total</span>
-            <span>${/* Calculate your grand total here */ 0}</span>
+            <span>${grandTotal.toFixed(2)}</span>
           </p>
-          <Link className="flex items-center flex-1" href="/Cart">
+          <Link
+            href="/Cart"
+            onClick={onclose}
+            className="flex items-center flex-1"
+          >
             <button className="flex items-center px-3 gap-2 rounded-lg justify-center py-2 flex-1 text-white bg-primary">
               <span className="text-white">Proceed to Cart</span>
               <TiShoppingCart color="white" />

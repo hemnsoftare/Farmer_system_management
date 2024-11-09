@@ -1,34 +1,50 @@
 // store/cartSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ItemCartProps } from "@/type/globals";
+import { ItemCartProps } from "@/type";
 
-const initialState: ItemCartProps[] = [];
+// Load cart data from localStorage if it exists
+export const loadCartFromLocalStorage = (): ItemCartProps[] => {
+  var data;
+  try {
+    data = localStorage.getItem("cart");
+  } catch (error) {}
+  console.log("in get local strogae");
+  return data ? JSON.parse(data) : [];
+};
+
+// Save cart data to localStorage
+const saveCartToLocalStorage = (cart: ItemCartProps[]) => {
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
+
+// Initial state
+const initialState: ItemCartProps[] = loadCartFromLocalStorage();
+
 const cart = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<ItemCartProps>) {
-      const isExistaName = state.some(
-        (item) => item.name === action.payload.name
-      );
-      const isExistColor = state.some(
+      // Find the index of the existing item by both name and color
+      const existingItemIndex = state.findIndex(
         (item) =>
-          item.colors.name === action.payload.colors.name &&
-          item.name === action.payload.name
-      );
-      if (!isExistColor) {
-        state.push(action.payload);
-      } else if (!isExistaName) {
-        state.push(action.payload);
-      } else {
-        return state.map((item) =>
           item.name === action.payload.name &&
           item.colors.name === action.payload.colors.name
-            ? { ...item, quantity: action.payload.quantity } // Update quantity
-            : item
-        );
+      );
+
+      if (existingItemIndex !== -1) {
+        // If the item exists, update its quantity by adding the new quantity
+        state[existingItemIndex].quantity = action.payload.quantity;
+      } else {
+        // If the item does not exist, add it to the cart
+
+        state.push(action.payload);
       }
+
+      // Save updated state to localStorage
+      saveCartToLocalStorage(state);
     },
+
     updateItem(
       state,
       action: PayloadAction<{
@@ -38,7 +54,6 @@ const cart = createSlice({
         type: "increase" | "decrease";
       }>
     ) {
-      // Map through the items to update the quantity based on the action type
       const updatedItems = state.map((item) => {
         if (
           item.name === action.payload.name &&
@@ -49,24 +64,31 @@ const cart = createSlice({
               ? item.quantity + 1
               : item.quantity - 1;
 
-          // Return updated item with new quantity
           return { ...item, quantity: newQuantity };
         }
         return item;
       });
 
       // Filter out any items with quantity 0 after decreasing
-      return updatedItems.filter((item) => item.quantity > 0);
+      const filteredItems = updatedItems.filter((item) => item.quantity > 0);
+      saveCartToLocalStorage(filteredItems); // Save updated state to localStorage
+      return filteredItems;
     },
     removeItem(state, action: PayloadAction<{ name: string; color: string }>) {
-      return state.filter(
+      const filteredItems = state.filter(
         (item) =>
-          item.name !== action.payload.name &&
-          action.payload.color === item.colors.color
+          item.name !== action.payload.name ||
+          item.colors.color !== action.payload.color
       );
+      saveCartToLocalStorage(filteredItems); // Save updated state to localStorage
+      return filteredItems;
+    },
+    removeAll() {
+      saveCartToLocalStorage([]); // Clear localStorage when all items are removed
+      return [];
     },
   },
 });
-console.log(cart.getInitialState);
-export const { addToCart, updateItem, removeItem } = cart.actions;
+
+export const { addToCart, updateItem, removeItem, removeAll } = cart.actions;
 export default cart.reducer;

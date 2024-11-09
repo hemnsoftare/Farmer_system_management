@@ -12,14 +12,18 @@ import { ProductFormInput } from "@/type";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/lib/action/Order";
 import { redirect, useRouter } from "next/navigation";
-import { ItemCartProps } from "@/type/globals";
+import { ItemCartProps } from "@/type";
+import { Toast } from "../ui/toast";
+import { useToast } from "@/hooks/use-toast";
+import { FaCartArrowDown } from "react-icons/fa";
 
 const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
+  const { toast } = useToast();
+
   const cartItems = useSelector(
     (state: { cart: ItemCartProps[] }) => state.cart || []
   );
 
-  // Find existing items in the cart and initialize color-based quantities
   const initialQuantities = cartItems.reduce((acc, cartItem) => {
     if (cartItem.name === item.name) {
       acc[cartItem.colors.name] = cartItem.quantity;
@@ -30,7 +34,6 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
   const [quantities, setQuantities] = useState<{ [color: string]: number }>(
     initialQuantities
   );
-
   const [selectedColor, setSelectedColor] = useState(
     item.colors[0] || { name: "", color: "" }
   );
@@ -39,7 +42,6 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // Update quantity for the selected color
   const handleQuantityChange = (type: "increase" | "decrease") => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -52,6 +54,42 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
   };
 
   const handleAddToCart = () => {
+    if (item.colors.length === 0) {
+      toast({
+        title: "No Colors Available",
+        description: "Please select a color to add the product to the cart.",
+        style: {
+          backgroundColor: "white",
+          color: "#ff0000", // Red color for error
+          borderColor: "#ff0000",
+          borderWidth: "2px",
+          borderRadius: "10px",
+          padding: "8px",
+        },
+      });
+      return; // Exit early if there are no colors
+    }
+
+    toast({
+      title: "Success",
+      description: (
+        <div
+          style={{ display: "flex", alignItems: "center", color: "#008000" }}
+        >
+          <FaCartArrowDown color="#008000" style={{ marginRight: "8px" }} />
+          <span>Success action </span>
+        </div>
+      ),
+      style: {
+        backgroundColor: "white",
+        color: "#008000",
+        borderColor: "#00FA9A",
+        borderWidth: "2px",
+        borderRadius: "10px",
+        padding: "8px",
+      },
+    });
+
     dispatch(
       addToCart({
         colors: selectedColor,
@@ -89,11 +127,8 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
           selectedColor={selectedColor.name}
         />
         <button
-          disabled={!user}
           onClick={handleAddToCart}
-          className={`${
-            user ? "bg-primary hover:bg-blue-700 " : "bg-primary-75"
-          } flex items-center mb-2 lg:w-[79%] self-center md:w-full py-2 rounded-lg duration-300 justify-center gap-2 text-white`}
+          className={` flex bg-primary hover:bg-blue-700 items-center mb-2 lg:w-[79%] self-center md:w-full py-2 rounded-lg duration-300 justify-center gap-2 text-white`}
         >
           <MdOutlineShoppingCart />
           <span>Add to Cart</span>
