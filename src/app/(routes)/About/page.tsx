@@ -10,7 +10,7 @@ const Page = () => {
           home
         </Link>
         &gt;{" "}
-        <span className="text-blue-600 underline underline-offset-4">
+        <span className="text-blue-600 cursor-pointer underline underline-offset-4">
           {" "}
           about us
         </span>{" "}

@@ -34,6 +34,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
   const [quantities, setQuantities] = useState<{ [color: string]: number }>(
     initialQuantities
   );
+
   const [selectedColor, setSelectedColor] = useState(
     item.colors[0] || { name: "", color: "" }
   );

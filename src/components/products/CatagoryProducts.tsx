@@ -51,9 +51,9 @@ const CatagoryProducts = ({
           key={item.name}
           className={`${
             item.name.trim() === selected.trim()
-              ? "shadow-blue-400"
-              : "shadow-slate-100"
-          } flex w-[120px] text-center flex-col hover:bg-slate-50 hover:scale-[1.1] px-3 rounded-lg py-1 shadow-sm duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
+              ? "shadow-blue-500 shadow-md rounded-lg border-blue-600"
+              : "shadow-slate-100 shadow-lg rounded-lg"
+          } flex w-[120px] text-center flex-col hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
         >
           <Image
             src={item.image.link}

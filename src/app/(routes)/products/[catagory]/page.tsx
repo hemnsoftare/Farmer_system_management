@@ -16,7 +16,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
     brand: [],
     color: [],
     discount: false,
-    price: [1, 1000],
+    price: [1, 100000],
   });
   const [products, setproducts] = useState<ProductFormInput[]>([]);
   const [sortBy, setsortBy] = useState<string>("new");
@@ -46,8 +46,8 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
       updatedFilter.discount = false;
     }
 
-    setFilterProducts({ ...updatedFilter });
     setSelected(selected + " "); // Trigger a refresh
+    setFilterProducts({ ...updatedFilter });
   };
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
         <Link href={"/"} className="hover:text-blue-800 hover:underline">
           home
         </Link>
-        &gt; products
+        &gt; <span className="cursor-pointer"> products </span>
       </p>
       <CatagoryProducts
         handleSelected={(name) => {
@@ -95,7 +95,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
             brand: [],
             color: [],
             discount: false,
-            price: [1, 1000],
+            price: [1, 100000],
           });
         }}
         catagory={params.catagory}
@@ -111,7 +111,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
             brand: [],
             color: [],
             discount: false,
-            price: [1, 1000],
+            price: [1, 100000],
           });
         }}
       />

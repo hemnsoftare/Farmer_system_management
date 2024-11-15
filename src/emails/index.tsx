@@ -24,8 +24,7 @@ interface YelpRecentLoginEmailProps {
   loginIp?: string;
   order: OrderType;
 }
-
-export const Email = ({ order }: YelpRecentLoginEmailProps) => {
+const Email = ({ order }: YelpRecentLoginEmailProps) => {
   console.log(" in Email");
   return (
     <Html>
@@ -197,3 +196,4 @@ const footerTextStyle = {
   color: "rgba(0, 0, 0, 0.7)",
   marginTop: "20px",
 };
+export default Email;

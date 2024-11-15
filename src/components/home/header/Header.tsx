@@ -51,20 +51,23 @@ const Header = () => {
   }, [cartItems]);
 
   // Return early if on a specific path
-  if (pathName.startsWith("/si") && pathName.includes("dashboard")) {
+  if (pathName.startsWith("/s") || pathName.includes("dashboard")) {
     return null;
   }
 
   return (
     <div className="flex relative items-center pt-4 justify-between">
       {/* logo */}
-      <Image
-        src={"/logo.svg"}
-        alt="logo"
-        width={48}
-        height={53}
-        className=" lg:w-[48px] lg:h-[53px] md:w-[39px] md:h-[43px]"
-      />
+      <Link href={"/"}>
+        {" "}
+        <Image
+          src={"/logo.svg"}
+          alt="logo"
+          width={48}
+          height={53}
+          className=" lg:w-[48px] lg:h-[53px] md:w-[39px] md:h-[43px]"
+        />
+      </Link>
       {/* center */}
       <div className="flex xl:gap-12 lg:gap-6 md:gap-6 py-2 justify-center w-[60%] items-center">
         <Link

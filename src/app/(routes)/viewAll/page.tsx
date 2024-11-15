@@ -13,15 +13,17 @@ import {
 } from "firebase/firestore";
 import { app } from "@/config/firebaseConfig";
 import { ProductFormInput } from "@/type";
+import { Loader } from "@/app/loader";
 
 const Page = ({ params }: { params: { type: string } }) => {
   const type = params.type;
   const db = getFirestore(app);
   const [products, setProducts] = useState<ProductFormInput[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  const [load, setload] = useState(true);
   useEffect(() => {
     const getData = async (col: string) => {
+      setload(true);
       let q;
       if (col !== "discount") {
         q = selectedCategory
@@ -52,6 +54,7 @@ const Page = ({ params }: { params: { type: string } }) => {
       snapshot.forEach((item) => {
         fetchedProducts.push(item.data() as ProductFormInput);
       });
+      setload(false);
       setProducts(fetchedProducts);
     };
 
@@ -75,11 +78,19 @@ const Page = ({ params }: { params: { type: string } }) => {
           setSelectedCategory(name);
         }}
       />
-      {products.length > 0 ? (
+
+      {!load && products.length > 0 ? (
         <div className="grid lg:grid-cols-4 md:grid-cols-3 w-full items-center justify-center">
           {products.map((item) => (
             <NewProducts key={item.name} itemDb={item} />
           ))}
+        </div>
+      ) : load ? (
+        <div className="flex items-center justify-center gap-3">
+          <Loader />
+          <Loader />
+          <Loader />
+          <Loader />
         </div>
       ) : (
         <h1 className="text-30 font-black my-[200px]">have not product</h1>

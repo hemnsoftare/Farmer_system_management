@@ -46,7 +46,7 @@ export const getFireBase = async (dbName: string): Promise<catagoryProps[]> => {
 };
 export const getProducts = async (
   filter: typeFilter,
-  categoroy: string,
+  category: string,
   sortBy: string
 ): Promise<ProductFormInput[]> => {
   const conditions: any[] = []; // Array to hold query conditions
@@ -61,33 +61,35 @@ export const getProducts = async (
     conditions.push(where("colorsName", "array-contains-any", filter.color));
   }
 
-  // Add discount condition
-  conditions.push(where("isDiscount", "==", filter.discount));
+  // Add discount condition only if filter.discount is true
+  if (filter.discount === true)
+    conditions.push(where("isDiscount", "==", true));
 
   // Add price conditions
   conditions.push(where("price", ">=", filter.price[0])); // Set minimum price
   conditions.push(where("price", "<=", filter.price[1])); // Set maximum price
-  conditions.push(where("category", "==", categoroy));
+  conditions.push(where("category", "==", category));
+
   // Build the query with dynamic conditions
-  console.log(conditions);
   const q = query(
     collection(db, "Products"),
     ...conditions,
     orderBy(
       sortBy === "new" ? "date" : "price",
-      sortBy === "new" ? "asc" : sortBy === "priceA" ? "asc" : "desc"
+      sortBy === "new" ? "desc" : sortBy === "priceA" ? "asc" : "desc"
     )
   );
 
-  const product: ProductFormInput[] | null = [];
-  const qsanpshot = await getDocs(q);
-  qsanpshot.forEach((item) => {
-    product.push({
+  const products: ProductFormInput[] = [];
+  const qSnapshot = await getDocs(q);
+  qSnapshot.forEach((item) => {
+    products.push({
       ...(item.data() as ProductFormInput),
       id: item.id as string,
     });
   });
-  return product;
+
+  return products;
 };
 
 export const getproductByCategory = async (

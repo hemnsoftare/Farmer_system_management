@@ -1,16 +1,17 @@
+"use client";
 import React from "react";
-import InputCheckout from "./InputCheckout";
-import { DialogTrigger } from "@radix-ui/react-dialog";
+
 import { errorCheckOutProps } from "@/type";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-
-const FormCheckout = ({
+import InputCheckout from "./InputCheckout";
+import { DialogTrigger } from "../ui/dialog";
+export default function FormCheckout({
   handleSubmit,
   errors,
 }: {
   errors: errorCheckOutProps;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}) => {
+}) {
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
@@ -44,9 +45,9 @@ const FormCheckout = ({
           error={errors.city}
         />
         <InputCheckout
-          label="Select region"
+          label=" region"
           name="Select_region"
-          placeholder="Select region"
+          placeholder=" region"
           error={errors.Select_region}
         />
       </div>
@@ -65,7 +66,7 @@ const FormCheckout = ({
             false ? "border-neutral-300" : "border-neutral-400"
           } outline-none placeholder:text-neutral-300 group-focus-within:placeholder:text-blue-500 focus:border-blue-600 shadow-inner border-2  rounded-lg text-blue-500 px-5 py-2 w-full focus:shadow-blue-100 shadow-neutral-100`}
         />
-        <IoIosCloseCircleOutline className="absolute scale-[1.05] right-5 top-[15px]" />
+        {/* <IoIosCloseCircleOutline className="absolute scale-[1.05] right-5 top-[15px]" /> */}
         <p className="text-red-700 ml-2 text-12 text-shadow-lg">
           {errors.note}
         </p>
@@ -75,14 +76,9 @@ const FormCheckout = ({
         <label htmlFor="accept">I am the recipient of my order</label>
       </p>
       <div className="flex w-full items-center gap-3">
-        <DialogTrigger>
+        <DialogTrigger className="border-blue-500 w-full text-blue-500 px-4 py-2 font-semibold border rounded-lg">
           {" "}
-          <button
-            type="button"
-            className="border-blue-500 w-full text-blue-500 px-4 py-2 font-semibold border rounded-lg"
-          >
-            back
-          </button>
+          back
         </DialogTrigger>
         <button
           type="submit"
@@ -93,6 +89,4 @@ const FormCheckout = ({
       </div>
     </form>
   );
-};
-
-export default FormCheckout;
+}

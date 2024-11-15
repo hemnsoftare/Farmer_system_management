@@ -19,7 +19,7 @@ const ForProducts = ({
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+      if (window.innerWidth >= 768 && window.innerWidth < 1300) {
         setLimit(4);
       } else {
         setLimit(5);
@@ -57,7 +57,7 @@ const ForProducts = ({
       </div>
     );
   return (
-    <div className="grid mt-3 w-full lg:grid-cols-5 md:grid-cols-4 grid-rows-1 bg-blue-10 gap-3 relative px-2 justify-between items-center">
+    <div className=" mt-3 w-full  flex  bg-blue-10 gap-3 relative px-2 justify-between items-center">
       {products &&
         products
           .slice(startProducts, startProducts + limit)

@@ -40,7 +40,7 @@ const HeaderProductIMage = ({
             alt=""
             width={480}
             height={180}
-            className="lg:w-full md:h-[250px] md:w-[380px] lg:h-[300px] "
+            className="lg:w-full md:min-h-[250px] md:max-h-[250px] md:w-[380px] lg:max-h-[300px] "
           />
           <div className="flex items-center justify-center gap-3 ">
             {" "}
@@ -51,7 +51,7 @@ const HeaderProductIMage = ({
                 alt=""
                 width={80}
                 height={80}
-                className="object-cover duration-300 hover:scale-[1.3]"
+                className="max-h-[80px] min-h-[80px] duration-300 hover:scale-[1.3]"
               />
             ))}
           </div>

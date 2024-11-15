@@ -81,6 +81,7 @@ html {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .overflow-x {
   overflow-y: hidden;
   overflow-x: auto;

@@ -43,7 +43,7 @@ const HeaderDilter = ({
           <DropdownMenuTrigger className="text-18 text-start px-2 border-e outline-none w-[200px]">
             {state}
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="bg-white">
             {Sort.map((item) => (
               <DropdownMenuItem
                 className="text-10 hover:bg-slate-100 duration-300 transition-all"

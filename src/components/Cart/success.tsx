@@ -5,13 +5,7 @@ import { PiCheckFatFill } from "react-icons/pi";
 import { OrderType } from "@/type";
 import { useRouter } from "next/navigation";
 
-const Success = ({
-  onClose,
-  order,
-}: {
-  onClose: () => void;
-  order: OrderType | undefined;
-}) => {
+const Success = ({ order }: { order: OrderType | undefined }) => {
   const router = useRouter();
 
   return (
@@ -36,11 +30,11 @@ const Success = ({
         <li className="flex capitalize items-center justify-between ">
           <span>Transaction id</span> <span>{order?.id}</span>
         </li>
-        {order?.totaldiscountPrice && order?.totaldiscountPrice > 0 && (
+        {order?.totaldiscountPrice && order?.totaldiscountPrice > 0 ? (
           <li className="flex capitalize items-center justify-between ">
             <span>Amount discount</span> <span> $ {order?.totalAmount}</span>
           </li>
-        )}
+        ) : null}
         <li className="flex capitalize text-black items-center justify-between ">
           <span>Amount Paid</span> <span> $ {order?.totalAmount}</span>
         </li>
@@ -49,7 +43,6 @@ const Success = ({
         {" "}
         <button
           onClick={() => {
-            onClose();
             router.push("/");
           }}
           className="bg-primary px-10 rounded-lg py-2 hover:bg-blue-800 duration-300 text-white self-end"

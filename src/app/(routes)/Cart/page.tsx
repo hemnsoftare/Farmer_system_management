@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "@/components/home/header/CartItem";
 
-import { Dialog } from "@radix-ui/react-dialog";
 import {
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -11,18 +11,21 @@ import {
 } from "@/components/ui/dialog";
 import { z } from "zod";
 import Success from "@/components/Cart/success";
-import FormCheckout from "@/components/Cart/FormCheckout";
+
 import { useDispatch, useSelector } from "react-redux";
 import { ItemCartProps, OrderType } from "@/type";
 import { setOrder } from "@/lib/action/uploadimage";
 import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { removeAll } from "@/lib/action/Order";
 import Plunk from "@plunk/node";
-import { Email } from "@/emails";
+// import { Email } from "@/emails";//
 import { render } from "@react-email/render";
 
 import { toast } from "@/hooks/use-toast";
 import { BsFillCartXFill } from "react-icons/bs";
+import Email from "@/emails";
+import FormCheckout from "@/components/Cart/FormCheckout";
+import Link from "next/link";
 
 const Page = () => {
   const cartItems = useSelector(
@@ -56,7 +59,7 @@ const Page = () => {
     phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
     streetName: z.string().min(1, "Street name is required"),
     city: z.string().min(1, "City is required"),
-    Select_region: z.string(),
+    Select_region: z.string().min(1, "region is required"),
     note: z.string().optional(),
   });
 
@@ -167,10 +170,10 @@ const Page = () => {
 
   return (
     <div className="fled py-8 flex-col  justify-center px-2 items-center">
-      <div className="m-3text-18">
-        <span>Home &gt;</span>{" "}
+      <p className="m-3 text-18">
+        <Link href={"/"}>Home &gt;</Link>{" "}
         <span className=" bgpri  bgpri-offset-4 text-primary"> Cart</span>
-      </div>
+      </p>
       {/* header  */}
       {/* <header className="flex mx-auto relative w-fit py-5 self-center items-center gap-20 justify-center">
         <div className="bg-neutral-400 z-[0] absolute top-[50%] w-full left-0 h-[3px]" />
@@ -186,7 +189,7 @@ const Page = () => {
       </header> */}
       <br />
       <h2>total price {totalPrice?.totalPrice}</h2>
-      <main className="flex  items-start justify-between">
+      <div className="flex  items-start justify-between">
         <div className="w-[55%] flex flex-col gap-3">
           {cartItems.map((cart, index) => (
             <CartItem key={index} item={cart} />
@@ -204,7 +207,7 @@ const Page = () => {
               <span>-${totalPrice?.discount}</span>
             </li>
           </ul>
-          <div className="bg-neutral-400 w-full h-[1px]" />
+          <hr className="bg-neutral-400 w-full h-[1px]" />
           <p className="flex items-center justify-between w-full">
             <span className="font-semibold">Grand Total</span>
             <span className="font-semibold">
@@ -279,7 +282,7 @@ const Page = () => {
                   {showSuccess && !showNotSuccess && (
                     <Success
                       order={order}
-                      onClose={() => setShowSuccess(false)}
+                      // onClose={() => setShowSuccess(false)}
                     />
                   )}
                   {!showSuccess && !showNotSuccess && (
@@ -290,7 +293,7 @@ const Page = () => {
             </Dialog>
           </div>
         </div>
-      </main>
+      </div>
       {/* <div className="flex mt-12 mb-3 flex-col w-full">
         <h2 className="font-semibold">
           Customers who viewed items in your browsing history also viewed
