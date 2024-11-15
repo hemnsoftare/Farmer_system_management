@@ -1,13 +1,17 @@
-"use client";
+import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/home/header/Header";
-import Footer from "@/components/home/Footer";
-import { ClerkProvider } from "@clerk/nextjs";
-import ContextProvider from "./(routes)/dashboard/ConTextData";
-import { Provider } from "react-redux";
-import store from "@/lib/action/store";
-import { Toaster } from "@/components/ui/toaster";
-import { ToastProvider } from "@/components/ui/toast"; // Ensure correct import path
+import ClientProviders from "./ClientProviders"; // Import the new client component
+
+export const metadata: Metadata = {
+  title: "Tech-Hiem",
+  description: "Tech0Hiem",
+  viewport: "width=device-width, initial-scale=1",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -15,23 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={""}>
-        <Provider store={store}>
-          <ClerkProvider>
-            <ContextProvider>
-              <ToastProvider>
-                {" "}
-                {/* Wrap Toaster within ToastProvider */}
-                <div className={`${"md:px-[30px] lg:px-[40px]"}`}>
-                  <Header />
-                  {children}
-                </div>
-                <Footer />
-                <Toaster /> {/* Place Toaster inside ToastProvider */}
-              </ToastProvider>
-            </ContextProvider>
-          </ClerkProvider>
-        </Provider>
+      <body className="">
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

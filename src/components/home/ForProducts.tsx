@@ -57,7 +57,7 @@ const ForProducts = ({
       </div>
     );
   return (
-    <div className=" mt-3 w-full  flex  bg-blue-10 gap-3 relative px-2 justify-between items-center">
+    <div className=" mt-3 w-full  flex  bg-blue-10 gap-3 relative px-2 justify-center  items-center">
       {products &&
         products
           .slice(startProducts, startProducts + limit)
