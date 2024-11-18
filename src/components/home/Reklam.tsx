@@ -3,11 +3,11 @@ import React from "react";
 
 const Reklam = () => {
   return (
-    <div className="flex items-start  justify-center gap-3 h-[400px]">
+    <div className="sm:flex block sm:px-4 px-0 items-start  justify-center gap-3 w-full sm:max-h-[400px]">
       {" "}
       {/* Added h-screen */}
       {/* left */}
-      <div className="flex  bg-gradient-to-br from-[#1975B9] relative via-[#30BCCE] to-[#B0E9C9]  lg:max-w-[600px] xl:max-w-[700px] p-3 bg-blue-300 rounded-lg h-full overflow-hidden">
+      <div className="flex px-2 py-0 bg-gradient-to-br from-[#1975B9] relative via-[#30BCCE] to-[#B0E9C9]  lg:max-w-[600px] xl:max-w-[700px] ms:p-3 bg-blue-300 rounded-lg h-full overflow-hidden">
         <Image
           src={"/circal.png"}
           alt="image"
@@ -16,7 +16,7 @@ const Reklam = () => {
           className="size-[200px] absolute -top-1/2 left-1/2"
         />
         <div className="flex w-full flex-col items-start  justify-between gap-2">
-          <h2 className="font-bold p-2 text-2xl">
+          <h2 className="font-bold p-2 mt-[100px] text-[20px] sm:text-2xl">
             {" "}
             {/* Updated text-20 to text-2xl */}
             Iphone <span className="text-white"> 15 Series</span>
@@ -26,30 +26,32 @@ const Reklam = () => {
             alt="image "
             width={300}
             height={300}
-            className="size-[280px] "
+            className="min-w-[200px]   "
           />
         </div>
         <main className="flex w-full items-start justify-start py-10 flex-col ">
-          <div className="flex items-center mx-4 justify-start gap-3">
-            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-18">8</span>
-              <span>Days</span>
+          <div className="flex items-center mx-4 justify-start gap-2">
+            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-16 sm:text-18">8</span>
+              <span className="text-13 sm:text-16">Days</span>
+            </button>
+            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-16 sm:text-18">8</span>
+              <span className="text-13 sm:text-16">Days</span>
             </button>{" "}
-            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-18">8</span>
-              <span>Days</span>
+            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-16 sm:text-18">8</span>
+              <span className="text-13 sm:text-16">Days</span>
             </button>{" "}
-            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-18">8</span>
-              <span>Days</span>
-            </button>{" "}
-            <button className="flex flex-col border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-18">8</span>
-              <span>Days</span>
+            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-16 sm:text-18">8</span>
+              <span className="text-13 sm:text-16">Days</span>
             </button>
           </div>
           <div className="flex flex-col items-start mt-12 justify-start  ">
-            <h1 className="font-bold text-20">It feels good to be the first</h1>
+            <h1 className="font-bold text-18 sm:text-20">
+              It feels good to be the first
+            </h1>
             <p className="text-neutral-700 text-14 px-4">
               Get ready for the future of smartphones.Experience innovation like
               never before. Stay tuned for the big iPhone 15 pre-sale.

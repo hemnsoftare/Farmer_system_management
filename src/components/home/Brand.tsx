@@ -6,7 +6,7 @@ import { MdNavigateNext } from "react-icons/md";
 
 const Brand = () => {
   return (
-    <div className="flex flex-col items-center w-full justify-center">
+    <div className="flex flex-col sm:bg-red-300 items-center w-full justify-center">
       <div className="flex justify-between border-b-4 w-full  pb-4 border-neutral-400">
         <h3 className="text-[32px]  text-black ">Top Brand</h3>
       </div>
@@ -45,7 +45,7 @@ const Brand = () => {
               }
               className={` ${
                 item === "/Apple.webp" && "scale-[0.7] mb-2"
-              } lg:w-[120px] lg:h-[70px] xl:w-[150px] xl:h-[90px] mt-4 md:w-[100px] md:h-[80px] `}
+              } lg:w-[120px] lg:h-[70px]  w-[70px] h-[50px] xl:w-[150px] xl:h-[90px] mt-4 md:w-[100px] md:h-[80px] `}
             />
           );
         })}

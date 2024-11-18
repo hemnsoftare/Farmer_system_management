@@ -41,7 +41,6 @@ const Catagory = () => {
       {catagory.map((item) => (
         <div
           key={item.path}
-         
           className="2xl:w-[284px] lg:w-[140px] md:w-[100px] hover:shadow-blue-200 hover:shadow-lg duration-200 transition-all hover:transform hover:scale-[1.08] flex flex-col rounded-lg shadow-md border gap-4 border-slate-100 items-center justify-between md:px-2 lg:px-6 py-4"
         >
           <Image
@@ -54,7 +53,7 @@ const Catagory = () => {
           <h3 className="capitalize lg:text-sm  text-center  md:text-10 w-full ">
             {item.name}
           </h3>
-        </Link>
+        </div>
       ))}
     </div>
   );

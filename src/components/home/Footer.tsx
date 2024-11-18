@@ -21,7 +21,7 @@ const Footer = () => {
     <>
       <div
         className="bg-gradient-to-t px-3 w-full to-primary-800  via-primary-800 from-primary-700 flex-col flex text-white
-      py-[20px] justify-between items-center"
+      py-[20px] overflow-hidden justify-between items-center"
       >
         <div className="flex justify-between w-full items-center">
           <FooterItem />
@@ -30,7 +30,7 @@ const Footer = () => {
               Sign up for News and updates
             </h2>{" "}
             <SignUpButton>
-              <fieldset className="relative border group w-[280px] focus-within:border-blue-700 border-gray-300 px-2 rounded-lg">
+              <fieldset className="relative border group w-full focus-within:border-blue-700 border-gray-300 px-2 rounded-lg">
                 <legend
                   className="text-blue-700 absolute bg-primary-800  -top-3 left-2 text-sm hidden group-focus-within:block
                duration-300 transition-all  px-2"
