@@ -103,8 +103,8 @@ export default function Home() {
         <ForProducts load={loadBestSale} products={productSale} />
       </div>
       <Brand />
-      {/* 
       <Banner />
+      {/* 
       <Blog /> 
       <Servies /> */}
       <br />

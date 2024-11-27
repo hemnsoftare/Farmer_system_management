@@ -6,7 +6,7 @@ import { MdNavigateNext } from "react-icons/md";
 
 const Brand = () => {
   return (
-    <div className="flex flex-col sm:bg-red-300 items-center w-full justify-center">
+    <div className="flex flex-col  items-center w-full justify-center">
       <div className="flex justify-between border-b-4 w-full  pb-4 border-neutral-400">
         <h3 className="sm:text-[32px] text-[24px]  text-black ">Top Brand</h3>
       </div>
