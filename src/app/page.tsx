@@ -66,8 +66,8 @@ export default function Home() {
     <div className="flex md:bg-slate-50 sm:bg-red-100 lg:bg-white flex-col gap-12">
       <Hero />
       <Catagory />
-      {/* 
       <Sales />
+      {/* 
       <div className="flex flex-col w-full items-center justify-center">
         <div
           id="newProducts"
@@ -107,6 +107,10 @@ export default function Home() {
       <Banner />
       <Blog /> 
       <Servies /> */}
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
