@@ -33,7 +33,7 @@ const Reklam = () => {
             alt="image "
             width={300}
             height={300}
-            className="min-w-[200px] mb-2  "
+            className="sm:min-w-[200px] min-w-[180px] mb-2  "
           />
         </div>
         <main className="flex  items-start justify-start py-10 flex-col ">
@@ -93,7 +93,7 @@ const Reklam = () => {
             alt=""
             width={190}
             height={139}
-            className=" w-[190px] h-[130px] z-[1]"
+            className=" sm:w-[190px] w-[210px] h-[140px] sm:h-[130px] z-[1]"
           />
           <h3 className="text-20 text-start px-3 sm:text-center font-bold w-full z-[1] text-[#FCC870]">
             {" "}
