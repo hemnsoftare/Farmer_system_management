@@ -7,8 +7,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import CartHeader from "@/components/home/header/CartHeader";
-import CartItem from "@/components/home/header/CartItem";
+import CartHeader from "@/components/header/CartHeader";
+import CartItem from "@/components/header/CartItem";
 import { carts, newProdcuts } from "@/util/data";
 import { TbShoppingBag } from "react-icons/tb";
 import { MdNavigateNext, MdOutlineFireTruck } from "react-icons/md";

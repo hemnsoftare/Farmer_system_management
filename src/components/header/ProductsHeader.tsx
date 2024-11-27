@@ -19,15 +19,7 @@ import Link from "next/link";
 import { catagoryProps } from "@/type";
 import { getFireBase } from "@/lib/action/uploadimage";
 
-const ProductsHeader = () => {
-  const [category, setcategory] = useState<catagoryProps[]>([]);
-  useEffect(() => {
-    const getdata = async () => {
-      const cate: catagoryProps[] = await getFireBase("category");
-      setcategory(cate);
-    };
-    getdata();
-  }, []);
+const ProductsHeader = ({ category }: { category: catagoryProps[] }) => {
   return (
     <NavigationMenu>
       <NavigationMenuList>

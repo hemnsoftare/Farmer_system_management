@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CartItem from "@/components/home/header/CartItem";
+import CartItem from "@/components/header/CartItem";
 
 import {
   Dialog,

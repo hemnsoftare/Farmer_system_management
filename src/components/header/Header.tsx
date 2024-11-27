@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import ProductsHeader from "./ProductsHeader";
 import UserHeader from "./UserHeader";
 import CartHeader from "./CartHeader";
-import Search from "../Search";
+import Search from "../home/Search";
 import {
   SignedIn,
   SignedOut,
@@ -15,18 +15,28 @@ import {
 } from "@clerk/nextjs";
 import { IoCartOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { ItemCartProps } from "@/type";
+import { catagoryProps, ItemCartProps } from "@/type";
 import { usePathname } from "next/navigation";
+import { IoMdMenu } from "react-icons/io";
+import Mune from "./Mune";
+import { getFireBase } from "@/lib/action/uploadimage";
 
 const Header = () => {
   const pathName = usePathname();
   const [isopenCart, setisopenCart] = useState(false);
   const [isOpenSearch, setisOpenSearch] = useState(false);
-
+  const [showMenu, setshowMenu] = useState(false);
   const { user } = useUser();
   const isAdmin = user?.publicMetadata?.role === "admin";
 
-  // Select cart items from Redux store
+  const [category, setcategory] = useState<catagoryProps[]>([]);
+  useEffect(() => {
+    const getdata = async () => {
+      const cate: catagoryProps[] = await getFireBase("category");
+      setcategory(cate);
+    };
+    getdata();
+  }, []);
   const cartItems = useSelector(
     (state: { cart: ItemCartProps[] }) => state.cart
   );
@@ -58,25 +68,32 @@ const Header = () => {
   return (
     <div className="flex relative items-center pt-4 justify-between">
       {/* logo */}
-      <Link href={"/"}>
+      <Link href={"/"} className="hidden sm:block">
         {" "}
         <Image
           src={"/logo.svg"}
           alt="logo"
           width={48}
           height={53}
-          className=" lg:w-[48px] lg:h-[53px] md:w-[39px] md:h-[43px]"
+          className=" lg:w-[48px] w-[30px] h-[30px] lg:h-[53px] md:w-[39px] md:h-[43px]"
         />
       </Link>
+
+      {/* menu */}
+      <div className="block sm:hidden">
+        <Mune category={category} />
+      </div>
+
+      <h2 className="font-bold text-secondary-300"> Tech - Hiem</h2>
       {/* center */}
-      <div className="flex xl:gap-12 lg:gap-6 md:gap-6 py-2 justify-center w-[60%] items-center">
+      <div className="sm:flex hidden xl:gap-12 lg:gap-6 md:gap-6 py-2 justify-center w-[60%] items-center">
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/"}
         >
           Home
         </Link>
-        <ProductsHeader />
+        <ProductsHeader category={category} />
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/About"}
@@ -95,17 +112,17 @@ const Header = () => {
           </Link>
         )}
         <div onClick={() => setisopenCart(!isopenCart)} className="relative">
-          <IoCartOutline size={30} className="relative" />
-          <p className="text-9 font-semibold rounded-full p-1 px-2 absolute bg-blue-700 text-white -bottom-1 -right-1">
+          <IoCartOutline size={24} className="relative" />
+          <p className="text-8 font-semibold rounded-full p-1 px-2 absolute bg-blue-700 text-white -bottom-1 -right-1">
             {total}
           </p>
         </div>
         <SignedOut>
           <div className="flex items-center justify-center gap-3">
-            <div className="text-primary px-3 py-1">
+            <div className="text-primary text-12 px-3 py-1">
               <SignInButton> Login</SignInButton>
             </div>
-            <div className="px-3 py-1 text-12 bg-blue-700 text-white rounded-lg">
+            <div className="px-3 py-1 text-8 sm:text-12 bg-blue-700 text-white rounded-lg">
               <SignUpButton> Sign Up </SignUpButton>
             </div>
           </div>
