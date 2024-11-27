@@ -64,7 +64,7 @@ const Header = () => {
   }
 
   return (
-    <div className="flex relative items-center pt-4 justify-between">
+    <div className="flex relative items-center px-3 pt-4 justify-between">
       {/* logo */}
       <Link href={"/"} className="hidden sm:block">
         {" "}
@@ -116,16 +116,18 @@ const Header = () => {
             {total}
           </p>
         </div>
-        <SignedOut>
-          <div className="flex items-center justify-center gap-3">
-            <div className="text-primary text-12 px-3 py-1">
-              <SignInButton> Login</SignInButton>
+        <div className="hidden sm:block">
+          <SignedOut>
+            <div className="flex items-center justify-center gap-3">
+              <div className="text-primary text-12 px-3 py-1">
+                <SignInButton> Login</SignInButton>
+              </div>
+              <div className="px-3 py-1 text-8 sm:text-12 bg-blue-700 text-white rounded-lg">
+                <SignUpButton> Sign Up </SignUpButton>
+              </div>
             </div>
-            <div className="px-3 py-1 text-8 sm:text-12 bg-blue-700 text-white rounded-lg">
-              <SignUpButton> Sign Up </SignUpButton>
-            </div>
-          </div>
-        </SignedOut>
+          </SignedOut>
+        </div>
         <SignedIn>
           <UserHeader />
         </SignedIn>

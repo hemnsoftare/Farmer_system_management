@@ -26,8 +26,10 @@ const NewProducts = ({
         // style={{ boxShadow: shadowColor }} // Apply custom shadow here
         key={product.name}
         className={`${
-          title === "sale" && "bg-white "
-        } flex gap-5 h-fit border lg:min-w-[200px] sm:w-full max-w-[300px] border-neutral-100 shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative min-w-[200px] items-center justify-center duration-300 transition-all rounded-lg p-4`}
+          title === "sale"
+            ? "bg-white min-w-[180px]"
+            : "sm:h-fit border lg:min-w-[200px] sm:w-full max-w-[300px]"
+        } flex gap-5   border-neutral-100 shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center duration-300 transition-all rounded-lg p-4`}
       >
         <div className="relative flex items-center justify-center w-full">
           <Image
@@ -35,7 +37,7 @@ const NewProducts = ({
             alt="image"
             width={217}
             height={161}
-            className="w-[217px] h-[161px] group-hover:scale-[1.03] duration-300 transition-all"
+            className="sm:w-[217px] w-[180px] h-[120px] sm:h-[161px] group-hover:scale-[1.03] duration-300 transition-all"
           />
           {product.colors && (
             <div className="flex group-hover:opacity-0 duration-300 transition-all flex-col gap-1 absolute top-12 -right-3">
@@ -67,9 +69,9 @@ const NewProducts = ({
           <h3
             className={`lg:text-12 md:text-10 ${
               title === "sale" || title === "dashboard"
-                ? "h-[14px]"
+                ? "h-[34px]"
                 : "h-[53px]"
-            }  overflow-hidden text-primary-500 font-light`}
+            }  overflow-hidden text-primary-500 font-[500]`}
           >
             {product.name}
           </h3>

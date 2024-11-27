@@ -20,6 +20,7 @@ import {
 import { IoMdMenu } from "react-icons/io";
 import { categories } from "@/util/data";
 import { catagoryProps } from "@/type";
+import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 const Mune = ({ category }: { category: catagoryProps[] }) => {
   return (
     <Sheet>
@@ -36,11 +37,11 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               alt="logo"
               width={48}
               height={53}
-              className=" lg:w-[48px] px-3  object-contain lg:h-[53px] md:w-[39px] md:h-[43px]"
+              className=" lg:w-[48px] px-3 w-[70px] h-[70px] lg:h-[53px] md:w-[39px] md:h-[43px]"
             />
           </SheetTitle>
           <SheetDescription>
-            <ul className="w-full flex flex-col mt-24  gap-3 justify-start  items-start ">
+            <ul className="w-full flex flex-col mt-24 text-20 gap-3 justify-start  items-start ">
               <Link
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/"}
@@ -80,6 +81,16 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               >
                 about
               </Link>
+              <SignedOut>
+                <div className="flex items-center justify-center gap-3">
+                  <div className="text-primary text-18 px-3 py-1">
+                    <SignInButton> Login</SignInButton>
+                  </div>
+                  <div className="px-3 py-2 text-18 sm:text-12 bg-secondary-400 text-white rounded-lg">
+                    <SignUpButton> Sign Up </SignUpButton>
+                  </div>
+                </div>
+              </SignedOut>
             </ul>
           </SheetDescription>
         </SheetHeader>

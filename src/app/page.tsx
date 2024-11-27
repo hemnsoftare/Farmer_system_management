@@ -72,21 +72,21 @@ export default function Home() {
           id="newProducts"
           className="flex transition-all px-2 duration-300 items-center justify-between w-full border-b-4 pb-4 border-neutral-400"
         >
-          <h3 className="text-[32px] flex items-center justify-center  text-black">
+          <h3 className="sm:text-[32px] text-24 flex items-center justify-center  text-black">
             New products
           </h3>
           <Link
             href={"/viewAll?type=New"}
             className="text-[16px] items-center  justify-center flex gap-2"
           >
-            <span>view all</span> <MdNavigateNext />
+            <span className="text-18">view all</span> <MdNavigateNext />
           </Link>
         </div>
 
         <ForProducts load={loadNew} products={productNew} />
       </div>
 
-      {/* <Reklam /> */}
+      <Reklam />
       <div className="flex flex-col px-3 w-full items-center justify-center">
         <div className="flex justify-between px-2 items-center border-b-4 w-full pb-4 border-neutral-400">
           <h3 className="text-[32px] flex items-center justify-center text-black">
@@ -96,14 +96,14 @@ export default function Home() {
             href={"/viewAll?type=numberSale "}
             className="text-[16px] items-center justify-center flex gap-2"
           >
-            <span>view all</span> <MdNavigateNext />
+            <span className="text-18">view all</span> <MdNavigateNext />
           </Link>
         </div>
 
         <ForProducts load={loadBestSale} products={productSale} />
       </div>
-      {/* 
       <Brand />
+      {/* 
       <Banner />
       <Blog /> 
       <Servies /> */}

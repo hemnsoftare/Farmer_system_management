@@ -50,7 +50,7 @@ const Catagory = () => {
             height={148}
             className=" sm:w-full sm:h-full w-[60px] h-[70px]"
           />
-          <h3 className="capitalize lg:text-sm text-8  text-center  md:text-10 w-full ">
+          <h3 className="capitalize lg:text-sm text-12  text-center  md:text-10 w-full ">
             {item.name}
           </h3>
         </div>
