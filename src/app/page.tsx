@@ -67,18 +67,17 @@ export default function Home() {
       <Hero />
       <Catagory />
       <Sales />
-      {/* 
-      <div className="flex flex-col w-full items-center justify-center">
+      <div className="flex flex-col px-3 w-full items-center justify-center">
         <div
           id="newProducts"
-          className="flex transition-all duration-300 items-center justify-between w-full border-b-4 pb-4 border-neutral-400"
+          className="flex transition-all px-2 duration-300 items-center justify-between w-full border-b-4 pb-4 border-neutral-400"
         >
           <h3 className="text-[32px] flex items-center justify-center  text-black">
             New products
           </h3>
           <Link
             href={"/viewAll?type=New"}
-            className="text-[16px] items-center justify-center flex gap-2"
+            className="text-[16px] items-center  justify-center flex gap-2"
           >
             <span>view all</span> <MdNavigateNext />
           </Link>
@@ -87,9 +86,9 @@ export default function Home() {
         <ForProducts load={loadNew} products={productNew} />
       </div>
 
-      <Reklam />
-      <div className="flex flex-col w-full items-center justify-center">
-        <div className="flex justify-between items-center border-b-4 w-full pb-4 border-neutral-400">
+      {/* <Reklam /> */}
+      <div className="flex flex-col px-3 w-full items-center justify-center">
+        <div className="flex justify-between px-2 items-center border-b-4 w-full pb-4 border-neutral-400">
           <h3 className="text-[32px] flex items-center justify-center text-black">
             best salery
           </h3>
@@ -103,6 +102,7 @@ export default function Home() {
 
         <ForProducts load={loadBestSale} products={productSale} />
       </div>
+      {/* 
       <Brand />
       <Banner />
       <Blog /> 

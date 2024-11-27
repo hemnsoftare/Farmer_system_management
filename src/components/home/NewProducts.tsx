@@ -27,7 +27,7 @@ const NewProducts = ({
         key={product.name}
         className={`${
           title === "sale" && "bg-white "
-        } flex gap-5 h-fit border  max-w-[300px] border-neutral-100 shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative min-w-[250px] items-center justify-center duration-300 transition-all rounded-lg p-4`}
+        } flex gap-5 h-fit border lg:min-w-[200px] sm:w-full max-w-[300px] border-neutral-100 shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative min-w-[200px] items-center justify-center duration-300 transition-all rounded-lg p-4`}
       >
         <div className="relative flex items-center justify-center w-full">
           <Image

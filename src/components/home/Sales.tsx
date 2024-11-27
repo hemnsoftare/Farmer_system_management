@@ -66,7 +66,7 @@ const Sales = () => {
         </div>
       )}
       {!load && (
-        <div className="sm:grid w-[70%] gap-3 items-center flex overflow-x-auto   sm:grid-cols-4 justify-start">
+        <div className="sm:grid w-[70%] sm:w-[80%] gap-3  items-center flex overflow-x-auto  sm:overflow-hidden sm:grid-cols-4 justify-start">
           {products.slice(start, 4 + start).map((item) => (
             <NewProducts key={item.name} itemDb={item} title="sale" />
           ))}
