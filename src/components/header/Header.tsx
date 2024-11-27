@@ -45,7 +45,6 @@ const Header = () => {
   const [total, setTotal] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
 
-  // Calculate total quantity and grand total whenever cartItems changes
   useEffect(() => {
     const quantityTotal = cartItems.reduce(
       (acc, item) => acc + item.quantity,
@@ -60,7 +59,6 @@ const Header = () => {
     setGrandTotal(calculatedGrandTotal);
   }, [cartItems]);
 
-  // Return early if on a specific path
   if (pathName.startsWith("/s") || pathName.includes("dashboard")) {
     return null;
   }
@@ -83,8 +81,9 @@ const Header = () => {
       <div className="block sm:hidden">
         <Mune category={category} />
       </div>
-
-      <h2 className="font-bold text-secondary-300"> Tech - Hiem</h2>
+      <h2 className="font-bold block sm:hidden text-secondary-300">
+        Tech - Hiem
+      </h2>
       {/* center */}
       <div className="sm:flex hidden xl:gap-12 lg:gap-6 md:gap-6 py-2 justify-center w-[60%] items-center">
         <Link

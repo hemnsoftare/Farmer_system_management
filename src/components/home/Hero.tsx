@@ -6,19 +6,16 @@ const Hero = () => {
   return (
     <div className="flex mt-12 items-center w-full justify-between ">
       <div className="flex md:w-[300px]  justify-center flex-col py-4 h-full items-center gap-8">
-        <h1 className="lg:text-35 xl:text-45 md:text-29 font-bold capitalize text-primary-700">
+        <h1 className="lg:text-35 xl:text-45 text-20 md:text-29 font-bold capitalize text-primary-700">
           Tech Heim
         </h1>
-        <h3 className="font-[500]  text-center w-full md:text-22 lg:text-28">
+        <h3 className="font-[500] text-15 text-center w-full md:text-22 lg:text-28">
           &quot;Join
           <span className="text-secondary"> the digital revolution&quot;</span>
         </h3>
-        <br />
-
-        <br />
 
         <Link href={"#newProducts"} className="transition-all duration-300">
-          <button className="capitalize -mb-6 hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-16 bg-secondary text-white px-8 py-4 rounded-lg mt-auto">
+          <button className="capitalize px-5 py-2 text-12 sm:text-20 -mb-6 hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-16 bg-secondary text-white  sm:py-4 rounded-lg mt-auto">
             explore more
           </button>
         </Link>
@@ -27,7 +24,7 @@ const Hero = () => {
       <Image
         src={"hero.svg"}
         alt="image hero"
-        className="mr-0 xl:w-[60%] self-end lg:w-[55%] md:w-[60%] "
+        className="mr-0 xl:w-[60%] w-[240px] h-[250px] sm:h-auto self-end lg:w-[55%] sm:w-[60%] "
         width={628}
         height={400}
       />
