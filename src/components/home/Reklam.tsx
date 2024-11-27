@@ -50,7 +50,7 @@ const Reklam = () => {
               <span className="font-semibold text-16 sm:text-18">8</span>
               <span className="text-13 sm:text-16">Days</span>
             </button>{" "}
-            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+            <button className="sm:flex hidden flex-col  w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
               <span className="font-semibold text-16 sm:text-18">8</span>
               <span className="text-13 sm:text-16">Days</span>
             </button>
