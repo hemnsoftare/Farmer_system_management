@@ -48,7 +48,7 @@ const SingleProduct = ({
         </Link>{" "}
         &gt; laptop
       </span>
-      <header className="flex w-full items-start justify-start gap-4">
+      <header className="flex flex-col sm:flex-row w-full sm:items-start justify-center items-center sm:justify-start gap-4">
         {product && <HeaderProduct item={product} />}
       </header>
       <main>

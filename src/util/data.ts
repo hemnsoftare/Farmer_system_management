@@ -155,7 +155,7 @@ const brand: [
   "/lenovo.svg",
 ];
 const servies: serviesProps[] = [
-  { name: "Latest and Greatest Tech", image: "/servies-computer.png" },
+  { name: "Latest and Greatest", image: "/servies-computer.png" },
   { name: "Guarantee", image: "/servies-sucrity.png" },
   { name: "Free Shipping over 1000$", image: "/servies-delivery.png" },
   { name: "24/7 Support", image: "/servies-time.png" },

@@ -5,7 +5,7 @@ import React from "react";
 const Banner = () => {
   return (
     <div className="bg-[#223949] max-w-[1400px] self-center duration-200 transition-all shadow-md hover:shadow-lg hover:shadow-[#223949] shadow-[#223949] relative md:px-[25px] lg:px-[100px] h-[300px] sm:h-[420px]  py-12 rounded-md flex overflow-hidden items-center justify-between">
-      <div className="flex scale-x-[1.3] justify-between gap-7 w-full items-center flex-col">
+      <div className="flex justify-between gap-7 w-full items-center flex-col">
         <h1 className="lg:text-[44px]  md:text-34 font-semibold uppercase text-white">
           Smart Watch
         </h1>
@@ -13,9 +13,9 @@ const Banner = () => {
           {" "}
           Various designs and brands
         </p>
-        {/* <button className="px-12 hover:bg-secondary-600 duration-300 transition-all  py-2 text-[16px] font-bold text-[#223949] rounded-md bg-secondary-400">
+        <button className="px-12 hover:bg-secondary-600 duration-300 transition-all  py-2 text-[16px] font-bold text-[#223949] rounded-md bg-secondary-400">
           <Link href={"/products/smartwatch/jhfdsj"}> view</Link>
-        </button> */}
+        </button>
       </div>
       <Image
         src={"threeOclock.svg"}

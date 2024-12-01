@@ -129,7 +129,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
         />
         <button
           onClick={handleAddToCart}
-          className={` flex bg-primary hover:bg-blue-700 items-center mb-2 lg:w-[79%] self-center md:w-full py-2 rounded-lg duration-300 justify-center gap-2 text-white`}
+          className={` flex px-3 bg-primary hover:bg-blue-700 items-center mb-2 lg:w-[79%] self-center md:w-full py-2 rounded-lg duration-300 justify-center gap-2 text-white`}
         >
           <MdOutlineShoppingCart />
           <span>Add to Cart</span>

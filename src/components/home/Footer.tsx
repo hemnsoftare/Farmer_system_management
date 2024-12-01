@@ -20,7 +20,7 @@ const Footer = () => {
   return (
     <>
       <div
-        className="bg-gradient-to-t px-3 w-full to-primary-800  via-primary-800 from-primary-700 flex-col flex text-white
+        className="bg-gradient-to-t px-3 w-full to-primary-800 hidden via-primary-800 from-primary-700 flex-col sm:flex text-white
       py-[20px] overflow-hidden justify-between items-center"
       >
         <div className="flex justify-between w-full items-center">
@@ -59,7 +59,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-primary-800 w-full px-[60px] flex justify-between">
+      <div className="bg-primary-800 w-full px-[60px] sm:flex hidden justify-between">
         <span className="text-[12px] text-neutral-300 p-2 flex items-center gap-2">
           <RiCopyrightLine /> <span> 2023 Tech Heim. </span>
         </span>

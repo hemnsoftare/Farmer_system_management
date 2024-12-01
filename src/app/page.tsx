@@ -63,7 +63,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div className="flex md:bg-slate-50 sm:bg-red-100 lg:bg-white flex-col gap-12">
+    <div className="flex mb-3 md:bg-slate-50 sm:bg-red-100 lg:bg-white flex-col gap-12">
       <Hero />
       <Catagory />
       <Sales />
@@ -106,11 +106,8 @@ export default function Home() {
       <Banner />
       {/* 
       <Blog /> 
-      <Servies /> */}
-      <br />
-      <br />
-      <br />
-      <br />
+      */}
+      <Servies />
     </div>
   );
 }

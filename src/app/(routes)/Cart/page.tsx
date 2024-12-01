@@ -189,13 +189,14 @@ const Page = () => {
       </header> */}
       <br />
       <h2>total price {totalPrice?.totalPrice}</h2>
-      <div className="flex  items-start justify-between">
-        <div className="w-[55%] flex flex-col gap-3">
+      <div className="flex flex-col sm:flex-row  items-start justify-between">
+        <div className="sm:w-[55%] w-full flex flex-col gap-3">
           {cartItems.map((cart, index) => (
             <CartItem key={index} item={cart} />
           ))}
         </div>
-        <div className="flex flex-col gap-3 border-neutral-300 shadow-md w-[35%] p-3 border-2 rounded-md items-start">
+        <br />
+        <div className="flex flex-col gap-3 border-neutral-300 shadow-md sm:w-[35%] w-full p-2 sm:p-3 border-2 rounded-md items-start">
           <h2 className="font-semibold">Payment Details</h2>
           <ul className="w-full text-12">
             <li className="w-full capitalize flex items-center justify-between text-neutral-500">

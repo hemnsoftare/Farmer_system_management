@@ -8,6 +8,7 @@ import store from "@/lib/action/store";
 import Header from "@/components/header/Header";
 import Footer from "@/components/home/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import FoooterMob from "@/components/home/FoooterMob";
 
 export default function ClientProviders({
   children,
@@ -24,7 +25,8 @@ export default function ClientProviders({
               <hr />
               {children}
             </div>
-            {/* <Footer /> */}
+            <Footer />
+            <FoooterMob />
             <Toaster />
           </ToastProvider>
         </ContextProvider>
