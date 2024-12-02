@@ -4,7 +4,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="flex w-full px-40 flex-col gap-4 ">
+    <div className="flex w-full  sm:px-40 flex-col  gap-4 px-2 sm:gap-4 ">
       <h2>
         <Link href={"/"} className="hover:text-blue-800 hover:underline">
           home
@@ -22,7 +22,7 @@ const Page = () => {
         height={400}
         className="w-full rounded-md"
       />
-      <p className="text-neutral-400 px-3 indent-2 -mt-2 ">
+      <p className="text-neutral-400 px-3 text-12 sm:text-18 indent-2 -mt-2 ">
         Tech Heim is an innovative online store that offers a diverse selection
         of digital gadgets, available for purchase in both cash and installment
         options. Embodying the motto Join the digital revolution today the
@@ -33,25 +33,29 @@ const Page = () => {
         question-answer section, fostering a dynamic community of tech
         enthusiasts.{" "}
       </p>
-      <h2 className="font-semibold text-18">Tech Heim Meaning </h2>
-      <p className="text-neutral-400 px-3 indent-2 ">
-        The name Tech Heim cleverly combines two languages (English & German),
-        signifying a home of technology that provides all the essential tech
-        products and services, making it a one-stop destination for tech-savvy
-        individuals seeking the latest and most exciting gadgets.
-      </p>
-      <h2 className="font-semibold text-18">
-        Some of Tech Heim’s impressive features :{" "}
-      </h2>
-      <p className="text-neutral-400 px-3 indent-2 ">
-        Diverse digital gadgets for purchase in cash or installments A blog with
-        reviews and articles about the latest technology and gadgets User
-        comments and Q&A section for community interaction Represents a
-        tech-savvy home with all necessary technology Easy-to-use interface for
-        a great user experience Consistent and visually appealing design A hub
-        for tech enthusiasts to connect and share insights Helps users make
-        informed purchase decisions
-      </p>
+      <div className="">
+        <h2 className="font-semibold ">Tech Heim Meaning </h2>
+        <p className="text-neutral-400 text-12 sm:text-18 px-3 indent-2 ">
+          The name Tech Heim cleverly combines two languages (English & German),
+          signifying a home of technology that provides all the essential tech
+          products and services, making it a one-stop destination for tech-savvy
+          individuals seeking the latest and most exciting gadgets.
+        </p>
+      </div>
+      <div className="">
+        <h2 className="font-semibold text-18">
+          Some of Tech Heim’s impressive features :{" "}
+        </h2>
+        <p className="text-neutral-400 px-3 text-12 sm:text-18 indent-2 ">
+          Diverse digital gadgets for purchase in cash or installments A blog
+          with reviews and articles about the latest technology and gadgets User
+          comments and Q&A section for community interaction Represents a
+          tech-savvy home with all necessary technology Easy-to-use interface
+          for a great user experience Consistent and visually appealing design A
+          hub for tech enthusiasts to connect and share insights Helps users
+          make informed purchase decisions
+        </p>
+      </div>
     </div>
   );
 };
