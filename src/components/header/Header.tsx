@@ -81,9 +81,9 @@ const Header = () => {
       <div className="block sm:hidden">
         <Mune category={category} />
       </div>
-      <h2 className="font-bold block sm:hidden text-secondary-300">
+      <Link href="/" className="font-bold block sm:hidden text-secondary-300">
         Tech - Hiem
-      </h2>
+      </Link>
       {/* center */}
       <div className="sm:flex hidden xl:gap-12 lg:gap-6 md:gap-6 py-2 justify-center w-[60%] items-center">
         <Link

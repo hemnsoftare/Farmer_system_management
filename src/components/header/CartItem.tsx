@@ -23,7 +23,7 @@ const CartItem = ({
     <div
       className={` ${
         type === "headerItem"
-          ? "items-center w-full sm:min-w-[500px]"
+          ? "items-center w-full b sm:min-w-[500px]"
           : "  w-full items-center"
       } shadow-md p-2   flex gap-2 rounded-md group duration-300 hover:shadow-lg `}
     >

@@ -31,7 +31,7 @@ const HeaderProductIMage = ({
             alt=""
             width={480}
             height={180}
-            className="lg:w-full md:h-[250px] md:w-[380px] lg:h-[300px] "
+            className="lg:w-full md:h-[250px] text-center size-[250px] md:w-[380px] lg:h-[300px] "
           />
         </DialogTrigger>
         <DialogContent className="flex flex-col justify-center items-center ">

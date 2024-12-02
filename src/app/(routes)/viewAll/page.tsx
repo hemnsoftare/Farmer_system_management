@@ -80,7 +80,7 @@ const Page = ({ params }: { params: { type: string } }) => {
       />
 
       {!load && products.length > 0 ? (
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 w-full items-center justify-center">
+        <div className="grid grid-cols-2 px-2 gap-2 lg:grid-cols-4 md:grid-cols-3 w-full items-center justify-center">
           {products.map((item) => (
             <NewProducts key={item.name} itemDb={item} />
           ))}

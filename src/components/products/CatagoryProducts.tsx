@@ -41,7 +41,7 @@ const CatagoryProducts = ({
       </div>
     );
   return (
-    <div className="flex lg:gap-4 md:gap-3 flex-wrap justify-center items-center w-full">
+    <div className="flex lg:gap-4 md:gap-3 py-3 gap-2 overflow-x-auto sm:overflow-hidden  sm:flex-wrap justify-start sm:justify-center items-center w-full">
       {category.map((item) => (
         <div
           onClick={() => {
@@ -51,9 +51,9 @@ const CatagoryProducts = ({
           key={item.name}
           className={`${
             item.name.trim() === selected.trim()
-              ? "shadow-blue-500 shadow-md rounded-lg border-blue-600"
+              ? "shadow-blue-300 shadow-lg  rounded-lg border-blue-300"
               : "shadow-slate-100 shadow-lg rounded-lg"
-          } flex w-[120px] text-center flex-col hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
+          } flex min-w-[120px] text-center flex-col  hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
         >
           <Image
             src={item.image.link}

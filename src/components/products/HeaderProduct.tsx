@@ -112,7 +112,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
           childImage={item.smallimageUrl}
         />
       </div>
-      <div className="flex lg:w-full shadow-md hover:bg-gray-50 hover:shadow-sm transition-all duration-300 p-2 h-full md:w-[80%] items-center gap-6 flex-col justify-center">
+      <div className="flex lg:w-full w-full  shadow-md sm:hover:bg-gray-50 hover:shadow-sm transition-all duration-300 p-2 h-full md:w-[80%] items-center gap-6 flex-col justify-center">
         <HeaderproductInfo
           productinfos={{
             colors: item.colors,
@@ -129,7 +129,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
         />
         <button
           onClick={handleAddToCart}
-          className={` flex px-3 bg-primary hover:bg-blue-700 items-center mb-2 lg:w-[79%] self-center md:w-full py-2 rounded-lg duration-300 justify-center gap-2 text-white`}
+          className={` flex px-3 bg-primary w-[80%] sm:hover:bg-blue-700 items-center mb-2 lg:w-[79%] self-center md:w-full py-2 rounded-lg duration-300 justify-center gap-2 text-white`}
         >
           <MdOutlineShoppingCart />
           <span>Add to Cart</span>

@@ -61,7 +61,7 @@ const HeaderproductInfo = ({
           ))}
         </div>
       </div>
-      <ul className="text-neutral-500 list-disc px-8 lg:w-[70%] md:w-[90%]  flex flex-col items-center justify-between">
+      <ul className="text-neutral-500 list-disc px-8 lg:w-[70%] md:w-[90%] w-[80%]  flex flex-col items-center justify-between">
         <li className="w-full md:text-12 lg:text-14 flex justify-between items-center">
           <span>Brand</span>
           <span className="text-black font-semibold">
@@ -78,7 +78,7 @@ const HeaderproductInfo = ({
           </li>
         ))}
       </ul>
-      <span className="flex justify-between flex-col lg:w-[70%] md:w-[90%] items-start">
+      <div className="flex justify-between flex-col w-[80%] lg:w-[70%] md:w-[90%] items-start">
         <span className="flex items-center w-full justify-between">
           {" "}
           <span className="flex items-center gap-2">
@@ -130,7 +130,7 @@ const HeaderproductInfo = ({
             </span>
           </span>
         </span>
-      </span>
+      </div>
     </>
   );
 };
