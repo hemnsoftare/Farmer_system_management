@@ -128,3 +128,17 @@ html {
 .custom-slider .slider-track-fill {
   background: linear-gradient(to right, blue, purple, pink);
 }
+
+/* Hides scrollbar but allows scrolling */
+* {
+  scrollbar-width: thin; /* Firefox: customizes scrollbar appearance */
+  scrollbar-color: transparent transparent; /* Firefox: makes scrollbar transparent */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera: hides scrollbar */
+}
+
+* {
+  -ms-overflow-style: none; /* IE/Edge: hides scrollbar */
+}

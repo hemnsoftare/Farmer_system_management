@@ -36,7 +36,7 @@ const CartHeader = ({
         onClick={onclose}
         className="h-screen fixed top-20 right-0 bg-re w-screen backdrop-blur-sm z-10"
       />
-      <div className="flex gap-4 z-50 SM:h-fit w-screen overflow-hidden absolute top-full bg-gray-50 px-4 pb-3 shadow-md right-0 flex-col items-start justify-start">
+      <div className="flex gap-4 z-50 sm:h-fitc sm:w-fit w-screen overflow-hidden absolute top-full bg-gray-50 px-4 pb-3 shadow-md right-0 flex-col items-start justify-start">
         <p className="mt-3 w-full flex items-center justify-between">
           <span>{total} items</span>
           <Link

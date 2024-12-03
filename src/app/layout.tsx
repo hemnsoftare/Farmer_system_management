@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
+  themeColor: "#000000", // Add theme-color here
 };
 
 export default function RootLayout({
@@ -19,6 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>{/* Next.js will inject metadata automatically */}</head>
       <body className="">
         <ClientProviders>{children}</ClientProviders>
       </body>

@@ -31,7 +31,7 @@ const NewProducts = ({
             : "sm:h-fit border lg:min-w-[200px] sm:w-full max-w-[300px]"
         } flex sm:gap-5  gap-1  border-neutral-100 shadow-sm sm:shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center pb-3 duration-300 transition-all rounded-lg sm:p-4 p-2`}
       >
-        <div className="relative flex items-center mb-2 flex-col justify-center w-full">
+        <div className="relative flex items-center mb-1 flex-col justify-center w-full">
           <Image
             src={product?.bigimageUrl}
             alt="image"
@@ -95,7 +95,7 @@ const NewProducts = ({
               } flex relative text-black mt-3 justify-between`}
             >
               {product.isDiscount && (
-                <span className="line-through absolute  group-hover:opacity-0 -top-4 text-sm left-0 text-neutral-600">
+                <span className="line-through absolute  group-hover:opacity-0 -top-4 left-0 text-neutral-600">
                   $
                   {product.discount &&
                     (product.discount * 0.01 * product.price).toFixed(2)}
@@ -111,11 +111,11 @@ const NewProducts = ({
                 )}
               {/* mobile btn add to cart */}
               <Link
-                className="flex items-center px-3 text-14 py-2 -mt-3 sm:hidden justify-center bg-blue-600 text-white rounded-lg"
+                className="flex min-w-[30%] items-center px-3 text-14 py-2 -mt-3 sm:hidden justify-center bg-secondary-300 text-white rounded-lg"
                 href={`/products/${product.category}/${product.name}`}
               >
                 <MdOutlineShoppingCart size={15} color="white" />
-                <span>Add to Cart</span>
+                {/* <span>Add to Cart</span> */}
               </Link>
             </div>
           </div>
