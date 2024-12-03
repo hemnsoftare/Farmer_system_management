@@ -22,29 +22,29 @@ const contactInfo = [
 
 const Page = () => {
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="mt-4">
+    <div className="flex flex-col py-4 w-full gap-4">
+      <h2 className="mt-4 px-3">
         home &gt;{" "}
         <span className="text-blue-600 border-blue-600  border-b">
           Contact Us
         </span>
       </h2>
-      <div className="flex items-center justify-center  gap-5 w-full">
+      <div className="flex items-center justify-center mt-6  gap-5 w-full">
         {contactInfo.map((item) => (
           <div
             key={item.type}
-            className="flex flex-col items-center w-[200px]  justify-center gap-3"
+            className="flex flex-col items-center w-[200px] h-[100px]  justify-center gap-3"
           >
-            <item.icon color="blue" className=" w-8 h-8" />
-            <h3 className="font-semibold text-16">{item.type}</h3>
-            <span className="text-neutral-500 text-wrap text-14 text-center">
+            <item.icon color="blue" className=" sm:w-8 w-5 h-5 sm:h-8" />
+            <h3 className="font-semibold text-12 sm:text-16">{item.type}</h3>
+            <span className="text-neutral-500 text-wrap text-10 sm:text-14 text-center">
               {item.address}
             </span>
           </div>
         ))}
       </div>
-      <div className="flex items-start mt-8 px-24 gap-10 justify-center">
-        <div className="flex flex-col w-[40%] items-start gap-3 justify-normal">
+      <div className="flex flex-col sm:flex-row items-start mt-8 sm:px-24 px-2 sm:gap-10 justify-center">
+        <div className="flex flex-col w-full sm:w-[40%] items-start gap-3 justify-normal">
           <h2 className="font-semibold">Message us</h2>
           <p className="text-neutral-400">
             We are here to assist you every step of the way. Whether you have a
@@ -53,7 +53,7 @@ const Page = () => {
             assistance.
           </p>
         </div>
-        <div className="flex flex-col self-end w-[60%] mt-5 items-center justify-center gap-3 ">
+        <div className="flex flex-col self-end w-full sm:w-[60%] mt-5 items-center justify-center gap-3 ">
           <textarea
             name="message"
             placeholder="* message .."

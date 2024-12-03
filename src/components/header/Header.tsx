@@ -92,6 +92,18 @@ const Header = () => {
         >
           Home
         </Link>
+        <Link
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          href={"/FAQ"}
+        >
+          FAQ
+        </Link>
+        <Link
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          href={"/ContactUs"}
+        >
+          Contact Us
+        </Link>
         <ProductsHeader category={category} />
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"

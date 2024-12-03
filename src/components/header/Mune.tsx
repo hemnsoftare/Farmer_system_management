@@ -76,15 +76,21 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
 
               <Link
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
-                href={"/About"}
-              >
-                about
-              </Link>
-              <Link
-                className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/FAQ"}
               >
                 FAQ
+              </Link>
+              <Link
+                className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
+                href={"/ContactUs"}
+              >
+                Contact Us
+              </Link>
+              <Link
+                className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
+                href={"/About"}
+              >
+                About
               </Link>
               <SignedOut>
                 <div className="flex items-center justify-center gap-3">
