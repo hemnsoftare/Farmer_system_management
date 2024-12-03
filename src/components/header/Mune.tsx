@@ -58,7 +58,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                     {category.map((item) => (
                       <Link
                         key={item.name}
-                        href={`products/${item.name}`}
+                        href={`/products/${item.name}`}
                         className="flex px-3 hover:bg-gray-100 rounded-lg duration-300 transition-all   items-center  gap-2 justify-start"
                       >
                         <Image
