@@ -27,8 +27,8 @@ const HeaderDilter = ({
 }) => {
   const [state, setstate] = useState("newest");
   return (
-    <div className="flex justify-between items-center">
-      <span className="flex gap-5 items-center">
+    <div className="flex w-full gap-3 px-3 justify-between items-center">
+      <span className="flex gap-5 border bg-neutral-100 rounded-lg  pl-2 sm:w-fit w-1/2 items-center">
         <span className="font-semibold">Filters ({length})</span>
         <button
           onClick={onClear}
@@ -37,10 +37,10 @@ const HeaderDilter = ({
           Clear Filter
         </button>
       </span>
-      <span className="flex items-center gap-1">
+      <span className="flex w-1/2 sm:w-fit border bg-neutral-100 rounded-lg justify-center  items-center gap-1">
         <span className="text-18">Sort by : </span>
         <DropdownMenu>
-          <DropdownMenuTrigger className="text-18 text-start px-2 border-e outline-none w-[200px]">
+          <DropdownMenuTrigger className="text-18 text-start px-2 border-e outline-none w-fit sm:w-[200px]">
             {state}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white">

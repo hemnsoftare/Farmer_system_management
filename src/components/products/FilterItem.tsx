@@ -112,7 +112,7 @@ const FilterItem = ({
   }, [color, discount, brand, price, onFilter]);
   console.log(discount);
   return (
-    <div className="flex flex-col w-full items-center justify-start">
+    <div className="sm:flex flex-col hidden  w-full items-center justify-start">
       <FilterSection
         title="brand"
         items={category?.brands || []}

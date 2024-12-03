@@ -145,7 +145,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
         {load ? (
           <Loader />
         ) : products.length > 0 ? (
-          <div className="col-span-3 grid lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
+          <div className="sm:col-span-3 col-span-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
             {products.map((item) => (
               <NewProducts key={item.name} itemDb={item} title="catagory" />
             ))}
