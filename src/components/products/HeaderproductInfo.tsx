@@ -27,19 +27,22 @@ const HeaderproductInfo = ({
   return (
     <>
       <h2 className="font-bold">{productinfos?.name}</h2>
-      <div className="flex justify-between gap-6 items-center">
-        <span className="flex md:text-12 lg:text-16 items-center gap-2">
-          <CiShop color="blue" className="lg:w-5 lg:h-5 md:w-4 md:h-4" />
+      <div className="flex justify-between  w-full sm:gap-6 gap-0 px-5 items-center">
+        <span className="flex md:text-12 text-12 lg:text-16 items-center gap-2">
+          <CiShop color="blue" className="lg:w-5 lg:h-5 w-5 h-5" />
           <span>in stock</span>
         </span>
-        <span className="flex md:text-12 lg:text-16 items-center gap-2">
-          <GoVerified color="blue" className="lg:w-5 lg:h-5 md:w-4 md:h-4" />
+        <span className="flex md:text-12 text-12 lg:text-16 items-center gap-2">
+          <GoVerified
+            color="blue"
+            className="lg:w-5 lg:h-5 w-5 h-5 md:w-4 md:h-4"
+          />
           <span>Guaranteed</span>
         </span>
-        <span className="flex md:text-12 lg:text-16 items-center gap-2">
+        <span className="flex md:text-12 text-12 lg:text-16 items-center gap-2">
           <TbTruckDelivery
             color="blue"
-            className="lg:w-6 lg:h-5 md:w-4 md:h-4"
+            className="lg:w-6 lg:h-5  min-w-5 min-h-5"
           />
           <span>Free Delivery</span>
         </span>
@@ -61,7 +64,7 @@ const HeaderproductInfo = ({
           ))}
         </div>
       </div>
-      <ul className="text-neutral-500 list-disc px-8 lg:w-[70%] md:w-[90%] w-[80%]  flex flex-col items-center justify-between">
+      <ul className="text-neutral-500 list-disc  lg:w-[70%] md:w-[90%] w-[80%]  flex flex-col items-center justify-between">
         <li className="w-full md:text-12 lg:text-14 flex justify-between items-center">
           <span>Brand</span>
           <span className="text-black font-semibold">
@@ -90,7 +93,7 @@ const HeaderproductInfo = ({
               onClick={() => {
                 onQuantity("decrease");
               }}
-              className="font-semibold text-18"
+              className="font-semibold text-22"
             >
               -
             </button>
@@ -101,7 +104,7 @@ const HeaderproductInfo = ({
               onClick={() => {
                 onQuantity("increase");
               }}
-              className="font-semibold text-18"
+              className="font-semibold text-22"
             >
               +
             </button>

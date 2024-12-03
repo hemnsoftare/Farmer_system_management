@@ -32,7 +32,7 @@ const HeaderDilter = ({
         <span className="font-semibold">Filters ({length})</span>
         <button
           onClick={onClear}
-          className="text-primary px-3 py-1 hover:bg-blue-200 duration-300 transition-all"
+          className="text-primary hidden sm:block px-3 py-1 hover:bg-blue-200 duration-300 transition-all"
         >
           Clear Filter
         </button>

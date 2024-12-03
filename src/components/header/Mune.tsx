@@ -31,7 +31,6 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
       <SheetContent side={"left"}>
         <SheetHeader>
           <SheetTitle>
-            {" "}
             <Image
               src={"/logo.svg"}
               alt="logo"
@@ -80,6 +79,12 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 href={"/About"}
               >
                 about
+              </Link>
+              <Link
+                className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
+                href={"/FAQ"}
+              >
+                FAQ
               </Link>
               <SignedOut>
                 <div className="flex items-center justify-center gap-3">

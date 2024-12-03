@@ -33,7 +33,7 @@ const CartItem = ({
         width={174}
         height={140}
         className={` ${
-          type === "headerItem" ? "w-[154px] h-[100px]" : " w-[200px] h-[150px]"
+          type === "headerItem" ? "w-[154px] h-[100px]" : " w-[150px] h-[100px]"
         }  group-hover:scale-[1.1] duration-300 transition-all `}
       />
       <div className="flex flex-col h-full  items-start bg-white   shadow-neutral-50    w-full justify-between py-3 gap-2">
@@ -47,22 +47,7 @@ const CartItem = ({
           />
           <span>{item.colors.name}</span>
         </p>
-        <p
-          className={` ${
-            type === "headerItem" && "hidden"
-          } flex  gap-2 md:text-12 lg:text-14 items-center`}
-        >
-          <TbTruckDelivery className="text-blue-500 w-4 h-4" />
-          <span>free</span>
-        </p>
-        <p
-          className={` ${
-            type === "headerItem" && "hidden"
-          } flex  gap-2 md:text-12 lg:text-14 items-center`}
-        >
-          <MdOutlineVerified className="text-blue-500 w-4 h-4" />
-          <span>guarantee</span>
-        </p>
+
         <div className="flex items-center  w-full gap-6 justify-between ">
           <p className="text-12 text-neutral-900">
             $ {item.price * item.quantity}

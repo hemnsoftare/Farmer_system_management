@@ -51,7 +51,7 @@ const CatagoryProducts = ({
           key={item.name}
           className={`${
             item.name.trim() === selected.trim()
-              ? "shadow-blue-300 shadow-lg  rounded-lg border-blue-300"
+              ? "shadow-blue-300 shadow-md  rounded-lg border-blue-300"
               : "shadow-slate-100 shadow-lg rounded-lg"
           } flex min-w-[120px] text-center flex-col  hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
         >

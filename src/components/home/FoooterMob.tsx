@@ -20,12 +20,12 @@ const FoooterMob = () => {
   return (
     <div className="bg-gradient-to-t  sm:hidden px-3 w-full py-6 to-primary-800  via-primary-800 from-primary-700 flex-col flex text-white">
       <div className="w-full ">
-        <h1>Sign up for News and updates</h1>
+        <h2 className="text-14">Sign up for News and updates</h2>
 
         <button className="flex justify-between items-center py-2 mt-2 px-2 border-2 w-full border-white rounded-lg">
           <span className="flex items-center gap-2">
             <FaRegUser color="white" />
-            <span>E-mail Address</span>
+            <span className="text-12 sm:text-16">E-mail Address</span>
           </span>
           <MdNavigateNext color="white" />
         </button>
@@ -36,7 +36,9 @@ const FoooterMob = () => {
             key={section.name}
             value={section.name.toLowerCase().replace(/\s+/g, "-")}
           >
-            <AccordionTrigger>{section.name}</AccordionTrigger>
+            <AccordionTrigger className="text-12 sm:text-16">
+              {section.name}
+            </AccordionTrigger>
             <AccordionContent>
               <ul>
                 {section.item.map((item) => (

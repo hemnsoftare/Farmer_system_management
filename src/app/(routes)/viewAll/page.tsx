@@ -69,7 +69,7 @@ const Page = ({ params }: { params: { type: string } }) => {
 
   return (
     <div className="flex items-center w-full py-8 gap-3 justify-center flex-col">
-      <h1 className="self-start text-30 my-3 font-semibold">
+      <h1 className="self-start px-3 text-26 sm:text-30 my-3 font-semibold">
         Last {products.length < 30 ? products.length : "30"} {type} products
       </h1>
       <CatagoryProducts

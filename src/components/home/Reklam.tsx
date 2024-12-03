@@ -33,15 +33,23 @@ const Reklam = () => {
             alt="image "
             width={300}
             height={300}
-            className="sm:min-w-[200px] min-w-[180px] mb-2  "
+            className="sm:min-w-[200px] min-w-[160px] mb-2  "
           />
         </div>
         <main className="flex  items-start justify-start py-10 flex-col ">
-          <div className="flex items-center mr-2 justify-start gap-2">
+          <div className="flex items-center -ml-2 justify-start gap-2">
             <button className="flex flex-col w-[35px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
               <span className="font-semibold text-16 sm:text-18">8</span>
               <span className="text-13 sm:text-16">Days</span>
             </button>
+            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-16 sm:text-18">8</span>
+              <span className="text-13 sm:text-16">Days</span>
+            </button>{" "}
+            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-16 sm:text-18">8</span>
+              <span className="text-13 sm:text-16">Days</span>
+            </button>{" "}
             <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
               <span className="font-semibold text-16 sm:text-18">8</span>
               <span className="text-13 sm:text-16">Days</span>
@@ -55,13 +63,13 @@ const Reklam = () => {
               <span className="text-13 sm:text-16">Days</span>
             </button>
           </div>
-          <div className="flex flex-col items-start mt-12 justify-start  ">
+          <div className="flex flex-col w-[90%] items-start mt-12 justify-start  ">
             <h1 className="font-bold text-16 sm:text-20">
               It feels good to be the first
             </h1>
-            <p className="text-neutral-700 text-14 px-4">
+            <p className="text-neutral-700  text-12 px-4">
               Get ready for the future smartphones.Experience innovation like
-              never before. Stay tuned for the big iPhone 15 pre-sale.
+              never before Stay tuned for the big iPhone 15 pre-sale.
             </p>
           </div>
         </main>{" "}

@@ -8,6 +8,7 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { getproductByCategory } from "@/lib/action/uploadimage";
 import Link from "next/link";
 import { app } from "@/config/firebaseConfig";
+import NewProducts from "@/components/home/NewProducts";
 const SingleProduct = ({
   params,
 }: {
@@ -35,7 +36,7 @@ const SingleProduct = ({
 
   return (
     <div className="flex flex-col w-full py-4">
-      <span className="lg:text-12 md:text-12">
+      <span className="lg:text-12 mb-4 px-3 md:text-12">
         <Link href="/" className="hover:text-blue-800 hover:underline">
           home
         </Link>{" "}
@@ -52,9 +53,14 @@ const SingleProduct = ({
         {product && <HeaderProduct item={product} />}
       </header>
       <main>
-        <div className="flex mt-3 flex-col w-full">
-          <h2 className="font-semibold">Similar products</h2>
-          <ForProducts products={similarProducts} />
+        <div className="flex mt-6 py-3 flex-col w-full">
+          <h2 className="font-semibold px-3 text-22">Similar products</h2>
+          <div className="flex flex-nowrap w-full px-3 items-center overflow-x-auto sm:overflowx-x-hidden   justify-start">
+            {similarProducts.map((item) => (
+              <NewProducts key={item.name} title="sale" itemDb={item} />
+            ))}
+          </div>
+          {/* <ForProducts products={similarProducts} /> */}
         </div>
       </main>
     </div>
