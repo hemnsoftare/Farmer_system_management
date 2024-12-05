@@ -336,9 +336,7 @@ const faq: FAQProps[] = [
     title: "General",
     QA: [
       {
-        questions: [
-          "Can I purchase products from Tech Heim using installment payments?",
-        ],
+        questions: ["Can I  products Tech Heim using installment payments?"],
         answers: [
           "Yes, Tech Heim offers the option to purchase products using both cash and installment payments. This allows you to choose the payment method that suits your needs and budget.",
         ],

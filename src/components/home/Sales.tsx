@@ -54,7 +54,7 @@ const Sales = () => {
         </h1>
         <h2>Shop Now!</h2>
         <br />
-        <button className="mt-auto bg-blue-500 z-30 hover:bg-blue-700 text-white mb-3 font-bold py-2 px-12 rounded">
+        <button className="mt-auto bg-blue-500 z-30 sm:hover:bg-blue-700 text-white mb-3 font-bold py-2 px-12 rounded">
           <Link href={"/viewAll?type=discount"}> View All</Link>
         </button>
       </div>

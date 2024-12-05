@@ -3,7 +3,7 @@ import React from "react";
 
 const Reklam = () => {
   return (
-    <div className="sm:flex  block sm:px-4 px-0 items-start  justify-center gap-3 w-full sm:max-h-[400px]">
+    <div className="sm:flex  block sm:px-4 px-2 items-start  justify-center gap-3 w-full sm:max-h-[400px]">
       {" "}
       {/* Added h-screen */}
       {/* left */}
@@ -33,43 +33,35 @@ const Reklam = () => {
             alt="image "
             width={300}
             height={300}
-            className="sm:min-w-[200px] min-w-[160px] mb-2  "
+            className="sm:min-w-[200px] above-405:min-w-[170px] min-w-[160px] mb-2  "
           />
         </div>
         <main className="flex  items-start justify-start py-10 flex-col ">
-          <div className="flex items-center -ml-2 justify-start gap-2">
-            <button className="flex flex-col w-[35px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-16 sm:text-18">8</span>
-              <span className="text-13 sm:text-16">Days</span>
-            </button>
-            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-16 sm:text-18">8</span>
-              <span className="text-13 sm:text-16">Days</span>
+          <div className="flex items-center -ml-4 above-405:ml-0 above-405:justify-center w-full justify-start gap-2">
+            <button className="flex flex-col sm:w-[45px] w-[35px]  border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 px-2 py-1">
+              <span className="font-semibold text-12 sm:text-18">8</span>
+              <span className="text-11 sm:text-16">Days</span>
             </button>{" "}
-            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-16 sm:text-18">8</span>
-              <span className="text-13 sm:text-16">Days</span>
+            <button className="flex flex-col sm:w-[45px] w-[35px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-12 sm:text-18">8</span>
+              <span className="text-11 sm:text-16">Days</span>
             </button>{" "}
-            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-16 sm:text-18">8</span>
-              <span className="text-13 sm:text-16">Days</span>
+            <button className="flex flex-col sm:w-[45px] w-[35px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-12 sm:text-18">8</span>
+              <span className="text-11 sm:text-16">Days</span>
             </button>{" "}
-            <button className="flex flex-col w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-16 sm:text-18">8</span>
-              <span className="text-13 sm:text-16">Days</span>
-            </button>{" "}
-            <button className="sm:flex hidden flex-col  w-[40px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
-              <span className="font-semibold text-16 sm:text-18">8</span>
-              <span className="text-13 sm:text-16">Days</span>
+            <button className="flex flex-col sm:w-[45px] w-[35px] border-black items-center justify-center border-2 rounded-lg -gap-1 p-2 py-1">
+              <span className="font-semibold text-12 sm:text-18">8</span>
+              <span className="text-11 sm:text-16">Days</span>
             </button>
           </div>
           <div className="flex flex-col w-[90%] items-start mt-12 justify-start  ">
-            <h1 className="font-bold text-16 sm:text-20">
+            <h1 className="font-bold text-15 sm:text-20">
               It feels good to be the first
             </h1>
-            <p className="text-neutral-700  text-12 px-4">
-              Get ready for the future smartphones.Experience innovation like
-              never before Stay tuned for the big iPhone 15 pre-sale.
+            <p className="text-neutral-700 sm:text-16 text-justify  sm:text-start text-12 pl-3">
+              Get ready for future phones Experience innovation never before
+              Stay tuned for big iPhone 15 pre-sale.
             </p>
           </div>
         </main>{" "}

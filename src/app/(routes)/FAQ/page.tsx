@@ -26,19 +26,19 @@ const Page = () => {
         alt="image quesin"
         width={500}
         height={600}
-        className="w-full sm:w-[80%] h-[200px] px-3 sm:h-[400px]"
+        className="w-full sm:w-[80%] min-h-[180px] above-405:min-h-[200px] px-3 sm:h-[400px]"
       />
       <div className="flex items-start flex-col sm:flex-row w-full sm:w-[80%] justify-center gap-3 ">
         <div className="flex gap-3 items-start px-3 mt-3 w-full sm:w-[23%] justify-start flex-col ">
           <h2 className="font-semibold ">Table of Contents</h2>
-          <div className="w-full flex flex-row sm:flex-col gap-3">
+          <div className="w-full overflow-x-auto sm:overflow-hidden justify-center flex flex-row sm:flex-col gap-1">
             {questions.map((item, index) => (
               <h2
                 className={` ${
                   IndexItem === index
                     ? "text-blue-600 border-b-2 border-blue-600"
                     : "border-black "
-                } md:text-14 lg:text-16 border-b px-4 text-12 w-[90px] sm:w-full flex items-center gap-2 hover:bg-slate-100 duration-300 transition-all`}
+                } md:text-14 lg:text-16 border-b justify-center  px-4 text-12 text-center  sm:w-full flex items-center gap-2 sm:hover:bg-slate-100 duration-300 transition-all`}
                 onClick={() => setIndexItem(index)}
                 key={item.title}
               >
@@ -48,7 +48,7 @@ const Page = () => {
                     IndexItem === index ? "rotate-[90deg] " : "rotate-[0deg]"
                   } duration-300 hidden sm:block transition-all`}
                 />
-                <span className="text-10 sm:text-16"> {item.title}</span>
+                <span className="text-11  sm:text-16"> {item.title}</span>
               </h2>
             ))}
           </div>
@@ -61,10 +61,10 @@ const Page = () => {
                 key={index}
                 value={`item-${index}`}
               >
-                <AccordionTrigger className="md:text-14 lg:text-16 text-10">
+                <AccordionTrigger className="md:text-14 w-full text-center  lg:text-16 text-12">
                   {Item.questions[0]}
                 </AccordionTrigger>
-                <AccordionContent className="md:text-12 lg:text-14">
+                <AccordionContent className="md:text-12 text-10 text-neutral-600 lg:text-14">
                   {Item.answers[0]}
                 </AccordionContent>
               </AccordionItem>

@@ -22,7 +22,7 @@ const ForProducts = ({
       if (window.innerWidth >= 768 && window.innerWidth < 1300) {
         setLimit(3);
       } else {
-        setLimit(4);
+        setLimit(5);
       }
     };
 
@@ -57,16 +57,17 @@ const ForProducts = ({
       </div>
     );
   return (
-    <div className=" mt-3 w-full overflow-x- py-7 sm:overflow-x-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-1 relative px- justify-start  items-center">
+    <div className=" mt-3 w-full overflow-x- py-7 sm:overflow-x-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 relative px- justify-center  items-center">
       {products &&
         products
           .slice(startProducts, startProducts + limit)
-          .map((product) => (
-            <NewProducts
-              key={product.price}
-              title="single_product"
-              itemDb={product}
-            />
+          .map((product, index) => (
+            <div
+              key={product.name}
+              className={`${index === 4 && "hidden sm:block"}`}
+            >
+              <NewProducts title="single_product" itemDb={product} />
+            </div>
           ))}
     </div>
   );

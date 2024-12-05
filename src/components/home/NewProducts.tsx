@@ -30,23 +30,23 @@ const NewProducts = ({
           title === "sale"
             ? "bg-white max-h-[300px] min-w-[180px]"
             : "sm:h-fit border h-full lg:min-w-[200px] sm:w-full max-w-[300px]"
-        } flex sm:gap-5  gap-1 border-neutral-100 shadow-sm sm:shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center  duration-300 transition-all rounded-lg sm:p-4 `}
+        } flex sm:gap-5  gap-1 border-neutral-100 shadow-sm sm:shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center  duration-300 transition-all rounded-lg sm:p-2 sm:pb-3 `}
       >
-        <div className="relative flex items-center p-[2px] flex-col justify-center w-full">
+        <div className="relative flex items-center  p-[2px] flex-col justify-center w-full">
           <Image
             src={product?.bigimageUrl}
             alt="image"
             width={217}
             height={161}
-            className="sm:w-[217px] w-full h-[130px] sm:h-[161px] group-hover:scale-[1.03] duration-300 transition-all"
+            className="sm:w-[217px] rounded-lg w-full above-405:h-[140px] h-[130px] sm:h-[161px] sm:group-hover:scale-[1.03] duration-300 transition-all"
           />{" "}
           {product.isDiscount && product.discount && product.discount > 0 && (
-            <p className="group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute flex sm:hidden text-12 left-1  bg-grsadient-to-l to-red-50 from-red-400 z-10 duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 ">
+            <p className="group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute flex sm:hidden text-12 left-1  bg-gradient-to-l to-red-50 from-red-400 z-10 duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 ">
               {product?.discount} $
             </p>
           )}
           {product.colors && (
-            <div className="sm:flex  hidden group-hover:opacity-0 duration-300 transition-all mt-2 flex-row sm:flex-col gap-1 sm:absolute sm:top-12 sm:-right-3">
+            <div className="sm:flex  hidden group-hover:opacity-0 duration-300 transition-all mt-2 flex-row sm:flex-col gap-1 sm:absolute sm:top-12 sm:-right-1">
               {product.colors.map((color: any, index: number) => {
                 if (index < 3)
                   return (
@@ -67,21 +67,21 @@ const NewProducts = ({
             </div>
           )}
         </div>
-        <div className="flex gap-2 p-2 w-full flex-col">
+        <div className="flex gap-2 pt-1 sm:pt-0 p-2 sm:p-[2px] w-full flex-col">
           <hr className="h-[2px] bg-gradient-to-r from-white via-slate-500 to-white border-0" />
           <h3
-            className={`lg:text-12 text-14 md:text-10 ${
+            className={`lg:text-16 text-14 md:text-10 ${
               title === "sale" || title === "dashboard"
                 ? "sm:h-[34px] h-[40px]"
                 : "sm:h-[53px] h-[40px]"
-            }  overflow-hidden mb-2  text-primary-500 font-[500]`}
+            }  overflow-hidden mb-2  text-secondary-400 font-[500]`}
           >
             {product.name}
           </h3>
           <div className="w-full h-fit sm:h-[33px]">
             {title !== "dashboard" && (
               <Link
-                className="w-full hidden group border opacity-0  rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all hover:bg-blue-900 text-white bg-primary hover:text-white items-center sm:group-hover:flex justify-center gap-2"
+                className="w-full hidden group px-3  border opacity-0  rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all hover:bg-blue-900 text-white bg-primary hover:text-white items-center sm:group-hover:flex justify-center gap-2"
                 href={`/products/${product.category}/${product.name}`}
               >
                 <MdOutlineShoppingCart color="white" />
@@ -93,7 +93,7 @@ const NewProducts = ({
                 title === "dashboard"
                   ? "opacity-100"
                   : " sm:group-hover:opacity-0 opacity-100 sm:group-hover:hidden"
-              } flex relative text-black mt-1 justify-between`}
+              } flex relative text-black mt-1 sm:mt-4 justify-between`}
             >
               {product.isDiscount && (
                 <span className="line-through text-11 sm:text-12 absolute  group-hover:opacity-0 -top-4 left-0 text-neutral-600">

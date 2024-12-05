@@ -160,6 +160,9 @@ const config = {
         "zoom-90": {
           raw: "(min-resolution: 90dpi)",
         },
+        "above-405": {
+          raw: "(min-width: 405px) and (max-width: 500px)",
+        },
       },
     },
   },

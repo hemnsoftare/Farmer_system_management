@@ -4,7 +4,7 @@ import React from "react";
 
 const Banner = () => {
   return (
-    <div className="bg-[#223949] w-full sm:max-w-[1000px] self-center duration-200 transition-all shadow-md hover:shadow-lg hover:shadow-[#223949] shadow-[#223949] relative md:px-[25px] lg:px-[100px] h-[250px] sm:h-[420px] py-8  sm:py-12 rounded-md flex overflow-hidden items-center justify-between">
+    <div className="bg-[#223949] w-full sm:max-w-[1000px] self-center duration-200 transition-all shadow-md sm:hover:shadow-lg sm:hover:shadow-[#223949] shadow-[#223949] relative md:px-[25px]  lg:px-[100px] h-[250px] sm:h-[420px] py-8  sm:py-12 rounded-md flex overflow-hidden items-center justify-between">
       <div className="flex justify-between sm:gap-7 gap-4 w-full items-center flex-col">
         <h1 className="lg:text-[44px]  md:text-34 font-semibold uppercase text-white">
           Smart Watch
@@ -13,8 +13,8 @@ const Banner = () => {
           {" "}
           Various designs and brands
         </p>
-        <button className="px-12 ml-3 mt-5     hover:bg-secondary-600 duration-300 transition-all  py-[6px] text-[16px] font-bold text-[#223949] rounded-md bg-secondary-400">
-          <Link href={"/products/smartwatch/jhfdsj"}> view</Link>
+        <button className="px-12 ml-3 mt-5     sm:hover:bg-secondary-600 duration-300 transition-all  py-[6px] text-[16px] font-bold text-[#223949] rounded-md bg-secondary-400">
+          <Link href={"#"}> view</Link>
         </button>
       </div>
       <Image

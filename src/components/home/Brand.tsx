@@ -6,13 +6,13 @@ import { MdNavigateNext } from "react-icons/md";
 
 const Brand = () => {
   return (
-    <div className="flex flex-col  items-center w-full justify-center">
+    <div className="flex flex-col px-3 items-center w-full justify-center">
       <div className="flex justify-between border-b-4 w-full  pb-4 border-neutral-400">
         <h3 className="sm:text-[32px] text-[20px] pl-3 text-black ">
           Top Brand
         </h3>
       </div>
-      <div className="flex gap-2 items-center w-full justify-start sm:justify-center md:gap-4 lg:gap-5">
+      <div className="flex gap-2 items-center w-full justify-between  sm:justify-center md:gap-4 lg:gap-5">
         {brand.map((item) => {
           return (
             <Image
@@ -23,8 +23,8 @@ const Brand = () => {
               height={70}
               className={` ${
                 item === "/Apple.webp"
-                  ? "w-[55px] h-[40px]"
-                  : "lg:w-[120px] lg:h-[70px]  w-[60px] h-[50px] xl:w-[150px] xl:h-[90px] mt-4 md:w-[100px] md:h-[80px]"
+                  ? "w-[55px] lg:min-w-[100px] lg:min-h-[60px] h-[40px]"
+                  : "lg:min-w-[140px] lg:min-h-[90px]  above-405:w-[70px] above-405:h-[60] w-[60px] h-[50px] xl:w-[150px] xl:h-[90px] mt-4 md:w-[100px] md:h-[80px]"
               } ${item === "/canon.svg" ? "hidden sm:block" : "block"}  `}
             />
           );

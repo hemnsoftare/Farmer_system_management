@@ -63,7 +63,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div className="flex mb-3 md:bg-slate-50 sm:bg-red-100 lg:bg-white flex-col gap-12">
+    <div className="flex mb-6 md:bg-slate-50 sm:bg-red-100 lg:bg-white flex-col gap-12">
       <Hero />
       <Catagory />
       <Sales />
@@ -89,7 +89,7 @@ export default function Home() {
       <Reklam />
       <div className="flex flex-col px-3 w-full items-center justify-center">
         <div className="flex justify-between px-2 items-center border-b-4 w-full pb-4 border-neutral-400">
-          <h3 className="text-[20px] flex items-center justify-center text-black">
+          <h3 className="text-[20px] sm:text-30 flex items-center justify-center text-black">
             best salery
           </h3>
           <Link
@@ -103,7 +103,9 @@ export default function Home() {
         <ForProducts load={loadBestSale} products={productSale} />
       </div>
       <Brand />
-      <Banner />
+      <div className="w-full flex items-center justify-center px-3">
+        <Banner />
+      </div>
       {/* 
       <Blog /> 
       */}
