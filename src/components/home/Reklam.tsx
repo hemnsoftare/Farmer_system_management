@@ -7,7 +7,7 @@ const Reklam = () => {
       {" "}
       {/* Added h-screen */}
       {/* left */}
-      <div className="flex px-2 w-full py-0 bg-gradient-to-br from-[#1975B9] relative via-[#30BCCE] to-[#B0E9C9]  lg:max-w-[600px] xl:max-w-[700px]  ms:p-3 bg-blue-300 rounded-lg h-full overflow-hidden">
+      <div className="flex sm:min-h-[390px] sm:max-w-[500px]  px-2 w-full py-0 bg-gradient-to-br from-[#1975B9] relative via-[#30BCCE] to-[#B0E9C9]  lg:max-w-[600px] xl:max-w-[700px]  ms:p-3 bg-blue-300 rounded-lg h-full overflow-hidden">
         <Image
           src={"/circal.png"}
           alt="image"
@@ -67,7 +67,7 @@ const Reklam = () => {
         </main>{" "}
       </div>
       {/* right side */}
-      <div className="flex flex-col mt-2 sm:mt-0 bg-[#005690] h-full overflow-hidden rounded-lg w-full relative justify-between py-8 items-center">
+      <div className="flex flex-col mt-2 sm:min-h-[390px] sm:max-w-[500px] sm:mt-0 bg-[#005690] h-full overflow-hidden rounded-lg w-full relative justify-between py-8 items-center">
         <Image
           src={"shape1.svg"}
           alt=""

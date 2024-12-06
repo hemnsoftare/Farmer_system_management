@@ -17,7 +17,7 @@ const Page = () => {
   const showQ = questions[IndexItem];
   return (
     <div className="flex flex-col gap-5 px-[px100] justify-center items-center ">
-      <h2 className="self-start px-3 text-12 sm:text-16 pt-10">
+      <h2 className="self-start  text-12 sm:text-16 pt-10">
         home &gt;{" "}
         <span className="text-primary border-b-primary border-b-2"> FQAs</span>
       </h2>
@@ -26,7 +26,7 @@ const Page = () => {
         alt="image quesin"
         width={500}
         height={600}
-        className="w-full sm:w-[80%] min-h-[180px] above-405:min-h-[200px] px-3 sm:h-[400px]"
+        className="w-full sm:w-[80%] min-h-[180px] above-405:min-h-[200px] px-3 xl:max-h-[400px] xl:min-h-[400px] sm:h-[400px]"
       />
       <div className="flex items-start flex-col sm:flex-row w-full sm:w-[80%] justify-center gap-3 ">
         <div className="flex gap-3 items-start px-3 mt-3 w-full sm:w-[23%] justify-start flex-col ">
@@ -38,7 +38,7 @@ const Page = () => {
                   IndexItem === index
                     ? "text-blue-600 border-b-2 border-blue-600"
                     : "border-black "
-                } md:text-14 lg:text-16 border-b justify-center  px-4 text-12 text-center  sm:w-full flex items-center gap-2 sm:hover:bg-slate-100 duration-300 transition-all`}
+                } md:text-14 lg:text-16 border-b justify-center sm:justify-between sm:flex-row-reverse  px-4 text-12 text-center  sm:w-full flex items-center gap-2 sm:hover:bg-slate-100 duration-300 transition-all`}
                 onClick={() => setIndexItem(index)}
                 key={item.title}
               >

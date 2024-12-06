@@ -86,7 +86,7 @@ const Page = ({ params }: { params: { type: string } }) => {
           ))}
         </div>
       ) : load ? (
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-3">
           <Loader />
           <Loader />
           <Loader />

@@ -14,15 +14,21 @@ import {
 import { app } from "../../config/firebaseConfig";
 import FilterSection from "./FilterSection ";
 import { cn } from "@/lib/utils";
+import { SheetTrigger } from "../ui/sheet";
 const FilterItem = ({
   onFilter,
   filters,
   selected,
+  type,
+  closeFiltered,
 }: {
   onFilter: (filter: typeFilter) => void;
   filters: typeFilter;
+  closeFiltered?: () => void;
   selected: string;
+  type?: "page" | "header";
 }) => {
+  console.log(type);
   const db = getFirestore(app);
   const [filter, setFilter] = useState<{ [key: string]: boolean }>({});
   const [price, setPrice] = useState<number[]>(filters.price); // Default price range
@@ -104,15 +110,21 @@ const FilterItem = ({
     getdata();
   }, [selected, db]);
 
-  useEffect(() => {
-    const filter: typeFilter = { brand, color, discount, price };
-    // console.log(".........");
-    // console.log(filter);
-    onFilter(filter);
-  }, [color, discount, brand, price, onFilter]);
+  useEffect(
+    () => {
+      const filter: typeFilter = { brand, color, discount, price };
+      if (type === "page") {
+        console.log(type);
+        console.log(filter);
+        onFilter(filter);
+      }
+    },
+    type === "page" ? [color, discount, brand, price, onFilter, type] : [type]
+  );
+
   console.log(discount);
   return (
-    <div className="sm:flex flex-col hidden  w-full items-center justify-start">
+    <div className="flex flex-col duration-300 transition-all  w-full items-center justify-start">
       <FilterSection
         title="brand"
         items={category?.brands || []}
@@ -238,8 +250,32 @@ const FilterItem = ({
           </div>
         </div>
       </div>
+      <br />
+      <br />
+      {type === "header" && (
+        <div className="w-full flex items-center gap-3 justify-between">
+          <button
+            onClick={() => {
+              const filter: typeFilter = { brand, color, discount, price };
+              onFilter(filter);
+              closeFiltered();
+            }}
+            className="w-1/2 text-center py-2 bg-secondary-400 text-white rounded-lg "
+          >
+            Apply
+          </button>
+          <button
+            onClick={() => {
+              closeFiltered();
+            }}
+            className="w-1/2 text-center py-2 border-secondary-400 border-2 text-secondary-400 rounded-lg "
+          >
+            Back
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default memo(FilterItem);
+export default FilterItem;

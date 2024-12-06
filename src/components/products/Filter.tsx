@@ -22,7 +22,7 @@ const Filtered = ({
             item !== "" && (
               <div
                 key={item}
-                className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg border-black w-[120px] justify-between"
+                className="flex items-center border-[2px] gap-2 font-semibold px-2 pr-4 py-1 rounded-lg border-neutral-400 w-fit  sm:w-[120px] justify-between"
               >
                 <span> {item} </span>
                 <IoMdCloseCircleOutline
@@ -33,7 +33,7 @@ const Filtered = ({
             )
         )}
       {type === "price" && item[0] !== "" && (
-        <div className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg border-black w-fit justify-between">
+        <div className="flex items-center border-[2px] gap-2 font-semibold px-2 py-1 pr-4 rounded-lg border-neutral-400 min-w-[120px] justify-between">
           <span>
             Price : {item[0]} - {item[1]}
           </span>
@@ -42,7 +42,7 @@ const Filtered = ({
       {type === "discount" && item === true ? (
         <div
           onClick={() => onDelete && onDelete("discount", "d")}
-          className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg border-black w-[120px] justify-between"
+          className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg pr-4 gap-2 border-neutral-400 w-fit sm:w-[120px] justify-between"
         >
           <span> {item && "Discounted"}</span>
           <IoMdCloseCircleOutline className="w-4 h-4" />

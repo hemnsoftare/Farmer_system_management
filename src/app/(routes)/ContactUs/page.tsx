@@ -22,7 +22,7 @@ const contactInfo = [
 
 const Page = () => {
   return (
-    <div className="flex flex-col py-4 w-full gap-4">
+    <div className="flex flex-col xl:py-12 py-4 w-full gap-4">
       <h2 className="mt-4 px-3">
         home &gt;{" "}
         <span className="text-blue-600 border-blue-600  border-b">

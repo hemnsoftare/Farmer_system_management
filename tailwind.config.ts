@@ -157,12 +157,17 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       screens: {
-        "zoom-90": {
-          raw: "(min-resolution: 90dpi)",
-        },
+        sm: "640px", // Small screens
+        md: "768px", // Medium screens
+        lg: "1024px", // Large screens
+        xl: "1280px", // Extra large screens
+        "2xl": "1536px", // Extra extra large screens
         "above-405": {
-          raw: "(min-width: 405px) and (max-width: 500px)",
+          raw: "(min-width: 405px) and (max-width: 500px)", // Custom breakpoint
         },
+      },
+      boxShadow: {
+        "center-shadow": "0px 0px 10px 5px #F6F6F6",
       },
     },
   },

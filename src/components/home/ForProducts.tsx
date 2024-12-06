@@ -20,7 +20,7 @@ const ForProducts = ({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768 && window.innerWidth < 1300) {
-        setLimit(3);
+        setLimit(4);
       } else {
         setLimit(5);
       }
@@ -50,10 +50,11 @@ const ForProducts = ({
         <Loader />
 
         <Loader />
+        <div className="hidden sm:block">
+          <Loader />
 
-        <Loader />
-
-        <Loader />
+          <Loader />
+        </div>
       </div>
     );
   return (

@@ -12,6 +12,7 @@ import { Loader } from "@/app/loader";
 
 const MyComponent = ({ params }: { params: { catagory: string } }) => {
   const [selected, setSelected] = useState(params.catagory.replace("%20", " "));
+  const [openFilter, setopenFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState<typeFilter>({
     brand: [],
     color: [],
@@ -27,6 +28,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
 
   const handleFilter = (filter: typeFilter) => {
     if (!isEqual(filter, filterProducts)) {
+      setSelected(selected + " ");
       setFilterProducts(filter);
     }
   };
@@ -81,7 +83,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
   // }, [selected]);
 
   return (
-    <div className="flex flex-col w-full gap-5 pt-5 ">
+    <div className="flex flex-col w-full gap-5 px-3  pt-5 ">
       <p className="text-16 py-6">
         <Link href={"/"} className="hover:text-blue-800 hover:underline">
           home
@@ -101,6 +103,10 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
         catagory={params.catagory}
       />
       <HeaderDilter
+        key={selected}
+        selected={selected}
+        filters={filterProducts}
+        onFilter={handleFilter}
         length={products.length}
         selectedSortBy={(item) => {
           setsortBy(item);
@@ -114,19 +120,24 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
             price: [1, 100000],
           });
         }}
+        openfilter={openFilter}
+        closeFilter={() => {
+          console.log("in close ");
+          setopenFilter(!openFilter);
+        }}
       />
-      <div className="flex items-center duration-300 transition-all animate-in flex-wrap text-12 justify-start gap-3 w-full ">
-        <Filtered
-          type="color"
-          onDelete={handelDelete}
-          item={filterProducts.color}
-        />
+      <div className="flex items-center duration-300 transition-all animate-in  overflow-x-auto sm:overflow-hidden flex-nowrap sm:flex-wrap text-12 justify-start gap-3 w-full ">
+        <Filtered type="price" item={filterProducts.price} />
         <Filtered
           type="discount"
           item={filterProducts.discount}
           onDelete={handelDelete}
         />
-        <Filtered type="price" item={filterProducts.price} />
+        <Filtered
+          type="color"
+          onDelete={handelDelete}
+          item={filterProducts.color}
+        />
         <Filtered
           type="brand"
           onDelete={handelDelete}
@@ -134,7 +145,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
         />
       </div>
       <div className="grid grid-cols-4 gap-2">
-        <div className="">
+        <div className="hidden md:block">
           <FilterItem
             key={selected}
             selected={selected}
@@ -143,7 +154,10 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
           />
         </div>
         {load ? (
-          <Loader />
+          <div className="flex w-full items-center justify-between px-3">
+            <Loader />
+            <Loader />
+          </div>
         ) : products.length > 0 ? (
           <div className="sm:col-span-3 col-span-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
             {products.map((item) => (

@@ -63,7 +63,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div className="flex mb-6 md:bg-slate-50 sm:bg-red-100 lg:bg-white flex-col gap-12">
+    <div className="flex lg:bg-red-200 xl:bg-blue-300 flex-col justify-center items-center gap-12">
       <Hero />
       <Catagory />
       <Sales />
