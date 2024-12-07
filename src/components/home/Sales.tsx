@@ -59,10 +59,13 @@ const Sales = () => {
         </button>
       </div>
       {load && (
-        <div className="flex items-center justify-center gap-4">
+        <div className="sm:grid w-full sm:w-[80%] gap-3  items-center flex overflow-x-auto  sm:overflow-hidden sm:grid-cols-4 justify-start">
           <Loader />
           <Loader />
-          <Loader />
+          <div className="hidden sm:block">
+            <Loader />
+            <Loader />
+          </div>
         </div>
       )}
       {!load && (

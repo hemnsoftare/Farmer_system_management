@@ -4,12 +4,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import { CgProfile } from "react-icons/cg";
 import { SignOutButton, useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 const UserHeader = () => {
   const { user } = useUser(); // Access the current user data
@@ -29,8 +28,8 @@ const UserHeader = () => {
           className="object-cover rounded-full"
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-2 z-50 bg-white">
-        <DropdownMenuLabel className="flex gap-2 items-center justify-between">
+      <DropdownMenuContent className=" z-50 bg-white">
+        <DropdownMenuLabel className="flex gap-2 border-b-2 border-neutral-100 items-center justify-between">
           <Image
             src={profileImageUrl} // Use the computed image URL
             alt="user"
@@ -47,11 +46,17 @@ const UserHeader = () => {
             </span>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-
-        <DropdownMenuItem className="flex items-center gap-2 hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+        <DropdownMenuItem className="flex items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+          <Link href={"/user-profile"}>Manage Account</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+          <Link href={"/historyOrder"}>Histroy Order</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           {/* Sign out button */}
-          <SignOutButton> LOG OUT</SignOutButton>
+          <span className="w-full">
+            <SignOutButton> LOG OUT</SignOutButton>
+          </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
