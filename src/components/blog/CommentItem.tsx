@@ -5,7 +5,6 @@ import { CommentProps } from "@/type";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { BiSolidLike } from "react-icons/bi";
 import { AiFillDislike, AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
-import { prefetchDNS } from "react-dom";
 const CommentItem = ({
   comment,
   toggleShowMore,

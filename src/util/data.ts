@@ -1,5 +1,4 @@
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
-import { LuLaptop2 } from "react-icons/lu";
 import { BsTabletLandscape, BsSmartwatch, BsCamera } from "react-icons/bs";
 import {
   IoHeadsetOutline,
@@ -145,7 +144,7 @@ const brand: [
   "/samsung.svg",
   "/canon.svg",
   "/huawei.svg",
-  "/lenovo.svg"
+  "/lenovo.svg",
 ] = [
   "/Apple.webp",
   "/sony.svg",
@@ -311,7 +310,7 @@ const comments: CommentProps[] = [
 
 const categories: Category[] = [
   { name: "mobile", icon: HiOutlineDevicePhoneMobile },
-  { name: "laptop", icon: LuLaptop2 },
+
   { name: "tablet", icon: BsTabletLandscape },
   { name: "audio", icon: IoHeadsetOutline },
   { name: "smartwatch", icon: BsSmartwatch },

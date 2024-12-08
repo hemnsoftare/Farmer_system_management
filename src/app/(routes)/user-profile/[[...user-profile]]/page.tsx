@@ -3,7 +3,6 @@ import React from "react";
 const Page = () => {
   return (
     <div className="flex items-center py-4 bg-white h-screen justify-center overflow-hidden ">
-      {" "}
       {/* Change the background color to black */}
       <UserProfile
         appearance={{

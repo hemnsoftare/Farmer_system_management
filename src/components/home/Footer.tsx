@@ -14,7 +14,11 @@ import { SignUpButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 const Footer = () => {
   const pathName = usePathname();
-  if (pathName.startsWith("/si") || pathName.includes("dashboard")) {
+  if (
+    pathName.startsWith("/si") ||
+    pathName.includes("dashboard") ||
+    pathName === "/user-profile"
+  ) {
     return;
   }
   return (

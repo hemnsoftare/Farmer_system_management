@@ -1,11 +1,10 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 const Page = () => {
   const { user } = useUser();
-  // console.log(user);
   const isAdmin = user?.publicMetadata?.role === "admin";
   console.log(isAdmin);
 

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   FaFacebookSquare,
@@ -16,7 +17,16 @@ import {
 import { footer } from "@/util/data";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuTwitter } from "react-icons/lu";
+import { usePathname } from "next/navigation";
 const FoooterMob = () => {
+  const pathName = usePathname();
+  if (
+    pathName.startsWith("/si") ||
+    pathName.includes("dashboard") ||
+    pathName === "/user-profile"
+  ) {
+    return;
+  }
   return (
     <div className="bg-gradient-to-t  sm:hidden px-3 w-full py-6 to-primary-800  via-primary-800 from-primary-700 flex-col flex text-white">
       <div className="w-full ">

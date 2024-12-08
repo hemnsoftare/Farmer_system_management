@@ -50,7 +50,7 @@ const ForProducts = ({
         <Loader />
 
         <Loader />
-        <div className="hidden sm:block">
+        <div className="hidden sm:flex gap-2">
           <Loader />
 
           <Loader />

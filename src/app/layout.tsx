@@ -1,3 +1,4 @@
+import type { Viewport } from "next";
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProviders from "./ClientProviders"; // Import the new client component
@@ -10,9 +11,12 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  themeColor: "#000000", // Add theme-color here
+  themeColor: "#F45E0C", // Add theme-color here
 };
 
+export const viewport: Viewport = {
+  themeColor: "#F45E0C",
+};
 export default function RootLayout({
   children,
 }: {
@@ -20,7 +24,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>{/* Next.js will inject metadata automatically */}</head>
+      <head>
+        <meta name="theme-color" content="#fff2f" />
+        {/* Next.js will inject metadata automatically */}
+      </head>
       <body className="">
         <ClientProviders>{children}</ClientProviders>
       </body>
