@@ -45,12 +45,12 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/"}
               >
-                home
+                Home
               </Link>
 
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="px-3 hover:bg-gray-200 rounded-lg  duration-300 w-[170px] py-2 text-start">
+                  <AccordionTrigger className="px-3 hover:bg-gray-200 rounded-lg  font-[400] duration-300 w-[170px] py-2 text-start">
                     Products
                   </AccordionTrigger>
                   <AccordionContent className="flex w-full flex-col gap-3">
@@ -73,7 +73,12 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-
+              <Link
+                className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
+                href={"/blog"}
+              >
+                Blog
+              </Link>
               <Link
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/FAQ"}
