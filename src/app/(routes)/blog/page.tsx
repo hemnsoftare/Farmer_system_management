@@ -21,7 +21,8 @@ const BlogPage = () => {
             ))}
           </div>
           <div className="flex w-full flex-col gap-4 ">
-            <h2>Recent posts</h2>
+            <h2>Recent post</h2>
+      
             <div className=" lg:grid  lg:grid-cols-2 gap-3">
               <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow />{" "}
               <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow />{" "}
