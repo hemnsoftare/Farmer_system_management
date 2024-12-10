@@ -25,7 +25,7 @@ const InputCheckout = forwardRef<HTMLInputElement, InputCheckoutProps>(
   ) => {
     return (
       <div className="relative w-full group flex items-start  flex-col">
-        <span className="absolute text-16 px-1 opacity-0 group-focus-within:opacity-100 duration-200 transition-all bg-white text-blue-400 -top-3 left-5 rounded-lg">
+        <span className="absolute text-14 sm:text-16 px-1 opacity-0 group-focus-within:opacity-100 duration-200 transition-all bg-white text-blue-400 -top-3 left-5 rounded-lg">
           {label}
         </span>
 

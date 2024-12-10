@@ -36,7 +36,11 @@ const NewProducts = ({
   if (product) {
     return (
       <Link
-        href={`/products/${product.category}/${product.name}`}
+        href={
+          title !== "dashboard"
+            ? `/products/${product.category}/${product.name}`
+            : "#"
+        }
         // style={{ boxShadow: shadowColor }} // Apply custom shadow here
         key={product.name}
         className={`${
@@ -45,7 +49,7 @@ const NewProducts = ({
             : "sm:h-fit border h-full lg:min-w-[200px] sm:w-full max-w-[300px]"
         } flex sm:gap-5  gap-1 border-neutral-100 shadow-sm sm:shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center  duration-300 transition-all rounded-lg sm:p-2 sm:pb-3 `}
       >
-        {user.id && (
+        {user.id && title !== "dashboard" && (
           <>
             {favoriteId && favoriteId.some((item) => item === itemDb.name) ? (
               <FaHeart

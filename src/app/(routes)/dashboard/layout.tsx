@@ -3,7 +3,7 @@ import { menuItems } from "@/util/data"; // Adjust the path to menuItems
 import Image from "next/image";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
 import { cont } from "./ConTextData"; // Import the context without re-wrapping
 import { useUser } from "@clerk/nextjs";
@@ -15,8 +15,12 @@ const Layout = ({
 }>) => {
   const pathname = usePathname();
   const { user } = useUser();
+
+  // State to manage the visibility of the sidebar
+  const [showSlider, setShowSlider] = useState(false);
+
   useEffect(() => {
-    console.log("lalyout");
+    console.log("layout initialized");
     if (user) {
       const isAdmin = user?.publicMetadata?.role === "admin";
       console.log(user);
@@ -26,16 +30,19 @@ const Layout = ({
       }
     }
   }, [user]);
-  // }, []);
-  // Now use the context correctly
-  const { handleHideSlider, handleShowSlider, showSlider } = useContext(cont);
+
+  // Functions to handle showing and hiding the sidebar
+  const handleShowSlider = () => setShowSlider(true);
+  const handleHideSlider = () => setShowSlider(false);
 
   return (
     <div className="flex relative items-start h-full justify-start w-full">
       {/* Sidebar Toggle Button */}
       <button
-        className={`absolute top-2 transition-all duration-1000 z-50  ${
-          showSlider ? "rotate-180 left-[210px]" : "rotate-0 left-4 top-2"
+        className={`absolute top-2 transition-all duration-1000 z-50 ${
+          showSlider
+            ? "rotate-180 right-2 sm:left-[210px]"
+            : "rotate-0 sm:left-4 right-[90%] top-2"
         }`}
         onClick={showSlider ? handleHideSlider : handleShowSlider}
       >
@@ -45,8 +52,8 @@ const Layout = ({
       {/* Sidebar */}
       <div
         className={`${
-          showSlider ? "w-[250px]" : "-translate-x-[200px] w-0"
-        } flex transition-all duration-300 gap-5 py-9 flex-col bg-neutral-400 items-start justify-start h-screen`}
+          showSlider ? "sm:w-[250px] w-full" : "-translate-x-[200px] w-0"
+        } flex transition-all duration-300 z-20 gap-5 py-9 flex-col bg-neutral-400 items-start justify-start h-screen`}
       >
         <div className="flex text-white items-center mb-4 justify-center">
           <Image
@@ -62,11 +69,12 @@ const Layout = ({
           <Link
             href={item.url || ""}
             key={item.name}
+            onClick={handleHideSlider}
             className={`${
               item.name !== "Home" &&
               pathname.includes(item.url || "null") &&
               "border-l-8 border-neutral-600 bg-neutral-500"
-            } w-full text-white flex text-19 py-2 cursor-pointer hover:bg-neutral-500 duration-300 transition-all items-center justify-start px-5 gap-2`}
+            } w-full text-white flex text-19 py-2 cursor-pointer sm:hover:bg-neutral-500 duration-300 transition-all items-center justify-start px-5 gap-2`}
           >
             <item.icon color="white" className="w-[20px]" />
             <h2>{item.name}</h2>
@@ -77,8 +85,8 @@ const Layout = ({
       {/* Main Content */}
       <div
         className={`${
-          showSlider ? "w-[calc(100%-250px)]" : "w-full "
-        } transition-all duration-300 h-full `}
+          showSlider ? "sm:w-[calc(100%-250px)] w-0" : "w-full"
+        } transition-all z-10 duration-300 h-full`}
       >
         {children}
       </div>

@@ -104,14 +104,14 @@ const ModalCategory = () => {
   };
 
   return (
-    <div className="flex flex-col px-3 w-full py-8 items-start">
+    <div className="flex flex-col px-3  w-full py-8 items-start">
       <h1 className="font-bold text-25">Categroy</h1>
       <form
         onClick={handleClickOutside}
-        className="flex flex-row-reverse bg-red-50 items-start w-full gap-3 justify-center mt-5"
+        className="flex flex-col-reverse items-center  sm:flex-row-reverse  sm:items-start w-full gap-3 justify-center mt-5"
         onSubmit={handleSubmit}
       >
-        <div className="flex  flex-col gap-3 bg-blue-100 items-start flex-1 justify-center">
+        <div className="flex  flex-col gap-3  w-full items-start flex-1 justify-center">
           {/* Category Name */}
           <div className="flex items-start p-2 w-full justify-start flex-col border-2 gap-2 rounded-lg border-neutral-500">
             <h2>Category name</h2>
@@ -124,7 +124,7 @@ const ModalCategory = () => {
             />
           </div>
 
-          <div className="flex items-center w-full justify-start gap-3">
+          <div className="flex flex-col sm:flex-row  items-center w-full justify-start gap-3">
             {/* Category Brand */}
             <div className="flex items-start p-2 w-full justify-start flex-col border-2 gap-2 rounded-lg border-neutral-500">
               <h2 className="flex items-center w-full justify-between">

@@ -14,6 +14,8 @@ import {
 import { app } from "@/config/firebaseConfig";
 import { ProductFormInput } from "@/type";
 import { Loader } from "@/app/loader";
+import { useUser } from "@clerk/nextjs";
+import { getAllItemNames } from "@/lib/action/fovarit";
 
 const Page = ({ params }: { params: { type: string } }) => {
   const type = params.type;
@@ -21,6 +23,8 @@ const Page = ({ params }: { params: { type: string } }) => {
   const [products, setProducts] = useState<ProductFormInput[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [load, setload] = useState(true);
+  const [favoriteId, setfavoriteId] = useState([]);
+  const { user } = useUser();
   useEffect(() => {
     const getData = async (col: string) => {
       setload(true);
@@ -66,7 +70,13 @@ const Page = ({ params }: { params: { type: string } }) => {
       getData("numberSale");
     }
   }, [db, type, selectedCategory]); // Add 'db' and 'type' to dependencies
-
+  useEffect(() => {
+    const getdata = async () => {
+      const data = await getAllItemNames(user?.id);
+      setfavoriteId(data as string[]);
+    };
+    getdata();
+  }, [user]);
   return (
     <div className="flex items-center w-full py-8 gap-3 justify-center flex-col">
       <h1 className="self-start px-3 text-26 sm:text-30 my-3 font-semibold">
@@ -82,7 +92,42 @@ const Page = ({ params }: { params: { type: string } }) => {
       {!load && products.length > 0 ? (
         <div className="grid grid-cols-2 px-2 gap-2 lg:grid-cols-4 md:grid-cols-3 w-full items-center justify-center">
           {products.map((item) => (
-            <NewProducts key={item.name} itemDb={item} />
+            <NewProducts
+              favoriteId={favoriteId}
+              addFavoriteid={() => {
+                setProducts((prev) =>
+                  prev.map(
+                    (itemp) =>
+                      itemp.name === item.name
+                        ? {
+                            ...itemp,
+                            numberFavorite: itemp.numberFavorite - 1,
+                          } // Update numberFavorite
+                        : itemp // Keep other items unchanged
+                  )
+                );
+                setfavoriteId((pre) => [...pre, item.name]);
+              }}
+              deleteFavoriteId={() => {
+                setProducts((prev) =>
+                  prev.map(
+                    (itemp) =>
+                      itemp.name === item.name
+                        ? {
+                            ...itemp,
+                            numberFavorite: itemp.numberFavorite - 1,
+                          } // Update numberFavorite
+                        : itemp // Keep other items unchanged
+                  )
+                );
+
+                setfavoriteId(
+                  (prev) => prev.filter((itemp) => itemp !== item.name) // Remove the product name from favorites
+                );
+              }}
+              key={item.name}
+              itemDb={item}
+            />
           ))}
         </div>
       ) : load ? (

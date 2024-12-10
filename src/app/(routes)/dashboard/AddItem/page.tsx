@@ -150,13 +150,13 @@ const Page = () => {
     getdata();
   }, []);
   return (
-    <div className="flex 0 flex-col py-9 h-screen lg:w-full xl:max-w-[900px] bg-red-50 ">
+    <div className=" z-0 flex-col py-9 sm:h-screen lg:w-full w-full xl:max-w-[900px]  ">
       <h2 className="text-29 font-semibold px-7">Add Product</h2>
       <form
         onSubmit={handleSubmit}
-        className="flex  items-start gap-3 px-4 justify-start w-full py-4"
+        className="flex md:flex-row flex-col items-start gap-3 px-4    justify-start w-full py-4"
       >
-        <div className="flex px-3 flex-col gap-3 items-center justify-normal">
+        <div className="flex sm:px-3 flex-col gap-3 self-center items-center justify-center">
           <input
             type="file"
             id="imageBig"
@@ -191,8 +191,8 @@ const Page = () => {
             ))}
           </div>
         </div>
-        <div className="flex gap-3 items-start w-full  justify-center flex-col">
-          <div className="w-full gap-3 flex items-start h-[70px] justify-between">
+        <div className="flex gap-3 my-3 mb-5 items-start w-full  justify-center flex-col">
+          <div className="w-full gap-3 flex-col sm:flex-row flex items-start h-[70px] justify-between">
             <InputCheckout
               label="Product Name"
               name="name"
@@ -206,32 +206,45 @@ const Page = () => {
               error=""
             />
           </div>
+          <br />
           <div className="w-full mt-3 items-start flex-col justify-start gap-6 flex">
             <div className="flex items-center justify-center gap-2">
-              <h2 className="font-semibold">Category:</h2>
+              <h2 className="font-semibold min-w-[80px] text-14 sm:text-18">
+                Category:
+              </h2>
               <select
                 name="category"
-                className="py-1 px-3 bg-neutral-300 w-[130px] rounded-md outline-none border-none"
+                className="py-1 px-3  bg-neutral-300 min-w-[230px] rounded-md outline-none border-none"
                 onChange={(e) => setselectedCategoryy(e.target.value)}
               >
                 {catagory &&
                   catagory.map((item) => (
-                    <option key={item.name} value={item.name}>
+                    <option
+                      className="text-14 sm:text-18"
+                      key={item.name}
+                      value={item.name}
+                    >
                       {item.name}
                     </option>
                   ))}
               </select>
             </div>
             <div className="flex items-center justify-center gap-2">
-              <h2 className="font-semibold">Brand:</h2>
+              <h2 className="font-semibold text-14 min-w-[80px] sm:text-18">
+                Brand:
+              </h2>
               <select
                 name="brand"
-                className="py-1 px-3 bg-neutral-300 w-[130px] rounded-md outline-none border-none"
+                className="py-1 px-3 bg-neutral-300 min-w-[230px] rounded-md outline-none border-none"
               >
                 {catagory?.map((item) => {
                   if (item.name === selectedCategoryy) {
                     return item.brands.map((brand) => (
-                      <option key={brand} value={brand}>
+                      <option
+                        className="text-14  sm:text-18"
+                        key={brand}
+                        value={brand}
+                      >
                         {brand}
                       </option>
                     ));
@@ -240,20 +253,22 @@ const Page = () => {
               </select>
             </div>
             {/* color  */}
-            <div className="flex items-center justify-center gap-2">
-              <h2 className="font-semibold">Colors:</h2>
-              <div className="flex items-center gap-5">
+            <div className="flex items-center  w-full justify-start gap-2">
+              <h2 className="font-semibold text-14 sm:text-18 in-range:">
+                Colors:
+              </h2>
+              <div className="flex overflow-x-auto w-full items-center gap-5">
                 {catagory
                   ?.filter((item) => item.name === selectedCategoryy)
                   .map((filteredItem) => (
                     <div
                       key={filteredItem.name}
-                      className=" flex items-center justify-start gap-3"
+                      className=" flex items-center overflow-x-auto w-full  justify-start gap-3"
                     >
                       {filteredItem.colors.map((color) => (
                         <div
                           key={color.name}
-                          className="flex gap-1 items-center"
+                          className="flex gap-1  items-center"
                           onClick={() => {
                             setselectedcolor((prevSelected) => {
                               // Check if the selected color already exists
@@ -306,7 +321,12 @@ const Page = () => {
                             name="colors"
                             id={color.name}
                           />
-                          <label htmlFor={color.name}>{color.name}</label>
+                          <label
+                            htmlFor={color.name}
+                            className="text-14 sm:text-18"
+                          >
+                            {color.name}
+                          </label>
                         </div>
                       ))}
                     </div>
@@ -316,7 +336,12 @@ const Page = () => {
           </div>
           <div className="flex h-[60px] items-center py-2 w-full justify-between">
             <div className="w-[49%] flex items-center justify-between">
-              <label htmlFor="discount">Discount</label>
+              <label
+                htmlFor="discount"
+                className="text-14 font-semibold sm:text-18"
+              >
+                Discount
+              </label>
               <Switch id="discount" onCheckedChange={(e) => setdiscount(e)} />
             </div>
             {discount && (
@@ -333,46 +358,52 @@ const Page = () => {
           </div>
 
           <div className=" py-1 w-full  cursor-pointer rounded-md flex-col items-center justify-center flex gap-2">
-            <div className="flex justify-between w-full items-center">
-              <h2>product details</h2>
+            <div className="flex justify-between  w-full items-center">
+              <h2 className="text-14 w-full sm:text-18 font-semibold">
+                product details
+              </h2>
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center w-[70%]  justify-center gap-2">
+                <DropdownMenuTrigger className="flex items-center w-[70%] text-14 sm:text-18 justify-center gap-2">
                   Detials <IoMdArrowDropdown />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white min-w-[400px]">
-                  {Details.map((item, index) => (
-                    <DropdownMenuItem
-                      key={item.description}
-                      className={` ${
-                        index % 2 === 0 ? "bg-neutral-50" : "bg-neutral-200"
-                      } flex items-center justify-between  px-4`}
-                    >
-                      <span className="text-neutral-600">{item.title}</span>{" "}
-                      <span className="text-neutral-500">
-                        {item.description}
-                      </span>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
+                {Details.length > 0 && (
+                  <DropdownMenuContent className="bg-white w-screen sm:min-w-[400px]">
+                    {Details.map((item, index) => (
+                      <DropdownMenuItem
+                        key={item.description}
+                        className={` ${
+                          index % 2 === 0 ? " bg-neutral-50" : "bg-neutral-200"
+                        } flex items-center justify-between  px-4`}
+                      >
+                        <span className="text-neutral-600">{item.title}</span>
+                        <span className="text-neutral-500">
+                          {item.description}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                )}
               </DropdownMenu>
             </div>
-            <div className="flex items-center gap-2 w-full justify-between">
-              <InputCheckout
-                label="Title Detials"
-                name="titleDetial"
-                placeholder=" enter the title details"
-                ref={titleRef}
-              />
-              <InputCheckout
-                label="description  Detials"
-                name="descriptionDetial"
-                placeholder="description details"
-                ref={descriptionRef}
-              />
+            <div className="flex flex-col sm:flex-row items-center gap-2 w-full justify-between">
+              <div className="w-full flex flex-col sm:flex-row  items-center gap-4 ">
+                <InputCheckout
+                  label="Title Detials"
+                  name="titleDetial"
+                  placeholder=" enter the title details"
+                  ref={titleRef}
+                />
+                <InputCheckout
+                  label="description  Detials"
+                  name="descriptionDetial"
+                  placeholder="description details"
+                  ref={descriptionRef}
+                />
+              </div>
               <button
                 type="button"
                 onClick={handleAdddetail}
-                className="px-5 py-2 bg-black text-white rounded-lg "
+                className="px-5 py-2 bg-black w-full  text-white rounded-lg "
               >
                 add
               </button>
@@ -381,11 +412,11 @@ const Page = () => {
           <div className="flex justify-end items-center w-full gap-4 ">
             <button
               type="button"
-              className="px-5 py-2 rounded-lg border border-black hover:bg-neutral-200 duration-300 transition-all"
+              className="px-5 py-2 rounded-lg border w-full sm:w-fit border-black hover:bg-neutral-200 duration-300 transition-all"
             >
               Back
             </button>
-            <button className=" px-5 py-2  border border-black text-white bg-black rounded-lg hover:bg-neutral-200 hover:text-black duration-300 transition-all ">
+            <button className=" px-5 py-2  border w-full sm:w-fit border-black text-white bg-black rounded-lg hover:bg-neutral-200 hover:text-black duration-300 transition-all ">
               Add Product
             </button>
           </div>

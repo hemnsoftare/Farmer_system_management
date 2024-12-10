@@ -1,7 +1,7 @@
-import { Link2 } from "lucide-react";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -16,15 +16,20 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import { IoMdMenu } from "react-icons/io";
-import { categories } from "@/util/data";
 import { catagoryProps } from "@/type";
 import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+
 const Mune = ({ category }: { category: catagoryProps[] }) => {
+  const [showSheet, setshowSheet] = useState(false);
+  const handleHideSheet = () => {
+    setTimeout(() => {
+      setshowSheet(false);
+    }, 500);
+  };
   return (
-    <Sheet>
-      <SheetTrigger>
+    <Sheet open={showSheet}>
+      <SheetTrigger onClick={() => setshowSheet(true)}>
         {" "}
         <IoMdMenu size={25} />
       </SheetTrigger>
@@ -42,6 +47,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
           <SheetDescription>
             <ul className="w-full flex flex-col mt-24 text-20 gap-3 justify-start  items-start ">
               <Link
+                onClick={() => setshowSheet(false)}
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/"}
               >
@@ -56,6 +62,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                   <AccordionContent className="flex w-full flex-col gap-3">
                     {category.map((item) => (
                       <Link
+                        onClick={handleHideSheet}
                         key={item.name}
                         href={`/products/${item.name}`}
                         className="flex px-3 hover:bg-gray-100 rounded-lg duration-300 transition-all   items-center  gap-2 justify-start"
@@ -74,24 +81,28 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 </AccordionItem>
               </Accordion>
               <Link
+                onClick={handleHideSheet}
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/blog"}
               >
                 Blog
               </Link>
               <Link
+                onClick={handleHideSheet}
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/FAQ"}
               >
                 FAQ
               </Link>
               <Link
+                onClick={handleHideSheet}
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/ContactUs"}
               >
                 Contact Us
               </Link>
               <Link
+                onClick={handleHideSheet}
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/About"}
               >

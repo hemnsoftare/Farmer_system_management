@@ -18,7 +18,7 @@ const Hero = () => {
         </h3>
 
         <Link href={"#newProducts"} className="transition-all duration-300">
-          <button className="capitalize px-4 py-2 text-10 lg:text-16 sm:text-20 -mb-6 above-405:px-7 sm:hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-10 bg-secondary text-white  sm:py-4 rounded-lg mt-auto">
+          <button className="capitalize px-7 py-2 text-10 lg:text-16 sm:text-20 -mb-6 above-405:px-7 sm:hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-10 bg-secondary text-white  sm:py-4 rounded-lg mt-auto">
             explore more
           </button>
         </Link>

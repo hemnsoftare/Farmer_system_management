@@ -45,9 +45,9 @@ export const getFireBase = async (dbName: string): Promise<catagoryProps[]> => {
   return catagory;
 };
 export const getProducts = async (
-  filter: typeFilter,
   category: string,
-  sortBy: string
+  sortBy?: string,
+  filter?: typeFilter
 ): Promise<ProductFormInput[]> => {
   const conditions: any[] = []; // Array to hold query conditions
 
