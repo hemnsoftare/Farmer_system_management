@@ -61,7 +61,7 @@ const CardFavorite = ({
                 });
                 addFavoriteid();
               }}
-              className="absolute p-3 sm:size-[25px] box-content size-[23px] top-2 z-50 right-2 cursor-pointer"
+              className="absolute p-3 sm:size-[26px] box-content size-[23px] top-2 z-50 right-2 cursor-pointer"
             />
           )}
         </>
