@@ -196,3 +196,14 @@ export type OrderType = {
   totaldiscountPrice: number;
   note?: string; // Optional notes provided by the user
 };
+export interface favorite {
+  name: string;
+  price: number;
+  image: string;
+  categroy: string;
+  numberFavorite: number;
+  colors: {
+    name: string;
+    color: string;
+  }[];
+}

@@ -9,6 +9,9 @@ import Filtered from "@/components/products/Filter";
 import { getProducts } from "@/lib/action/uploadimage";
 import Link from "next/link";
 import { Loader } from "@/app/loader";
+import ForProducts from "@/components/home/ForProducts";
+import { getAllItemNames } from "@/lib/action/fovarit";
+import { useUser } from "@clerk/nextjs";
 
 const MyComponent = ({ params }: { params: { catagory: string } }) => {
   const [selected, setSelected] = useState(params.catagory.replace("%20", " "));
@@ -22,7 +25,8 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
   const [products, setproducts] = useState<ProductFormInput[]>([]);
   const [sortBy, setsortBy] = useState<string>("new");
   const [load, setload] = useState(true);
-
+  const [favoriteId, setfavoriteId] = useState([]);
+  const { user } = useUser();
   const isEqual = (a: typeFilter, b: typeFilter) =>
     JSON.stringify(a) === JSON.stringify(b);
 
@@ -81,7 +85,13 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
   //     price: [1, 1000],
   //   });
   // }, [selected]);
-
+  useEffect(() => {
+    const getdata = async () => {
+      const data = await getAllItemNames(user?.id);
+      setfavoriteId(data as string[]);
+    };
+    getdata();
+  }, [user]);
   return (
     <div className="flex flex-col w-full gap-5 px-3  pt-5 ">
       <p className="text-16 py-6">
@@ -161,7 +171,43 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
         ) : products.length > 0 ? (
           <div className="sm:col-span-3 col-span-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
             {products.map((item) => (
-              <NewProducts key={item.name} itemDb={item} title="catagory" />
+              <NewProducts
+                key={item.name}
+                favoriteId={favoriteId}
+                addFavoriteid={() => {
+                  setproducts((prev) =>
+                    prev.map(
+                      (itemp) =>
+                        itemp.name === item.name
+                          ? {
+                              ...itemp,
+                              numberFavorite: itemp.numberFavorite - 1,
+                            } // Update numberFavorite
+                          : itemp // Keep other items unchanged
+                    )
+                  );
+                  setfavoriteId((pre) => [...pre, item.name]);
+                }}
+                deleteFavoriteId={() => {
+                  setproducts((prev) =>
+                    prev.map(
+                      (itemp) =>
+                        itemp.name === item.name
+                          ? {
+                              ...itemp,
+                              numberFavorite: itemp.numberFavorite - 1,
+                            } // Update numberFavorite
+                          : itemp // Keep other items unchanged
+                    )
+                  );
+
+                  setfavoriteId(
+                    (prev) => prev.filter((itemp) => itemp !== item.name) // Remove the product name from favorites
+                  );
+                }}
+                itemDb={item}
+                title="catagory"
+              />
             ))}
           </div>
         ) : (

@@ -18,10 +18,14 @@ import {
 import { app } from "../../config/firebaseConfig";
 import { ProductFormInput } from "@/type";
 import { Loader } from "@/app/loader";
+import { getAllItemNames } from "@/lib/action/fovarit";
+import { useUser } from "@clerk/nextjs";
 const Sales = () => {
   const [load, setload] = useState(true);
   const [start, setStart] = useState(0);
+  const { user } = useUser();
   const [products, setproducts] = useState<ProductFormInput[]>([]);
+  const [favoriteId, setfavoriteId] = useState([]);
   const db = getFirestore(app);
   useEffect(() => {
     const getdata = async () => {
@@ -38,7 +42,13 @@ const Sales = () => {
     };
     getdata();
   }, [db]);
-
+  useEffect(() => {
+    const getdata = async () => {
+      const data = await getAllItemNames(user?.id);
+      setfavoriteId(data as string[]);
+    };
+    getdata();
+  }, [user]);
   return (
     <div className="flex flex-col lg:max-w-[1200px] sm:flex-row rounded-2xl overflow-hidden bg-primary-500 h-full w-full py-3 pb-7  px-3  items-center justify-center shadow-blue-950 shadow-md relative sm:rounded-md text-white gap-4">
       <Image
@@ -62,7 +72,7 @@ const Sales = () => {
         <div className="sm:grid w-full sm:w-[80%] gap-3  items-center flex overflow-x-auto  sm:overflow-hidden sm:grid-cols-4 justify-start">
           <Loader />
           <Loader />
-          <div className="hidden sm:block">
+          <div className="hidden sm:flex">
             <Loader />
             <Loader />
           </div>
@@ -71,7 +81,37 @@ const Sales = () => {
       {!load && (
         <div className="sm:grid w-full sm:w-[80%] gap-3  items-center flex overflow-x-auto  sm:overflow-hidden sm:grid-cols-4 justify-start">
           {products.slice(start, 4 + start).map((item) => (
-            <NewProducts key={item.name} itemDb={item} title="sale" />
+            <NewProducts
+              favoriteId={favoriteId}
+              addFavoriteid={() => {
+                setproducts((prev) =>
+                  prev.map(
+                    (itemp) =>
+                      itemp.name === item.name
+                        ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
+                        : itemp // Keep other items unchanged
+                  )
+                );
+                setfavoriteId((pre) => [...pre, item.name]);
+              }}
+              deleteFavoriteId={() => {
+                setproducts((prev) =>
+                  prev.map(
+                    (itemp) =>
+                      itemp.name === item.name
+                        ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
+                        : itemp // Keep other items unchanged
+                  )
+                );
+
+                setfavoriteId(
+                  (prev) => prev.filter((itemp) => itemp !== item.name) // Remove the product name from favorites
+                );
+              }}
+              key={item.name}
+              itemDb={item}
+              title="sale"
+            />
           ))}
         </div>
       )}

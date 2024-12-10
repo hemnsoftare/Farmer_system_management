@@ -1,24 +1,37 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { ProductFormInput, Productsprops } from "@/type";
-
 import { Loader } from "@/app/loader";
 import Link from "next/link";
+import { IoIosHeart } from "react-icons/io";
+import { useUser } from "@clerk/nextjs";
+import { addfavorite, deleteFavorite } from "@/lib/action/fovarit";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const NewProducts = ({
-  item,
   title,
   itemDb,
   load,
+  favoriteId,
+  addFavoriteid,
+  deleteFavoriteId,
 }: {
   title?: string;
   item?: Productsprops;
   itemDb?: ProductFormInput;
   load?: boolean;
+  favoriteId?: string[];
+  addFavoriteid: () => void;
+  deleteFavoriteId: () => void;
 }) => {
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent click event from propagating to the <Link>
+    e.preventDefault(); // Prevent default behavior of the <Link>
+  };
   const product: ProductFormInput | undefined = itemDb;
-
+  const { user } = useUser();
   if (load) return <Loader />;
   if (product) {
     return (
@@ -32,6 +45,43 @@ const NewProducts = ({
             : "sm:h-fit border h-full lg:min-w-[200px] sm:w-full max-w-[300px]"
         } flex sm:gap-5  gap-1 border-neutral-100 shadow-sm sm:shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center  duration-300 transition-all rounded-lg sm:p-2 sm:pb-3 `}
       >
+        {user.id && (
+          <>
+            {favoriteId && favoriteId.some((item) => item === itemDb.name) ? (
+              <FaHeart
+                color="#f45e0c"
+                onClick={(e) => {
+                  handleFavoriteClick(e);
+                  deleteFavorite(user.id, itemDb.price, itemDb.name).finally(
+                    () => {}
+                  );
+                  deleteFavoriteId();
+                }}
+                className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-50 right-1"
+              />
+            ) : (
+              <FaRegHeart
+                color="#f45e0c"
+                onClick={(e) => {
+                  handleFavoriteClick(e);
+                  addfavorite({
+                    id: user.id,
+                    item: {
+                      name: itemDb.name,
+                      categroy: itemDb.category,
+                      price: itemDb.price,
+                      colors: itemDb.colors,
+                      image: itemDb.bigimageUrl,
+                      numberFavorite: itemDb.numberFavorite,
+                    },
+                  });
+                  addFavoriteid();
+                }}
+                className="absolute p-3 size-[23px] sm:size-[23px] box-content top-1 z-50 right-1"
+              />
+            )}
+          </>
+        )}
         <div className="relative flex items-center  p-[2px] flex-col justify-center w-full">
           <Image
             src={product?.bigimageUrl}
