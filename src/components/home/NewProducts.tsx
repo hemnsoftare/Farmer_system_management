@@ -23,8 +23,8 @@ const NewProducts = ({
   itemDb?: ProductFormInput;
   load?: boolean;
   favoriteId?: string[];
-  addFavoriteid: () => void;
-  deleteFavoriteId: () => void;
+  addFavoriteid?: () => void;
+  deleteFavoriteId?: () => void;
 }) => {
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent click event from propagating to the <Link>

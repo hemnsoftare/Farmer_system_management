@@ -15,13 +15,12 @@ const Page = () => {
     const getdata = async () => {
       console.log("in getdata");
       setload(true);
-      if (user?.id) {
-        const data = await getfavorite(user.id).finally(() => {
-          setload(false);
-        });
-        setproducts(data as favorite[]);
-        setfavorriteid(data.map((item) => item.name as string));
-      }
+
+      const data = await getfavorite(user.id).finally(() => {
+        setload(false);
+      });
+      setproducts(data as favorite[]);
+      setfavorriteid(data.map((item) => item.name as string));
     };
     getdata();
   }, [user]);
