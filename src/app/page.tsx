@@ -67,12 +67,12 @@ export default function Home() {
       <Hero />
       <Catagory />
       <Sales />
-      <div className="flex flex-col px-3 w-full items-center justify-center">
+      <div className="flex flex-col px-3 dark:text-white w-full items-center justify-center">
         <div
           id="newProducts"
           className="flex transition-all px-2 duration-300 items-center justify-between w-full border-b-4 pb-4 border-neutral-400"
         >
-          <h3 className="sm:text-[32px] text-20 flex items-center justify-center  text-black">
+          <h3 className="sm:text-[32px] text-20 flex items-center justify-center  ">
             New products
           </h3>
           <Link
@@ -87,9 +87,9 @@ export default function Home() {
       </div>
 
       <Reklam />
-      <div className="flex flex-col px-3 w-full items-center justify-center">
-        <div className="flex justify-between px-2 items-center border-b-4 w-full pb-4 border-neutral-400">
-          <h3 className="text-[20px] sm:text-30 flex items-center justify-center text-black">
+      <div className="flex flex-col px-3 w-full  items-center justify-center">
+        <div className="flex justify-between px-2 dark:text-white items-center border-b-4 w-full pb-4 border-neutral-400">
+          <h3 className="text-[20px] sm:text-30 flex items-center justify-center ">
             best salery
           </h3>
           <Link

@@ -73,7 +73,7 @@ const Header = () => {
   }
 
   return (
-    <div className="flex relative items-center px-3 pt-4 justify-between">
+    <div className="flex relative  dark:text-white items-center px-3 pt-4 justify-between">
       {/* logo */}
       <Link href={"/"} className="hidden sm:block">
         {" "}

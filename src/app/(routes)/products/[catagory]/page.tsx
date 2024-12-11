@@ -94,8 +94,11 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
   }, [user]);
   return (
     <div className="flex flex-col w-full gap-5 px-3  pt-5 ">
-      <p className="text-16 py-6">
-        <Link href={"/"} className="hover:text-blue-800 hover:underline">
+      <p className="text-16 dark:text-gray-500 py-6">
+        <Link
+          href={"/"}
+          className="hover:text-blue-800 dark:text-blue-600 px-2 hover:underline"
+        >
           home
         </Link>
         &gt; <span className="cursor-pointer"> products </span>
@@ -136,7 +139,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
           setopenFilter(!openFilter);
         }}
       />
-      <div className="flex items-center duration-300 transition-all animate-in  overflow-x-auto sm:overflow-hidden flex-nowrap sm:flex-wrap text-12 justify-start gap-3 w-full ">
+      <div className="flex items-center duration-300 dark:text-white dark:border-gray-500 transition-all animate-in  overflow-x-auto sm:overflow-hidden flex-nowrap sm:flex-wrap text-12 justify-start gap-3 w-full ">
         <Filtered type="price" item={filterProducts.price} />
         <Filtered
           type="discount"

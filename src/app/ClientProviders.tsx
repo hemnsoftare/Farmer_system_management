@@ -9,13 +9,14 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/home/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import FoooterMob from "@/components/home/FoooterMob";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider, useTheme } from "next-themes";
 
 export default function ClientProviders({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { theme } = useTheme();
   return (
     <ThemeProvider
       defaultTheme="system"
@@ -32,7 +33,9 @@ export default function ClientProviders({
         <ClerkProvider>
           <ContextProvider>
             <ToastProvider>
-              <div className="md:px-[30px] lg:px-[40px] orange:bg-redw-200 dark:bg-black">
+              <div
+                className={`md:px-[30px] klg:px-[40px] orange:bg-redw-200 dark:bg-black`}
+              >
                 <Header />
                 <hr />
                 {children}

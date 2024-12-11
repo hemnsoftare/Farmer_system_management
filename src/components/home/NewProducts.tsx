@@ -45,9 +45,9 @@ const NewProducts = ({
         key={product.name}
         className={`${
           title === "sale"
-            ? "bg-white max-h-[300px] min-w-[180px]"
+            ? "bg-white border dark:bg-neutral-900/90 max-h-[300px] min-w-[180px]"
             : "sm:h-fit border h-full lg:min-w-[200px] sm:w-full max-w-[300px]"
-        } flex sm:gap-5  gap-1 border-neutral-100 shadow-sm sm:shadow-lg shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center  duration-300 transition-all rounded-lg sm:p-2 sm:pb-3 `}
+        } flex sm:gap-5  gap-1 border-neutral-100 shadow-sm dark:shadow-secondary-500 dark:border-secondary sm:shadow-md shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3 `}
       >
         {user.id && title !== "dashboard" && (
           <>
@@ -95,7 +95,7 @@ const NewProducts = ({
             className="sm:w-[217px] rounded-lg w-full above-405:h-[140px] h-[130px] sm:h-[161px] sm:group-hover:scale-[1.03] duration-300 transition-all"
           />{" "}
           {product.isDiscount && product.discount && product.discount > 0 && (
-            <p className="group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute flex sm:hidden text-12 left-1  bg-gradient-to-l to-red-50 from-red-400 z-10 duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 ">
+            <p className="group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute flex sm:hidden text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-10 duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 ">
               {product?.discount} $
             </p>
           )}
@@ -122,7 +122,7 @@ const NewProducts = ({
           )}
         </div>
         <div className="flex gap-2 pt-1 sm:pt-0 p-2 sm:p-[2px] w-full flex-col">
-          <hr className="h-[2px] bg-gradient-to-r from-white via-slate-500 to-white border-0" />
+          <hr className="h-[2px] bg-gradient-to-r dark:hidden from-white via-slate-500 to-white border-0" />
           <h3
             className={`lg:text-16 text-14 md:text-10 ${
               title === "sale" || title === "dashboard"
@@ -135,7 +135,7 @@ const NewProducts = ({
           <div className="w-full h-fit sm:h-[33px]">
             {title !== "dashboard" && (
               <Link
-                className="w-full hidden group px-3  border opacity-0  rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all hover:bg-blue-900 text-white bg-primary hover:text-white items-center sm:group-hover:flex justify-center gap-2"
+                className="w-full hidden group px-3 dark:bg-blue-900  dark:hover:bg-blue-800 border opacity-0  rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all hover:bg-blue-900 text-white bg-primary hover:text-white items-center sm:group-hover:flex justify-center gap-2"
                 href={`/products/${product.category}/${product.name}`}
               >
                 <MdOutlineShoppingCart color="white" />
@@ -150,17 +150,19 @@ const NewProducts = ({
               } flex relative text-black mt-1 sm:mt-4 justify-between`}
             >
               {product.isDiscount && (
-                <span className="line-through text-11 sm:text-12 absolute  group-hover:opacity-0 -top-4 left-0 text-neutral-600">
+                <span className="line-through text-11 sm:text-12 absolute dark:text-neutral-400 decoration-secondary  group-hover:opacity-0 -top-4 left-0 text-neutral-600">
                   $
                   {product.discount &&
                     (product.discount * 0.01 * product.price).toFixed(2)}
                 </span>
               )}
-              <span className="text-12 sm:text-16">{product.price}$</span>
+              <span className="text-12 dark:text-neutral-500 sm:text-16">
+                {product.price}$
+              </span>
               {product.isDiscount &&
                 product.discount &&
                 product.discount > 0 && (
-                  <p className="group-hover:opacity-0 hidden sm:flex -mr-5 bg-gradient-to-r to-transparent from-red-300 z-10 duration-300 transition-all top-4 px-3 py-1 rounded-l-full text-secondary-500 text-sm">
+                  <p className="group-hover:opacity-0 hidden sm:flex -mr-5 bg-gradient-to-r to-transparent dark:from-red-500 from-red-300 z-10 duration-300 transition-all top-4 px-3 py-1 rounded-l-full sm:text-secondary-100 text-secondary-500 text-sm">
                     -{product?.discount} $
                   </p>
                 )}

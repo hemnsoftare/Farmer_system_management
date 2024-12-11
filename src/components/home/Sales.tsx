@@ -50,7 +50,7 @@ const Sales = () => {
     getdata();
   }, [user]);
   return (
-    <div className="flex flex-col lg:max-w-[1200px] sm:flex-row rounded-2xl overflow-hidden bg-primary-500 h-full w-full py-3 pb-7  px-3  items-center justify-center shadow-blue-950 shadow-md relative sm:rounded-md text-white gap-4">
+    <div className="flex flex-col lg:max-w-[1200px] sm:flex-row rounded-2xl overflow-hidden dark:bg-primary-700 bg-primary-500 h-full w-full py-3 pb-7  px-3  items-center justify-center shadow-blue-950 shadow-md relative sm:rounded-md text-white gap-4">
       <Image
         src={"/shape.png"}
         width={400}

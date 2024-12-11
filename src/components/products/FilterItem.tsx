@@ -124,7 +124,7 @@ const FilterItem = ({
 
   console.log(discount);
   return (
-    <div className="flex flex-col duration-300 transition-all  w-full items-center justify-start">
+    <div className="flex flex-col  h-full duration-300 transition-all dark:text-secondary w-full items-center justify-start">
       <FilterSection
         title="brand"
         items={category?.brands || []}
@@ -144,15 +144,15 @@ const FilterItem = ({
         <label htmlFor="discount">Discount</label>
         <Switch
           onClick={() => setDiscount(discount === true ? false : true)}
-          className="bg-blue-600"
+          className=" "
           id="discount"
         />
       </div>
       {/* Price Slider */}
       <div className="flex w-full items-center h-fit flex-col mt-2">
-        <span
+        <p
           onClick={() => handleOpen("price")}
-          className="cursor-pointer px-4 py-1 rounded-lg hover:bg-slate-100 duration-300 flex justify-between items-center w-full transition-all"
+          className="cursor-pointer px-4 py-1 rounded-lg sm:dark:hover:bg-neutral-700 sm:hover:bg-slate-100 duration-300 flex justify-between items-center w-full transition-all"
         >
           <span>price</span>
           <span
@@ -162,7 +162,7 @@ const FilterItem = ({
           >
             <FaChevronDown />
           </span>
-        </span>
+        </p>
         <div
           className={`${
             filter["price"] ? "h-fit opacity-100" : "h-0 w-0 opacity-0"
@@ -186,7 +186,7 @@ const FilterItem = ({
               onChange={handleSliderChange}
               formatOptions={{ style: "currency", currency: "USD" }}
               classNames={{
-                base: "w-full gap-3", // Ensure width is full or increased
+                base: "w-full dark:text-white/70 gap-3", // Ensure width is full or increased
                 filler:
                   "bg-gradient-to-r from-pink-300 to-cyan-300 dark:from-pink-600 dark:to-cyan-800",
                 track: "h-3 bg-gray-300 dark:bg-gray-600", // Add track styling

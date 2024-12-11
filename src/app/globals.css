@@ -86,39 +86,9 @@ html {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .orange {
-    --background: 33 100% 95%;
-    --foreground: 24 90% 35%;
-    --card: 33 100% 95%;
-    --card-foreground: 24 90% 35%;
-    --popover: 33 100% 95%;
-    --popover-foreground: 24 90% 35%;
-    --primary: 24 90% 50%;
-    --primary-foreground: 33 100% 95%;
-    --secondary: 33 90% 85%;
-    --secondary-foreground: 24 90% 35%;
-    --muted: 33 90% 90%;
-    --muted-foreground: 24 60% 40%;
-    --accent: 24 90% 50%;
-    --accent-foreground: 33 100% 95%;
-    --destructive: 12 90% 45%;
-    --destructive-foreground: 33 100% 95%;
-    --border: 24 90% 40%;
-    --input: 24 90% 50%;
-    --ring: 33 100% 70%;
-    --chart-1: 36 89% 61%;
-    --chart-2: 24 90% 40%;
-    --chart-3: 30 88% 45%;
-    --chart-4: 20 90% 50%;
-    --chart-5: 33 100% 75%;
-    --sidebar-background: 33 100% 90%;
-    --sidebar-foreground: 24 90% 35%;
-    --sidebar-primary: 24 90% 50%;
-    --sidebar-primary-foreground: 33 100% 95%;
-    --sidebar-accent: 24 80% 60%;
-    --sidebar-accent-foreground: 33 100% 90%;
-    --sidebar-border: 24 90% 35%;
-    --sidebar-ring: 33 100% 75%;
+  .orange-mode {
+    --background: #fff4e5;
+    --foreground: #4a2e00;
   }
 }
 

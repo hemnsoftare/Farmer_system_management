@@ -1,12 +1,12 @@
-"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
+  SheetOverlay,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -22,18 +22,24 @@ import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 const Mune = ({ category }: { category: catagoryProps[] }) => {
   const [showSheet, setshowSheet] = useState(false);
+
+  const handleOverlayClick = () => {
+    setshowSheet(false);
+  };
+
   const handleHideSheet = () => {
     setTimeout(() => {
       setshowSheet(false);
     }, 500);
   };
+
   return (
-    <Sheet open={showSheet}>
+    <Sheet open={showSheet} onOpenChange={setshowSheet}>
       <SheetTrigger onClick={() => setshowSheet(true)}>
-        {" "}
         <IoMdMenu size={25} />
       </SheetTrigger>
-      <SheetContent side={"left"}>
+      <SheetOverlay onClick={handleOverlayClick}></SheetOverlay>
+      <SheetContent side={"left"} className="dark:text-gray-400">
         <SheetHeader>
           <SheetTitle>
             <Image
@@ -48,8 +54,8 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
             <ul className="w-full flex flex-col mt-24 text-20 gap-3 justify-start  items-start ">
               <Link
                 onClick={() => setshowSheet(false)}
-                className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
                 href={"/"}
+                className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
               >
                 Home
               </Link>
@@ -59,13 +65,13 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                   <AccordionTrigger className="px-3 hover:bg-gray-200 rounded-lg  font-[400] duration-300 w-[170px] py-2 text-start">
                     Products
                   </AccordionTrigger>
-                  <AccordionContent className="flex w-full flex-col gap-3">
+                  <AccordionContent className="flex w-full flex-col dark:gap-2 gap-3">
                     {category.map((item) => (
                       <Link
                         onClick={handleHideSheet}
                         key={item.name}
                         href={`/products/${item.name}`}
-                        className="flex px-3 hover:bg-gray-100 rounded-lg duration-300 transition-all   items-center  gap-2 justify-start"
+                        className="flex px-3 hover:bg-gray-100 dark:bg-secondary rounded-lg duration-300 transition-all  dark:py-1 items-center  gap-2 justify-start"
                       >
                         <Image
                           src={item.image.link}
@@ -73,7 +79,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                           width={30}
                           height={30}
                           className="object-contain"
-                        />{" "}
+                        />
                         <span>{item.name}</span>
                       </Link>
                     ))}
@@ -81,9 +87,9 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 </AccordionItem>
               </Accordion>
               <Link
+                href={"/blog"}
                 onClick={handleHideSheet}
                 className="px-3 rounded-lg hover:bg-gray-200  duration-300 w-full py-2 text-start"
-                href={"/blog"}
               >
                 Blog
               </Link>

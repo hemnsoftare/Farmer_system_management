@@ -21,14 +21,22 @@ import {
 } from "../type";
 
 import { IconType } from "react-icons";
-import { FaUser, FaTrash, FaGift, FaHome } from "react-icons/fa";
+import {
+  FaUser,
+  FaTrash,
+  FaGift,
+  FaHome,
+  FaShippingFast,
+  FaDesktop,
+} from "react-icons/fa";
 import {
   MdAddCircleOutline,
   MdOutlineShoppingCart,
+  MdOutlineVerified,
   MdShoppingBasket,
 } from "react-icons/md";
 import { MenuItemProps } from "@nextui-org/react";
-import { BiCategoryAlt } from "react-icons/bi";
+import { BiCategoryAlt, BiSolidTimer } from "react-icons/bi";
 const newProdcuts: Productsprops[] = [
   {
     price: 12,
@@ -154,10 +162,10 @@ const brand: [
   "/lenovo.svg",
 ];
 const servies: serviesProps[] = [
-  { name: "Latest and Greatest", image: "/servies-computer.png" },
-  { name: "Guarantee", image: "/servies-sucrity.png" },
-  { name: "Free Shipping over 1000$", image: "/servies-delivery.png" },
-  { name: "24/7 Support", image: "/servies-time.png" },
+  { name: "Latest and Greatest", image: FaDesktop },
+  { name: "Guarantee", image: MdOutlineVerified },
+  { name: "Free Shipping over 1000$", image: FaShippingFast },
+  { name: "24/7 Support", image: BiSolidTimer },
 ];
 const footer: footerProps[] = [
   {

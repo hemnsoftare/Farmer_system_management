@@ -27,9 +27,9 @@ const FilterSection = ({
 
   return (
     <div className="flex border-b-2 w-full mt-2 flex-col items-center gap-2">
-      <span
+      <p
         onClick={handleOpen}
-        className="cursor-pointer px-4 py-1 rounded-lg hover:bg-slate-100 duration-300 flex justify-between items-center w-full transition-all"
+        className="cursor-pointer px-4 py-1 rounded-lg sm:dark:hover:bg-neutral-700 sm:hover:bg-slate-100 duration-300 flex justify-between items-center w-full transition-all"
       >
         <span>{title}</span>
         <span
@@ -39,7 +39,7 @@ const FilterSection = ({
         >
           <FaChevronDown />
         </span>
-      </span>
+      </p>
 
       <ul
         className={`${
@@ -51,7 +51,10 @@ const FilterSection = ({
           const displayText = typeof item === "string" ? item : item.name;
 
           return (
-            <li className="flex w-full items-center gap-2" key={index}>
+            <li
+              className="flex w-full dark:text-white/70 items-center gap-2"
+              key={index}
+            >
               <input
                 checked={selectedItems.includes(displayText)}
                 type="checkbox"

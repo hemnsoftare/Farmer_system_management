@@ -49,16 +49,18 @@ const SingleProduct = ({
         </Link>{" "}
         &gt; laptop
       </span>
-      <header className="flex flex-col sm:flex-row w-full sm:items-start justify-center items-center sm:justify-start gap-4">
+      <header className="flex flex-col dark:text-gray-600 sm:flex-row w-full sm:items-start justify-center items-center sm:justify-start gap-4">
         {product && <HeaderProduct item={product} />}
       </header>
+      <br className="hidden dark:block" />
       <main>
+        <hr />
         <div className="flex mt-6 py-3 flex-col w-full">
-          <h2 className="font-semibold px-3 text-22">Similar products</h2>
+          <h2 className="font-semibold px-3 dark:text-gray-500 text-22">
+            Similar products
+          </h2>
           <div className="flex flex-nowrap w-full px-3 items-center overflow-x-auto sm:overflowx-x-hidden   justify-start">
-            {similarProducts.map((item) => (
-              <NewProducts key={item.name} title="sale" itemDb={item} />
-            ))}
+            <ForProducts products={similarProducts} />
           </div>
           {/* <ForProducts products={similarProducts} /> */}
         </div>

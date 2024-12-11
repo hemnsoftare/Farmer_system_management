@@ -24,7 +24,7 @@ const Footer = () => {
   return (
     <>
       <div
-        className="bg-gradient-to-t px-3 w-full to-primary-800 hidden via-primary-800 from-primary-700 flex-col sm:flex text-white
+        className="bg-gradient-to-t px-3 w-full dark:to-black dark:via-blue-950 dark:via-indigo-950 to-primary-700 hidden via-primary-700 from-primary-700 flex-col sm:flex text-white
       py-[20px] overflow-hidden justify-between items-center"
       >
         <div className="flex justify-between w-full items-center">

@@ -7,7 +7,7 @@ import Link from "next/link";
 import React from "react";
 const BlogPage = () => {
   return (
-    <div className="flex mb-7 px-3 md:px-[100px] lg:px-0 flex-col w-full ">
+    <div className="flex mb-7 px-3 dark:text-gray-600 md:px-[100px] lg:px-0 flex-col w-full ">
       <span className="py-4">
         <Link href={"/"}> home</Link> &gt; blog{" "}
       </span>
@@ -22,7 +22,7 @@ const BlogPage = () => {
           </div>
           <div className="flex w-full flex-col gap-4 ">
             <h2>Recent post</h2>
-      
+
             <div className=" lg:grid  lg:grid-cols-2 gap-3">
               <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow />{" "}
               <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow /> <BlogRow />{" "}

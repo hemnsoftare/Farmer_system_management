@@ -67,9 +67,7 @@ const HeaderproductInfo = ({
       <ul className="text-neutral-500 list-disc  lg:w-[70%] md:w-[90%] w-[80%]  flex flex-col items-center justify-between">
         <li className="w-full md:text-12 lg:text-14 flex justify-between items-center">
           <span>Brand</span>
-          <span className="text-black font-semibold">
-            {productinfos?.brand}
-          </span>
+          <span className=" font-semibold">{productinfos?.brand}</span>
         </li>
         {productinfos?.infos.map((item) => (
           <li
@@ -77,7 +75,7 @@ const HeaderproductInfo = ({
             className="w-full md:text-12 lg:text-14 flex justify-between items-center"
           >
             <span>{item.title}</span>
-            <span className="text-black font-semibold">{item.description}</span>
+            <span className=" font-semibold">{item.description}</span>
           </li>
         ))}
       </ul>
@@ -88,12 +86,12 @@ const HeaderproductInfo = ({
             <span className="text-17 ">Price:</span>
             <span className="font-serif">{productinfos?.price}</span>$
           </span>
-          <span className="flex items-center gap-2">
+          <span className="flex items-center -mr-2 gap-2">
             <button
               onClick={() => {
                 onQuantity("decrease");
               }}
-              className="font-semibold text-22"
+              className="font-semibold p-2 text-22"
             >
               -
             </button>
@@ -104,7 +102,7 @@ const HeaderproductInfo = ({
               onClick={() => {
                 onQuantity("increase");
               }}
-              className="font-semibold text-22"
+              className="font-semibold p-2 text-22"
             >
               +
             </button>

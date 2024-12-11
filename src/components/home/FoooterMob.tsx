@@ -28,7 +28,7 @@ const FoooterMob = () => {
     return;
   }
   return (
-    <div className="bg-gradient-to-t  sm:hidden px-3 w-full py-6 to-primary-800  via-primary-800 from-primary-700 flex-col flex text-white">
+    <div className="bg-gradient-to-t dark:to-black dark:via-blue-950 dark:via-indigo-950 sm:hidden px-3 w-full py-6 to-primary-800  via-primary-800 from-primary-700 flex-col flex text-white">
       <div className="w-full ">
         <h2 className="text-14">Sign up for News and updates</h2>
 

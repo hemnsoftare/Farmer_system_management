@@ -6,10 +6,10 @@ const Hero = () => {
   return (
     <div className="flex sm:mt-12 overflow-hidden above-405:px-3 mt-0 items-center w-full justify-between ">
       <div className="flex w-full md:w-[300px] justify-center flex-col py-4 h-full items-center gap-8">
-        <h1 className="lg:text-35 xl:text-45 text-18 md:text-29 font-bold capitalize text-primary-700">
+        <h1 className="lg:text-35 dark:text-primary-200 xl:text-45 text-18 md:text-29 font-bold capitalize text-primary-700">
           Tech Heim
         </h1>
-        <h3 className="font-[500] text-12 text-center w-full md:text-20 lg:text-24">
+        <h3 className="font-[500] dark:text-neutral-500 text-12 text-center w-full md:text-20 lg:text-24">
           &quot;Join
           <span className="text-secondary">
             {" "}

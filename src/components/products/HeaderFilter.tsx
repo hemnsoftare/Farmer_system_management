@@ -43,15 +43,15 @@ const HeaderDilter = ({
       <Sheet open={openfilter}>
         <SheetTrigger
           onClick={() => closeFilter()}
-          className="flex   gap-2 sm:justify-start px-3 sm:px-0 border py-1 shadow-center-shadow rounded-lg   sm:w-fit w-1/2 items-center"
+          className="flex dark:text-gray-600 dark:shadow-secondary sm:hidden  gap-2 sm:justify-start px-3 sm:px-0 border py-1 shadow-center-shadow rounded-lg   sm:w-fit w-1/2 items-center"
         >
           <VscSettings className="block sm:hidden" />
           <span className="font-semibold">Filters ({length})</span>
         </SheetTrigger>
-        <SheetContent side="left" className="w-full">
+        <SheetContent side="left" className="w-full h-full">
           <SheetHeader>
             <SheetTitle>Filters</SheetTitle>
-            <SheetDescription>
+            <SheetDescription className="h-full">
               <FilterItem
                 closeFiltered={closeFilter}
                 key={selected}
@@ -64,8 +64,8 @@ const HeaderDilter = ({
           </SheetHeader>
         </SheetContent>
       </Sheet>
-
-      <span className="flex w-1/2 sm:w-fit border  shadow-center-shadow rounded-lg justify-center px-3 items-center gap-">
+      <br />
+      <div className="flex w-1/2 sm:w-fit border  dark:text-gray-600 dark:shadow-secondary shadow-center-shadow rounded-lg justify-center px-3 items-center gap-">
         <span className="text-16 font-semibold above-405:text-18 py-1 ">
           Sort by :{" "}
         </span>
@@ -73,7 +73,7 @@ const HeaderDilter = ({
           <DropdownMenuTrigger className="text-16 font-semibold above-405:text-18  pl-1 text-start  border-e outline-none w-1/2 sm:w-[200px]">
             {state}
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white w-full">
+          <DropdownMenuContent className="bg-white dark:bg-neutral-black dark:text-white border dark:border-secondary w-full">
             {Sort.map((item) => (
               <DropdownMenuItem
                 className="text-10 hover:bg-slate-100 duration-300 transition-all"
@@ -88,7 +88,7 @@ const HeaderDilter = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-      </span>
+      </div>
     </div>
   );
 };

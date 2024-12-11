@@ -11,7 +11,7 @@ interface Productsprops {
 }
 interface serviesProps {
   name: string;
-  image: string;
+  image: IconType;
 }
 interface footerProps {
   name: string;

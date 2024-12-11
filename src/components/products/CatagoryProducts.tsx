@@ -41,7 +41,7 @@ const CatagoryProducts = ({
       </div>
     );
   return (
-    <div className="flex lg:gap-4 md:gap-3 py-3 gap-2 overflow-x-auto sm:overflow-hidden  sm:flex-wrap justify-start sm:justify-center items-center w-full">
+    <div className="flex lg:gap-4 md:gap-3  py-3 gap-2 overflow-x-auto sm:overflow-hidden  sm:flex-wrap justify-start sm:justify-center items-center w-full">
       {category.map((item) => (
         <div
           onClick={() => {
@@ -51,9 +51,9 @@ const CatagoryProducts = ({
           key={item.name}
           className={`${
             item.name.trim() === selected.trim()
-              ? "shadow-blue-300 shadow-md  rounded-lg border-blue-300"
-              : "shadow-slate-100 shadow-lg rounded-lg"
-          } flex min-w-[120px] text-center flex-col  hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
+              ? "shadow-blue-300 dark:shadow-secondary shadow-md  rounded-lg border-blue-300"
+              : "shadow-slate-100 shadow-lg dark:shadow-secondary rounded-lg"
+          } flex min-w-[120px] text-center flex-col dark:bg-neutral-600 hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
         >
           <Image
             src={item.image.link}
@@ -62,7 +62,7 @@ const CatagoryProducts = ({
             height={20}
             className="w-5  h-5"
           />
-          <div className="text-14 flex justify-center items-center gap-2 w-full text-center">
+          <div className="text-14 flex justify-center items-center dark:text-gray-300 gap-2 w-full text-center">
             {item.name}
           </div>
         </div>
