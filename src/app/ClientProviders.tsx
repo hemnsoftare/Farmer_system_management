@@ -9,6 +9,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/home/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import FoooterMob from "@/components/home/FoooterMob";
+import { ThemeProvider } from "next-themes";
 
 export default function ClientProviders({
   children,
@@ -16,21 +17,34 @@ export default function ClientProviders({
   children: React.ReactNode;
 }) {
   return (
-    <ReduxProvider store={store}>
-      <ClerkProvider>
-        <ContextProvider>
-          <ToastProvider>
-            <div className="md:px-[30px]  lg:px-[40px]">
-              <Header />
-              <hr />
-              {children}
-            </div>
-            <Footer />
-            <FoooterMob />
-            <Toaster />
-          </ToastProvider>
-        </ContextProvider>
-      </ClerkProvider>
-    </ReduxProvider>
+    <ThemeProvider
+      defaultTheme="system"
+      attribute="class"
+      value={{
+        light: "light",
+        dark: "dark",
+        blue: "blue",
+        green: "green",
+        red: "red",
+      }}
+    >
+      <ReduxProvider store={store}>
+        <ClerkProvider>
+          <ContextProvider>
+            <ToastProvider>
+              <div className="md:px-[30px] lg:px-[40px] orange:bg-red-200 dark:bg-black">
+                <Header />
+                <hr />
+                {children}
+              </div>
+
+              <Footer />
+              <FoooterMob />
+              <Toaster />
+            </ToastProvider>
+          </ContextProvider>
+        </ClerkProvider>
+      </ReduxProvider>
+    </ThemeProvider>
   );
 }

@@ -20,6 +20,15 @@ import { usePathname } from "next/navigation";
 import { IoMdMenu } from "react-icons/io";
 import Mune from "./Mune";
 import { getFireBase } from "@/lib/action/uploadimage";
+import { useTheme } from "next-themes";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const pathName = usePathname();
@@ -28,7 +37,7 @@ const Header = () => {
   const [showMenu, setshowMenu] = useState(false);
   const { user } = useUser();
   const isAdmin = user?.publicMetadata?.role === "admin";
-
+  const { setTheme } = useTheme();
   const [category, setcategory] = useState<catagoryProps[]>([]);
   useEffect(() => {
     const getdata = async () => {
@@ -117,6 +126,20 @@ const Header = () => {
         >
           About Us
         </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger>MODE</DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              LIGHT
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              darck
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("orange")}>
+              orange
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       {/* right */}
       <div className="flex gap-2 items-center">

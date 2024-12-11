@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="orange">
       <head>
         <meta name="theme-color" content="#fff2f" />
         {/* Next.js will inject metadata automatically */}
