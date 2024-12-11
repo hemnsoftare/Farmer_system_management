@@ -32,7 +32,7 @@ export default function ClientProviders({
         <ClerkProvider>
           <ContextProvider>
             <ToastProvider>
-              <div className="md:px-[30px] lg:px-[40px] orange:bg-red-200 dark:bg-black">
+              <div className="md:px-[30px] lg:px-[40px] orange:bg-redw-200 dark:bg-black">
                 <Header />
                 <hr />
                 {children}

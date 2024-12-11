@@ -62,9 +62,9 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
       setload(true);
       try {
         const productsData = await getProducts(
-          filterProducts,
           selected.trim(),
-          sortBy
+          sortBy,
+          filterProducts
         );
         setproducts(productsData);
       } catch (error) {

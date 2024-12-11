@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
-  darkMode: ["class", '[data-theme="dark"]'], // Enable dark mode using class or data-theme
+const config = {
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -17,9 +17,70 @@ const config: Config = {
       },
     },
     extend: {
+      fontSize: {
+        "1": "1px",
+        "2": "2px",
+        "3": "3px",
+        "4": "4px",
+        "5": "5px",
+        "6": "6px",
+        "7": "7px",
+        "8": "8px",
+        "9": "9px",
+        "10": "10px",
+        "11": "11px",
+        "12": "12px",
+        "13": "13px",
+        "14": "14px",
+        "15": "15px",
+        "16": "16px",
+        "17": "17px",
+        "18": "18px",
+        "19": "19px",
+        "20": "20px",
+        "21": "21px",
+        "22": "22px",
+        "23": "23px",
+        "24": "24px",
+        "25": "25px",
+        "26": "26px",
+        "27": "27px",
+        "28": "28px",
+        "29": "29px",
+        "30": "30px",
+        "31": "31px",
+        "32": "32px",
+        "33": "33px",
+        "34": "34px",
+        "35": "35px",
+        "36": "36px",
+        "37": "37px",
+        "38": "38px",
+        "39": "39px",
+        "40": "40px",
+        "41": "41px",
+        "42": "42px",
+        "43": "43px",
+        "44": "44px",
+        "45": "45px",
+        "46": "46px",
+        "47": "47px",
+        "48": "48px",
+        "49": "49px",
+        "50": "50px",
+        "51": "51px",
+        "52": "52px",
+        "53": "53px",
+        "54": "54px",
+        "55": "55px",
+        "56": "56px",
+        "57": "57px",
+        "58": "58px",
+        "59": "59px",
+        "60": "60px",
+      },
       colors: {
         primary: {
-          DEFAULT: "#2767F5",
           "25": "#E4E9FE",
           "50": "#AECDFB",
           "75": "#7BA8F9",
@@ -30,24 +91,20 @@ const config: Config = {
           "600": "#052E6D",
           "700": "#042352",
           "800": "#022736",
+          DEFAULT: "#2767F5",
         },
-        orange: {
-          DEFAULT: "#FFA500",
-          "50": "#FFF4E5",
-          "100": "#FFE8CC",
-          "200": "#FFD199",
-          "300": "#FFB366",
-          "400": "#FF944D",
-          "500": "#FF8500",
-          "600": "#CC6B00",
-          "700": "#994F00",
-          "800": "#663300",
+        textShadow: {
+          default: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+          lg: "4px 4px 8px rgba(0, 0, 0, 0.7)",
         },
-        dark: {
-          background: "#1A1A1A",
-          foreground: "#EAEAEA",
-          muted: "#999999",
-          card: "#222222",
+        secondary: {
+          "100": "#FDCBC9",
+          "200": "#FAB793",
+          "300": "#F88242",
+          "400": "#F45E0C",
+          "500": "#E84D09",
+          "600": "#B83A0B",
+          DEFAULT: "#F45E0C",
         },
         neutral: {
           black: "#0C0C0C",
@@ -65,63 +122,65 @@ const config: Config = {
             "900": "#2D2D2D",
           },
         },
-      },
-      textColor: {
-        orange: {
-          light: "#FFD199",
-          DEFAULT: "#FF8500",
-          dark: "#CC6B00",
-        },
-        dark: {
-          DEFAULT: "#EAEAEA",
-          muted: "#999999",
-        },
-      },
-      backgroundColor: {
-        orange: {
-          light: "#FFF4E5",
-          DEFAULT: "#FFA500",
-          dark: "#CC6B00",
-        },
-        dark: {
-          DEFAULT: "#1A1A1A",
-          card: "#222222",
-          muted: "#333333",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
         },
       },
-      borderColor: {
-        orange: {
-          DEFAULT: "#FFA500",
-          light: "#FFB366",
-        },
-        dark: {
-          DEFAULT: "#333333",
-          muted: "#444444",
-        },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+        "above-405": {
+          raw: "(min-width: 405px) and (max-width: 500px)",
+        },
+      },
+      boxShadow: {
+        "center-shadow": "0px 0px 10px 5px #F6F6F6",
+      },
     },
   },
-  plugins: [
-    function ({ addVariant }) {
-      addVariant("orange", '[data-theme="orange"] &'); // Orange mode variant
-      addVariant("dark", '[data-theme="dark"] &'); // Dark mode variant
-    },
-    require("tailwindcss-animate"),
-  ],
-};
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;
 
 export default config;
