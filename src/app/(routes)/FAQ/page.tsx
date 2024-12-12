@@ -31,14 +31,14 @@ const Page = () => {
       <div className="flex items-start flex-col sm:flex-row w-full sm:w-[80%] justify-center gap-3 ">
         <div className="flex gap-3 items-start px-3 mt-3 w-full sm:w-[23%] justify-start flex-col ">
           <h2 className="font-semibold ">Table of Contents</h2>
-          <div className="w-full overflow-x-auto sm:overflow-hidden justify-center flex flex-row sm:flex-col gap-1">
+          <div className="w-full  overflow-x-auto sm:overflow-hidden justify-center flex-col gap-1">
             {questions.map((item, index) => (
               <h2
                 className={` ${
                   IndexItem === index
-                    ? "text-blue-600 border-b-2 border-blue-600"
+                    ? "text-blue-600 border-b-2 sm:border-blue-600"
                     : "border-black "
-                } md:text-14 lg:text-16 border-b justify-center sm:justify-between sm:flex-row-reverse  px-4 text-12 text-center  sm:w-full flex items-center gap-2 sm:hover:bg-slate-100 duration-300 transition-all`}
+                } md:text-14 lg:text-16 border-b text-start  md:dark:hover:bg-neutral-800  sm:justify-between sm:flex-row-reverse  px-4 text-12 md:text-center  sm:w-full flex items-center gap-2 sm:hover:bg-slate-100 duration-300 transition-all`}
                 onClick={() => setIndexItem(index)}
                 key={item.title}
               >

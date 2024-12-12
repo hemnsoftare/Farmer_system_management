@@ -34,10 +34,10 @@ const CartItem = ({
         height={140}
         className={` ${
           type === "headerItem" ? "w-[154px] h-[100px]" : " w-[150px] h-[100px]"
-        }  group-hover:scale-[1.1] duration-300 transition-all `}
+        }  md:group-hover:scale-[1.1] duration-300 rounded-lg  transition-all `}
       />
-      <div className="flex flex-col h-full  items-start bg-white   shadow-neutral-50    w-full justify-between py-3 gap-2">
-        <h2 className="lg:text-16 md:text-14 w-full font-semibold text-neutral-900 text-wrap">
+      <div className="flex flex-col h-full  items-start dark:bg-transparent bg-white   shadow-neutral-50    w-full justify-between py-3 gap-2">
+        <h2 className="lg:text-16 md:text-14 w-full font-semibold dark:text-neutral-600 text-neutral-900 text-wrap">
           {item.name}
         </h2>
         <p className="text-10 flex items-center gap-2 text-neutral-600">
@@ -49,7 +49,7 @@ const CartItem = ({
         </p>
 
         <div className="flex items-center  w-full gap-6 justify-between ">
-          <p className="text-12 text-neutral-900">
+          <p className="text-12 dark:text-neutral-600 text-neutral-900">
             $ {item.price * item.quantity}
           </p>
           <div className="flex  items-center  px-5 gap-2">

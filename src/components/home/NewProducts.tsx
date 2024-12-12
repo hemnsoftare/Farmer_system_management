@@ -49,7 +49,7 @@ const NewProducts = ({
             : "sm:h-fit border h-full lg:min-w-[200px] sm:w-full max-w-[300px]"
         } flex sm:gap-5  gap-1 border-neutral-100 shadow-sm dark:shadow-secondary-500 dark:border-secondary sm:shadow-md shadow-neutral-400 overflow-hidden flex-col group relative w-full items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3 `}
       >
-        {user.id && title !== "dashboard" && (
+        {user && user.id && title !== "dashboard" && (
           <>
             {favoriteId && favoriteId.some((item) => item === itemDb.name) ? (
               <FaHeart

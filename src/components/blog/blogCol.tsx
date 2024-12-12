@@ -6,7 +6,7 @@ import { BlogColProps } from "@/type";
 
 const BlogCol = ({ blog }: { blog: BlogColProps }) => {
   return (
-    <div className="flex flex-col justify-center group gap-1 sm:gap-4 shadow-gray-200 shadow-md hover:shadow-lg rounded-lg duration-300 transition-all overflow-hidden items-center min-h-[250px] max-h-[250px] xl:min-h-[336px] lg:min-h-[320px] sm:h-[336px] min-w-[150px] ">
+    <div className="flex flex-col justify-center group gap-1 sm:gap-4 dark:shadow-neutral-700 shadow-gray-200 shadow-md hover:shadow-lg rounded-lg duration-300 transition-all overflow-hidden items-center min-h-[250px] max-h-[250px] xl:min-h-[336px] lg:min-h-[320px] sm:h-[336px] min-w-[150px] ">
       <Image
         src={blog.imageSrc}
         alt="image blog"
@@ -30,10 +30,10 @@ const BlogCol = ({ blog }: { blog: BlogColProps }) => {
           </p>
         </div>
         <div className="flex flex-col mt-3  sm:mt-1 justify-start">
-          <h2 className="sm:text-20 lg:min-h-[34px] sm:mb-1 max-h-[20px] min-h-[20px] text-11 font-semibold sm:hover:text-red-600 text-black  w-full  overflow-hidden">
+          <h2 className="sm:text-20 dark:text-neutral-500 lg:min-h-[34px] sm:mb-1 max-h-[20px] min-h-[20px] text-11 font-semibold sm:hover:text-red-600 text-black  w-full  overflow-hidden">
             {blog.title}
           </h2>
-          <p className="w-full h-[47px] text-black overflow-hidden mt-3 text-10 sm:text-[16px]">
+          <p className="w-full h-[47px] dark:text-neutral-600 text-black overflow-hidden mt-3 text-10 sm:text-[16px]">
             {blog.description}
           </p>
         </div>

@@ -11,8 +11,9 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { LuHistory } from "react-icons/lu";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegUser } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
+import { RiAccountCircleLine } from "react-icons/ri";
 
 const UserHeader = () => {
   const { user } = useUser(); // Access the current user data
@@ -24,16 +25,10 @@ const UserHeader = () => {
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none border-none">
         {/* Use the user's profile image URL */}
-        <Image
-          src={"/user.png"} // Use the computed image URL
-          alt="user"
-          width={24}
-          height={24}
-          className="object-cover rounded-full"
-        />
+        <FaRegUser className="object-cover w-5 dark:text-white   h-5 md:h-6 md:w-6" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className=" z-50 bg-white">
-        <DropdownMenuLabel className="flex gap-2 border-b-2 border-neutral-100 items-center justify-between">
+      <DropdownMenuContent className=" z-50 dark:bg-black border dark:border-white/50 mt-3 bg-white">
+        <DropdownMenuLabel className="flex gap-2 border-b-2  dark:border-neutral-700 border-neutral-100 items-center justify-between">
           <Image
             src={profileImageUrl} // Use the computed image URL
             alt="user"
@@ -50,27 +45,27 @@ const UserHeader = () => {
             </span>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuItem className="flex items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link href={"/user-profile"} className="flex gap-2 items-center">
             <MdOutlineManageAccounts color=" #f45e0c" className="size-[23px]" />
             <span> Manage Account</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link href={"/historyOrder"} className="flex items-center gap-2">
             {" "}
             <LuHistory color=" #f45e0c" className="size-[23px]" />{" "}
             <span> Histroy Order</span>
           </Link>
         </DropdownMenuItem>{" "}
-        <DropdownMenuItem className="flex items-center gap-2 border-b-2  border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2  border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link href={"/favorite"} className="flex items-center gap-2">
             {" "}
             <FaHeart color=" #f45e0c" className="size-[23px]" />{" "}
             <span> Favorite Products</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           {/* Sign out button */}
           <span className="w-full flex items-center gap-2">
             <CiLogout color=" #f45e0c" className="size-[23px]" />

@@ -7,7 +7,7 @@ const BlogRow = ({ type }: { type?: "blog_single_page" }) => {
   return (
     <div
       className={`  w-full  h-[116px] lg:w-full
-       flex   items-center overflow-hidden rounded-xl group   shadow-gray-300 shadow-lg justify-center gap-0`}
+       flex   items-center overflow-hidden rounded-xl group dark:shadow-neutral-700  shadow-gray-300 shadow-lg justify-center gap-0`}
     >
       <Image
         src={"/bog-row1.webp"}
@@ -24,7 +24,7 @@ const BlogRow = ({ type }: { type?: "blog_single_page" }) => {
           8 Things You Probably Didn’t Know About Head
         </h3>
         <p
-          className={`   min-h-[35px] max-h-[35px] md:text-10 text-8 lg:text-[10px] xl:text-12 overflow-hidden mt-2 text-neutral-800 `}
+          className={`   min-h-[35px] max-h-[35px] md:text-10 text-8 dark:text-neutral-500 lg:text-[10px] xl:text-12 overflow-hidden mt-2 text-neutral-800 `}
         >
           Owning a headphone could mean a different thing for different people.
           For some, it act as a fashion statement. It’s easy to spot these

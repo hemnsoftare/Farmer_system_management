@@ -24,7 +24,7 @@ const ProductsHeader = ({ category }: { category: catagoryProps[] }) => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>
+          <NavigationMenuTrigger className=" bg-transparent">
             <Link
               href={"/products/laptop"}
               className="hover:underline underline-offset-4 md:text-12 lg:text-16 duration-200 transition-all hover:text-primary text-lg font-[400]"
@@ -32,13 +32,13 @@ const ProductsHeader = ({ category }: { category: catagoryProps[] }) => {
               Products
             </Link>
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-white p-4 w-[130px] rounded-md shadow-lg">
+          <NavigationMenuContent className="bg-white p-4 dark:bg-black w-[130px] rounded-md shadow-lg">
             <div className="flex flex-col gap-2">
               {category.map((item) => (
                 <NavigationMenuLink
                   key={item.name}
                   href={`/products/${item.name}`}
-                  className="flex w-[130px] text-[12px] items-center gap-2 hover:scale-[1.08] duration-300 transition-all hover:bg-slate-100 p-2 rounded-md"
+                  className="flex w-[130px] dark:bg-secondary text-[12px] items-center gap-2 hover:scale-[1.08] duration-300 transition-all hover:bg-slate-100 p-2 rounded-md"
                 >
                   <Image
                     src={item.image.link}

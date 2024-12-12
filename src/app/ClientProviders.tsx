@@ -34,7 +34,7 @@ export default function ClientProviders({
           <ContextProvider>
             <ToastProvider>
               <div
-                className={`md:px-[30px] klg:px-[40px] orange:bg-redw-200 dark:bg-black`}
+                className={`md:px-[30px] klg:px-[40px] relative orange:bg-redw-200 dark:bg-black`}
               >
                 <Header />
                 <hr />

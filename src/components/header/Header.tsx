@@ -29,6 +29,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 const Header = () => {
   const pathName = usePathname();
@@ -53,7 +54,30 @@ const Header = () => {
   // State to track the total quantity and grand total
   const [total, setTotal] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState("None");
+  const [lastScrollY, setLastScrollY] = useState(0);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        setScrollDirection("Increasing");
+      } else if (currentScrollY < lastScrollY) {
+        setScrollDirection("Decreasing");
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    // Add the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]); // Dependency on lastScrollY
   useEffect(() => {
     const quantityTotal = cartItems.reduce(
       (acc, item) => acc + item.quantity,
@@ -73,7 +97,16 @@ const Header = () => {
   }
 
   return (
-    <div className="flex relative  dark:text-white items-center px-3 pt-4 justify-between">
+    <div
+      className={` ${
+        scrollDirection === "Decreasing"
+          ? " translate-y-0 transition-all backdrop-blur-md dark:backdrop-brightness-75 duration-300 sticky top-0 right-0 left-0"
+          : scrollDirection === "None"
+            ? "translate-y-0"
+            : "-translate-y-[200px]"
+      } 
+         flex relative z-[50] top-0 right-0 left-0 dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
+    >
       {/* logo */}
       <Link href={"/"} className="hidden sm:block">
         {" "}
@@ -93,6 +126,15 @@ const Header = () => {
       <Link href="/" className="font-bold block sm:hidden text-secondary-300">
         Tech - Hiem
       </Link>
+      {/* dark mode and light mode  */}
+      <MdOutlineDarkMode
+        className="block  dark:hidden md:dark:hidden md:hidden"
+        onClick={() => setTheme("dark")}
+      />
+      <MdOutlineLightMode
+        className="hidden  md:dark:hidden dark:block md:hidden"
+        onClick={() => setTheme("light")}
+      />
       {/* center */}
       <div className="sm:flex hidden xl:gap-12 lg:gap-6 md:gap-6 py-2 justify-center w-[60%] items-center">
         <Link
@@ -127,15 +169,26 @@ const Header = () => {
           About Us
         </Link>
         <DropdownMenu>
-          <DropdownMenuTrigger>MODE</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => setTheme("light")}>
-              LIGHT
+          <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
+            Mode
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
+            <DropdownMenuItem
+              className="sm:hover:bg-slate-500 duration-300"
+              onClick={() => setTheme("light")}
+            >
+              Light
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
-              darck
+            <DropdownMenuItem
+              className="sm:hover:bg-slate-500 duration-300"
+              onClick={() => setTheme("dark")}
+            >
+              dark
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("orange")}>
+            <DropdownMenuItem
+              className="sm:hover:bg-slate-500 duration-300"
+              onClick={() => setTheme("orange")}
+            >
               orange
             </DropdownMenuItem>
           </DropdownMenuContent>

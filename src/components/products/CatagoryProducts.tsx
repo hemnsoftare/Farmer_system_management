@@ -53,16 +53,16 @@ const CatagoryProducts = ({
             item.name.trim() === selected.trim()
               ? "shadow-blue-300 dark:shadow-secondary shadow-md  rounded-lg border-blue-300"
               : "shadow-slate-100 shadow-lg dark:shadow-secondary rounded-lg"
-          } flex min-w-[120px] text-center flex-col dark:bg-neutral-600 hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
+          } flex min-w-[120px]  text-center flex-col dark:bg-neutral-200 hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
         >
           <Image
             src={item.image.link}
             alt="image "
             width={20}
             height={20}
-            className="w-5  h-5"
+            className="w-6 md:min-w-[25px] md:min-h-[25px] h-6"
           />
-          <div className="text-14 flex justify-center items-center dark:text-gray-300 gap-2 w-full text-center">
+          <div className="text-14 flex justify-center items-center dark:text-black gap-2 w-full text-center">
             {item.name}
           </div>
         </div>

@@ -16,7 +16,7 @@ const CardHistory: React.FC<CardHistoryProps> = ({ item, date }) => {
 
   //   console.log(FormData);
   return (
-    <div className="flex flex-col gap-3 max-w-[400px] rounded-sm sm:rounded-lg justify-center items-center shadow-md shadow-neutral-300 p-2">
+    <div className="flex flex-col gap-3 max-w-[400px] rounded-sm sm:rounded-lg justify-center items-center shadow-md dark:shadow-secondary shadow-neutral-300 p-2">
       {/* Item Image */}
       <Image
         src={item.image}

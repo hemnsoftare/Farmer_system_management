@@ -26,7 +26,7 @@ const CardFavorite = ({
   return (
     <Link
       href={`/products/${item.categroy}/${item.name}`}
-      className="flex flex-col relative gap-3 w-full sm:max-w-[250px] sm:min-w-[250px] rounded-sm sm:rounded-lg justify-center items-center shadow-md shadow-secondary-100 p-2"
+      className="flex flex-col relative gap-3 w-full dark:shadow-secondary sm:max-w-[250px] sm:min-w-[250px] rounded-sm sm:rounded-lg justify-center items-center shadow-md shadow-secondary-100 p-2"
     >
       {/* Item Image */}
       {userId && (

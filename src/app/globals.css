@@ -105,40 +105,10 @@ html {
 /* Default styles (fallback) */
 body {
   transition:
-    background-color 0.3s,
+    background-color 2s,
     color 0.3s;
   background-color: white;
   color: black;
-}
-
-/* Light theme */
-body.light {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-/* Dark theme */
-body.dark {
-  background-color: #121212;
-  color: #ffffff;
-}
-
-/* Blue theme */
-body.blue {
-  background-color: #007bff;
-  color: #ffffff;
-}
-
-/* Green theme */
-body.green {
-  background-color: #28a745;
-  color: #ffffff;
-}
-
-/* Red theme */
-body.red {
-  background-color: #dc3545;
-  color: #ffffff;
 }
 
 .overflow-y {

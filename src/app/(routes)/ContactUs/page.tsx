@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { MdOutlineMail } from "react-icons/md";
@@ -23,11 +24,11 @@ const contactInfo = [
 const Page = () => {
   return (
     <div className="flex flex-col xl:py-12 py-4 w-full gap-4">
-      <h2 className="mt-4 px-3">
-        home &gt;{" "}
-        <span className="text-blue-600 border-blue-600  border-b">
-          Contact Us
-        </span>
+      <h2 className="mt-4  px-3">
+        <Link href={"/"} className="text-blue-600 border-blue-600  border-b">
+          home{" "}
+        </Link>{" "}
+        &gt; <span className="">Contact Us</span>
       </h2>
       <div className="flex items-center justify-center mt-6  gap-5 w-full">
         {contactInfo.map((item) => (
@@ -46,7 +47,7 @@ const Page = () => {
       <div className="flex flex-col sm:flex-row items-start mt-8 sm:px-24 px-2 sm:gap-10 justify-center">
         <div className="flex flex-col w-full sm:w-[40%] items-start gap-3 justify-normal">
           <h2 className="font-semibold">Message us</h2>
-          <p className="text-neutral-400">
+          <p className="text-neutral-400 dark:text-neutral-600">
             We are here to assist you every step of the way. Whether you have a
             question, need technical support, or simply want to share your
             feedback, our dedicated team is ready to listen and provide prompt
@@ -59,7 +60,7 @@ const Page = () => {
             placeholder="* message .."
             id=""
             rows={5}
-            className="placeholder:text-neutral-400 w-full rounded-sm duration-300 transition-all text-neutral-700 shadow-md focus:shadow-md shadow-slate-100 border-neutral-300/50 outline-none px-4 py-2 border-2"
+            className="placeholder:text-neutral-400 w-full rounded-sm duration-300 transition-all text-neutral-700 shadow-md focus:shadow-md shadow-slate-100 border-neutral-300/50 dark:border-black/60 dark:shadow-secondary outline-none px-4 py-2 border-2"
           />
           <button className="text-white bg-primary rounded-lg px-10 py-2 self-end hover:bg-blue-700 ">
             submit
