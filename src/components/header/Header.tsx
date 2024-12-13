@@ -34,12 +34,15 @@ import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 const Header = () => {
   const pathName = usePathname();
   const [isopenCart, setisopenCart] = useState(false);
-  const [isOpenSearch, setisOpenSearch] = useState(false);
-  const [showMenu, setshowMenu] = useState(false);
   const { user } = useUser();
   const isAdmin = user?.publicMetadata?.role === "admin";
   const { setTheme } = useTheme();
   const [category, setcategory] = useState<catagoryProps[]>([]);
+  // State to track the total quantity and grand total
+  const [total, setTotal] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState("None");
+  const [lastScrollY, setLastScrollY] = useState(0);
   useEffect(() => {
     const getdata = async () => {
       const cate: catagoryProps[] = await getFireBase("category");
@@ -51,22 +54,18 @@ const Header = () => {
     (state: { cart: ItemCartProps[] }) => state.cart
   );
 
-  // State to track the total quantity and grand total
-  const [total, setTotal] = useState(0);
-  const [grandTotal, setGrandTotal] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState("None");
-  const [lastScrollY, setLastScrollY] = useState(0);
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY) {
         setScrollDirection("Increasing");
+      } else if (currentScrollY === 0) {
+        setScrollDirection("None");
       } else if (currentScrollY < lastScrollY) {
         setScrollDirection("Decreasing");
       }
-
+      setisopenCart(false);
       setLastScrollY(currentScrollY);
     };
 
@@ -228,9 +227,6 @@ const Header = () => {
       </div>
       {isopenCart && (
         <CartHeader items={cartItems} onclose={() => setisopenCart(false)} />
-      )}
-      {isOpenSearch && (
-        <Search isopen={isOpenSearch} onclose={() => setisOpenSearch(false)} />
       )}
     </div>
   );

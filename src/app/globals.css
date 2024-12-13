@@ -168,7 +168,7 @@ body {
 
 /* Hides scrollbar but allows scrolling */
 * {
-  scrollbar-width: thin; /* Firefox: customizes scrollbar appearance */
+  scrollbar-width: none; /* Firefox: customizes scrollbar appearance */
   scrollbar-color: transparent transparent; /* Firefox: makes scrollbar transparent */
 }
 

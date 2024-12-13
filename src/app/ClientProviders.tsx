@@ -10,6 +10,7 @@ import Footer from "@/components/home/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import FoooterMob from "@/components/home/FoooterMob";
 import { ThemeProvider, useTheme } from "next-themes";
+import Search from "@/components/home/Search";
 
 export default function ClientProviders({
   children,
@@ -38,6 +39,7 @@ export default function ClientProviders({
               >
                 <Header />
                 <hr />
+                <Search />
                 {children}
               </div>
 

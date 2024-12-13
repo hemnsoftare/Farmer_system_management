@@ -1,87 +1,68 @@
-import React from "react";
-import { IoCloseSharp, IoSearchOutline } from "react-icons/io5";
+import { useState } from "react";
+import { IoSearch } from "react-icons/io5";
 
-type SearchedItems = {
-  name: string;
-  items: string[];
-};
-const Search = ({
-  isopen,
-  onclose,
-}: {
-  isopen: boolean;
-  onclose: () => void;
-}) => {
-  const searchData: SearchedItems[] = [
-    {
-      name: "The Most Searched Items",
-      items: [
-        "MacBook Pro",
-        "AirPods Pro",
-        "Samsung S9",
-        "Tablet",
-        "Xiaomi",
-        "JBL speaker",
-        "Canon",
-        "AirPods Max",
-        "Asus",
-        "MagSafe",
-      ],
-    },
-    {
-      name: "Most used keywords",
-      items: [
-        "Tablets",
-        "Headphones",
-        "Smartphones",
-        "Smartwatch",
-        "Laptops",
-        "USB Drive",
-        "Phone Cases",
-      ],
-    },
+const SearchComponent = () => {
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const searchData = [
+    "MacBook Pro",
+    "AirPods Pro",
+    "Samsung S9",
+    "Tablet",
+    "Xiaomi",
+    "JBL speaker",
   ];
 
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+
+    if (value.trim() === "") {
+      setFilteredData([]);
+      return;
+    }
+
+    const filtered = searchData.filter((item) =>
+      item.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
   return (
-    <>
-      <div
-        onClick={onclose}
-        className=" h-screen fixed top-0 right-0 bg-re w-screen backdrop-blur-xl  z-10   400"
-      ></div>
-      <dialog
-        open={isopen}
-        className=" md:w-[80%] md:ml-[10%] md:mr-[10%]  md:mt-[50%] bg-white rounded-2xl px-12  shadow-2xl shadow-black py-4 flex flex-col z-40  lg:w-[60%] lg:ml-[20%] lg:mr-[20%] lg:mt-[50%]"
-      >
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center lg:w-[85%] md:w-[90%] ">
-            <input
-              type="search"
-              className="w-full px-8 py-3  rounded-md outline-none relative  bg-gray-200 border-gray-500 "
-              placeholder="search"
-            />
-            <IoSearchOutline className="-translate-x-8" />
-          </div>
-          <IoCloseSharp onClick={onclose} className="w-[20px] h-[20px] mr-2 " />
-        </div>
-        <div className="flex items-start justify-cente  mt-6 md:w-[90%]  lg:w-[85%]">
-          {searchData.map((item) => (
-            <div key={item.name} className="flex gap-4   w-full  flex-col">
-              <h2 className=" font-semibold lg:text-15 md:text-15 ">
-                {item.name}
-              </h2>
-              <div className="grid gap-3 grid-cols-2">
-                {item.items.map((type) => (
-                  <span className="text-13 md:text-10" key={type}>
-                    {type}
-                  </span>
-                ))}
-              </div>
-            </div>
+    <div className="w-full flex mt-3 justify-center px-5 items-center">
+      <div className="relative group w-full md:w-1/2">
+        <input
+          type="search"
+          value={searchValue}
+          onChange={handleSearch}
+          className="w-full py-2 rounded-full outline-none focus:bg-gray-200 duration-300 bg-gray-100 px-3 border border-gray-300"
+          placeholder="Search"
+        />
+        <IoSearch className="absolute top-3 right-4 text-gray-500 group-focus-within:hidden block" />
+
+        <ul
+          className={`absolute w-full box-border bg-white border shadow-xl flex flex-col items-center justify-start rounded-lg mx-0 px-0 transition-all duration-300 border-gray-300 mt-1 max-h-48 overflow-y-auto z-50 ${
+            filteredData.length > 0
+              ? "opacity-100 max-h-48"
+              : "opacity-0 max-h-0"
+          }`}
+          style={{
+            visibility: filteredData.length > 0 ? "visible" : "hidden", // Maintain visibility for transition
+          }}
+        >
+          {filteredData.map((item, index) => (
+            <li
+              key={index}
+              onClick={() => setSearchValue(item)}
+              className=" px-3 py-2 w-full duration-300 hover:bg-gray-100 cursor-pointer"
+            >
+              {item}
+            </li>
           ))}
-        </div>
-      </dialog>
-    </>
+        </ul>
+      </div>
+    </div>
   );
 };
 
-export default Search;
+export default SearchComponent;
