@@ -5,8 +5,8 @@ import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
-import { cont } from "./ConTextData"; // Import the context without re-wrapping
 import { useUser } from "@clerk/nextjs";
+import { FaPlus } from "react-icons/fa";
 
 const Layout = ({
   children,
@@ -15,7 +15,7 @@ const Layout = ({
 }>) => {
   const pathname = usePathname();
   const { user } = useUser();
-
+  const [showtabs, setshowtabs] = useState(false);
   // State to manage the visibility of the sidebar
   const [showSlider, setShowSlider] = useState(false);
 
@@ -37,9 +37,48 @@ const Layout = ({
 
   return (
     <div className="flex relative items-start h-full justify-start w-full">
+      <button onClick={() => setshowtabs((pre) => !pre)} className="z-50">
+        <FaPlus
+          className={`p-1 box-border rounded-full text-25 text-white absolute top-3 left-3 
+          ${showtabs ? "rotate-45" : "rotate-0"} 
+          duration-300 transition-transform bg-secondary`}
+        />
+      </button>
+
+      <div
+        className={`transition-all duration-1000 flex-col gap-3 z-50 absolute top-12 left-3
+    ${showtabs ? "max-w-[200px] opacity-100 flex" : "max-w-0 opacity-0"}`}
+      >
+        {menuItems.map((item, index) => (
+          <Link
+            href={item.url || ""}
+            key={item.name}
+            onClick={() => setshowtabs(false)}
+            style={{
+              transitionDelay: `${index * 150}ms`, // Slightly increased delay for a smoother stagger
+              transitionDuration: "700ms", // Add inline duration to avoid conflicts
+            }}
+            className={`bg-purple-600 flex px-3 py-1 items-center gap-2 text-white rounded-xl
+        transition-all overflow-hidden
+        ${showtabs ? "translate-x-0 opacity-100" : "-translate-x-[240px] opacity-0"}`}
+          >
+            <item.icon color="white" className="w-[20px]" />
+            <h2
+              className={`transition-opacity ${showtabs ? "opacity-100" : "opacity-0"}`}
+              style={{
+                transitionDelay: `${index * 150}ms`,
+                transitionDuration: "700ms",
+              }}
+            >
+              {item.name}
+            </h2>
+          </Link>
+        ))}
+      </div>
+
       {/* Sidebar Toggle Button */}
       <button
-        className={`absolute top-2 transition-all duration-1000 z-50 ${
+        className={`absolute top-2 transition-all md:block hidden duration-1000 z-50 ${
           showSlider
             ? "rotate-180 right-2 sm:left-[210px]"
             : "rotate-0 sm:left-4 right-[90%] top-2"
@@ -53,7 +92,7 @@ const Layout = ({
       <div
         className={`${
           showSlider ? "sm:w-[250px] w-full" : "-translate-x-[200px] w-0"
-        } flex transition-all duration-300 z-20 gap-5 py-9 flex-col bg-neutral-400 items-start justify-start h-screen`}
+        } hidden md:flex transition-all duration-300 z-20 gap-5 py-9 flex-col bg-neutral-400 items-start justify-start h-screen`}
       >
         <div className="flex text-white items-center mb-4 justify-center">
           <Image
