@@ -61,7 +61,7 @@ const NewProducts = ({
                   );
                   deleteFavoriteId();
                 }}
-                className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-50 right-1"
+                className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-10 right-1"
               />
             ) : (
               <FaRegHeart
@@ -81,7 +81,7 @@ const NewProducts = ({
                   });
                   addFavoriteid();
                 }}
-                className="absolute p-3 size-[23px] sm:size-[23px] box-content top-1 z-50 right-1"
+                className="absolute p-3 size-[23px] sm:size-[23px] box-content top-1 z-10 right-1"
               />
             )}
           </>
