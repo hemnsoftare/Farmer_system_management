@@ -127,6 +127,7 @@ interface ProductFormInput {
   colorsName: string[];
   isDiscount: boolean;
   bigimageUrl: string;
+  numSearch: number;
   smallimageUrl: string[];
 }
 type CategoryImage = {
@@ -139,10 +140,15 @@ interface catagoryProps {
   brands: string[]; // Assuming 'brands' is an array of brand names
   colors: { name: string; color: string }[]; // Assuming 'colors' is an array of color names
 }
-
+interface searchProps {
+  name: string;
+  category: string;
+  numSearch: number;
+}
 export type {
   Productsprops,
   serviesProps,
+  searchProps,
   footerProps,
   userProps,
   Cart,

@@ -61,7 +61,7 @@ const NewProducts = ({
                   );
                   deleteFavoriteId();
                 }}
-                className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-10 right-1"
+                className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-[2] right-1"
               />
             ) : (
               <FaRegHeart
@@ -81,7 +81,7 @@ const NewProducts = ({
                   });
                   addFavoriteid();
                 }}
-                className="absolute p-3 size-[23px] sm:size-[23px] box-content top-1 z-10 right-1"
+                className="absolute p-3 size-[23px] sm:size-[23px] box-content top-1 z-[2] right-1"
               />
             )}
           </>
@@ -95,7 +95,7 @@ const NewProducts = ({
             className="sm:w-[217px] rounded-lg w-full above-405:h-[140px] h-[130px] sm:h-[161px] sm:group-hover:scale-[1.03] duration-300 transition-all"
           />{" "}
           {product.isDiscount && product.discount && product.discount > 0 && (
-            <p className="group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute flex sm:hidden text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-10 duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 ">
+            <p className="group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute flex sm:hidden text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-[2] duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 ">
               {product?.discount} $
             </p>
           )}
@@ -162,7 +162,7 @@ const NewProducts = ({
               {product.isDiscount &&
                 product.discount &&
                 product.discount > 0 && (
-                  <p className="group-hover:opacity-0 hidden sm:flex -mr-5 bg-gradient-to-r to-transparent dark:from-red-500 from-red-300 z-10 duration-300 transition-all top-4 px-3 py-1 rounded-l-full sm:text-secondary-100 text-secondary-500 text-sm">
+                  <p className="group-hover:opacity-0 hidden sm:flex -mr-5 bg-gradient-to-r to-transparent dark:from-red-500 from-red-300 z-[2] duration-300 transition-all top-4 px-3 py-1 rounded-l-full sm:text-secondary-100 text-secondary-500 text-sm">
                     -{product?.discount} $
                   </p>
                 )}

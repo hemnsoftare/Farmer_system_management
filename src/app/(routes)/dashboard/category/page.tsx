@@ -26,7 +26,7 @@ const ModalCategory = () => {
     setOpenSelectedColors((prevState) => !prevState);
   };
 
-  const handleClickOutside = async () => {
+  const handleClickOutside = () => {
     setOpenSelectedColors(false);
   };
 
@@ -49,16 +49,6 @@ const ModalCategory = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data: catagoryProps = {
-      name: nameRef.current?.value || "",
-      image: {
-        name: categoryImage.fileName || "",
-        link: categoryImage.link || "",
-      },
-      brands,
-      colors,
-    };
-    // await setFireBase("catagory", data, data.name || "");
   };
 
   const handleAdd = (type: "brand" | "color", value?: string) => {
@@ -73,17 +63,6 @@ const ModalCategory = () => {
         )?.name;
         setColors((prev) => [...prev, { name: colorName || "", color: value }]);
       }
-    }
-  };
-
-  const handleColorToggle = (color: string, isChecked: boolean) => {
-    if (!isChecked) {
-      setColors((prev) => prev.filter((item) => item.color !== color));
-    } else {
-      const colorName = availableColors.find(
-        (item) => item.color === color
-      )?.name;
-      setColors((prev) => [...prev, { name: colorName || "", color }]);
     }
   };
 
@@ -104,166 +83,113 @@ const ModalCategory = () => {
   };
 
   return (
-    <div className="flex flex-col px-3  w-full py-8 items-start">
-      <h1 className="font-bold text-25">Categroy</h1>
+    <div className="p-6 md:p-10 bg-gray-100 dark:bg-gray-900 min-h-screen rounded-lg shadow-md">
+      <h1 className="font-bold text-2xl md:text-3xl text-center text-gray-800 dark:text-white mb-6">
+        Add Category
+      </h1>
       <form
         onClick={handleClickOutside}
-        className="flex flex-col-reverse items-center  sm:flex-row-reverse  sm:items-start w-full gap-3 justify-center mt-5"
         onSubmit={handleSubmit}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8"
       >
-        <div className="flex  flex-col gap-3  w-full items-start flex-1 justify-center">
-          {/* Category Name */}
-          <div className="flex items-start p-2 w-full justify-start flex-col border-2 gap-2 rounded-lg border-neutral-500">
-            <h2>Category name</h2>
+        {/* Left Section */}
+        <div className="flex flex-col gap-6">
+          <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
+            <label className="block text-lg font-semibold mb-2">
+              Category Name
+            </label>
             <input
               type="text"
-              name="categoryName"
               ref={nameRef}
-              placeholder="Enter your category"
-              className="border-2 border-neutral-500 outline-none px-3 w-full py-2 rounded-lg"
+              placeholder="Enter category name"
+              className="w-full p-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row  items-center w-full justify-start gap-3">
-            {/* Category Brand */}
-            <div className="flex items-start p-2 w-full justify-start flex-col border-2 gap-2 rounded-lg border-neutral-500">
-              <h2 className="flex items-center w-full justify-between">
-                <span>Category brand</span>
-                <button
-                  type="button"
-                  onClick={() => handleAdd("brand")}
-                  className="px-4 py-1 rounded-lg border-2 border-neutral-500"
-                >
-                  add
-                </button>
-              </h2>
-              {brands.length > 0 ? (
-                <ul className="w-full">
-                  {brands.map((item) => (
-                    <li
-                      key={item}
-                      className="flex w-full items-center justify-between"
-                    >
-                      <span>{item}</span>
-                      <MdOutlineDelete
-                        color="red"
-                        size={25}
-                        onClick={() => handleDeleteBrand(item)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Have not brand</p>
-              )}
-              <input
-                type="text"
-                name="categoryBrand"
-                ref={BrandRef}
-                placeholder="Enter your category brand"
-                className="border-2 border-neutral-500 outline-none px-3 w-full py-2 rounded-lg"
-              />
-            </div>
-
-            {/* Category Colors */}
-            <div className="flex items-start p-2 w-full justify-start flex-col border-2 gap-2 rounded-lg border-neutral-500">
-              <h2 className="flex items-center w-full justify-between">
-                <span>Category color</span>
-              </h2>
-              {colors.length > 0 ? (
-                <ul className="w-full  ">
-                  {colors.map((item) => (
-                    <li
-                      key={item.name}
-                      className="flex w-full items-center justify-between"
-                    >
-                      <span>{item.name}</span>
-                      <MdOutlineDelete
-                        color="red"
-                        size={25}
-                        onClick={() => handleDeleteColor(item.color)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Have not colors</p>
-              )}
-              <div className="relative w-full">
-                <h2
-                  className="border-2 flex items-center justify-between border-neutral-500 outline-none px-3 w-full py-2 rounded-lg"
-                  onClick={handleDropdownToggle}
-                >
-                  <span>Selected colors</span> <RiArrowDropDownLine size={30} />
-                </h2>
-
-                <div
-                  className={`${
-                    openSelectedColors ? "flex" : "hidden"
-                  } absolute bottom-0 left-1/4 py-2 overflow-y scrollbar-hidden px-1 border-neutral-500 border flex-col bg-neutral-200 opacity-100 items-center justify-start w-[140px] gap-1 rounded-lg shadow-neutral-400 h-[300px]`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {availableColors.map((item) => (
-                    <div
-                      key={item.name}
-                      style={{ backgroundColor: item.color }}
-                      className="w-[136px] border-neutral-500 border rounded-lg px-3 py-2 flex items-center justify-center gap-2 z-10"
-                    >
-                      <input
-                        type="checkbox"
-                        name="catagoryColors"
-                        id={item.name}
-                        checked={colors.some(
-                          (color) => item.name === color.name
-                        )}
-                        value={item.color}
-                        onChange={(e) =>
-                          handleColorToggle(item.color, e.target.checked)
-                        }
-                      />
-                      <label htmlFor={item.name}>{item.name}</label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
+            <label className="flex justify-between items-center mb-2">
+              <span className="text-lg font-semibold">Brands</span>
+              <button
+                type="button"
+                onClick={() => handleAdd("brand")}
+                className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Add
+              </button>
+            </label>
+            <input
+              type="text"
+              ref={BrandRef}
+              placeholder="Enter brand name"
+              className="w-full p-2 border-2 border-gray-300 rounded-lg mb-2"
+            />
+            <ul>
+              {brands.map((item) => (
+                <li key={item} className="flex justify-between items-center">
+                  <span>{item}</span>
+                  <MdOutlineDelete
+                    className="cursor-pointer text-red-500"
+                    size={20}
+                    onClick={() => handleDeleteBrand(item)}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
-          <button
-            type="button"
-            onClick={setDateFirebase}
-            className="px-9 w-full py-2 bg-black hover:bg-slate-800 rounded-lg duration-300 transition-all text-white"
-          >
-            Add Category
-          </button>
-        </div>
-
-        {/* File Input for Category Image */}
-        <div className="flex items-start  justify-start">
-          <input
-            type="file"
-            name="categoryImage"
-            onChange={handleSetImage}
-            id="image"
-            className="hidden"
-          />
-          <label
-            htmlFor="image"
-            className=" h-[200px] w-[200px] bg-neutral-300 border-2 border-neutral-500 cursor-pointer flex items-center justify-center"
-          >
-            {categoryImage.link ? (
+          <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
+            <label className="block text-lg font-semibold mb-2">
+              Upload Image
+            </label>
+            <input
+              type="file"
+              onChange={handleSetImage}
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+            />
+            {categoryImage.link && (
               <Image
                 src={categoryImage.link}
-                alt="Category Image"
+                alt="Category"
                 width={200}
                 height={200}
-                className="object-contain"
+                className="mt-4 rounded-lg"
               />
-            ) : (
-              <span>Select Image</span>
             )}
-          </label>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex flex-col gap-6">
+          <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
+            <label className="block text-lg font-semibold mb-2">
+              Category Colors
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {availableColors.map((color) => (
+                <label
+                  key={color.color}
+                  style={{ backgroundColor: color.color }}
+                  className="p-2 rounded-lg flex items-center justify-between cursor-pointer text-white"
+                >
+                  <span>{color.name}</span>
+                  <input
+                    type="checkbox"
+                    checked={colors.some((c) => c.color === color.color)}
+                    onChange={(e) =>
+                      handleAdd("color", e.target.checked ? color.color : "")
+                    }
+                  />
+                </label>
+              ))}
+            </div>
+          </div>
         </div>
       </form>
+      <button
+        onClick={setDateFirebase}
+        className="w-full mt-6 py-2 text-lg bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all"
+      >
+        Save Category
+      </button>
     </div>
   );
 };

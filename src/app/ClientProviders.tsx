@@ -11,6 +11,7 @@ import { Toaster } from "@/components/ui/toaster";
 import FoooterMob from "@/components/home/FoooterMob";
 import { ThemeProvider, useTheme } from "next-themes";
 import Search from "@/components/home/Search";
+import { usePathname } from "next/navigation";
 
 export default function ClientProviders({
   children,
@@ -18,6 +19,7 @@ export default function ClientProviders({
   children: React.ReactNode;
 }) {
   const { theme } = useTheme();
+  const pathName = usePathname();
   return (
     <ThemeProvider
       defaultTheme="system"
@@ -35,7 +37,11 @@ export default function ClientProviders({
           <ContextProvider>
             <ToastProvider>
               <div
-                className={`md:px-[30px] klg:px-[40px] relative orange:bg-redw-200 dark:bg-black`}
+                className={`${
+                  pathName.startsWith("/dash")
+                    ? " relative  dark:bg-black"
+                    : "md:px-[30px] klg:px-[40px] relative dark:bg-black"
+                }`}
               >
                 <Header />
                 <hr />

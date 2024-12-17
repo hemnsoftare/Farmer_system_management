@@ -54,6 +54,7 @@ const Page = () => {
       price: parseFloat(formData.get("price") as string),
       brand: formData.get("brand") as string,
       colors: selectedcolor,
+      numSearch: Math.random() * 67,
       category: formData.get("category") as string,
       Bigimage: maiinImageNmae,
       colorsName: selectedcolor.map((item) => item.name),
@@ -156,7 +157,7 @@ const Page = () => {
         onSubmit={handleSubmit}
         className="flex md:flex-row flex-col items-start gap-3 px-4    justify-start w-full py-4"
       >
-        <div className="flex sm:px-3 flex-col gap-3 self-center items-center justify-center">
+        <div className="flex sm:px-3 flex-col gap-3  items-center justify-center">
           <input
             type="file"
             id="imageBig"
@@ -385,8 +386,8 @@ const Page = () => {
                 )}
               </DropdownMenu>
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-2 w-full justify-between">
-              <div className="w-full flex flex-col sm:flex-row  items-center gap-4 ">
+            <div className="flex flex-col items-center gap-2 w-full justify-between">
+              <div className="w-full flex flex-col   items-center gap-4 ">
                 <InputCheckout
                   label="Title Detials"
                   name="titleDetial"
@@ -403,7 +404,7 @@ const Page = () => {
               <button
                 type="button"
                 onClick={handleAdddetail}
-                className="px-5 py-2 bg-black w-full  text-white rounded-lg "
+                className="px-5 py-2 bg-blue-500 w-full  text-white rounded-lg "
               >
                 add
               </button>

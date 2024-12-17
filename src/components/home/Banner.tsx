@@ -21,7 +21,7 @@ const Banner = () => {
         alt=""
         width={500}
         height={328}
-        className="z-10 max-w-[200px] h-[150px] md:max-w-[400px] md:min-h-[450px]"
+        className="z-[2] max-w-[200px] h-[150px] md:max-w-[400px] md:min-h-[450px]"
       />
       <Image
         src={"shape3.svg"}

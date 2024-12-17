@@ -13,9 +13,16 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { catagoryProps, ProductFormInput, typeFilter, UserType } from "@/type";
+import {
+  catagoryProps,
+  ProductFormInput,
+  searchProps,
+  typeFilter,
+  UserType,
+} from "@/type";
 import { app, storage } from "@/config/firebaseConfig";
 import { OrderType } from "@/type";
+import { number, string } from "zod";
 
 const db = getFirestore(app);
 // Function to upload the image
@@ -149,7 +156,7 @@ export const setOrder = async (order: OrderType): Promise<string> => {
         region: order.address.region || "",
         streetName: order.address.streetName || "",
       },
-      // email: order.email.length > 0 ? order.email : [{ emailAddress: "" }], // Ensure it’s an array
+      email: order.email.length > 0 ? order.email : [{ emailAddress: "" }], // Ensure it’s an array
       fullName: order.fullName || "",
       orderDate: new Date(),
       orderItems: order.orderItems.map((item) => ({
@@ -182,4 +189,31 @@ export const setOrder = async (order: OrderType): Promise<string> => {
     console.error("Error saving order:", error);
     throw error; // Rethrow the error for further handling
   }
+};
+
+export const Search = async (searchValue: string): Promise<searchProps[]> => {
+  const querySnapshot = await getDocs(collection(db, "Products"));
+  const results: searchProps[] = [];
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    if (data.name.toLowerCase().includes(searchValue.toLowerCase())) {
+      results.push({
+        name: data.name,
+        numSearch: data.numSearch,
+        category: data.category,
+      });
+    }
+  });
+
+  return results;
+};
+
+export const getAllOrder = async (): Promise<OrderType[]> => {
+  const getorder = await getDocs(collection(db, "order"));
+  const data: OrderType[] = [];
+  getorder.forEach((item) =>
+    data.push({ ...(item.data() as OrderType), id: item.id })
+  );
+  return data;
 };

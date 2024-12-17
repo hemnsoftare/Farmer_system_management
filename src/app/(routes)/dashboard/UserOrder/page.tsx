@@ -3,12 +3,22 @@ import { carts } from "@/util/data";
 import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { cont } from "../ConTextData";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { OrderType } from "@/type";
+import { getAllOrder } from "@/lib/action/uploadimage";
 
 const Page = () => {
   const { handleShowSlider, handleShowCartSlider, showSliderCart } =
     useContext(cont);
-
+  const [orders, setorders] = useState<OrderType[]>([]);
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getAllOrder();
+      console.log(data[0].orderDate);
+      setorders(data as OrderType[]);
+    };
+    getData();
+  }, []);
   return (
     <div className="flex flex-col lg:flex-row overflow-hidden justify-start w-full gap-2 px-2 items-start">
       {/* Order History Section */}
@@ -31,17 +41,35 @@ const Page = () => {
               </tr>
             </thead>
             <tbody>
-              <tr
-                onClick={handleShowCartSlider}
-                className="text-neutral-500 transition-all duration-300 cursor-pointer border hover:bg-neutral-50 text-center"
-              >
-                <td>hemn_farhad</td>
+              {orders.length > 0 &&
+                orders.map((item) => (
+                  <tr
+                    key={item.id}
+                    onClick={handleShowCartSlider}
+                    className="text-neutral-500 transition-all duration-300 cursor-pointer border hover:bg-neutral-50 text-center"
+                  >
+                    <td>{item.fullName}</td>
+                    <td>{item.orderItems.length}</td>
+                    <td>{item.id}</td>
+                    <td>
+                      {item.email && item.email.length > 0
+                        ? item.email[0].emailAddress
+                        : "hemnsoft89@gmail.com"}
+                    </td>
+                    <td>{item.totalAmount}</td>
+                    <td>
+                      {new Date(
+                        (item.orderDate.seconds as any) * 1000
+                      ).toLocaleDateString("en-US")}
+                    </td>
+                  </tr>
+                ))}
+              {/* <td>hemn_farhad</td>
                 <td>4</td>
                 <td>123934</td>
                 <td>hemnfrahd14@gmail.com</td>
                 <td>128.18$</td>
-                <td>2023/2/25</td>
-              </tr>
+                <td>2023/2/25</td> */}
             </tbody>
           </table>
         </div>

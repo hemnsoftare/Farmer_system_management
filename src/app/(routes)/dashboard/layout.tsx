@@ -39,7 +39,7 @@ const Layout = ({
     <div className="flex relative items-start h-full justify-start w-full">
       <button onClick={() => setshowtabs((pre) => !pre)} className="z-50">
         <FaPlus
-          className={`p-1 box-border rounded-full text-25 text-white absolute top-3 left-3 
+          className={`p-1 box-border rounded-full text-25 md:hidden text-white absolute top-3 left-3 
           ${showtabs ? "rotate-45" : "rotate-0"} 
           duration-300 transition-transform bg-secondary`}
         />
