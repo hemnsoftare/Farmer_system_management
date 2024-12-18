@@ -10,7 +10,7 @@ interface CardHistoryProps {
 const CardHistory: React.FC<CardHistoryProps> = ({ item, date }) => {
   // Format the date to MM/DD/YYYY
   //   console.log(date);
-  const formattedDate = new Date(date.seconds || 0 * 1000).toLocaleDateString(
+  const formattedDate = new Date((date.seconds || 0) * 1000).toLocaleDateString(
     "en-US"
   );
 
