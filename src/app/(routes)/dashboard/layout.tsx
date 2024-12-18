@@ -45,6 +45,7 @@ const Layout = ({
         />
       </button>
 
+      {/* sidbar of */}
       <div
         className={`transition-all duration-1000 flex-col gap-3 z-50 absolute top-12 left-3
     ${showtabs ? "max-w-[200px] opacity-100 flex" : "max-w-0 opacity-0"}`}
@@ -62,7 +63,7 @@ const Layout = ({
         transition-all overflow-hidden
         ${showtabs ? "translate-x-0 opacity-100" : "-translate-x-[240px] opacity-0"}`}
           >
-            <item.icon color="white" className="w-[20px]" />
+            <item.icon color="white" className="w-[20px]   " />
             <h2
               className={`transition-opacity ${showtabs ? "opacity-100" : "opacity-0"}`}
               style={{
@@ -92,9 +93,9 @@ const Layout = ({
       <div
         className={`${
           showSlider ? "sm:w-[250px] w-full" : "-translate-x-[200px] w-0"
-        } hidden md:flex transition-all duration-300 z-20 gap-5 py-9 flex-col bg-neutral-400 items-start justify-start h-screen`}
+        } hidden md:flex transition-all px-3 duration-300 z-20 gap-5 py-9 flex-col bg-cyan-800 items-start justify-start h-screen`}
       >
-        <div className="flex text-white items-center mb-4 justify-center">
+        <div className="flex text-white  items-center mb-4 justify-center">
           <Image
             src={"/user.png"}
             alt="User Avatar"
@@ -112,11 +113,22 @@ const Layout = ({
             className={`${
               item.name !== "Home" &&
               pathname.includes(item.url || "null") &&
-              "border-l-8 border-neutral-600 bg-neutral-500"
-            } w-full text-white flex text-19 py-2 cursor-pointer sm:hover:bg-neutral-500 duration-300 transition-all items-center justify-start px-5 gap-2`}
+              " rounded-l-lg border-l-4 bg-gradient-to-l from-cyan-400 to-transparent border-l-cyan-400 "
+            } w-full text-white rounded-lg flex text-19 py-2 cursor-pointer sm:hover:bg-cyan-500 duration-300 transition-all items-center justify-start px-5 gap-2`}
           >
-            <item.icon color="white" className="w-[20px]" />
-            <h2>{item.name}</h2>
+            <item.icon
+              color="white"
+              className={`${
+                item.name !== "Home" && pathname.includes(item.url || "null")
+                  ? "bg-gradient-to-b from-white to-cyan-950 to-85% text-black"
+                  : "bg-gradient-to-b from-white to-cyan-950 to-45%"
+              } w-[20px] shadow-sm shadow-white  rounded-full p-2 box-content`}
+            />
+            <h2
+              className={` ${item.name !== "Home" && pathname.includes(item.url || "null") ? "text-cyan-200 " : " text-neutral-white"} font-semibold`}
+            >
+              {item.name}
+            </h2>
           </Link>
         ))}
       </div>
