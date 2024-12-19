@@ -15,12 +15,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
 const Page = () => {
   const { handleShowSlider, handleShowCartSlider, showSliderCart } =
     useContext(cont);
   const [orders, setorders] = useState<OrderType[]>([]);
   const [viewOrder, setviewOrder] = useState<any>();
   const [showOrder, setshowOrder] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
       const data = await getAllOrder();
@@ -29,12 +31,14 @@ const Page = () => {
     };
     getData();
   }, []);
+
   let date;
   if (viewOrder) {
     date = new Date(
       (viewOrder.orderDate?.seconds || 0) * 1000
     ).toLocaleDateString("en-US");
   }
+
   return (
     <div className="flex flex-col lg:flex-row overflow-hidden justify-start w-full gap-2 px-2 items-start">
       {/* Order History Section */}
@@ -46,19 +50,20 @@ const Page = () => {
         {/* Table Container */}
         <div className="overflow-x-auto">
           <table className="border w-full min-w-[600px]">
-            <thead className="bg-neutral-200">
+            <thead className="bg-neutral-200 text-10 md:text-16">
               <tr>
-                <th className="min-w-[150px]">User</th>
-                <th className="min-w-[150px]">Number Orders</th>
-                <th className="min-w-[150px]">Transaction ID</th>
-                <th className="min-w-[150px]">Email</th>
-                <th className="min-w-[150px]">Total Price</th>
-                <th className="min-w-[150px]">Order Date</th>
+                <th>id</th>
+                <th className="">User</th>
+                <th className="">Orders Item</th>
+                <th className="">Transaction ID</th>
+                <th className="">Email</th>
+                <th className="">Total Price</th>
+                <th className="">Order Date</th>
               </tr>
             </thead>
             <tbody>
               {orders.length > 0 &&
-                orders.map((item: any) => {
+                orders.map((item: any, index) => {
                   const formattedDate = new Date(
                     (item.orderDate?.seconds || 0) * 1000
                   ).toLocaleDateString("en-US");
@@ -71,8 +76,9 @@ const Page = () => {
                         setshowOrder(true);
                         handleShowCartSlider();
                       }}
-                      className="text-neutral-500 transition-all duration-300 cursor-pointer border hover:bg-neutral-50 text-center"
+                      className={` ${index % 2 == 0 ? "bg-neutral-50" : "bg-neutral-200"} text-neutral-500 text-9 md:text-14 transition-all duration-300 cursor-pointer border md:hover:bg-neutral-50 px-1 py-1 text-center`}
                     >
+                      <td>{index + 1}</td>
                       <td>{item.fullName}</td>
                       <td>{item.orderItems.length}</td>
                       <td>{item.id}</td>
@@ -86,13 +92,6 @@ const Page = () => {
                     </tr>
                   );
                 })}
-
-              {/* <td>hemn_farhad</td>
-                <td>4</td>
-                <td>123934</td>
-                <td>hemnfrahd14@gmail.com</td>
-                <td>128.18$</td>
-                <td>2023/2/25</td> */}
             </tbody>
           </table>
         </div>
@@ -101,14 +100,12 @@ const Page = () => {
         <SheetOverlay onClick={() => setshowOrder(false)}></SheetOverlay>
         <SheetContent
           side={"bottom"}
-          className="dark:text-gray-400 border-b text-black  outline-0"
+          className="dark:text-gray-400 border-b text-black outline-0"
         >
           <SheetDescription>
             {viewOrder && (
-              <div
-                className={`  py-3 transition-all flex flex-col md:flex-row w-full duration-300`}
-              >
-                <div className="flex flex-col min-w-[200px] gap-2 ">
+              <div className="py-3 transition-all flex flex-col md:flex-row w-full duration-300">
+                <div className="flex flex-col min-w-[200px] gap-2">
                   <h2 className="text-14 font-bold px-2">Order Information</h2>
                   <h3 className="text-12 px-4">
                     User Name : {viewOrder.fullName}
@@ -132,11 +129,11 @@ const Page = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="w-full overflow-x-auto overflow-y-auto flex flex-col md:flex-row md:min-h-full   md:max-h-full max-h-[300px] min-h-[300px] items-center gap-4  px-2">
+                <div className="w-full overflow-x-auto overflow-y-auto flex flex-col md:flex-row md:min-h-full md:max-h-full max-h-[300px] min-h-[300px] items-center gap-4 px-2">
                   {viewOrder.orderItems.map((item, index) => (
                     <div
                       key={index}
-                      className="flex shadow-md   p-1 min-w-[280px] md:hover:shadow-lg transition-all duration-300 shadow-lime-100 flex-row items-center text-start"
+                      className="flex shadow-md p-1 min-w-[280px] md:hover:shadow-lg transition-all duration-300 shadow-lime-100 flex-row items-center text-start"
                     >
                       <Image
                         src={item.image}
@@ -145,7 +142,7 @@ const Page = () => {
                         height={150}
                         className="object-cover max-w-[100px] max-h-[100px] min-w-[100px] min-h-[100px] rounded-md"
                       />
-                      <div className="w-full pl-3 ">
+                      <div className="w-full pl-3">
                         <h2 className="sm:text-14 text-12 font-semibold">
                           {item.name}
                         </h2>
