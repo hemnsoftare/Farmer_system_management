@@ -3,10 +3,12 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   getFirestore,
+  or,
   orderBy,
   query,
   setDoc,
@@ -147,16 +149,14 @@ export const setOrder = async (order: OrderType): Promise<string> => {
       update.push(itemupdate);
     }
   });
-  console.log(update);
   try {
-    // Pass the orders object directly to addDoc
-    const refSet = await addDoc(collection(db, "order"), {
+    const refSendData = await addDoc(collection(db, "order"), {
       address: {
         city: order.address.city || "",
         region: order.address.region || "",
         streetName: order.address.streetName || "",
       },
-      email: order.email.length > 0 ? order.email : [{ emailAddress: "" }], // Ensure it’s an array
+      email: order.email.map((email) => email.emailAddress) || [],
       fullName: order.fullName || "",
       orderDate: new Date(),
       orderItems: order.orderItems.map((item) => ({
@@ -176,6 +176,7 @@ export const setOrder = async (order: OrderType): Promise<string> => {
       userId: order.userId || "",
       note: order.note || "",
     });
+
     update.map(async (item) => {
       const getitem = await getDoc(doc(db, "Products", item.name));
       const currentNumberSale = getitem.exists() && getitem.data().numberSale;
@@ -184,7 +185,7 @@ export const setOrder = async (order: OrderType): Promise<string> => {
       }).then((res) => console.log("update in number sale"));
     });
 
-    return refSet.id; // Return the document ID
+    return refSendData.id;
   } catch (error) {
     console.error("Error saving order:", error);
     throw error; // Rethrow the error for further handling
@@ -216,4 +217,11 @@ export const getAllOrder = async (): Promise<OrderType[]> => {
     data.push({ ...(item.data() as OrderType), id: item.id })
   );
   return data;
+};
+export const deleteProducts = async (id: string) => {
+  await deleteDoc(doc(db, "Products", id))
+    .then(() => console.log("Document successfully deleted!"))
+    .catch((error) => {
+      console.error("Error removing document: ", error);
+    });
 };

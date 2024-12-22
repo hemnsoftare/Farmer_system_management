@@ -38,7 +38,7 @@ const Page = () => {
       (viewOrder.orderDate?.seconds || 0) * 1000
     ).toLocaleDateString("en-US");
   }
-
+  console.log(orders);
   return (
     <div className="flex flex-col lg:flex-row overflow-hidden justify-start w-full gap-2 px-2 items-start">
       {/* Order History Section */}
@@ -82,11 +82,7 @@ const Page = () => {
                       <td>{item.fullName}</td>
                       <td>{item.orderItems.length}</td>
                       <td>{item.id}</td>
-                      <td>
-                        {item.email && item.email.length > 0
-                          ? item.email[0].emailAddress
-                          : "hemnsoft89@gmail.com"}
-                      </td>
+                      <td>{item.email}</td>
                       <td>{item.totalAmount}</td>
                       <td>{formattedDate}</td>
                     </tr>

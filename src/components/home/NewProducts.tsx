@@ -9,6 +9,9 @@ import { IoIosHeart } from "react-icons/io";
 import { useUser } from "@clerk/nextjs";
 import { addfavorite, deleteFavorite } from "@/lib/action/fovarit";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FileEdit } from "lucide-react";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { deleteProducts } from "@/lib/action/uploadimage";
 
 const NewProducts = ({
   title,
@@ -17,6 +20,7 @@ const NewProducts = ({
   favoriteId,
   addFavoriteid,
   deleteFavoriteId,
+  deleteProducts,
 }: {
   title?: string;
   item?: Productsprops;
@@ -25,11 +29,13 @@ const NewProducts = ({
   favoriteId?: string[];
   addFavoriteid?: () => void;
   deleteFavoriteId?: () => void;
+  deleteProducts?: () => void;
 }) => {
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent click event from propagating to the <Link>
     e.preventDefault(); // Prevent default behavior of the <Link>
   };
+
   const product: ProductFormInput | undefined = itemDb;
   const { user } = useUser();
   if (load) return <Loader />;
@@ -42,6 +48,7 @@ const NewProducts = ({
             : "#"
         }
         // style={{ boxShadow: shadowColor }} // Apply custom shadow here
+
         key={product.name}
         className={`${
           title === "sale"
@@ -95,7 +102,9 @@ const NewProducts = ({
             className="sm:w-[217px] rounded-lg w-full above-405:h-[140px] h-[130px] sm:h-[161px] sm:group-hover:scale-[1.03] duration-300 transition-all"
           />{" "}
           {product.isDiscount && product.discount && product.discount > 0 && (
-            <p className="group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute flex sm:hidden text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-[2] duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 ">
+            <p
+              className={`group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute ${title === "dashboard" ? "flex" : "flex sm:hidden"}  text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-[2] duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 `}
+            >
               {product?.discount} $
             </p>
           )}
@@ -159,21 +168,36 @@ const NewProducts = ({
               <span className="text-12 dark:text-neutral-500 sm:text-16">
                 {product.price}$
               </span>
-              {product.isDiscount &&
+              {title !== "dashboard" &&
+                product.isDiscount &&
                 product.discount &&
                 product.discount > 0 && (
-                  <p className="group-hover:opacity-0 hidden sm:flex -mr-5 bg-gradient-to-r to-transparent dark:from-red-500 from-red-300 z-[2] duration-300 transition-all top-4 px-3 py-1 rounded-l-full sm:text-secondary-100 text-secondary-500 text-sm">
+                  <p className="group-hover:opacity-0 hidden sm:flex -mr-5 bg-gradient-to-r to-transparent dark:from-red-500 from-red-300 z-[2] duration-300 transition-all top-4 px-3 py-1 rounded-l-full   text-sm text-secondary-500 ">
                     -{product?.discount} $
                   </p>
                 )}
               {/* mobile btn add to cart */}
-              {/* <Link
+              <div className="flex gap-2 item-center">
+                <Link href={`/dashboard/AddItem?id=${product.name}`}>
+                  <FileEdit />
+                </Link>
+
+                <RiDeleteBin6Line
+                  onClick={(e) => {
+                    handleFavoriteClick(e);
+                    deleteProducts();
+                  }}
+                  size={24}
+                  color="red"
+                />
+              </div>
+              <Link
                 className="flex min-w-[30%] items-center px-3 text-14 py-2 -mt-3 sm:hidden justify-center bg-secondary-300 text-white rounded-lg"
                 href={`/products/${product.category}/${product.name}`}
               >
                 <MdOutlineShoppingCart size={15} color="white" />
-                <span>Add to Cart</span> 
-              </Link> */}
+                <span>Add to Cart</span>
+              </Link>
             </div>
           </div>
         </div>

@@ -90,10 +90,10 @@ const Page = () => {
         note: data.note ? (data.note as string) : undefined, // Use undefined if no note is provided
       };
 
-      sendEmail({ ...orders });
       const id = await setOrder(orders);
       setorder({ ...orders, id });
       dispatch(removeAll());
+      sendEmail({ ...orders });
     } else {
       // Initialize an empty error object with all properties as empty strings
       // setShowNotSuccess(true);
@@ -133,8 +133,6 @@ const Page = () => {
       console.log("Error: Recipient email is not a valid string.");
       return;
     }
-
-    // Send the email using plunk.emails.send
     plunk.emails
       .send({
         to: recipientEmail.trim(), // Trim the recipient email

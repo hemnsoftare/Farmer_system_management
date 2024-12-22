@@ -2,7 +2,7 @@
 import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
 import { app } from "@/config/firebaseConfig";
-import { getProducts } from "@/lib/action/uploadimage";
+import { deleteProducts, getProducts } from "@/lib/action/uploadimage";
 import { ProductFormInput } from "@/type";
 import {
   collection,
@@ -80,7 +80,15 @@ const Page = () => {
       <div className="grid lg:grid-cols-4 w-full grid-cols-2 gap-3 xl:grid-cols-5 ">
         {prodcts &&
           prodcts.map((item) => (
-            <NewProducts key={item.name} itemDb={item} title="dashboard" />
+            <NewProducts
+              deleteProducts={() => {
+                deleteProducts(item.name);
+                setproducts(prodcts.filter((i) => i.name !== item.name));
+              }}
+              key={item.name}
+              itemDb={item}
+              title="dashboard"
+            />
           ))}
       </div>
     </div>

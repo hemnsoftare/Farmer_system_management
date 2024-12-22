@@ -23,11 +23,11 @@ const Layout = ({
     console.log("layout initialized");
     if (user) {
       const isAdmin = user?.publicMetadata?.role === "admin";
-      console.log(user);
-      console.log(isAdmin);
       if (!isAdmin) {
         redirect("/");
       }
+    } else {
+      redirect("/");
     }
   }, [user]);
 
