@@ -31,8 +31,8 @@ const Footer = () => {
           <FooterItem />
           <div className="flex flex-col w-fit items-center gap-4">
             <h2 className="font-semibold text-[16px]">
-              Sign up for News and updates
-            </h2>{" "}
+              Sign up for New and updates
+            </h2>
             <SignUpButton>
               <fieldset className="relative border group w-full focus-within:border-blue-700 border-gray-300 px-2 rounded-lg">
                 <legend

@@ -176,7 +176,7 @@ const NewProducts = ({
                     -{product?.discount} $
                   </p>
                 )}
-              {/* mobile btn add to cart */}
+              {/* mobile btn add yui to cart */}
               <div className="flex gap-2 item-center">
                 <Link href={`/dashboard/AddItem?id=${product.id}`}>
                   <FileEdit />
