@@ -99,7 +99,7 @@ const NewProducts = ({
             alt="image"
             width={217}
             height={161}
-            className="sm:w-[217px] rounded-lg w-full above-405:h-[140px] h-[130px] sm:h-[161px] sm:group-hover:scale-[1.03] duration-300 transition-all"
+            className="sm:w-[217px] rounded-lg w-full above-405:h-[160px] h-[140px] sm:h-[161px] sm:group-hover:scale-[1.03] duration-300 transition-all"
           />{" "}
           {product.isDiscount && product.discount && product.discount > 0 && (
             <p
@@ -191,13 +191,6 @@ const NewProducts = ({
                   color="red"
                 />
               </div>
-              <Link
-                className="flex min-w-[30%] items-center px-3 text-14 py-2 -mt-3 sm:hidden justify-center bg-secondary-300 text-white rounded-lg"
-                href={`/products/${product.category}/${product.id}`}
-              >
-                <MdOutlineShoppingCart size={15} color="white" />
-                <span>Add to Cart</span>
-              </Link>
             </div>
           </div>
         </div>
