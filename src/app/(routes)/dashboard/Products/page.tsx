@@ -45,7 +45,10 @@ const Page = () => {
       const snapshot = await getDocs(q);
       const fetchedProducts: ProductFormInput[] = [];
       snapshot.forEach((item) => {
-        fetchedProducts.push(item.data() as ProductFormInput);
+        fetchedProducts.push({
+          ...(item.data() as ProductFormInput), // Spread item data
+          id: item.id, // Add the `id` field
+        });
       });
       setload(false);
       setproducts(fetchedProducts);

@@ -8,6 +8,7 @@ export interface InputCheckoutProps {
   error?: string;
   isdisabled?: boolean;
   type?: string;
+  defualtValue?: string;
 }
 
 // Use forwardRef to forward the ref to the input element
@@ -20,6 +21,7 @@ const InputCheckout = forwardRef<HTMLInputElement, InputCheckoutProps>(
       error,
       type,
       isdisabled = true,
+      defualtValue = "",
     },
     ref
   ) => {
@@ -34,6 +36,7 @@ const InputCheckout = forwardRef<HTMLInputElement, InputCheckoutProps>(
           type={type ? type : "text"}
           ref={ref}
           name={name}
+          defaultValue={defualtValue}
           placeholder={placeholder}
           className={`${
             !isdisabled ? "border-neutral-300" : "border-neutral-400"

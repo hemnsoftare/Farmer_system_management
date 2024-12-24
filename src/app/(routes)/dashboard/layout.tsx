@@ -26,8 +26,6 @@ const Layout = ({
       if (!isAdmin) {
         redirect("/");
       }
-    } else {
-      redirect("/");
     }
   }, [user]);
 

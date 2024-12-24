@@ -124,7 +124,6 @@ interface ProductFormInput {
   numberFavorite: number;
   numberSale: number;
   date: Date;
-  colorsName: string[];
   isDiscount: boolean;
   bigimageUrl: string;
   numSearch: number;

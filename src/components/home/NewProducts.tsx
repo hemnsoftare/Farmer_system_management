@@ -178,7 +178,7 @@ const NewProducts = ({
                 )}
               {/* mobile btn add to cart */}
               <div className="flex gap-2 item-center">
-                <Link href={`/dashboard/AddItem?id=${product.name}`}>
+                <Link href={`/dashboard/AddItem?id=${product.id}`}>
                   <FileEdit />
                 </Link>
 
@@ -193,7 +193,7 @@ const NewProducts = ({
               </div>
               <Link
                 className="flex min-w-[30%] items-center px-3 text-14 py-2 -mt-3 sm:hidden justify-center bg-secondary-300 text-white rounded-lg"
-                href={`/products/${product.category}/${product.name}`}
+                href={`/products/${product.category}/${product.id}`}
               >
                 <MdOutlineShoppingCart size={15} color="white" />
                 <span>Add to Cart</span>
