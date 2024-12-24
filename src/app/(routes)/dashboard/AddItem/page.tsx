@@ -61,7 +61,11 @@ const initialState = {
   date: "",
   discount: "", // Optional value can be omitted
 };
-const Page = () => {
+const Page = ({
+  params,
+}: {
+  params: { [key: string]: string | undefined };
+}) => {
   const [selectedcolor, setselectedcolor] = useState<
     { name: string; color: string }[]
   >([]);
@@ -90,10 +94,9 @@ const Page = () => {
   const [name, setname] = useState("");
   const [price, setprice] = useState(0);
   const [brand, setbrand] = useState("");
-  const searchParams = useSearchParams();
+  const haveId = params.id;
   const [error, seterror] = useState(initialState);
   const { toast } = useToast();
-  const haveId = searchParams.get("id");
   const db = getFirestore(app);
 
   const validation = z.object({
