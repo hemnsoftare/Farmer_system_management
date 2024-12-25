@@ -28,6 +28,7 @@ import {
   FaHome,
   FaShippingFast,
   FaDesktop,
+  FaShoppingCart,
 } from "react-icons/fa";
 import {
   MdAddCircleOutline,
@@ -441,6 +442,17 @@ const menuItems: propsMenuItem[] = [
     icon: FaUser,
     url: "/dashboard/PersonalData",
   },
+  {
+    name: "Blog",
+    icon: FaUser,
+    url: "/dashboard/Blog",
+  },
+  {
+    name: "Popular Products", // Corrected spelling
+    icon: FaShoppingCart, // Updated to a more relevant icon
+    url: "/dashboard/popular", // Corrected URL
+  },
+
   {
     name: "category",
     icon: BiCategoryAlt,

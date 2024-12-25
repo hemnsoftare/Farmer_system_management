@@ -12,9 +12,11 @@ import { getAllItemNames } from "@/lib/action/fovarit";
 const ForProducts = ({
   products,
   load,
+  title,
 }: {
   load?: boolean;
   products?: ProductFormInput[];
+  title?: "dashboard";
 }) => {
   const [startProducts, setStartProducts] = useState(0);
   const [pro, setpro] = useState(products);
@@ -56,11 +58,11 @@ const ForProducts = ({
   };
   if (load)
     return (
-      <div className="flex mt-4 px-3 justify-between items-center gap-4">
+      <div className="flex mt-4 px-3 justify-between w-full items-center gap-4">
         <Loader />
 
         <Loader />
-        <div className="hidden sm:flex gap-2">
+        <div className="hidden sm:flex w-full items-center justify-start gap-2">
           <Loader />
 
           <Loader />
@@ -80,7 +82,7 @@ const ForProducts = ({
             >
               <NewProducts
                 favoriteId={favoriteId}
-                title="single_product"
+                title={title ? title : "single_product"}
                 itemDb={product}
                 addFavoriteid={() => {
                   setpro((pre) =>

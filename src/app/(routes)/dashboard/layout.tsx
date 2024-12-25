@@ -46,7 +46,7 @@ const Layout = ({
       {/* sidbar of */}
       <div
         className={`transition-all duration-1000 flex-col gap-3 z-50 absolute top-12 left-3
-    ${showtabs ? "max-w-[200px] opacity-100 flex" : "max-w-0 opacity-0"}`}
+    ${showtabs ? "max-w-[220px] opacity-100 flex" : "max-w-0 opacity-0"}`}
       >
         {menuItems.map((item, index) => (
           <Link
@@ -77,9 +77,9 @@ const Layout = ({
 
       {/* Sidebar Toggle Button */}
       <button
-        className={`absolute top-2 transition-all md:block hidden duration-1000 z-50 ${
+        className={`absolute top-2 transition-all md:block hidden bg-white p-0 rounded-full duration-1000 w-fit z-50 ${
           showSlider
-            ? "rotate-180 right-2 sm:left-[210px]"
+            ? "rotate-180 left-[200px]  sm:left-[210px]"
             : "rotate-0 sm:left-4 right-[90%] top-2"
         }`}
         onClick={showSlider ? handleHideSlider : handleShowSlider}
@@ -90,7 +90,9 @@ const Layout = ({
       {/* Sidebar */}
       <div
         className={`${
-          showSlider ? "sm:w-[250px] w-full" : "-translate-x-[200px] w-0"
+          showSlider
+            ? "sm:min-w-[260px] min-w-full"
+            : "-translate-x-[200px] w-0"
         } hidden md:flex transition-all px-3 duration-300 z-20 gap-5 py-9 flex-col bg-cyan-800 items-start justify-start h-screen`}
       >
         <div className="flex text-white  items-center mb-4 justify-center">

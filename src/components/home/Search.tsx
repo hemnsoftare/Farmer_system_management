@@ -40,12 +40,12 @@ const SearchComponent = () => {
       {/* Backdrop Overlay */}
       {filteredData.length > 0 && (
         <div
-          className="w-screen z-10 h-screen fixed top-0 left-0 right-0 backdrop-blur-md"
+          className="w-screen z-[2] h-screen fixed top-0 left-0 right-0 backdrop-blur-md"
           onClick={() => setFilteredData([])}
         ></div>
       )}
 
-      <div className="w-full flex mt-3 justify-center px-5 items-center relative z-[50]">
+      <div className="w-full flex mt-3 justify-center px-5 items-center relative z-[3]">
         <div className="relative group w-full md:w-1/2">
           {/* Input */}
           <input
@@ -68,17 +68,21 @@ const SearchComponent = () => {
               visibility: filteredData.length > 0 ? "visible" : "hidden",
             }}
           >
-            {filteredData.map((item, index) => (
-              <Link
-                href={`/products/${item.category}/${item.name}`}
-                key={index}
-                onClick={() => setSearchValue(item.name)}
-                className="px-3 py-2 w-full flex justify-between items-center  duration-300 hover:bg-gray-100 cursor-pointer"
-              >
-                <span>{item.name}</span>
-                <span>{item.numSearch}</span>
-              </Link>
-            ))}
+            {filteredData.length > 0 ? (
+              filteredData.map((item, index) => (
+                <Link
+                  href={`/products/${item.category}/${item.name}`}
+                  key={index}
+                  onClick={() => setSearchValue(item.name)}
+                  className="px-3 py-2 w-full flex justify-between items-center  duration-300 hover:bg-gray-100 cursor-pointer"
+                >
+                  <span>{item.name}</span>
+                  <span>{item.numSearch.toFixed(0)}</span>
+                </Link>
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No data found</p>
+            )}
           </ul>
         </div>
       </div>
