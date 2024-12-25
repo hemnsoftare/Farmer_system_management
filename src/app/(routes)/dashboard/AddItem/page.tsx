@@ -66,6 +66,7 @@ const Page = ({
 }: {
   params: { [key: string]: string | undefined };
 }) => {
+  const haveId = params.id;
   const [selectedcolor, setselectedcolor] = useState<
     { name: string; color: string }[]
   >([]);
@@ -94,7 +95,6 @@ const Page = ({
   const [name, setname] = useState("");
   const [price, setprice] = useState(0);
   const [brand, setbrand] = useState("");
-  const haveId = params.id;
   const [error, seterror] = useState(initialState);
   const { toast } = useToast();
   const db = getFirestore(app);

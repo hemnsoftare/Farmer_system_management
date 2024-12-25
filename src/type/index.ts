@@ -144,11 +144,30 @@ interface searchProps {
   category: string;
   numSearch: number;
 }
+interface BlogProps {
+  id?: string; // Unique identifier for
+  title: string; // Blog title
+  description: string; // Blog description
+  video?: string; // URL to the uploaded video (optional)
+  image?: string; // URL to the uploaded image (optional)
+  type: "video" | "image"; // Type of media content
+  date: Date; // Date the blog was created
+  user: string; // User's full name
+  numberOfLikes: number; // Count of likes
+  numberOfDislikes: number; // Count of dislikes
+  numberOfComments: number; // Count of comments
+  comments: string[]; // List of comments
+  numberOfViews: number; // Count of views
+  numberOffavorites: number; // Count of favorites
+  numberOfSearches: number; // Count of searches
+}
+
 export type {
   Productsprops,
   serviesProps,
   searchProps,
   footerProps,
+  BlogProps,
   userProps,
   Cart,
   BlogColProps,

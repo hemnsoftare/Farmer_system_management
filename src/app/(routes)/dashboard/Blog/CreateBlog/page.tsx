@@ -4,15 +4,26 @@ import { app } from "@/config/firebaseConfig";
 import { useToast } from "@/hooks/use-toast";
 import { handleUpload } from "@/lib/action/blog";
 import { uploadImage } from "@/lib/action/uploadimage";
-import { comments } from "@/util/data";
 import { useUser } from "@clerk/nextjs";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { set, z } from "zod";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { z } from "zod";
 
-const Page = () => {
+const Page = ({
+  params,
+}: {
+  params: { [key: string]: string | undefined };
+}) => {
+  const haveId = params.id;
   const [video, setVideo] = useState<File | null>(null);
   const [image, setimage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -24,7 +35,7 @@ const Page = () => {
   const [description, setdescription] = useState<string>();
   const [type, settype] = useState<"video" | "image">();
   const [error, seterror] = useState<{
-    title: String;
+    title: string;
     description: string;
     type: string;
   }>();
@@ -32,18 +43,22 @@ const Page = () => {
   const { user } = useUser();
   const { toast } = useToast();
   const db = getFirestore(app);
+
   const validation = z.object({
-    title: z.string({ message: "have not title" }).min(3).max(100),
-    description: z.string({ message: "have not description" }).min(3).max(500),
+    title: z.string().min(3).max(100, { message: "Title is required" }),
+    description: z
+      .string()
+      .min(3)
+      .max(500, { message: "Description is required" }),
   });
+
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("in handle vedio change");
     if (e.target.files) {
-      console.log("in handle vedio in if  change");
       setVideo(e.target.files[0]);
       handleUploadVideo();
     }
   };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setimage(e.target.files[0]);
@@ -53,6 +68,7 @@ const Page = () => {
       handleUploadImage();
     }
   };
+
   const handleUploadVideo = async () => {
     try {
       setLoading(true);
@@ -63,7 +79,6 @@ const Page = () => {
         (message) => setMessage(message),
         (error) => setMessage(error)
       );
-      console.log("Video URL:", url);
       setMessage("Upload successful!");
       setvedeoUrl(url);
       settype("video");
@@ -81,32 +96,58 @@ const Page = () => {
       const imageUrl = await uploadImage(image).finally(() => {
         setLoading(false);
       });
-      console.log(imageUrl);
       setimageUrl(imageUrl);
     } else {
       setMessage("Please provide a video file.");
     }
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     seterror({
       title: "",
       description: "",
       type: "",
     });
-    console.log("submitting");
     e.preventDefault();
-    const vladate = validation.safeParse({ title, description });
-    if (!vladate.success) {
-      vladate.error.errors.map((error) => {
+    const validate = validation.safeParse({ title, description });
+    if (!validate.success) {
+      validate.error.errors.map((error) => {
         seterror((prev) => ({ ...prev, [error.path[0]]: error.message }));
       });
-
       return;
     }
     if (!type) {
       seterror((prev) => ({ ...prev, type: "Please select a media type" }));
       return;
     }
+    if (haveId) {
+      // Updating existing blog
+      await updateDoc(doc(db, "blogs", haveId), {
+        title: title,
+        description: description,
+        video: vedeoUrl,
+        image: imageUrl,
+        type: type,
+        date: new Date(),
+        user: user.fullName,
+        numberOfLikes: Math.floor(Math.random() * 100),
+        numberOfDislikes: 0,
+        numberOfComments: 0,
+        comments: [],
+        numberOfViews: 0,
+        numberOffavorites: 0,
+        numberOfSearches: Math.floor(Math.random() * 100),
+      })
+        .then(() => {
+          toast({ title: "Blog updated successfully" });
+          router.push("/dashboard/Blog");
+        })
+        .catch((error) => {
+          console.log("Error updating blog", error);
+        });
+      return;
+    }
+    // Submitting a new blog
     await addDoc(collection(db, "blogs"), {
       title: title,
       description: description,
@@ -130,23 +171,35 @@ const Page = () => {
       .catch((error) => {
         console.log("Error submitting blog", error);
       });
-
-    // Submit the blog
   };
-  console.log(vedeoUrl);
+
+  useEffect(() => {
+    console.log(haveId);
+    if (haveId) {
+      const getData = async () => {
+        const data = await getDoc(doc(db, "blogs", haveId));
+        const blog = data.data();
+        console.log(blog);
+        if (blog) {
+          settitle(blog.title);
+          setdescription(blog.description);
+          setimageUrl(blog.image);
+          setvedeoUrl(blog.video);
+          settype(blog.type);
+        }
+      };
+      getData();
+    }
+  }, [db, haveId]);
+
   return (
     <div className="flex flex-col items-center p-6 bg-gray-50 min-h-screen space-y-8">
-      {/* Header */}
       <h1 className="text-3xl font-bold text-gray-800">Create Blog</h1>
-
-      {/* Form and Preview */}
       <div className="flex flex-col lg:flex-row w-full max-w-6xl gap-8 items-start">
-        {/* Form Section */}
         <form
           onSubmit={handleSubmit}
           className="flex flex-col w-full lg:w-1/2 gap-6 bg-white p-6 rounded-lg shadow-lg"
         >
-          {/* Upload Options */}
           <div className="flex justify-between gap-4">
             <label
               htmlFor="image-upload"
@@ -165,7 +218,6 @@ const Page = () => {
                 onChange={handleImageChange}
               />
             </label>
-
             <label
               htmlFor="video-upload"
               className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer ${
@@ -186,8 +238,9 @@ const Page = () => {
               />
             </label>
           </div>
+
           {error?.type && <p className="text-red-500">{error.type}</p>}
-          {/* Title Input */}
+
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Title
@@ -202,7 +255,6 @@ const Page = () => {
             {error?.title && <p className="text-red-500">{error.title}</p>}
           </div>
 
-          {/* Description Input */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Description
@@ -219,7 +271,6 @@ const Page = () => {
             )}
           </div>
 
-          {/* Submit Button */}
           <footer className="flex gap-3 w-full">
             <button
               type="button"
@@ -229,16 +280,14 @@ const Page = () => {
               back to Blogs
             </button>
             <button
-              // onClick={handleSubmit}
               type="submit"
               className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
-              Submit Blog
+              {haveId ? "Update Blog" : "Submit Blog"}
             </button>
           </footer>
         </form>
 
-        {/* Preview Section */}
         <div className="flex flex-col w-full lg:w-1/2 gap-6 bg-gray-100 p-6 rounded-lg shadow-lg">
           <h2 className="text-xl font-semibold text-gray-800">Preview</h2>
           <div className="flex justify-center items-center bg-white p-4 rounded-lg border">

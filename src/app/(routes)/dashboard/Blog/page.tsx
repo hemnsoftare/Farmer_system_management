@@ -1,8 +1,42 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Blog from "./_components/Blog";
-
+import { BlogProps } from "@/type";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
+import { app } from "@/config/firebaseConfig";
+import { set } from "zod";
 const Page = () => {
+  const [blogs, setblogs] = useState<BlogProps[]>([]);
+  const db = getFirestore(app);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, "blogs", id));
+      setblogs(blogs.filter((blog) => blog.id !== id));
+    } catch (error) {
+      console.error("Error deleting document:", error);
+    }
+  };
+  useEffect(() => {
+    const getBlogs = async () => {
+      const data = await getDocs(collection(db, "blogs"));
+      const blogs = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+        date: doc.data().date ? doc.data().date.toDate() : new Date(), // Handle Firestore Timestamp conversion
+      })) as BlogProps[];
+      setblogs(blogs);
+    };
+    getBlogs();
+  }, [db]);
+  console.log(blogs);
   return (
     <div className="flex flex-col mt-9 items-start px-4">
       <header className="flex w-full items-center justify-between">
@@ -15,12 +49,20 @@ const Page = () => {
         </Link>
       </header>
       <div className="flex items-center mt-7 justify-start gap-4">
-        <Blog
-          date="2/2/2000"
-          description="lorem sdfjakd ka jasdf asdf jkjas kjasdfjklasdfjkl jkd jkldfs jkl  jklsdf  jsdjsdfjlasdf asdf klsdf ikojsdf  ijwer oisdf klj iljsdf ljsdf klasdf jkl sdfajsdkla fjasdf klj kljk "
-          image="/blog-row.jpg"
-          title="iphone 16 por max"
-        />
+        {blogs.map((blog) => (
+          <Blog
+            key={blog.id}
+            date={blog.date.toDateString()}
+            description={blog.description}
+            image={blog.image}
+            title={blog.title}
+            type={blog.type}
+            user={blog.user}
+            video={blog.video}
+            id={blog.id}
+            handleDelete={handleDelete}
+          />
+        ))}
       </div>
     </div>
   );
