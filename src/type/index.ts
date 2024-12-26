@@ -130,7 +130,7 @@ interface ProductFormInput {
   smallimageUrl: string[];
 }
 type CategoryImage = {
-  name: string;
+  fileName: string;
   link: string;
 };
 interface catagoryProps {

@@ -3,15 +3,26 @@ import { uploadImage } from "@/lib/action/uploadimage";
 import { catagoryProps } from "../../../../type";
 import { colors as availableColors } from "@/util/data";
 import Image from "next/image";
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 import { app } from "../../../../config/firebaseConfig";
 import { z } from "zod";
+import Cate from "./_components/Cate";
+import { useToast } from "@/hooks/use-toast";
 
 const ModalCategory = () => {
   const [brands, setBrands] = useState<string[]>([]);
+  const { toast } = useToast();
+  const [category, setCategory] = useState<catagoryProps[]>([]);
   const [colors, setColors] = useState<{ name: string; color: string }[]>([]);
   const [categoryImage, setCategoryImage] = useState<{
     link: string | undefined;
@@ -23,7 +34,8 @@ const ModalCategory = () => {
     colors: string;
     image: string;
   }>();
-  const BrandRef = useRef<HTMLInputElement>(null);
+  // const BrandRef = useRef<HTMLInputElement>(null);
+  const [brand, setbrand] = useState("");
   const nameRef = useRef<HTMLInputElement>(null);
   const db = getFirestore(app);
   const validation = z.object({
@@ -83,9 +95,9 @@ const ModalCategory = () => {
   };
 
   const handleAdd = (type: "brand" | "color", value?: string) => {
-    if (type === "brand" && BrandRef.current?.value) {
-      setBrands((prev) => [...prev, BrandRef.current!.value]);
-      BrandRef.current.value = "";
+    if (type === "brand" && brand) {
+      setBrands((prev) => [...prev, brand]);
+      setbrand("");
     } else if (type === "color" && value) {
       const colorExists = colors.some((item) => item.color === value);
       console.log(colorExists);
@@ -119,11 +131,52 @@ const ModalCategory = () => {
     }
   };
 
+  const handleDeleteCategory = async (id: string) => {
+    await deleteDoc(doc(db, "category", id)).then(() => {
+      toast({ title: "delete category" });
+      setCategory((pre) => pre.filter((item) => item.name !== id));
+    });
+  };
+  useEffect(() => {
+    const getData = async () => {
+      const snapshot = await getDocs(collection(db, "category"));
+      const fetchedCategory: catagoryProps[] = [];
+      snapshot.forEach((item) => {
+        fetchedCategory.push(item.data() as catagoryProps);
+      });
+      setCategory(fetchedCategory);
+    };
+    getData();
+  }, [db]);
+  console.log(brands);
   return (
     <div className="p-6 md:p-10 bg-gray-100 dark:bg-gray-900 min-h-screen rounded-lg shadow-md">
       <h1 className="font-bold text-2xl md:text-3xl text-center text-gray-800 dark:text-white mb-6">
         Add Category
       </h1>
+      <div className="w-full flex gap-3 flex-wrap  m-4  items-center justify-center">
+        {category.map((item) => (
+          <Cate
+            key={item.name}
+            name={item.name}
+            image={item.image.link || ""}
+            onDelete={(name) => {
+              handleDeleteCategory(name);
+            }}
+            onEdite={(name) => {
+              setBrands(item.brands);
+              setColors(item.colors);
+              setCategoryImage(
+                item.image as {
+                  link: string;
+                  fileName: string;
+                }
+              );
+              nameRef.current.value = item.name;
+            }}
+          />
+        ))}
+      </div>
       <form
         onSubmit={handleSubmit}
         className="grid grid-cols-1 lg:grid-cols-2 gap-8"
@@ -138,7 +191,7 @@ const ModalCategory = () => {
               type="text"
               ref={nameRef}
               placeholder="Enter category name"
-              className="w-full p-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full  p-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {error?.name && (
               <span className="text-red-500 text-sm">{error.name}</span>
@@ -158,17 +211,18 @@ const ModalCategory = () => {
             </label>
             <input
               type="text"
-              ref={BrandRef}
+              onChange={(e) => setbrand(e.target.value || "")}
+              value={brand}
               placeholder="Enter brand name"
               className="w-full p-2 border-2 border-gray-300 rounded-lg mb-2"
             />
             {error?.brands && (
-              <span className="text-red-500 text-sm">{error.brands}sdfsdf</span>
+              <span className="text-red-500 text-sm">{error.brands}</span>
             )}
             <ul>
               {brands.map((item) => (
                 <li key={item} className="flex justify-between items-center">
-                  <span>{item}</span>
+                  <span>{item}a</span>
                   <MdOutlineDelete
                     className="cursor-pointer text-red-500"
                     size={20}
@@ -218,6 +272,7 @@ const ModalCategory = () => {
                   <span>{color.name}</span>
                   <input
                     type="checkbox"
+                    checked={colors.some((item) => item.color === color.color)}
                     onChange={(e) =>
                       handleAdd("color", e.target.checked ? color.color : "")
                     }
