@@ -18,12 +18,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { z } from "zod";
 
-const Page = ({
-  params,
-}: {
-  params: { [key: string]: string | undefined };
-}) => {
-  const haveId = params.id;
+const Page = () => {
   const [video, setVideo] = useState<File | null>(null);
   const [image, setimage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -39,10 +34,16 @@ const Page = ({
     description: string;
     type: string;
   }>();
-  const router = useRouter();
   const { user } = useUser();
   const { toast } = useToast();
   const db = getFirestore(app);
+
+  const [haveId, setId] = useState(null);
+  const router = useRouter();
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search); // Parse the query string
+    setId(params.get("id")); // Get the 'id' parameter
+  }, [router]);
 
   const validation = z.object({
     title: z.string().min(3).max(100, { message: "Title is required" }),

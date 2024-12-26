@@ -61,12 +61,13 @@ const initialState = {
   date: "",
   discount: "", // Optional value can be omitted
 };
-const Page = ({
-  params,
-}: {
-  params: { [key: string]: string | undefined };
-}) => {
-  const haveId = params.id;
+const Page = () => {
+  const [haveId, sethaveId] = useState("");
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    sethaveId(id);
+  }, []);
   const [selectedcolor, setselectedcolor] = useState<
     { name: string; color: string }[]
   >([]);
@@ -120,7 +121,7 @@ const Page = ({
       .array(
         z.object({
           name: z.string(),
-          hex: z.string(), // Example: Color can have a name and a hex code
+          color: z.string(),
         })
       )
       .nonempty(),
@@ -175,11 +176,12 @@ const Page = ({
         await updateDoc(doc(db, "Products", haveId), { ...sanitizedData });
         console.log("Data updated successfully");
         toast({ title: "update the product successfully" });
+        window.location.href = "/dashboard/Products";
       } else {
         await addDoc(collection(db, "Products"), data);
         console.log("Data added successfully");
       }
-      // window.location.href = "/dashboard/Products";
+      window.location.href = "/dashboard/Products";
     } catch (error) {
       console.error("Error saving data:", error);
     }
@@ -261,21 +263,23 @@ const Page = ({
     prevSelected: Color[]
   ): Color[] => {
     // Check if the color already exists in the selected array
-    const colorExists = prevSelected.some((item) => item.color === color.color);
-
-    if (!colorExists) {
-      // Find the color's name from the available colors
+    const colorExists = prevSelected.filter(
+      (item) => item.color === color.color
+    ).length;
+    console.log(colorExists);
+    if (colorExists) {
+      // If the color exists, remove it from the selected array
+      return prevSelected.filter((item) => item.color !== color.color);
+    } else {
+      // If the color doesn't exist, add it to the selected array
       const colorName = filteredColors.find(
         (item) => item.color === color.color
       )?.name;
 
-      // Return the updated selected colors array
       return [...prevSelected, { name: colorName || "", color: color.color }];
     }
-
-    // If color already exists, return the current state
-    return prevSelected;
   };
+
   useEffect(() => {
     const getdata = async () => {
       const cate: catagoryProps[] = await getFireBase("category");
@@ -288,6 +292,7 @@ const Page = ({
     const getdata = async () => {
       const data = await getDoc(doc(db, "Products", haveId));
       // setvalue(data.data() as ProductFormInput);
+      console.log(data.data());
       setselectedCategoryy(data.data().category);
       setname(data.data().name);
       setprice(data.data().price);
@@ -363,7 +368,8 @@ const Page = ({
             <InputCheckout
               label="Product Price"
               name="price"
-              defualtValue={price.toString()}
+              type="number"
+              defualtValue={price as unknown as string}
               placeholder="Product price"
               error={error.price}
             />
@@ -377,6 +383,7 @@ const Page = ({
               <select
                 name="category"
                 defaultValue={selectedCategoryy}
+                value={selectedCategoryy}
                 className="py-1 px-3  bg-neutral-300 min-w-[230px] rounded-md outline-none border-none"
                 onChange={(e) => {
                   setselectedcolor([]);
@@ -404,9 +411,15 @@ const Page = ({
               </h2>
               <select
                 name="brand"
-                defaultValue={brand}
                 className="py-1 px-3 bg-neutral-300 min-w-[230px] rounded-md outline-none border-none"
               >
+                <option
+                  className="text-14  sm:text-18"
+                  key={brand}
+                  value={brand}
+                >
+                  {brand}
+                </option>
                 {catagory?.map((item) => {
                   if (item.name === selectedCategoryy) {
                     return item.brands.map((branditem) => (
@@ -436,21 +449,24 @@ const Page = ({
                   .map((filteredItem) => (
                     <div
                       key={filteredItem.name}
-                      className=" flex items-center overflow-x-auto w-full  justify-start gap-3"
+                      className="flex items-center overflow-x-auto w-full justify-start gap-3"
                     >
                       {filteredItem.colors.map((color) => (
                         <div
                           key={color.name}
-                          className="flex gap-1  items-center"
-                          onClick={() => {
-                            setselectedcolor((prevSelected) =>
-                              handleColorSelection(
-                                color,
-                                filteredItem.colors,
-                                prevSelected
-                              )
-                            );
-                          }}
+                          className="flex gap-1 items-center"
+                          onClick={() =>
+                            setselectedcolor((prev) =>
+                              prev.some((item) => item.color === color.color)
+                                ? prev.filter(
+                                    (item) => item.color !== color.color
+                                  )
+                                : [
+                                    ...prev,
+                                    { name: color.name, color: color.color },
+                                  ]
+                            )
+                          }
                         >
                           <input
                             type="checkbox"
@@ -571,6 +587,9 @@ const Page = ({
           <div className="flex justify-end items-center w-full gap-4 ">
             <button
               type="button"
+              onClick={() => {
+                window.location.href = "/dashboard/Products";
+              }}
               className="px-5 py-2 rounded-lg border w-full sm:w-fit border-black hover:bg-neutral-200 duration-300 transition-all"
             >
               Back

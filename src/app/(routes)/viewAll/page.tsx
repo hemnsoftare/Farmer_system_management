@@ -17,8 +17,14 @@ import { Loader } from "@/app/loader";
 import { useUser } from "@clerk/nextjs";
 import { getAllItemNames } from "@/lib/action/fovarit";
 
-const Page = ({ params }: { params: { type: string } }) => {
-  const type = params.type;
+const Page = () => {
+  const [type, settype] = useState("");
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type");
+    settype(type);
+  }, []);
+  console.log(type);
   const db = getFirestore(app);
   const [products, setProducts] = useState<ProductFormInput[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");

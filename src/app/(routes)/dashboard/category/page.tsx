@@ -8,30 +8,61 @@ import { MdOutlineDelete } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { app } from "../../../../config/firebaseConfig";
+import { z } from "zod";
 
 const ModalCategory = () => {
-  const [openSelectedColors, setOpenSelectedColors] = useState(false);
   const [brands, setBrands] = useState<string[]>([]);
   const [colors, setColors] = useState<{ name: string; color: string }[]>([]);
   const [categoryImage, setCategoryImage] = useState<{
     link: string | undefined;
     fileName: string | undefined;
   }>({ fileName: undefined, link: undefined });
+  const [error, seterror] = useState<{
+    name: string;
+    brands: string;
+    colors: string;
+    image: string;
+  }>();
   const BrandRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const db = getFirestore(app);
-
-  const handleDropdownToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setOpenSelectedColors((prevState) => !prevState);
-  };
-
-  const handleClickOutside = () => {
-    setOpenSelectedColors(false);
-  };
+  const validation = z.object({
+    name: z.string().nonempty(),
+    brands: z.array(z.string()).nonempty({ message: "Please add a brand" }),
+    colors: z
+      .array(
+        z.object({
+          name: z.string(),
+          color: z.string(),
+        }),
+        { message: "Please select a color" }
+      )
+      .nonempty({ message: "Please select a color" }),
+    image: z.object(
+      {
+        link: z.string(),
+        fileName: z.string(),
+      },
+      { message: "Please select a image" }
+    ),
+  });
 
   const setDateFirebase = async () => {
     console.log("submit add");
+    seterror({ name: "", brands: "", colors: "", image: "" });
+
+    const validate = validation.safeParse({
+      name: nameRef.current?.value || "",
+      brands,
+      colors,
+      image: categoryImage,
+    });
+    if (!validate.success) {
+      validate.error?.errors.map((item) => {
+        seterror((prev) => ({ ...prev, [item.path[0]]: item.message }));
+      });
+      return;
+    }
     await setDoc(doc(db, "category", nameRef.current?.value || ""), {
       name: nameRef.current?.value || "",
       brands,
@@ -56,14 +87,20 @@ const ModalCategory = () => {
       setBrands((prev) => [...prev, BrandRef.current!.value]);
       BrandRef.current.value = "";
     } else if (type === "color" && value) {
-      const colorExists = colors.find((item) => item.color === value);
+      const colorExists = colors.some((item) => item.color === value);
+      console.log(colorExists);
       if (!colorExists) {
         const colorName = availableColors.find(
           (item) => item.color === value
         )?.name;
+        console.log(colorName);
         setColors((prev) => [...prev, { name: colorName || "", color: value }]);
+      } else {
+        console.log("delete");
+        setColors((prev) => prev.filter((item) => item.color !== value));
       }
     }
+    seterror({ name: "", brands: "", colors: "", image: "" });
   };
 
   const handleDeleteBrand = (brand: string) => {
@@ -88,7 +125,6 @@ const ModalCategory = () => {
         Add Category
       </h1>
       <form
-        onClick={handleClickOutside}
         onSubmit={handleSubmit}
         className="grid grid-cols-1 lg:grid-cols-2 gap-8"
       >
@@ -104,6 +140,9 @@ const ModalCategory = () => {
               placeholder="Enter category name"
               className="w-full p-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            {error?.name && (
+              <span className="text-red-500 text-sm">{error.name}</span>
+            )}
           </div>
 
           <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
@@ -123,6 +162,9 @@ const ModalCategory = () => {
               placeholder="Enter brand name"
               className="w-full p-2 border-2 border-gray-300 rounded-lg mb-2"
             />
+            {error?.brands && (
+              <span className="text-red-500 text-sm">{error.brands}sdfsdf</span>
+            )}
             <ul>
               {brands.map((item) => (
                 <li key={item} className="flex justify-between items-center">
@@ -154,6 +196,9 @@ const ModalCategory = () => {
                 className="mt-4 rounded-lg"
               />
             )}
+            {error?.image && (
+              <span className="text-red-500 text-sm">select image please</span>
+            )}
           </div>
         </div>
 
@@ -173,7 +218,6 @@ const ModalCategory = () => {
                   <span>{color.name}</span>
                   <input
                     type="checkbox"
-                    checked={colors.some((c) => c.color === color.color)}
                     onChange={(e) =>
                       handleAdd("color", e.target.checked ? color.color : "")
                     }
@@ -182,14 +226,28 @@ const ModalCategory = () => {
               ))}
             </div>
           </div>
+          {error?.colors && (
+            <span className="text-red-500 text-sm">{error.colors}</span>
+          )}
         </div>
       </form>
-      <button
-        onClick={setDateFirebase}
-        className="w-full mt-6 py-2 text-lg bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all"
-      >
-        Save Category
-      </button>
+      <footer className="mt-6 w-full">
+        <div className="flex justify-end gap-4">
+          <button
+            type="button"
+            onClick={() => (window.location.href = "/dashboard/Products")}
+            className="w-full py-2 text-lg bg-blue-500 text-white rounded-lg hover:bg-green-600 transition-all"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={setDateFirebase}
+            className="w-full py-2 text-lg bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all"
+          >
+            Save Category
+          </button>
+        </div>
+      </footer>
     </div>
   );
 };
