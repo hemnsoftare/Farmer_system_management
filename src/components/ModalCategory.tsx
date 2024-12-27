@@ -52,7 +52,7 @@ const ModalCategory = () => {
     const data: catagoryProps = {
       name: nameRef.current?.value || "",
       image: {
-        name: categoryImage.fileName || "",
+        fileName: categoryImage.fileName || "",
         link: categoryImage.link || "",
       },
       brands,

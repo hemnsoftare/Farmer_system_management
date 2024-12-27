@@ -13,14 +13,13 @@ const Page = () => {
   const { user } = useUser();
   useEffect(() => {
     const getdata = async () => {
-      console.log("in getdata");
       setload(true);
 
       const data = await getfavorite(user.id).finally(() => {
         setload(false);
       });
       setproducts(data as favorite[]);
-      setfavorriteid(data.map((item) => item.name as string));
+      setfavorriteid(data.map((item) => item.id as string));
     };
     getdata();
   }, [user]);
@@ -48,28 +47,28 @@ const Page = () => {
               click={() => setstate((pre) => pre + 1)}
               item={itemorder}
               userId={user.id}
-              key={itemorder.name}
+              key={itemorder.id}
               addFavoriteid={() => {
                 setproducts((pre) =>
                   pre.map((item) =>
-                    itemorder.name !== item.name
+                    itemorder.id !== item.id
                       ? item
                       : { ...item, numberFavorite: item.numberFavorite + 1 }
                   )
                 );
-                setfavorriteid((pre) => [...pre, itemorder.name]);
+                setfavorriteid((pre) => [...pre, itemorder.id]);
               }}
               favoriteId={favorriteid}
               deleteFavoriteId={() => {
                 setproducts((pre) =>
                   pre.map((item) =>
-                    itemorder.name !== item.name
+                    itemorder.id !== item.id
                       ? item
                       : { ...item, numberFavorite: item.numberFavorite - 1 }
                   )
                 );
                 setfavorriteid((pre) =>
-                  pre.map((item) => (item !== itemorder.name ? item : null))
+                  pre.map((item) => (item !== itemorder.id ? item : null))
                 );
               }}
             />

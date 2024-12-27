@@ -82,7 +82,11 @@ const CartItem = ({
                   },
                 });
                 dispatch(
-                  removeItem({ name: item.name, color: item.colors.color })
+                  removeItem({
+                    name: item.name,
+                    id: item.id,
+                    color: item.colors.color,
+                  })
                 );
               }}
               color="red"
@@ -93,6 +97,7 @@ const CartItem = ({
                   updateItem({
                     name: item.name,
                     type: "increase",
+                    id: item.id,
                     color: item.colors.color,
                   })
                 )
@@ -112,6 +117,7 @@ const CartItem = ({
                     name: item.name,
                     type: "decrease",
                     color: item.colors.color,
+                    id: item.id,
                   })
                 )
               }

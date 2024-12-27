@@ -31,13 +31,13 @@ const CardFavorite = ({
       {/* Item Image */}
       {userId && (
         <>
-          {favoriteId && favoriteId.some((id) => id === item.name) ? (
+          {favoriteId && favoriteId.some((id) => id === item.id) ? (
             <FaHeart
               color="#f45e0c"
               onClick={(e) => {
                 handleFavoriteClick(e);
                 deleteFavoriteId();
-                deleteFavorite(userId, item.numberFavorite, item.name).finally(
+                deleteFavorite(userId, item.numberFavorite, item.id).finally(
                   () => {}
                 );
               }}
@@ -55,6 +55,7 @@ const CardFavorite = ({
                     categroy: item.categroy,
                     price: item.price,
                     colors: item.colors,
+                    id: item.id,
                     numberFavorite: item.numberFavorite,
                     image: item.image,
                   },

@@ -1,28 +1,41 @@
-import { Search } from "@/lib/action/uploadimage";
-import { searchProps } from "@/type";
+"use client";
+import {
+  Search,
+  SearchBlog,
+  SearchBlog as fns,
+} from "@/lib/action/uploadimage";
+import { SearchBlogsProps, searchProps } from "@/type";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-
 const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState<searchProps[]>([]);
+  const [searchBlog, setsearchBlog] = useState<SearchBlogsProps[]>([]);
+  const [show, setshow] = useState(false);
   const pathName = usePathname();
+
   useEffect(() => {
+    setshow(false);
     setSearchValue("");
     setFilteredData([]);
   }, [pathName]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchValue.trim() === "") {
         setFilteredData([]);
+        setsearchBlog([]);
         return;
       }
 
       const filtered = async () => {
         const data = await Search(searchValue);
+        const dataBlog = await fns(searchValue);
         setFilteredData(data as searchProps[]);
+        setsearchBlog(dataBlog);
+        setshow(true);
       };
       filtered();
     }, 500);
@@ -31,14 +44,17 @@ const SearchComponent = () => {
     return () => clearTimeout(timer);
   }, [searchValue]);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setshow(false);
     setSearchValue(e.target.value);
   };
-  if (pathName.startsWith("/dash")) return;
+
+  if (pathName !== "/") return null;
+
   return (
     <>
       {/* Backdrop Overlay */}
-      {filteredData.length > 0 && (
+      {searchValue.length > 0 && (
         <div
           className="w-screen z-[2] h-screen fixed top-0 left-0 right-0 backdrop-blur-md"
           onClick={() => setFilteredData([])}
@@ -59,29 +75,60 @@ const SearchComponent = () => {
 
           {/* Dropdown */}
           <ul
-            className={`absolute w-full bg-white dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-1 max-h-48 overflow-y-auto z-[100] ${
-              filteredData.length > 0
-                ? "opacity-100 max-h-48"
-                : "opacity-0 max-h-0"
+            className={`absolute w-full bg-white pb-2 dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-1   z-[100] ${
+              show ? "opacity-100 h-full  bg-white" : "opacity-0 max-h-0"
             }`}
-            style={{
-              visibility: filteredData.length > 0 ? "visible" : "hidden",
-            }}
           >
-            {filteredData.length > 0 ? (
-              filteredData.map((item, index) => (
-                <Link
-                  href={`/products/${item.category}/${item.name}`}
-                  key={index}
-                  onClick={() => setSearchValue(item.name)}
-                  className="px-3 py-2 w-full flex justify-between items-center  duration-300 hover:bg-gray-100 cursor-pointer"
-                >
-                  <span>{item.name}</span>
-                  <span>{item.numSearch.toFixed(0)}</span>
-                </Link>
-              ))
+            {show ? (
+              <>
+                {/* Products Section */}
+                <p className="px-3 py-2 w-full flex rounded-t-lg justify-between font-semibold items-center duration-300 bg-gray-300 cursor-pointer">
+                  Products
+                </p>
+                {filteredData.length > 0 ? (
+                  filteredData.map((item, index) => (
+                    <Link
+                      href={`/products/${item.category}/${item.id}`}
+                      key={index}
+                      onClick={() => setSearchValue(item.name)}
+                      className="px-3 py-2 w-full   flex justify-between items-center bg-white duration-300 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <span>{item.name}</span>
+                      <span>{item.numSearch.toFixed(0)}</span>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="px-3 py-2   w-full text-center bg-gray-50 text-neutral-500">
+                    No products found
+                  </p>
+                )}
+
+                {/* Blogs Section */}
+                <p className="px-3 py-2 w-full flex justify-between font-semibold items-center duration-300 bg-gray-300 cursor-pointer">
+                  Blogs
+                </p>
+                {searchBlog.length > 0 ? (
+                  searchBlog.map((item) => (
+                    <Link
+                      href={`/blog/${item.id}`}
+                      key={item.id}
+                      onClick={() => setSearchValue(item.name)}
+                      className="px-3 py-2 w-full  rounded-b-lg bg-white flex justify-between items-center duration-300 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <span>{item.name}</span>
+                      <span>{item.numberOfSearches.toFixed(0)}</span>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="px-3 py-2  rounded-b-lg w-full text-center bg-gray-50 text-neutral-500">
+                    No blogs found
+                  </p>
+                )}
+              </>
             ) : (
-              <p className="text-center text-gray-500">No data found</p>
+              <p className="px-3 py-4 rounded-b-lg w-full text-center text-neutral-500">
+                No results found for your search
+              </p>
             )}
           </ul>
         </div>

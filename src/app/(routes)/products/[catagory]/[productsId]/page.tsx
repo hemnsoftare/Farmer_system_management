@@ -8,13 +8,14 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { getproductByCategory } from "@/lib/action/uploadimage";
 import Link from "next/link";
 import { app } from "@/config/firebaseConfig";
-import NewProducts from "@/components/home/NewProducts";
+import LoadingProducts from "@/components/products/loadingProducts";
 const SingleProduct = ({
   params,
 }: {
   params: { catagory: string; productsId: string };
 }) => {
   const [product, setProduct] = useState<ProductFormInput>();
+  const [load, setload] = useState(false);
   const [similarProducts, setSimilarProducts] = useState<ProductFormInput[]>(
     []
   );
@@ -23,12 +24,14 @@ const SingleProduct = ({
 
   useEffect(() => {
     const getProduct = async () => {
-      const productId = params.productsId.replaceAll("%20", " ").trim();
+      setload(true);
+      const productId = params.productsId;
       const refDoc = await getDoc(doc(db, "Products", productId));
       setProduct(refDoc.data() as ProductFormInput);
-
+      console.log(refDoc.data());
       const productsByCategory = await getproductByCategory(params.catagory);
       setSimilarProducts(productsByCategory);
+      setload(false);
     };
 
     getProduct();
@@ -50,7 +53,11 @@ const SingleProduct = ({
         &gt; laptop
       </span>
       <header className="flex flex-col dark:text-gray-600 sm:flex-row w-full sm:items-start justify-center items-center sm:justify-start gap-4">
-        {product && <HeaderProduct item={product} />}
+        {load ? (
+          <LoadingProducts />
+        ) : (
+          product && <HeaderProduct item={product} />
+        )}
       </header>
       <br className="hidden dark:block" />
       <main>

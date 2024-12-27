@@ -1,4 +1,5 @@
 import { IconType } from "react-icons";
+import { string } from "zod";
 
 interface Productsprops {
   name: string;
@@ -143,6 +144,12 @@ interface searchProps {
   name: string;
   category: string;
   numSearch: number;
+  id: string;
+}
+interface SearchBlogsProps {
+  name: string;
+  id: string;
+  numberOfSearches: number;
 }
 interface BlogProps {
   id?: string; // Unique identifier for
@@ -162,10 +169,18 @@ interface BlogProps {
   numberOfSearches: number; // Count of searches
 }
 
+interface contactUSProps {
+  title: string;
+  formMessage: string;
+  imageUrl: string;
+  id?: string;
+}
 export type {
   Productsprops,
+  contactUSProps,
   serviesProps,
   searchProps,
+  SearchBlogsProps,
   footerProps,
   BlogProps,
   userProps,
@@ -196,6 +211,7 @@ export type UserType = {
 
 export interface ItemCartProps {
   name: string;
+  id: string;
   discount?: number;
   price: number;
   colors: { name: string; color: string }; // Keep it simple
@@ -221,6 +237,7 @@ export type OrderType = {
   note?: string; // Optional notes provided by the user
 };
 export interface favorite {
+  id: string;
   name: string;
   price: number;
   image: string;

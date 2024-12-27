@@ -28,7 +28,7 @@ const cart = createSlice({
       // Find the index of the existing item by both name and color
       const existingItemIndex = state.findIndex(
         (item) =>
-          item.name === action.payload.name &&
+          item.id === action.payload.id &&
           item.colors.name === action.payload.colors.name
       );
 
@@ -50,13 +50,14 @@ const cart = createSlice({
       action: PayloadAction<{
         color: string;
         name: string;
+        id: string;
         quantity?: number;
         type: "increase" | "decrease";
       }>
     ) {
       const updatedItems = state.map((item) => {
         if (
-          item.name === action.payload.name &&
+          item.id === action.payload.id &&
           item.colors.color === action.payload.color
         ) {
           const newQuantity =
@@ -74,10 +75,13 @@ const cart = createSlice({
       saveCartToLocalStorage(filteredItems); // Save updated state to localStorage
       return filteredItems;
     },
-    removeItem(state, action: PayloadAction<{ name: string; color: string }>) {
+    removeItem(
+      state,
+      action: PayloadAction<{ name: string; id: string; color: string }>
+    ) {
       const filteredItems = state.filter(
         (item) =>
-          item.name !== action.payload.name ||
+          item.id !== action.payload.id ||
           item.colors.color !== action.payload.color
       );
       saveCartToLocalStorage(filteredItems); // Save updated state to localStorage

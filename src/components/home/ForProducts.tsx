@@ -39,6 +39,7 @@ const ForProducts = ({
   useEffect(() => {
     const getdata = async () => {
       const data = await getAllItemNames(user?.id);
+      console.log(data);
       setfavoriteId(data as string[]);
     };
     getdata();
@@ -69,7 +70,6 @@ const ForProducts = ({
         </div>
       </div>
     );
-  console.log(favoriteId);
   return (
     <div className=" mt-3 w-full overflow-x- py-7 sm:overflow-x-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-4 relative px- justify-center  items-center">
       {products &&
@@ -87,7 +87,7 @@ const ForProducts = ({
                 addFavoriteid={() => {
                   setpro((pre) =>
                     pre.map((item) =>
-                      item.name !== product.name
+                      item.id !== product.id
                         ? item
                         : { ...item, numberFavorite: item.numberFavorite + 1 }
                     )
@@ -97,16 +97,16 @@ const ForProducts = ({
                 deleteFavoriteId={() => {
                   setpro((pre) =>
                     pre.map((item) =>
-                      item.name !== product.name
+                      item.id !== product.id
                         ? item
                         : { ...item, numberFavorite: item.numberFavorite - 1 }
                     )
                   );
                   setfavoriteId(
                     (prev) =>
-                      prev.includes(product.name)
-                        ? prev.filter((item) => item !== product.name) // Remove the product if it exists
-                        : [...prev, product.name] // Add the product if it doesn't exist
+                      prev.includes(product.id)
+                        ? prev.filter((item) => item !== product.id) // Remove the product if it exists
+                        : [...prev, product.id] // Add the product if it doesn't exist
                   );
                 }}
               />

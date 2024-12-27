@@ -44,7 +44,7 @@ const NewProducts = ({
       <Link
         href={
           title !== "dashboard"
-            ? `/products/${product.category}/${product.name}`
+            ? `/products/${product.category}/${product.id}`
             : "#"
         }
         // style={{ boxShadow: shadowColor }} // Apply custom shadow here
@@ -58,14 +58,16 @@ const NewProducts = ({
       >
         {user && user.id && title !== "dashboard" && (
           <>
-            {favoriteId && favoriteId.some((item) => item === itemDb.name) ? (
+            {favoriteId && favoriteId.some((item) => item === itemDb.id) ? (
               <FaHeart
                 color="#f45e0c"
                 onClick={(e) => {
                   handleFavoriteClick(e);
-                  deleteFavorite(user.id, itemDb.price, itemDb.name).finally(
-                    () => {}
-                  );
+                  deleteFavorite(
+                    user.id,
+                    itemDb.numberFavorite,
+                    itemDb.id
+                  ).finally(() => {});
                   deleteFavoriteId();
                 }}
                 className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-[2] right-1"
@@ -82,6 +84,7 @@ const NewProducts = ({
                       categroy: itemDb.category,
                       price: itemDb.price,
                       colors: itemDb.colors,
+                      id: itemDb.id,
                       image: itemDb.bigimageUrl,
                       numberFavorite: itemDb.numberFavorite,
                     },
@@ -145,7 +148,7 @@ const NewProducts = ({
             {title !== "dashboard" && (
               <Link
                 className="w-full hidden group px-3 dark:bg-blue-900  dark:hover:bg-blue-800 border opacity-0  rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all hover:bg-blue-900 text-white bg-primary hover:text-white items-center sm:group-hover:flex justify-center gap-2"
-                href={`/products/${product.category}/${product.name}`}
+                href={`/products/${product.category}/${product.id}`}
               >
                 <MdOutlineShoppingCart color="white" />
                 <span>Add to Cart</span>
@@ -177,20 +180,22 @@ const NewProducts = ({
                   </p>
                 )}
               {/* mobile btn add yui to cart */}
-              <div className="flex gap-2 item-center">
-                <Link href={`/dashboard/AddItem?id=${product.id}`}>
-                  <FileEdit />
-                </Link>
+              {title === "dashboard" && (
+                <div className="flex gap-2 item-center">
+                  <Link href={`/dashboard/AddItem?id=${product.id}`}>
+                    <FileEdit />
+                  </Link>
 
-                <RiDeleteBin6Line
-                  onClick={(e) => {
-                    handleFavoriteClick(e);
-                    deleteProducts();
-                  }}
-                  size={24}
-                  color="red"
-                />
-              </div>
+                  <RiDeleteBin6Line
+                    onClick={(e) => {
+                      handleFavoriteClick(e);
+                      deleteProducts();
+                    }}
+                    size={24}
+                    color="red"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

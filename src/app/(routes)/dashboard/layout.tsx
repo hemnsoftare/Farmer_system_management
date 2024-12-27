@@ -34,7 +34,7 @@ const Layout = ({
   const handleHideSlider = () => setShowSlider(false);
 
   return (
-    <div className="flex relative items-start h-full justify-start w-full">
+    <div className={`flex relative   items-start h-full justify-start w-full`}>
       <button onClick={() => setshowtabs((pre) => !pre)} className="z-50">
         <FaPlus
           className={`p-1 box-border rounded-full text-25 md:hidden text-white absolute top-3 left-3 
@@ -93,28 +93,32 @@ const Layout = ({
           showSlider
             ? "sm:min-w-[260px] min-w-full"
             : "-translate-x-[200px] w-0"
-        } hidden md:flex transition-all px-3 duration-300 z-20 gap-5 py-9 flex-col bg-cyan-800 items-start justify-start h-screen`}
+        } hidden md:flex transition-all overflow-y-auto h-screen px-3 duration-300 z-20 gap-5 py-9 flex-col bg-cyan-800 items-start justify-start `}
       >
-        <div className="flex text-white  items-center mb-4 justify-center">
-          <Image
-            src={"/user.png"}
-            alt="User Avatar"
-            width={100}
-            height={100}
-            className="w-[50px] h-[50px]"
-          />
-          <h2>hemn software</h2>
+        <div className="flex text-white   gap-3 items-center mb-4 justify-center">
+          {user && (
+            <>
+              {" "}
+              <Image
+                src={user.imageUrl || "/user.png"}
+                alt="User Avatar"
+                width={100}
+                height={100}
+                className="w-[50px] rounded-full h-[50px]"
+              />
+              <h2 className="text-25 font-smaller">{user.fullName}</h2>
+            </>
+          )}
         </div>
         {menuItems.map((item) => (
           <Link
             href={item.url || ""}
             key={item.name}
-            onClick={handleHideSlider}
             className={`${
               item.name !== "Home" &&
               pathname.includes(item.url || "null") &&
               " rounded-l-lg border-l-4 bg-gradient-to-l from-cyan-400 to-transparent border-l-cyan-400 "
-            } w-full text-white rounded-lg flex text-19 py-2 cursor-pointer sm:hover:bg-cyan-500 duration-300 transition-all items-center justify-start px-5 gap-2`}
+            } w-full text-white rounded-lg   flex text-19 py-2 cursor-pointer sm:hover:bg-cyan-500 duration-300 transition-all items-center justify-start px-5 gap-2`}
           >
             <item.icon
               color="white"
@@ -137,7 +141,7 @@ const Layout = ({
       <div
         className={`${
           showSlider ? "sm:w-[calc(100%-250px)] w-0" : "w-full"
-        } transition-all z-10 duration-300 h-full`}
+        }  transition-all  bg-white z-10 duration-300  h-full`}
       >
         {children}
       </div>

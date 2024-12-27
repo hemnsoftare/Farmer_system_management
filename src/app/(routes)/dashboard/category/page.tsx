@@ -273,9 +273,7 @@ const ModalCategory = () => {
                   <input
                     type="checkbox"
                     checked={colors.some((item) => item.color === color.color)}
-                    onChange={(e) =>
-                      handleAdd("color", e.target.checked ? color.color : "")
-                    }
+                    onClick={(e) => handleAdd("color", color.color)}
                   />
                 </label>
               ))}

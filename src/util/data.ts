@@ -29,6 +29,7 @@ import {
   FaShippingFast,
   FaDesktop,
   FaShoppingCart,
+  FaEnvelope,
 } from "react-icons/fa";
 import {
   MdAddCircleOutline,
@@ -443,18 +444,7 @@ const menuItems: propsMenuItem[] = [
     url: "/dashboard/PersonalData",
   },
   {
-    name: "Blog",
-    icon: FaUser,
-    url: "/dashboard/Blog",
-  },
-  {
-    name: "Popular Products", // Corrected spelling
-    icon: FaShoppingCart, // Updated to a more relevant icon
-    url: "/dashboard/popular", // Corrected URL
-  },
-
-  {
-    name: "category",
+    name: "Category",
     icon: BiCategoryAlt,
     url: "/dashboard/category",
   },
@@ -464,14 +454,30 @@ const menuItems: propsMenuItem[] = [
     url: "/dashboard/AddItem",
   },
   {
+    name: "Products",
+    icon: MdShoppingBasket,
+    url: "/dashboard/Products",
+  },
+  {
+    name: "Popular Products",
+    icon: FaShoppingCart,
+    url: "/dashboard/popular",
+  },
+  {
     name: "User Orders",
     icon: MdOutlineShoppingCart,
     url: "/dashboard/UserOrder",
   },
   {
-    name: "Products",
-    icon: MdShoppingBasket,
-    url: "/dashboard/Products",
+    name: "Blog",
+    icon: FaUser,
+    url: "/dashboard/Blog",
+  },
+
+  {
+    name: "Contact Us",
+    icon: FaEnvelope,
+    url: "/dashboard/ContactUs",
   },
   {
     name: "Discounts",
@@ -484,6 +490,7 @@ const menuItems: propsMenuItem[] = [
     url: "/",
   },
 ];
+
 const colors: { name: string; color: string }[] = [
   { name: "Red", color: "#FF0000" },
   { name: "Green", color: "#00FF00" },

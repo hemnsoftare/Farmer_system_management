@@ -16,7 +16,9 @@ import {
 } from "firebase/firestore";
 import {
   catagoryProps,
+  contactUSProps,
   ProductFormInput,
+  SearchBlogsProps,
   searchProps,
   typeFilter,
   UserType,
@@ -24,6 +26,7 @@ import {
 import { app, storage } from "@/config/firebaseConfig";
 import { OrderType } from "@/type";
 import { number, string } from "zod";
+import { title } from "process";
 
 const db = getFirestore(app);
 // Function to upload the image
@@ -136,15 +139,15 @@ export const setUser = async (user: UserType) => {
 };
 
 export const setOrder = async (order: OrderType): Promise<string> => {
-  type quantity = { name: string; quantitiy: number }[];
+  type quantity = { id: string; quantitiy: number }[];
   let update: quantity = [];
   order.orderItems.map((item) => {
     let sum = 0;
     order.orderItems.filter((orderitem) =>
       orderitem.name === item.name ? (sum += orderitem.quantity) : null
     );
-    let itemupdate = { name: item.name, quantitiy: sum };
-    if (!update.some((itemupdateed) => itemupdateed.name === item.name)) {
+    let itemupdate = { id: item.id, quantitiy: sum };
+    if (!update.some((itemupdateed) => itemupdateed.id === item.id)) {
       update.push(itemupdate);
     }
   });
@@ -160,6 +163,7 @@ export const setOrder = async (order: OrderType): Promise<string> => {
       orderDate: new Date(),
       orderItems: order.orderItems.map((item) => ({
         name: item.name || "",
+        id: item.id || "",
         discount: item.discount || 0,
         price: item.price || 0,
         colors: {
@@ -177,9 +181,9 @@ export const setOrder = async (order: OrderType): Promise<string> => {
     });
 
     update.map(async (item) => {
-      const getitem = await getDoc(doc(db, "Products", item.name));
+      const getitem = await getDoc(doc(db, "Products", item.id));
       const currentNumberSale = getitem.exists() && getitem.data().numberSale;
-      await updateDoc(doc(db, "Products", item.name), {
+      await updateDoc(doc(db, "Products", item.id), {
         numberSale: item.quantitiy + currentNumberSale,
       }).then((res) => console.log("update in number sale"));
     });
@@ -200,6 +204,7 @@ export const Search = async (searchValue: string): Promise<searchProps[]> => {
     if (data.name.toLowerCase().includes(searchValue.toLowerCase())) {
       results.push({
         name: data.name,
+        id: data.id,
         numSearch: data.numSearch,
         category: data.category,
       });
@@ -208,7 +213,21 @@ export const Search = async (searchValue: string): Promise<searchProps[]> => {
 
   return results;
 };
+export const SearchBlog = async (searchValue): Promise<SearchBlogsProps[]> => {
+  const data = await getDocs(collection(db, "blogs"));
+  const results: SearchBlogsProps[] = [];
+  data.forEach(async (item) => {
+    if (item.data().title.toLowerCase().includes(searchValue.toLowerCase())) {
+      results.push({
+        id: item.id as string,
+        name: item.data().title as string,
+        numberOfSearches: item.data().numberOfSearches as number,
+      });
+    }
+  });
 
+  return results;
+};
 export const getAllOrder = async (): Promise<OrderType[]> => {
   const getorder = await getDocs(collection(db, "order"));
   const data: OrderType[] = [];
@@ -223,4 +242,41 @@ export const deleteProducts = async (id: string) => {
     .catch((error) => {
       console.error("Error removing document: ", error);
     });
+};
+export const addContactUs = async ({
+  title,
+  formMessage,
+  imageUrl,
+}: contactUSProps): Promise<string> => {
+  const refSet = await addDoc(collection(db, "ContactUs"), {
+    title,
+    formMessage,
+    imageUrl,
+  });
+  return refSet.id;
+};
+export const getConactUs = async (): Promise<contactUSProps[]> => {
+  const results: contactUSProps[] = [];
+  const data = await getDocs(collection(db, "ContactUs"));
+  data.forEach((item) =>
+    results.push({ ...(item.data() as contactUSProps), id: item.id })
+  );
+  return results;
+};
+export const deleteContactUs = async (id: string) => {
+  await deleteDoc(doc(db, "ContactUs", id)).then((res) =>
+    console.log("delete the concat us ")
+  );
+};
+export const UpdateContactUUs = async ({
+  title,
+  formMessage,
+  imageUrl,
+  id,
+}: contactUSProps) => {
+  await updateDoc(doc(db, "ContactUs", id), {
+    title,
+    formMessage,
+    imageUrl,
+  });
 };

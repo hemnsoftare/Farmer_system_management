@@ -1,48 +1,48 @@
+"use client";
+import CardContactUs from "@/components/contactus/CardContactUs";
+import LoadingSpinner from "@/components/contactus/LoadingSpinner";
+import { getConactUs } from "@/lib/action/uploadimage";
+import { contactUSProps } from "@/type";
 import Link from "next/link";
-import React from "react";
-import { FaPhoneVolume } from "react-icons/fa6";
-import { MdOutlineMail } from "react-icons/md";
-import { RiMapPinAddLine } from "react-icons/ri";
-const contactInfo = [
-  {
-    type: "Office",
-    icon: RiMapPinAddLine, // Use the correct icon here
-    address: "123 Main Street, Anytown, USA",
-  },
-  {
-    type: "Email",
-    icon: MdOutlineMail, // Use the correct icon here
-    address: "info@techheim.com",
-  },
-  {
-    type: "Phone",
-    icon: FaPhoneVolume, // Use the correct icon here
-    address: "+1 (555) 123-4567",
-  },
-];
+import React, { useEffect, useState } from "react";
 
 const Page = () => {
+  const [load, setLoad] = useState(false);
+  const [contacts, setContacts] = useState<contactUSProps[]>([]);
+  useEffect(() => {
+    const getData = async () => {
+      setLoad(true);
+      const data = await getConactUs();
+      setLoad(false);
+      setContacts(data);
+    };
+    getData();
+  }, []);
   return (
-    <div className="flex flex-col xl:py-12 py-4 w-full gap-4">
+    <div className="flex flex-col px-3 xl:py-12 py-4 w-full gap-4">
       <h2 className="mt-4  px-3">
         <Link href={"/"} className="text-blue-600 border-blue-600  border-b">
           home{" "}
         </Link>{" "}
         &gt; <span className="">Contact Us</span>
       </h2>
-      <div className="flex items-center justify-center mt-6  gap-5 w-full">
-        {contactInfo.map((item) => (
-          <div
-            key={item.type}
-            className="flex flex-col items-center w-[200px] h-[100px]  justify-center gap-3"
-          >
-            <item.icon color="blue" className=" sm:w-8 w-5 h-5 sm:h-8" />
-            <h3 className="font-semibold text-12 sm:text-16">{item.type}</h3>
-            <span className="text-neutral-500 text-wrap text-10 sm:text-14 text-center">
-              {item.address}
-            </span>
-          </div>
-        ))}
+      <div className="w-full flex py-7 px-1  overflow-x-auto md:flex-wrap gap-3 items-center justify-start md:justify-center">
+        {!load ? (
+          contacts.map((item) => (
+            <CardContactUs
+              key={item.title}
+              formMessage={item.formMessage}
+              imageUrl={item.imageUrl}
+              id={item.id}
+              showActions={false}
+              title={item.title}
+            />
+          ))
+        ) : (
+          <>
+            <LoadingSpinner /> <LoadingSpinner /> <LoadingSpinner />
+          </>
+        )}
       </div>
       <div className="flex flex-col sm:flex-row items-start mt-8 sm:px-24 px-2 sm:gap-10 justify-center">
         <div className="flex flex-col w-full sm:w-[40%] items-start gap-3 justify-normal">

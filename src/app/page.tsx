@@ -34,14 +34,20 @@ export default function Home() {
   useEffect(() => {
     const getdata = async (col: string) => {
       const q = await query(collection(db, "Products"), orderBy(col, "desc"));
+      const pro: ProductFormInput[] = [];
       const qsanpshot = await getDocs(q);
       qsanpshot.forEach((item) => {
         if (col === "date") {
+          pro.push({ ...(item.data() as ProductFormInput), id: item.id });
           setloadNew(false);
-          setproductNew((pre) => [...pre, item.data() as ProductFormInput]);
         } else {
+          pro.push({ ...(item.data() as ProductFormInput), id: item.id });
           setloadBestSale(false);
-          setproductSale((pre) => [...pre, item.data() as ProductFormInput]);
+        }
+        if (col === "date") {
+          setproductNew(pro);
+        } else {
+          setproductSale(pro);
         }
       });
     };

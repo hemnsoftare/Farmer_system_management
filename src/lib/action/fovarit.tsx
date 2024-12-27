@@ -9,8 +9,10 @@ import {
 } from "firebase/firestore";
 import { favorite } from "@/type";
 import { app, storage } from "@/config/firebaseConfig";
+import { idText } from "typescript";
 
 const db = getFirestore(app);
+
 export const addfavorite = async ({
   id,
   item,
@@ -27,19 +29,19 @@ export const addfavorite = async ({
 
     const nmf = item.numberFavorite + 1;
     if (!querySnapshot.empty) {
-      await updateDoc(doc(db, "Products", item.name), {
+      await updateDoc(doc(db, "Products", item.id), {
         numberFavorite: nmf,
       }).then((res) => console.log("update in number sale"));
 
-      await setDoc(doc(db, "favorite", id, "items", item.name), {
+      await setDoc(doc(db, "favorite", id, "items", item.id), {
         ...item,
         numberFavorite: nmf,
       });
     } else {
-      await updateDoc(doc(db, "Products", item.name), {
+      await updateDoc(doc(db, "Products", item.id), {
         numberFavorite: nmf,
       }).then((res) => console.log("update in number sale"));
-      await setDoc(doc(db, "favorite", id, "items", item.name), {
+      await setDoc(doc(db, "favorite", id, "items", item.id), {
         ...item,
         numberFavorite: nmf,
       });
@@ -59,11 +61,10 @@ export const getfavorite = async (userId) => {
 
     // Extract data from each document
     const items = querySnapshot.docs.map((doc) => ({
-      // Include the document ID
-      ...doc.data(), // Spread the document data
+      ...doc.data(),
+      id: doc.id,
     }));
 
-    console.log("Favorite items:", items);
     return items;
   } catch (error) {
     console.error("Error fetching favorite items:", error);
@@ -73,17 +74,18 @@ export const getfavorite = async (userId) => {
 export const deleteFavorite = async (
   userId: string,
   numberFavorite: number,
-  itemName: string
+  id: string
 ) => {
   try {
-    await deleteDoc(doc(db, "favorite", userId, "items", itemName));
+    await deleteDoc(doc(db, "favorite", userId, "items", id)).then((res) =>
+      console.log("delete the products in favorite")
+    );
     console.log(numberFavorite);
     const nmf = numberFavorite - 1;
     console.log(nmf);
-    await updateDoc(doc(db, "Products", itemName), {
+    await updateDoc(doc(db, "Products", id), {
       numberFavorite: nmf,
     }).then((res) => console.log("update in number favorite"));
-    console.log(`Item "${itemName}" deleted successfully.`);
   } catch (error) {
     console.error("Error deleting favorite item:", error);
   }
@@ -93,7 +95,7 @@ export const getAllItemNames = async (userId: string): Promise<string[]> => {
     const itemsRef = collection(db, "favorite", userId, "items");
     const querySnapshot = await getDocs(itemsRef);
     const itemNames = querySnapshot.docs.map((doc) => doc.id);
-    console.log("Item names:", itemNames);
+    console.log(itemNames);
     return itemNames;
   } catch (error) {
     console.error("Error fetching item names:", error);

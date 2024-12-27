@@ -26,7 +26,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
 
   const initialQuantities = cartItems.reduce(
     (acc, cartItem) => {
-      if (cartItem.name === item.name) {
+      if (cartItem.id === item.id) {
         acc[cartItem.colors.name] = cartItem.quantity;
       }
       return acc;
@@ -99,6 +99,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
         colors: selectedColor,
         image: item.bigimageUrl,
         name: item.name,
+        id: item.id,
         price: item.price,
         discount: item.discount ? item.discount : 0,
         quantity: quantities[selectedColor.name] || 1,
