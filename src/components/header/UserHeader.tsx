@@ -25,7 +25,7 @@ const UserHeader = () => {
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none border-none">
         {/* Use the user's profile image URL */}
-        <FaRegUser className="object-cover w-5 dark:text-white   h-5 md:h-6 md:w-6" />
+        <FaRegUser className="object-cover w-5    h-5 md:h-6 md:w-6" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className=" z-50 dark:bg-black border dark:border-white/50 mt-3 bg-white">
         <DropdownMenuLabel className="flex gap-2 border-b-2  dark:border-neutral-700 border-neutral-100 items-center justify-between">

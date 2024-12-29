@@ -1,7 +1,11 @@
 import type { Viewport } from "next";
 import type { Metadata } from "next";
 import "./globals.css";
-import ClientProviders from "./ClientProviders"; // Import the new client component
+import dynamic from "next/dynamic";
+
+const ClientProviders = dynamic(() => import("./ClientProviders"), {
+  ssr: false, // Disable server-side rendering for this component
+});
 
 export const metadata: Metadata = {
   title: "Tech-Hiem",
@@ -13,10 +17,10 @@ export const metadata: Metadata = {
   },
   themeColor: "#F45E0C", // Add theme-color here
 };
-
 export const viewport: Viewport = {
   themeColor: "#F45E0C",
 };
+
 export default function RootLayout({
   children,
 }: {
@@ -28,7 +32,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#fff2f" />
         {/* Next.js will inject metadata automatically */}
       </head>
-      <body className="transition-colors  duration-300 bg-white dark:text-neutral-500 text-black dark:bg-black">
+      <body className="transition-colors duration-300 bg-white dark:text-neutral-500 text-black dark:bg-black">
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

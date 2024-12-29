@@ -270,7 +270,7 @@ const Page = () => {
               >
                 Proceed to checkout
               </DialogTrigger>
-              <DialogContent className="md:scale-[0.8] h-fit lg:scale-[0.8]">
+              <DialogContent className="md:scale-[0.8]  h-screen w-screen md:w-fit md:h-fit lg:scale-[0.8]">
                 <DialogHeader className="flex flex-col gap-3">
                   {!showSuccess && !showNotSuccess && (
                     <DialogTitle>Address details</DialogTitle>

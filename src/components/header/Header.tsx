@@ -58,25 +58,27 @@ const Header = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY) {
-        setScrollDirection("Increasing");
-      } else if (currentScrollY === 0) {
-        setScrollDirection("None");
-      } else if (currentScrollY < lastScrollY) {
-        setScrollDirection("Decreasing");
+      if (Math.abs(currentScrollY - lastScrollY) > 0.1) {
+        // Threshold to avoid small changes
+        if (currentScrollY > lastScrollY) {
+          setScrollDirection("Increasing");
+        } else if (currentScrollY < 30) {
+          setScrollDirection("None");
+        } else if (currentScrollY < lastScrollY) {
+          setScrollDirection("Decreasing");
+        }
       }
+
       setisopenCart(false);
       setLastScrollY(currentScrollY);
     };
 
-    // Add the scroll event listener
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup event listener on unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]); // Dependency on lastScrollY
+  }, [lastScrollY]);
+
   useEffect(() => {
     const quantityTotal = cartItems.reduce(
       (acc, item) => acc + item.quantity,
@@ -99,12 +101,12 @@ const Header = () => {
     <div
       className={` ${
         scrollDirection === "Decreasing"
-          ? " translate-y-0 transition-all backdrop-blur-md dark:backdrop-brightness-75 duration-300 sticky top-0 right-0 left-0"
+          ? " translate-y-0 transition-all backdrop-blur-md text-black dark:backdrop-brightness-75 duration-300 sticky top-0 right-0 left-0"
           : scrollDirection === "None"
-            ? "translate-y-0"
-            : "-translate-y-[200px]"
+            ? "translate-y-0 md:bg-white bg-black md:text-black text-white"
+            : "-translate-y-[200px] text-black "
       } 
-         flex relative z-[50] top-0 right-0 left-0 dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
+         flex relative z-[50] top-0 right-0 left-0  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
     >
       {/* logo */}
       <Link href={"/"} className="hidden sm:block">

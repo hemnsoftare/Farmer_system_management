@@ -9,8 +9,8 @@ export default function FormCheckout({
   handleSubmit,
   errors,
 }: {
-  errors: errorCheckOutProps;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  errors?: errorCheckOutProps;
+  handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   return (
     <form
