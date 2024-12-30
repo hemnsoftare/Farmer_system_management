@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 const SearchComponent = () => {
-  const [showSearch, setshowSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState<searchProps[]>([]);
   const [searchBlog, setsearchBlog] = useState<SearchBlogsProps[]>([]);
@@ -59,16 +58,12 @@ const SearchComponent = () => {
             setsearchBlog([]);
             setshow(false);
             setFilteredData([]);
-            setshowSearch(false);
           }}
         ></div>
       )}
 
-      <div className="w-full hidden relative md:flex mt-3 justify-center px-5 items-center  z-[4]">
-        <IoSearch onClick={() => setshowSearch(true)} />
-        <div
-          className={` ${showSearch ? "flex" : "hidden"} relative group w-full md:w-1/2`}
-        >
+      <div className="w-full  relative md:flex mt-3 justify-center px-5 items-center  z-[4]">
+        <div className={` flex relative group w-full md:w-1/2`}>
           {/* Input */}
           <input
             type="search"
@@ -77,7 +72,7 @@ const SearchComponent = () => {
             className="w-full py-2 rounded-full dark:bg-neutral-800 dark:text-white outline-none dark:focus:bg-neutral-700 focus:bg-gray-200 duration-300 bg-gray-100 px-3 border border-gray-300"
             placeholder="Search"
           />
-          <IoSearch className="absolute top-6 right-4 text-gray-500 group-focus-within:hidden block" />
+          <IoSearch className="absolute top-3 right-4 text-gray-500 group-focus-within:hidden block" />
           {/* Dropdown */}
           <ul
             className={`absolute w-full bg-white pb-2 dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-1   z-[100] ${

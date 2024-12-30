@@ -103,7 +103,7 @@ const Header = () => {
         scrollDirection === "Decreasing"
           ? " translate-y-0 transition-all backdrop-blur-md text-black dark:backdrop-brightness-75 duration-300 sticky top-0 right-0 left-0"
           : scrollDirection === "None"
-            ? "translate-y-0 md:bg-white bg-black md:text-black text-white"
+            ? "translate-y-0 "
             : "-translate-y-[200px] text-black "
       } 
          flex relative z-[50] top-0 right-0 left-0  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
