@@ -154,7 +154,7 @@ const ModalCategory = () => {
       <h1 className="font-bold text-2xl md:text-3xl text-center text-gray-800 dark:text-white mb-6">
         Add Category
       </h1>
-      <div className="w-full flex gap-3 flex-wrap  m-4  items-center justify-center">
+      <div className="w-full flex gap-3 flex-wrap  m-4 overflow-x-auto items-center justify-center">
         {category.map((item) => (
           <Cate
             key={item.name}
