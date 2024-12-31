@@ -92,7 +92,7 @@ const ForProducts = ({
                         : { ...item, numberFavorite: item.numberFavorite + 1 }
                     )
                   );
-                  setfavoriteId((pre) => [...pre, product.name]);
+                  setfavoriteId((pre) => [...pre, product.id]);
                 }}
                 deleteFavoriteId={() => {
                   setpro((pre) =>
