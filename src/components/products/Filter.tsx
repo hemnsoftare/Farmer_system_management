@@ -32,7 +32,7 @@ const Filtered = ({
               </div>
             )
         )}
-      {type === "price" && item[0] !== "" && (
+      {type === "price" && item && item[0] !== "" && (
         <div className="flex items-center border-[2px] gap-2 font-semibold px-2 py-1 pr-4 rounded-lg border-neutral-400 min-w-[120px] justify-between">
           <span>
             Price : {item[0]} - {item[1]}

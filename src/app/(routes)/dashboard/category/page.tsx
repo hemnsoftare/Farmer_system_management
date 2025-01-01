@@ -79,6 +79,7 @@ const ModalCategory = () => {
       name: nameRef.current?.value || "",
       brands,
       colors,
+      numberOfSearches: Math.floor(Math.random() * 100),
       image: categoryImage,
     })
       .then(() => {

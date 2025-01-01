@@ -184,7 +184,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
     <Sheet open={showSheet} onOpenChange={setShowSheet}>
       <SheetTrigger
         onClick={() => setShowSheet(true)}
-        className="text-black hover:text-blue-500 transition-all duration-300"
+        className="text-black dark:text-white hover:text-blue-500 transition-all duration-300"
       >
         <IoMdMenu size={30} />
       </SheetTrigger>

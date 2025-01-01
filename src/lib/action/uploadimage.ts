@@ -19,6 +19,7 @@ import {
   contactUSProps,
   ProductFormInput,
   SearchBlogsProps,
+  SearchCategoryProps,
   searchProps,
   typeFilter,
   UserType,
@@ -221,6 +222,23 @@ export const SearchBlog = async (searchValue): Promise<SearchBlogsProps[]> => {
       results.push({
         id: item.id as string,
         name: item.data().title as string,
+        numberOfSearches: item.data().numberOfSearches as number,
+      });
+    }
+  });
+
+  return results;
+};
+export const SearchCategory = async (
+  searchValue: string
+): Promise<SearchCategoryProps[]> => {
+  const data = await getDocs(collection(db, "category"));
+  const results: SearchCategoryProps[] = [];
+  data.forEach(async (item) => {
+    if (item.data().name.toLowerCase().includes(searchValue.toLowerCase())) {
+      results.push({
+        id: item.id as string,
+        name: item.data().name as string,
         numberOfSearches: item.data().numberOfSearches as number,
       });
     }

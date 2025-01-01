@@ -12,8 +12,12 @@ import { Loader } from "@/app/loader";
 import ForProducts from "@/components/home/ForProducts";
 import { getAllItemNames } from "@/lib/action/fovarit";
 import { useUser } from "@clerk/nextjs";
+import { brand } from "@/util/data";
+import { set } from "zod";
 
 const MyComponent = ({ params }: { params: { catagory: string } }) => {
+  const [filter, setFilter] = useState<{ [key: string]: boolean }>({});
+
   const [selected, setSelected] = useState(params.catagory.replace("%20", " "));
   const [openFilter, setopenFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState<typeFilter>({
@@ -32,30 +36,26 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
 
   const handleFilter = (filter: typeFilter) => {
     if (!isEqual(filter, filterProducts)) {
-      setSelected(selected + " ");
       setFilterProducts(filter);
     }
   };
 
   const handelDelete = (type: string, item: string) => {
-    let updatedFilter: any = filterProducts;
-
+    const update: typeFilter = { ...filterProducts };
     if (type === "brand") {
-      updatedFilter.brand = filterProducts.brand.filter(
-        (brand) => brand !== item
-      );
+      update.brand = filterProducts.brand.filter((brand) => brand !== item);
     } else if (type === "color") {
-      updatedFilter.color = filterProducts.color.filter(
-        (color) => color !== item
-      );
+      update.color = filterProducts.color.filter((color) => color !== item);
     } else if (type === "discount") {
-      updatedFilter.discount = false;
+      update.discount = false;
     }
-
-    setSelected(selected + " "); // Trigger a refresh
-    setFilterProducts({ ...updatedFilter });
+    setSelected(selected + " ");
+    handleFilter(update);
   };
 
+  const handleOpen = (type: string) => {
+    setFilter((prev) => ({ ...prev, [type]: !prev[type] }));
+  };
   useEffect(() => {
     // Effect to fetch products whenever filters or selected category changes
     const getData = async () => {
@@ -117,8 +117,10 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
       />
       <HeaderDilter
         key={selected}
+        onOpen={handleOpen}
         selected={selected}
         filters={filterProducts}
+        filter={filter}
         onFilter={handleFilter}
         length={products.length}
         selectedSortBy={(item) => {
@@ -126,12 +128,13 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
         }}
         onClear={() => {
           setSelected(selected + " ");
-          setFilterProducts({
+          const data = {
             brand: [],
             color: [],
             discount: false,
             price: [1, 100000],
-          });
+          };
+          handleFilter(data as typeFilter);
         }}
         openfilter={openFilter}
         closeFilter={() => {
@@ -158,14 +161,26 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
         />
       </div>
       <div className="grid grid-cols-4 gap-2">
-        <div className="hidden md:block">
+        <div className="hidden  md:block">
           <FilterItem
             key={selected}
+            onOpen={handleOpen}
+            filter={filter}
             selected={selected}
+            onClear={() => {
+              setFilterProducts({
+                brand: [],
+                color: [],
+                discount: false,
+                price: [1, 100000],
+              });
+            }}
             filters={filterProducts}
             onFilter={handleFilter}
+            type="page"
           />
         </div>
+
         {load ? (
           <div className="flex w-full items-center justify-between px-3">
             <Loader />

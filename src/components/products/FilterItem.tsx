@@ -14,31 +14,70 @@ import {
 import { app } from "../../config/firebaseConfig";
 import FilterSection from "./FilterSection ";
 import { cn } from "@/lib/utils";
-import { SheetTrigger } from "../ui/sheet";
+import { on } from "events";
+
 const FilterItem = ({
   onFilter,
   filters,
   selected,
+  filter,
+  onClear,
+  onOpen,
   type,
   closeFiltered,
 }: {
   onFilter: (filter: typeFilter) => void;
   filters: typeFilter;
   closeFiltered?: () => void;
+  onClear?: () => void;
   selected: string;
+  filter: { [key: string]: boolean };
   type?: "page" | "header";
+  onOpen: (type: string) => void;
 }) => {
-  console.log(type);
   const db = getFirestore(app);
-  const [filter, setFilter] = useState<{ [key: string]: boolean }>({});
-  const [price, setPrice] = useState<number[]>(filters.price); // Default price range
-  const [color, setColor] = useState<string[]>(filters?.color);
-  const [brand, setBrand] = useState<string[]>(filters.brand);
-  const [discount, setDiscount] = useState<boolean>(filters.discount);
-  const [category, setcategory] = useState<catagoryProps>();
-  const handleOpen = (type: string) => {
-    setFilter((prev) => ({ ...prev, [type]: !prev[type] }));
-  };
+  // const [filter, setFilter] = useState<{ [key: string]: boolean }>({});
+  const [price, setPrice] = useState<number[]>([1, 100000]); // Default price range
+  const [color, setColor] = useState<string[]>([]);
+  const [brand, setBrand] = useState<string[]>([]);
+  const [discount, setDiscount] = useState<boolean>(false);
+  const [category, setcategory] = useState<catagoryProps | undefined>();
+
+  useEffect(() => {
+    if (filters) {
+      setColor(filters.color || []);
+      setBrand(filters.brand || []);
+      setDiscount(filters.discount);
+      setPrice(filters.price || [1, 100000]);
+    }
+  }, [filters]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        if (!selected) return;
+        const q = query(
+          collection(db, "category"),
+          where("name", "==", selected.trim())
+        );
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) return;
+        querySnapshot.forEach((doc) => {
+          setcategory(doc.data() as catagoryProps);
+        });
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+      }
+    };
+    getData();
+  }, [selected, db]);
+
+  useEffect(() => {
+    if (type === "page") {
+      const filter: typeFilter = { brand, color, discount, price };
+      onFilter(filter); // Trigger the filter update
+    }
+  }, [brand, color, discount, price, onFilter, type]); // Avoid unnecessary rerender by only triggering when relevant state changes
 
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -58,80 +97,26 @@ const FilterItem = ({
   };
 
   const handleSliderChange = (value: number | number[]) => {
-    // Ensure value is an array of two numbers
     const newValue: [number, number] =
       Array.isArray(value) && value.length === 2
         ? (value as [number, number])
-        : [0, 1000]; // Fallback if not an array of length 2
-
-    setPrice(newValue); // Update state with new slider values
+        : [1, 100000];
+    setPrice(newValue);
   };
 
-  useEffect(() => {
-    if (filters) {
-      setColor(filters.color || []);
-      setBrand(filters.brand || []);
-      setDiscount(filters.discount);
-      setPrice(filters.price || [200, 300]);
-    }
-  }, [filters]);
+  const handleOpen = (type: string) => {
+    onOpen(type);
+  };
 
-  useEffect(() => {
-    const getdata = async () => {
-      // console.log(selected, "]]]]]]]]]]]");
-      try {
-        // console.log("Fetching data for selected category:", selected);
-
-        if (!selected) {
-          console.error("No category selected");
-          return;
-        }
-
-        // Firestore query
-        const q = query(
-          collection(db, "category"),
-          where("name", "==", selected.trim())
-        );
-
-        const querySnapShot = await getDocs(q);
-
-        if (querySnapShot.empty) {
-          // console.log("No matching documents found.");
-        } else {
-          querySnapShot.forEach((doc) => {
-            setcategory(doc.data() as catagoryProps);
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching category data:", error);
-      }
-    };
-
-    getdata();
-  }, [selected, db]);
-
-  useEffect(
-    () => {
-      const filter: typeFilter = { brand, color, discount, price };
-      if (type === "page") {
-        console.log(type);
-        console.log(filter);
-        onFilter(filter);
-      }
-    },
-    type === "page" ? [color, discount, brand, price, onFilter, type] : [type]
-  );
-
-  console.log(discount);
   return (
-    <div className="flex flex-col  h-full duration-300 transition-all dark:text-secondary w-full items-center justify-start">
+    <div className="flex flex-col h-full duration-300 transition-all dark:text-secondary w-full items-center justify-start">
       <FilterSection
         title="brand"
         items={category?.brands || []}
         filterKey="brand"
         selectedItems={brand}
         handleCheckboxChange={handleCheckboxChange}
-      />{" "}
+      />
       <FilterSection
         title="color"
         items={category?.colors || []}
@@ -143,7 +128,7 @@ const FilterItem = ({
       <div className="flex items-center border-b-2 py-2 w-full justify-between px-4">
         <label htmlFor="discount">Discount</label>
         <Switch
-          onClick={() => setDiscount(discount === true ? false : true)}
+          onClick={() => setDiscount((prev) => !prev)}
           className=" "
           id="discount"
         />
@@ -156,100 +141,47 @@ const FilterItem = ({
         >
           <span>price</span>
           <span
-            className={`${
-              filter["price"] ? "rotate-180" : "rotate-0"
-            } transform duration-300 transition-all`}
+            className={`${filter["price"] ? "rotate-180" : "rotate-0"} transform duration-300`}
           >
             <FaChevronDown />
           </span>
         </p>
         <div
-          className={`${
-            filter["price"] ? "h-fit opacity-100" : "h-0 w-0 opacity-0"
-          } duration-300 w-[85%] relative transition-all mt-2`}
+          className={`${filter["price"] ? "h-fit opacity-100" : "h-0 w-0 opacity-0"} duration-300 w-[85%] relative transition-all mt-2`}
         >
-          {/* React Range Slider */}
-          {/* <div className="flex text-12 my-5 justify-between items-center">
-            {" "}
-            <span className="text-14">price range </span>{" "}
-            <span className="text-14 ">
-              {price[0]}$ - {price[1]}${" "}
-            </span>{" "}
-          </div> */}
-          <div>
-            <Slider
-              size="lg"
-              label="Price Range"
-              maxValue={100000}
-              step={100}
-              defaultValue={price}
-              onChange={handleSliderChange}
-              formatOptions={{ style: "currency", currency: "USD" }}
-              classNames={{
-                base: "w-full dark:text-white/70 gap-3", // Ensure width is full or increased
-                filler:
-                  "bg-gradient-to-r from-pink-300 to-cyan-300 dark:from-pink-600 dark:to-cyan-800",
-                track: "h-3 bg-gray-300 dark:bg-gray-600", // Add track styling
-              }}
-              renderThumb={({ index, ...props }) => (
-                <div
-                  {...props}
-                  className="group p-1 top-1/2 bg-background border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
-                >
-                  <span
-                    className={cn(
-                      "transition-transform bg-gradient-to-br shadow-small rounded-full w-5 h-5 block group-data-[dragging=true]:scale-80",
-                      index === 0
-                        ? "from-pink-200 to-pink-500 dark:from-pink-400 dark:to-pink-600" // first thumb
-                        : "from-cyan-200 to-cyan-600 dark:from-cyan-600 dark:to-cyan-800" // second thumb
-                    )}
-                  />
-                </div>
-              )}
-            />
-            {/* <Slider
-              label="Price Range"
-              step={50}
-              minValue={0}
-              maxValue={100000}
-              defaultValue={price}
-              onChange={handleSliderChange}
-              formatOptions={{ style: "currency", currency: "USD" }}
-              className="max-w-md "
-            /> */}
-            {/* <Slider
-              size="lg"
-              maxValue={100000}
-              step={10}
-              defaultValue={price}
-              formatOptions={{ style: "currency", currency: "USD" }}
-              classNames={{
-                base: "max-w-md  text-12 gap-3",
-                filler:
-                  "bg-gradient-to-r  text-12 from-pink-300 to-cyan-300 dark:from-pink-600 dark:to-cyan-800",
-              }}
-              value={price} // Bind value to state
-              onChange={handleSliderChange} // Attach handler to onChange
-              renderThumb={({ index, ...props }) => (
-                <div
-                  {...props}
-                  className="group p-1 text-12 top-1/2 bg-background border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
-                >
-                  <span
-                    className={`transition-transform  text-12  bg-gradient-to-br shadow-small rounded-full w-5 h-5 block group-data-[dragging=true]:scale-80 ${
-                      index === 0
-                        ? "from-pink-200 to-pink-500 dark:from-pink-400 dark:to-pink-600" // first thumb
-                        : "from-cyan-200 to-cyan-600 dark:from-cyan-600 dark:to-cyan-800" // second thumb
-                    }`}
-                  />
-                </div>
-              )}
-            /> */}
-            {/* Display the selected price range */}
-            {/* <div className=" absolute -bottom-[16px]  transform scale-x-[1.2] -translate-x-1 rounded-2xl w-full -z-50 h-[34px] left-0 bg-slate-100"></div> */}
-          </div>
+          <Slider
+            size="lg"
+            label="Price Range"
+            maxValue={100000}
+            step={100}
+            defaultValue={price}
+            onChange={handleSliderChange}
+            formatOptions={{ style: "currency", currency: "USD" }}
+            classNames={{
+              base: "w-full dark:text-white/70 gap-3",
+              filler:
+                "bg-gradient-to-r from-pink-300 to-cyan-300 dark:from-pink-600 dark:to-cyan-800",
+              track: "h-3 bg-gray-300 dark:bg-gray-600",
+            }}
+            renderThumb={({ index, ...props }) => (
+              <div
+                {...props}
+                className="group p-1 top-1/2 bg-background border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
+              >
+                <span
+                  className={cn(
+                    "transition-transform bg-gradient-to-br shadow-small rounded-full w-5 h-5 block group-data-[dragging=true]:scale-80",
+                    index === 0
+                      ? "from-pink-200 to-pink-500 dark:from-pink-400 dark:to-pink-600"
+                      : "from-cyan-200 to-cyan-600 dark:from-cyan-600 dark:to-cyan-800"
+                  )}
+                />
+              </div>
+            )}
+          />
         </div>
       </div>
+      <br />
       <br />
       <br />
       {type === "header" && (
@@ -260,15 +192,13 @@ const FilterItem = ({
               onFilter(filter);
               closeFiltered();
             }}
-            className="w-1/2 text-center py-2 bg-secondary-400 text-white rounded-lg "
+            className="w-1/2 text-center py-2 bg-secondary-400 text-white rounded-lg"
           >
             Apply
           </button>
           <button
-            onClick={() => {
-              closeFiltered();
-            }}
-            className="w-1/2 text-center py-2 border-secondary-400 border-2 text-secondary-400 rounded-lg "
+            onClick={() => closeFiltered?.()}
+            className="w-1/2 text-center py-2 border-secondary-400 border-2 text-secondary-400 rounded-lg"
           >
             Back
           </button>

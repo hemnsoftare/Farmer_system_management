@@ -1,6 +1,10 @@
 "use client";
-import { Search, SearchBlog as fns } from "@/lib/action/uploadimage";
-import { SearchBlogsProps, searchProps } from "@/type";
+import {
+  Search,
+  SearchCategory,
+  SearchBlog as fns,
+} from "@/lib/action/uploadimage";
+import { SearchBlogsProps, SearchCategoryProps, searchProps } from "@/type";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,6 +13,7 @@ const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState<searchProps[]>([]);
   const [searchBlog, setsearchBlog] = useState<SearchBlogsProps[]>([]);
+  const [searchCategory, setsearchCategory] = useState([]);
   const [show, setshow] = useState(false);
   const pathName = usePathname();
 
@@ -29,19 +34,20 @@ const SearchComponent = () => {
       const filtered = async () => {
         const data = await Search(searchValue);
         const dataBlog = await fns(searchValue);
+        const dataCategory = await SearchCategory(searchValue);
+        setsearchCategory(dataCategory as SearchCategoryProps[]);
         setFilteredData(data as searchProps[]);
         setsearchBlog(dataBlog);
         setshow(true);
       };
       filtered();
-    }, 500);
+    }, 200);
 
     // Cleanup function to clear the timer
     return () => clearTimeout(timer);
   }, [searchValue]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setshow(false);
     setSearchValue(e.target.value);
   };
 
@@ -75,12 +81,33 @@ const SearchComponent = () => {
           <IoSearch className="absolute top-3 right-4 text-gray-500 group-focus-within:hidden block" />
           {/* Dropdown */}
           <ul
-            className={`absolute w-full bg-white pb-2 dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-1   z-[100] ${
+            className={`absolute w-full bg-white pb-2 dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-12   z-[100] ${
               show ? "opacity-100 h-full  bg-white" : "opacity-0 max-h-0"
             }`}
           >
-            {show ? (
+            {show && searchValue ? (
               <>
+                {/* Categories Section */}
+                <p className="px-3 py-2 w-full flex rounded-t-lg justify-between font-semibold items-center duration-300 bg-gray-300 cursor-pointer">
+                  Category
+                </p>
+                {searchCategory.length > 0 ? (
+                  searchCategory.map((item, index) => (
+                    <Link
+                      href={`/products/${item.name}`}
+                      key={index}
+                      onClick={() => setSearchValue(item.name)}
+                      className="px-3 py-2 w-full   flex justify-between items-center bg-white duration-300 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <span>{item.name}</span>
+                      <span>{item.numberOfSearches}</span>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="px-3 py-2   w-full text-center bg-gray-50 text-neutral-500">
+                    No category found
+                  </p>
+                )}
                 {/* Products Section */}
                 <p className="px-3 py-2 w-full flex rounded-t-lg justify-between font-semibold items-center duration-300 bg-gray-300 cursor-pointer">
                   Products
@@ -126,9 +153,11 @@ const SearchComponent = () => {
                 )}
               </>
             ) : (
-              <p className="px-3 py-4 rounded-b-lg w-full text-center text-neutral-500">
-                No results found for your search
-              </p>
+              searchValue && (
+                <p className="px-3 py-4 rounded-b-lg w-full text-center text-neutral-500">
+                  No results found for your search
+                </p>
+              )
             )}
           </ul>
         </div>

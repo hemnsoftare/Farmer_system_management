@@ -22,7 +22,7 @@ const CardContactUs: React.FC<CardContactUsProps> = ({
   showActions,
 }) => {
   return (
-    <div className="flex flex-col min-w-[120px] md:min-h-[234px] md:max-h-[234px] md:min-w-[214px] md:max-w-[214px] items-center justify-center gap-2  border-gray-300 p-2 rounded-md md:rounded-xl shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+    <div className="flex flex-col min-w-[120px] md:min-h-[234px] md:max-h-[234px] md:min-w-[214px] md:max-w-[214px] items-center justify-center gap-2  border-gray-300 p-2 rounded-2xl md:rounded-xl shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
       <div className="flex flex-col items-center gap-4">
         <Image
           src={imageUrl}

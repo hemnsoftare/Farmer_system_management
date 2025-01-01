@@ -18,24 +18,30 @@ import {
 } from "@/components/ui/sheet";
 import FilterItem from "./FilterItem";
 import { typeFilter } from "@/type";
+import { on } from "events";
 
 const HeaderDilter = ({
   selectedSortBy,
   length,
   onFilter,
+  filter,
+  onOpen,
   filters,
   selected,
   openfilter,
   closeFilter,
+  onClear,
 }: {
   selectedSortBy: (sort: string) => void;
   onClear: () => void;
   length: number;
   closeFilter?: () => void;
+  onOpen: (type: string) => void;
   onFilter: (filter: typeFilter) => void;
   filters: typeFilter;
   selected: string;
   openfilter: boolean;
+  filter: { [key: string]: boolean };
 }) => {
   const [state, setstate] = useState("newest");
   return (
@@ -50,11 +56,21 @@ const HeaderDilter = ({
         </SheetTrigger>
         <SheetContent side="left" className="w-full h-full">
           <SheetHeader>
-            <SheetTitle>Filters</SheetTitle>
+            <SheetTitle className="flex items-center justify-between">
+              <span> Filters</span>
+              <button
+                onClick={onClear}
+                className="text-blue-800 active:bg-blue-300 px-2 py-1 rounded-lg duration-300 transition-all font-semibold text-18 "
+              >
+                Clear All
+              </button>
+            </SheetTitle>
             <SheetDescription className="h-full">
               <FilterItem
+                onOpen={onOpen}
                 closeFiltered={closeFilter}
                 key={selected}
+                filter={filter}
                 selected={selected}
                 filters={filters}
                 type="header"
@@ -64,7 +80,15 @@ const HeaderDilter = ({
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <br />
+      <button className=" px-3 dark:text-gray-600 dark:shadow-secondary md:flex hidden   gap-2   border py-1 shadow-center-shadow rounded-lg w-[240px] justify-between items-center">
+        <span className="flex gap-2 items-center ">
+          <VscSettings className="block sm:hidden" />
+          <span className="font-semibold">Filters ({length})</span>
+        </span>
+        <button className="text-blue-500 font-semibold" onClick={onClear}>
+          Clear all
+        </button>
+      </button>
       <div className="flex w-1/2 sm:w-fit border  dark:text-gray-600 dark:shadow-secondary shadow-center-shadow rounded-lg justify-center px-3 items-center gap-">
         <span className="text-16 font-semibold above-405:text-18 py-1 ">
           Sort by :{" "}

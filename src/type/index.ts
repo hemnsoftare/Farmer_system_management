@@ -137,6 +137,7 @@ type CategoryImage = {
 interface catagoryProps {
   name: string;
   image: CategoryImage;
+  numberOfSearches: number;
   brands: string[]; // Assuming 'brands' is an array of brand names
   colors: { name: string; color: string }[]; // Assuming 'colors' is an array of color names
 }
@@ -147,6 +148,11 @@ interface searchProps {
   id: string;
 }
 interface SearchBlogsProps {
+  name: string;
+  id: string;
+  numberOfSearches: number;
+}
+interface SearchCategoryProps {
   name: string;
   id: string;
   numberOfSearches: number;
@@ -194,6 +200,7 @@ export type {
   ProductInfoProps,
   FAQProps,
   errorCheckOutProps,
+  SearchCategoryProps,
   propsMenuItem,
   ProductFormInput,
   catagoryProps,
