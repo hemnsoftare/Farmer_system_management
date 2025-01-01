@@ -55,6 +55,7 @@ const ModalCategory = () => {
         fileName: categoryImage.fileName || "",
         link: categoryImage.link || "",
       },
+      numberOfSearches: Math.floor(Math.random() * 1000),
       brands,
       colors,
     };
