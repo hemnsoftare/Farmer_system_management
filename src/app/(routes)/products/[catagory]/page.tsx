@@ -49,8 +49,8 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
     } else if (type === "discount") {
       update.discount = false;
     }
-    setSelected(selected + " ");
     handleFilter(update);
+    setSelected(selected + " ");
   };
 
   const handleOpen = (type: string) => {
