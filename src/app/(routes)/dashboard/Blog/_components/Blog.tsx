@@ -1,11 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { a } from "@nextui-org/slider/dist/use-slider-a94a4c83";
 import { FaEdit } from "react-icons/fa";
-import { FaDeleteLeft } from "react-icons/fa6";
-import { Delete } from "lucide-react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Link from "next/link";
+import ReactPlayer from "react-player";
 
 interface BlogProps {
   image?: string;
@@ -42,37 +40,54 @@ const Blog = ({
   const formattedDate = new Date(
     (date?.seconds || 0) * 1000
   ).toLocaleDateString("en-US");
+
   return (
-    <div className="flex min-w-[150px] max-w-[150px] md:min-w-[300px] md:max-w-[300px] flex-col rounded-lg shadow-md overflow-hidden">
-      <div className="relative min-h-[220px] max-h-[220px] w-full">
-        {type === "video" && (
-          <video controls className="w-full  min-h-[220px] max-h-[220px]">
-            <source src={video} type="video/mp4" />
-          </video>
-        )}
-        {type === "image" && (
-          <Image
-            src={image}
-            alt={title}
-            width={200}
-            height={200}
-            className="w-full  min-h-[220px] max-h-[220px]"
-          />
+    <div className="flex min-w-[250px] max-w-[250px] md:min-w-[400px] md:max-w-[400px] flex-col rounded-lg shadow-md overflow-hidden">
+      <div className="relative  w-full">
+        {/* Video Display */}
+        {type === "video" && video ? (
+          <div className="relative w-full pb-[56.25%]">
+            {" "}
+            {/* 16:9 Aspect Ratio */}
+            <ReactPlayer
+              url={video}
+              width="100%"
+              height="100%"
+              controls
+              className="absolute top-0 left-0"
+            />
+          </div>
+        ) : type === "video" && !video ? (
+          <div className="flex justify-center items-center h-full bg-gray-200">
+            <span className="text-gray-600">No video available</span>
+          </div>
+        ) : (
+          // Image Display
+          type === "image" &&
+          image && (
+            <Image
+              src={image}
+              alt={title}
+              width={200}
+              height={200}
+              className="w-full  min-h-[220px] max-h-[220px] object-cover"
+            />
+          )
         )}
       </div>
       <div className="p-4 space-y-2">
         <p>
-          create by{" "}
-          <span className="text-gray-600 text-14 underline"> {user}</span>
+          Created by{" "}
+          <span className="text-gray-600 text-sm underline">{user}</span>
         </p>
         <h3 className="text-xl font-semibold">{title}</h3>
         <p className="text-sm text-gray-500">{formattedDate}</p>
-        <p className="text-gray-700  md:max-h-[59px] md:min-h-[60px]">
+        <p className="text-gray-700 md:max-h-[59px] md:min-h-[60px]">
           {truncatedDescription}
         </p>
       </div>
 
-      <footer className="flex px-4 justify-end items-center pb-3   rounded-b-lg">
+      <footer className="flex px-4 justify-end items-center pb-3 rounded-b-lg">
         {id && (
           <Link href={`/dashboard/Blog/CreateBlog?id=${id}`}>
             <FaEdit color="blue" size={22} />

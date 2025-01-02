@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import ReactPlayer from "react-player";
 import { z } from "zod";
 
 const Page = () => {
@@ -219,27 +220,21 @@ const Page = () => {
                 onChange={handleImageChange}
               />
             </label>
-            <label
-              htmlFor="video-upload"
-              className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer ${
-                type === "image" || loading
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-gray-100"
-              }`}
-            >
-              <span className="text-gray-600">
-                Upload Video {progress ? progress : null}
-              </span>
-              <input
-                type="file"
-                id="video-upload"
-                accept="video/*"
-                className="hidden"
-                onChange={handleVideoChange}
-              />
-            </label>
           </div>
-
+          <div className="">
+            <label htmlFor="veidio">Link to video</label>
+            <input
+              type="text"
+              id="veidio"
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter video link"
+              value={vedeoUrl}
+              onChange={(e) => {
+                settype("video");
+                setvedeoUrl(e.target.value);
+              }}
+            />
+          </div>
           {error?.type && <p className="text-red-500">{error.type}</p>}
 
           <div>
@@ -293,10 +288,12 @@ const Page = () => {
           <h2 className="text-xl font-semibold text-gray-800">Preview</h2>
           <div className="flex justify-center items-center bg-white p-4 rounded-lg border">
             {vedeoUrl ? (
-              <video className="w-full rounded-lg object-contain" controls>
-                <source src={vedeoUrl} type="video/mp4" />
-              </video>
-            ) : type === "image" ? (
+              <ReactPlayer
+                url={vedeoUrl}
+                controls
+                className="w-full rounded-lg object-contain"
+              />
+            ) : imageUrl ? (
               <Image
                 src={imageUrl}
                 alt="Uploaded Preview"

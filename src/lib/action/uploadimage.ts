@@ -21,6 +21,7 @@ import {
   SearchBlogsProps,
   SearchCategoryProps,
   searchProps,
+  teamProps,
   typeFilter,
   UserType,
 } from "@/type";
@@ -295,6 +296,71 @@ export const UpdateContactUUs = async ({
   await updateDoc(doc(db, "ContactUs", id), {
     title,
     formMessage,
+    imageUrl,
+  });
+};
+export const setAbouut = async (
+  imageUrl: string,
+  description: string,
+  descriptions: { title: string; description: string }[]
+) => {
+  await setDoc(doc(db, "aboutUs", "about"), {
+    descriptions,
+    imageUrl,
+    description,
+  });
+};
+export const getAboutUs = async (): Promise<{
+  imageUrl: string;
+  description: string;
+  descriptions: { title: string; description: string }[];
+}> => {
+  const data = await getDoc(doc(db, "aboutUs", "about"));
+  const result: {
+    imageUrl: string;
+    description: string;
+    descriptions: { title: string; description: string }[];
+  } = data.data() as any;
+  return result;
+};
+export const setMemeber = async (
+  fullName: string,
+  position: string,
+  description: string,
+  imageUrl: string
+) => {
+  await addDoc(collection(db, "team"), {
+    fullName,
+    position,
+    description,
+    imageUrl,
+  });
+};
+export const getTeam = async (): Promise<teamProps[]> => {
+  const data = await getDocs(collection(db, "team"));
+  const result: teamProps[] = [];
+  data.forEach((item) =>
+    result.push({ ...(item.data() as teamProps), id: item.id })
+  );
+  return result;
+};
+export const deleteTeam = async (id: string) => {
+  await deleteDoc(doc(db, "team", id)).then((res) =>
+    console.log("delete the team ")
+  );
+};
+export const UpdateTeam = async ({
+  description,
+  imageUrl,
+  fullName,
+  position,
+
+  id,
+}: teamProps) => {
+  await updateDoc(doc(db, "team", id), {
+    fullName,
+    position,
+    description,
     imageUrl,
   });
 };

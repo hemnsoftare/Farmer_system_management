@@ -181,9 +181,17 @@ interface contactUSProps {
   imageUrl: string;
   id?: string;
 }
+interface teamProps {
+  id?: string;
+  fullName: string;
+  position: string;
+  description: string;
+  imageUrl: string;
+}
 export type {
   Productsprops,
   contactUSProps,
+  teamProps,
   serviesProps,
   searchProps,
   SearchBlogsProps,

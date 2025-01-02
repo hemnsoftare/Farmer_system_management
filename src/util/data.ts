@@ -39,6 +39,7 @@ import {
 } from "react-icons/md";
 import { MenuItemProps } from "@nextui-org/react";
 import { BiCategoryAlt, BiSolidTimer } from "react-icons/bi";
+import { FaUsersLine } from "react-icons/fa6";
 const newProdcuts: Productsprops[] = [
   {
     price: 12,
@@ -483,6 +484,11 @@ const menuItems: propsMenuItem[] = [
     name: "Discounts",
     icon: FaGift,
     url: "/dashboard/discount",
+  },
+  {
+    name: "About Us",
+    icon: FaUsersLine,
+    url: "/dashboard/aboutUs",
   },
   {
     name: "Home",

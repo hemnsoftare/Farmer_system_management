@@ -1,8 +1,30 @@
+"use client";
+import CardTeam from "@/components/about/CardTeam";
+import { getAboutUs } from "@/lib/action/uploadimage";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 const Page = () => {
+  const [about, setabout] = useState({
+    description: "",
+    imageUrl: "",
+    descriptions: [
+      {
+        title: "",
+        description: "",
+      },
+    ],
+  });
+
+  useEffect(() => {
+    getdata();
+  }, []);
+  const getdata = async () => {
+    // Fetch data from an API
+    const data = await getAboutUs();
+    setabout(data as any);
+  };
+
   return (
     <div className="flex w-full  sm:px-40 flex-col py-8 gap-4 px-2 sm:gap-4 ">
       <h2>
@@ -16,46 +38,24 @@ const Page = () => {
         </span>{" "}
       </h2>
       <Image
-        src={"/About.png"}
+        src={about.imageUrl}
         alt="about image "
         width={600}
         height={400}
-        className="w-full rounded-md"
+        className="w-full rounded-md md:h-full max-h-[450px] "
       />
-      <p className="text-neutral-400 dark:text-neutral-600 px-3 leading-[18px] text-12 sm:text-16 line-clamp-0 indent-2 -mt-2 ">
-        Tech Heim is an innovative online store that offers a diverse selection
-        of digital gadgets, available for purchase in both cash and installment
-        options. Embodying the motto Join the digital revolution today the
-        website not only provides a seamless shopping experience but also
-        features a captivating blog section filled with insightful reviews,
-        articles, and videos about cutting-edge technology and digital gadgets.
-        Users can actively engage with the content through comments and a
-        question-answer section, fostering a dynamic community of tech
-        enthusiasts.{" "}
+      <p className="text-neutral-400 dark:text-neutral-600 px-3  text-12 sm:text-16 line-clamp-0 indent-2 -mt-2 ">
+        {about.description}
       </p>
       <div className="">
-        <h2 className="font-semibold text-16 sm:text-20">Tech Heim Meaning </h2>
-        <p className="text-neutral-400 text-12 dark:text-neutral-600 leading-[18px] sm:text-18 px-3 indent-2 ">
-          The name Tech Heim cleverly combines two languages (English & German),
-          signifying a home of technology that provides all the essential tech
-          products and services, making it a one-stop destination for tech-savvy
-          individuals seeking the latest and most exciting gadgets.
-        </p>
+        {about.descriptions.map((item) => (
+          <div key={item.title} className="flex flex-col gap-2">
+            <h2 className="text-20 font-semibold">{item.title}</h2>
+            <p className="text-14">{item.description}</p>
+          </div>
+        ))}
       </div>
-      <div className="">
-        <h2 className="font-semibold text-16 sm:text-20 ">
-          Some of Tech Heim’s impressive features :{" "}
-        </h2>
-        <p className="text-neutral-400 px-3 dark:text-neutral-600 leading-[18px] text-12 sm:text-18 indent-2 ">
-          Diverse digital gadgets for purchase in cash or installments A blog
-          with reviews and articles about the latest technology and gadgets User
-          comments and Q&A section for community interaction Represents a
-          tech-savvy home with all necessary technology Easy-to-use interface
-          for a great user experience Consistent and visually appealing design A
-          hub for tech enthusiasts to connect and share insights Helps users
-          make informed purchase decisions
-        </p>
-      </div>
+      <div className="w-full h-full flex md:flex-row flex-wrap flex-col gap-4"></div>
     </div>
   );
 };

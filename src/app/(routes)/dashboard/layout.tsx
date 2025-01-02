@@ -17,14 +17,14 @@ const Layout = ({
   const { user } = useUser();
   const [showtabs, setshowtabs] = useState(false);
   // State to manage the visibility of the sidebar
-  const [showSlider, setShowSlider] = useState(false);
+  const [showSlider, setShowSlider] = useState(true);
 
   useEffect(() => {
     console.log("layout initialized");
     if (user) {
       const isAdmin = user?.publicMetadata?.role === "admin";
       if (!isAdmin) {
-        redirect("/");
+        // redirect("/");
       }
     }
   }, [user]);
