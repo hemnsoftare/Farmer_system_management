@@ -104,6 +104,15 @@ const Page = () => {
           refdescription.current?.value,
           imageUrl
         );
+        setteam((pre) => [
+          ...pre,
+          {
+            description: refdescription.current.value,
+            fullName: reffullName.current.value,
+            imageUrl: imageUrl,
+            position: refposition.current.value,
+          },
+        ]);
         toast({ title: "Member added successfully" });
         reffullName.current!.value = "";
         refposition.current!.value = "";
@@ -123,12 +132,36 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="w-full flex items-center justify-center flex-col ">
+    <div className="w-screen flex mt-8 px-5 py-2 items-center justify-center flex-col ">
       <h1 className="self-start text-30 font-semibold">My team</h1>
+      <div className="w-full h-full flex flex-wrap gap-4">
+        {team.map((item) => (
+          <CardTeam
+            key={item.id}
+            name={item.fullName}
+            description={item.description}
+            imageUrl={item.imageUrl}
+            role={item.position}
+            isDashboard={true}
+            onEdit={() => {
+              refdescription.current!.value = item.description;
+              refposition.current!.value = item.position;
+              reffullName.current!.value = item.fullName;
+              setimageUrl(item.imageUrl);
+              setid(item.id);
+            }}
+            onDelete={() => {
+              setteam((prev) => prev.filter((i) => i.id !== item.id));
+              deleteTeam(item.id);
+              toast({ title: "Member deleted successfully" });
+            }}
+          />
+        ))}
+      </div>
       <form
         action=""
         onSubmit={handleSubmit}
-        className="w-full max-w-sm flex flex-col rounded-2xl items-center justify-center p-4 bg-gradient-to-br from-blue-600 to-purple-700 text-white shadow-md"
+        className="w-full mt-6 flex flex-col rounded-2xl items-center justify-center p-4 bg-gradient-to-br from-blue-600 to-purple-700 text-white shadow-md"
       >
         <h1 className="text-xl font-bold mb-4">
           {id ? "Edit Member" : "Add Member"}
@@ -139,9 +172,9 @@ const Page = () => {
           htmlFor="image-upload"
           className="flex flex-col items-center justify-center w-48 h-48 border-2 border-dashed rounded-md cursor-pointer hover:border-white transition-all duration-200 bg-white bg-opacity-10"
         >
-          {imagePreview ? (
+          {imagePreview || imageUrl ? (
             <Image
-              src={URL.createObjectURL(imagePreview)}
+              src={imageUrl ? imageUrl : URL.createObjectURL(imagePreview)}
               alt="Uploaded Preview"
               width={192}
               height={192}
@@ -209,36 +242,29 @@ const Page = () => {
           <p className="text-red-500 text-sm">{error.description}</p>
         )}
         {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-white text-blue-600 font-semibold rounded-md p-2 mt-3 hover:bg-gray-100 transition-all duration-200 shadow-sm"
-        >
-          {id ? "Edit Member" : "Add Member"}
-        </button>
+        <footer className="w-full mt-3  flex items-center justify-between gap-3 ">
+          <button
+            type="button"
+            onClick={() => {
+              setimageUrl("");
+              setid("");
+              setimagePreview(null);
+              reffullName.current.value = "";
+              refposition.current.value = "";
+              refdescription.current.value = "";
+            }}
+            className="w-full p-2 md:hover:bg-cyan-900 duration-300 transition-all active:bg-cyan-800  border rounded-lg border-white "
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="w-full bg-white text-blue-600 font-semibold rounded-md p-2  hover:bg-gray-100 transition-all duration-200 shadow-sm"
+          >
+            {id ? "Edit Member" : "Add Member"}
+          </button>
+        </footer>
       </form>
-      <div className="w-full h-full flex flex-wrap gap-4">
-        {team.map((item) => (
-          <CardTeam
-            key={item.id}
-            name={item.fullName}
-            description={item.description}
-            imageUrl={item.imageUrl}
-            role={item.position}
-            isDashboard={true}
-            onEdit={() => {
-              refdescription.current!.value = item.description;
-              refposition.current!.value = item.position;
-              reffullName.current!.value = item.fullName;
-              setimageUrl(item.imageUrl);
-            }}
-            onDelete={() => {
-              setteam((prev) => prev.filter((i) => i.id !== item.id));
-              deleteTeam(item.id);
-              toast({ title: "Member deleted successfully" });
-            }}
-          />
-        ))}
-      </div>
     </div>
   );
 };

@@ -6,6 +6,8 @@ const CardTeam = ({
   role,
   description,
   imageUrl,
+  onEdit,
+  onDelete,
   isDashboard,
 }: {
   name: string;
@@ -25,7 +27,7 @@ const CardTeam = ({
           alt={name || "Team Member"}
           width={176}
           height={176}
-          className="rounded-full border-4"
+          className="rounded-full min-h-[175px] max-h-[176px] min-w-[176px] max-w-[176px] border-4"
         />
       </div>
       {/* Name */}
@@ -37,15 +39,24 @@ const CardTeam = ({
       {/* Role/Description */}
       <p className="text-sm text-gray-600 text-center">
         {description || "No description provided."}
+        perferendis laboriosam eos numquam natus consectetur saepe
+        necessitatibus consequatur veniam voluptatem ab veritatis, tenetur
+        aliquam a.
       </p>
 
       {/* Dashboard Buttons */}
       {isDashboard && (
         <div className="flex gap-2 mt-4">
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all">
+          <button
+            onClick={onEdit}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
+          >
             Edit
           </button>
-          <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all">
+          <button
+            onClick={onDelete}
+            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+          >
             Delete
           </button>
         </div>

@@ -1,6 +1,8 @@
 "use client";
 import CardTeam from "@/components/about/CardTeam";
-import { getAboutUs } from "@/lib/action/uploadimage";
+import { getAboutUs, getTeam } from "@/lib/action/uploadimage";
+import { teamProps } from "@/type";
+import { image } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -15,13 +17,15 @@ const Page = () => {
       },
     ],
   });
+  const [team, setteam] = useState<teamProps[]>([]);
 
   useEffect(() => {
     getdata();
   }, []);
   const getdata = async () => {
-    // Fetch data from an API
     const data = await getAboutUs();
+    const datateam = await getTeam();
+    setteam(datateam);
     setabout(data as any);
   };
 
@@ -55,7 +59,18 @@ const Page = () => {
           </div>
         ))}
       </div>
-      <div className="w-full h-full flex md:flex-row flex-wrap flex-col gap-4"></div>
+      <div className="w-full h-full flex md:flex-row flex-wrap flex-col gap-4">
+        {team.map((item) => (
+          <CardTeam
+            key={item.description}
+            description={item.description}
+            imageUrl={item.imageUrl}
+            isDashboard={false}
+            name={item.fullName}
+            role={item.position}
+          />
+        ))}
+      </div>
     </div>
   );
 };
