@@ -55,7 +55,7 @@ const Page = () => {
   return (
     <div className="flex items-start gap-8 px-4 justify-start w-full flex-col">
       <h1 className="text-30 flex items-center w-full justify-between font-bold mt-8">
-        <span> Products Discount </span>
+        Products Discount
       </h1>
       <div className="w-full flex-wrap flex items-center justify-between">
         <CatagoryProducts handleSelected={setcategory} catagory={category} />

@@ -15,56 +15,72 @@ const Page = () => {
   const [questions] = useState<FAQProps[]>(faq);
   const [IndexItem, setIndexItem] = useState<number>(0);
   const showQ = questions[IndexItem];
+
   return (
-    <div className="flex flex-col gap-5 px-[px100] justify-center items-center ">
-      <h2 className="self-start  text-12 sm:text-16 pt-10">
-        home &gt;{" "}
-        <span className="text-primary border-b-primary border-b-2"> FQAs</span>
+    <div className="flex flex-col gap-10 px-5 sm:px-10 xl:px-20 justify-center py-4 items-center ">
+      {/* Breadcrumbs */}
+      <h2 className="self-start text-sm sm:text-base pt-10 text-gray-700">
+        Home &gt;{" "}
+        <span className="text-primary border-b-2 border-primary">FAQs</span>
       </h2>
+
+      {/* Hero Image */}
       <Image
         src={"/FAQ.png"}
-        alt="image quesin"
+        alt="FAQ Illustration"
         width={500}
         height={600}
-        className="w-full sm:w-[80%] min-h-[180px] above-405:min-h-[200px] px-3 xl:max-h-[400px] xl:min-h-[400px] sm:h-[400px]"
+        className="w-full sm:w-[80%] rounded-lg shadow-gray-500 shadow-lg"
       />
-      <div className="flex items-start flex-col sm:flex-row w-full sm:w-[80%] justify-center gap-3 ">
-        <div className="flex gap-3 items-start px-3 mt-3 w-full sm:w-[23%] justify-start flex-col ">
-          <h2 className="font-semibold ">Table of Contents</h2>
-          <div className="w-full  overflow-x-auto sm:overflow-hidden justify-center flex-col gap-1">
+
+      {/* FAQ Section */}
+      <div className="flex flex-col sm:flex-row w-full sm:w-[80%] justify-center gap-8">
+        {/* Table of Contents */}
+        <div className="flex flex-col gap-5 w-full sm:w-1/3">
+          <h2 className="text-lg font-semibold text-gray-800">
+            Table of Contents
+          </h2>
+          <div className="flex flex-col gap-2">
             {questions.map((item, index) => (
-              <h2
-                className={` ${
-                  IndexItem === index
-                    ? "text-blue-600 border-b-2 sm:border-blue-600"
-                    : "border-black "
-                } md:text-14 lg:text-16 border-b text-start  md:dark:hover:bg-neutral-800  sm:justify-between sm:flex-row-reverse  px-4 text-12 md:text-center  sm:w-full flex items-center gap-2 sm:hover:bg-slate-100 duration-300 transition-all`}
-                onClick={() => setIndexItem(index)}
+              <button
                 key={item.title}
+                onClick={() => setIndexItem(index)}
+                className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-all duration-300 ${
+                  IndexItem === index
+                    ? "bg-blue-100 text-blue-600 border-l-4 border-blue-600"
+                    : "bg-white text-gray-700 hover:bg-gray-100"
+                }`}
               >
                 <FaCaretRight
-                  color={IndexItem === index ? "blue" : "black"}
-                  className={`${
-                    IndexItem === index ? "rotate-[90deg] " : "rotate-[0deg]"
-                  } duration-300 hidden sm:block transition-all`}
+                  size={16}
+                  className={`transition-transform ${
+                    IndexItem === index
+                      ? "rotate-90 text-blue-600"
+                      : "rotate-0 text-gray-500"
+                  }`}
                 />
-                <span className="text-11  sm:text-16"> {item.title}</span>
-              </h2>
+                <span className="text-sm sm:text-base">{item.title}</span>
+              </button>
             ))}
           </div>
         </div>
-        <div className="sm:w-[77%] w-full px-3 sm:px-0 ">
-          <Accordion type="single" collapsible className="w-full mt-7">
+
+        {/* FAQ Content */}
+        <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            {showQ.title}
+          </h2>
+          <Accordion type="single" collapsible className="w-full">
             {showQ.QA.map((Item, index) => (
               <AccordionItem
-                className="w-full"
+                className="border-b last:border-none"
                 key={index}
                 value={`item-${index}`}
               >
-                <AccordionTrigger className="md:text-14 w-full text-center  lg:text-16 text-12">
+                <AccordionTrigger className="text-base sm:text-lg font-medium text-gray-800 py-3">
                   {Item.questions[0]}
                 </AccordionTrigger>
-                <AccordionContent className="md:text-12 text-10 text-neutral-600 lg:text-14">
+                <AccordionContent className="text-sm sm:text-base text-gray-600 leading-relaxed">
                   {Item.answers[0]}
                 </AccordionContent>
               </AccordionItem>

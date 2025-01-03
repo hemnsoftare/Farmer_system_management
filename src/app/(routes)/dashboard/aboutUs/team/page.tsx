@@ -3,6 +3,7 @@ import CardTeam from "@/components/about/CardTeam";
 import { useToast } from "@/hooks/use-toast";
 import {
   deleteTeam,
+  getAboutUs,
   getTeam,
   setMemeber,
   UpdateTeam,
@@ -26,6 +27,7 @@ const Page = () => {
     description: "",
     imageUrl: "",
   });
+
   const [id, setid] = useState("");
   const { toast } = useToast();
   const [team, setteam] = useState<teamProps[]>([]);
@@ -38,7 +40,7 @@ const Page = () => {
 
   const handleUploadimage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
-    const reader = new FileReader();
+
     const imagedowlad = await uploadImage(file);
     setimageUrl(imagedowlad);
     setimagePreview(file);

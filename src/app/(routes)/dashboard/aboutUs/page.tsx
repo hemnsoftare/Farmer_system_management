@@ -1,9 +1,14 @@
 "use client";
 import { useToast } from "@/hooks/use-toast";
-import { setAbouut, uploadImage } from "@/lib/action/uploadimage";
+import {
+  getAboutUs,
+  setAbouut,
+  updateAbout,
+  uploadImage,
+} from "@/lib/action/uploadimage";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
 const Page = () => {
@@ -19,10 +24,21 @@ const Page = () => {
     descriptions: "",
     description: "",
   });
+  const [isUpdate, setisUpdate] = useState(false);
   const [image, setimage] = useState<string>();
   const title = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLTextAreaElement>(null);
   const descriptionImage = useRef<HTMLTextAreaElement>(null);
+  const [about, setabout] = useState({
+    description: "",
+    imageUrl: "",
+    descriptions: [
+      {
+        title: "",
+        description: "",
+      },
+    ],
+  });
   const { toast } = useToast();
   const validation = z.object({
     descriptions: z.array(
@@ -67,27 +83,62 @@ const Page = () => {
         seterror((prev) => ({ ...prev, [err.path[0]]: err.message }));
       });
     } else {
-      setAbouut(image, descriptionImage.current.value, descriptions).finally(
-        () => {
+      if (isUpdate) {
+        updateAbout(
+          image,
+          descriptionImage.current.value,
+          descriptions
+        ).finally(() => {
+          setabout({
+            imageUrl: image,
+            description: descriptionImage.current.value,
+            descriptions,
+          });
+
           setDescriptions([]);
           setImagePreview(null);
           setimage("");
           descriptionImage.current.value = "";
           title.current.value = "";
           description.current.value = "";
-
+          setisUpdate(false);
           toast({
-            title: "About Us Added Successfully",
+            title: "About Us Updated Successfully",
             style: {
               backgroundColor: "green",
               color: "white",
             },
           }); // Show success message
-        }
-      );
+        });
+      } else {
+        setAbouut(image, descriptionImage.current.value, descriptions).finally(
+          () => {
+            setDescriptions([]);
+            setImagePreview(null);
+            setimage("");
+            descriptionImage.current.value = "";
+            title.current.value = "";
+            description.current.value = "";
+
+            toast({
+              title: "About Us Added Successfully",
+              style: {
+                backgroundColor: "green",
+                color: "white",
+              },
+            }); // Show success message
+          }
+        );
+      }
     }
   };
-
+  useEffect(() => {
+    const getdata = async () => {
+      const data = await getAboutUs();
+      setabout(data as any);
+    };
+    getdata();
+  }, []);
   return (
     <div className="flex flex-col py-9 px-6 items-center justify-center w-full">
       <div className="w-full flex items-center justify-between ">
@@ -101,35 +152,56 @@ const Page = () => {
       </div>
       <div className="flex w-full sm:px-40 flex-col py-8 gap-4 px-2 sm:gap-4">
         <Image
-          src={"/About.png"}
+          src={about.imageUrl ? about.imageUrl : "/About.png"}
           alt="about image"
           width={600}
           height={400}
           className="w-full rounded-md md:h-full h-[250px]"
         />
         <p className="text-neutral-400 dark:text-neutral-600 px-3 text-12 sm:text-16 line-clamp-0 indent-2 -mt-2">
-          Tech Heim is an innovative online store that offers a diverse
-          selection of digital gadgets, available for purchase in both cash and
-          installment options. Embodying the motto Join the digital revolution
-          today the website not only provides a seamless shopping experience but
-          also features a captivating blog section filled with insightful
-          reviews, articles, and videos about cutting-edge technology and
-          digital gadgets.
+          {about.description
+            ? about.description
+            : " Tech Heim is an innovative online store that offers a diverse  selection of digital gadgets, available for purchase in both cash and   installment options. Embodying the motto Join the digital revolution          today the website not only provides a seamless shopping experience but          also features a captivating blog section filled with insightful          reviews, articles, and videos about cutting-edge technology and          digital gadgets. The platform also includes a user comments and Q&A "}
         </p>
         <div className="">
-          <h2 className="font-semibold text-16 sm:text-20 ">
-            Some of Tech Heim’s impressive features :{" "}
-          </h2>
-          <p className="text-neutral-400 px-3 dark:text-neutral-600  text-12 sm:text-18 indent-2 ">
-            Diverse digital gadgets for purchase in cash or installments A blog
-            with reviews and articles about the latest technology and gadgets
-            User comments and Q&A section for community interaction Represents a
-            tech-savvy home with all necessary technology Easy-to-use interface
-            for a great user experience Consistent and visually appealing design
-            A hub for tech enthusiasts to connect and share insights Helps users
-            make informed purchase decisions
-          </p>
+          {about.description ? (
+            about.descriptions.map((item) => (
+              <div key={item.title} className="flex flex-col gap-2">
+                <h2 className="text-20 font-semibold">{item.title}</h2>
+                <p className="text-14">{item.description}</p>
+              </div>
+            ))
+          ) : (
+            <>
+              <h2 className="font-semibold text-16 sm:text-20 ">
+                Some of Tech Heim’s impressive features :{" "}
+              </h2>
+              <p className="text-neutral-400 px-3 dark:text-neutral-600  text-12 sm:text-18 indent-2 ">
+                Diverse digital gadgets for purchase in cash or installments A
+                blog with reviews and articles about the latest technology and
+                gadgets User comments and Q&A section for community interaction
+                Represents a tech-savvy home with all necessary technology
+                Easy-to-use interface for a great user experience Consistent and
+                visually appealing design A hub for tech enthusiasts to connect
+                and share insights Helps users make informed purchase decisions
+              </p>
+            </>
+          )}
         </div>
+        <footer className="flex items-center justify-end w-full gap-4">
+          <button
+            onClick={() => {
+              descriptionImage.current.value = about.description;
+              setDescriptions(about.descriptions);
+              setimage(about.imageUrl);
+              setImagePreview(null);
+              setisUpdate(true);
+            }}
+            className="px-7 rounded-lg py-1 bg-secondary text-white md:hover:bg-secondary-300 duration-300 transition-all active:bg-secondary-300"
+          >
+            edite abot{" "}
+          </button>
+        </footer>
       </div>
       <form
         onSubmit={handleSubmit}
@@ -140,9 +212,9 @@ const Page = () => {
             htmlFor="image-upload"
             className="flex flex-col items-center justify-center w-full min-h-[450px] max-h-[450px] border-2 border-dashed rounded-lg cursor-pointer hover:border-blue-400 transition-all duration-200"
           >
-            {imagePreview ? (
+            {imagePreview || image ? (
               <Image
-                src={imagePreview}
+                src={image ? image : imagePreview}
                 alt="about image"
                 width={600}
                 height={400}
@@ -252,7 +324,7 @@ const Page = () => {
           type="submit"
           className="w-full py-2 md:hover:text-white  rounded-lg text-white bg-green-600 md:hover:bg-green-800 duration-300 transition-all active:bg-green-800 "
         >
-          Add About Us
+          {isUpdate ? "Update About Us" : "Add About Us"}
         </button>
       </form>
     </div>

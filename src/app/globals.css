@@ -188,17 +188,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-.toggle {
-  @apply appearance-none w-12 h-6 rounded-full bg-gray-400 transition-all cursor-pointer relative;
-}
-
-.toggle:checked {
-  @apply bg-green-500;
-}
-.toggle:checked::after {
-  @apply translate-x-6;
-}
-
-.toggle::after {
-  @apply content-[''] w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform;
-}

@@ -17,6 +17,7 @@ import {
 import {
   catagoryProps,
   contactUSProps,
+  faqProps,
   ProductFormInput,
   SearchBlogsProps,
   SearchCategoryProps,
@@ -310,6 +311,18 @@ export const setAbouut = async (
     description,
   });
 };
+export const updateAbout = async (
+  imageUrl: string,
+  description: string,
+  descriptions: { title: string; description: string }[]
+) => {
+  await updateDoc(doc(db, "aboutUs", "about"), {
+    descriptions,
+    imageUrl,
+    description,
+  });
+};
+
 export const getAboutUs = async (): Promise<{
   imageUrl: string;
   description: string;
@@ -362,5 +375,31 @@ export const UpdateTeam = async ({
     position,
     description,
     imageUrl,
+  });
+};
+export const addFAQ = async (
+  category: string,
+  questionAndAnswer: { question: string; answer: string }[]
+) => {
+  await addDoc(collection(db, "FAQ"), {
+    category,
+    questionAndAnswer,
+  });
+};
+export const getFAQ = async (): Promise<faqProps[]> => {
+  const data = await getDocs(collection(db, "FAQ"));
+  const result = [];
+  data.forEach((item) => result.push({ ...(item.data() as any), id: item.id }));
+  return result;
+};
+export const deleteFAQ = async (id: string) => {
+  await deleteDoc(doc(db, "FAQ", id)).then((res) =>
+    console.log("delete the team ")
+  );
+};
+export const updateFAQ = async ({ item }: { item: faqProps }) => {
+  await updateDoc(doc(db, "FAQ", item.id), {
+    questionAndAnswer: item.questionAndAnswer,
+    category: item.category,
   });
 };

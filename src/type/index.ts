@@ -188,9 +188,15 @@ interface teamProps {
   description: string;
   imageUrl: string;
 }
+interface faqProps {
+  id: string;
+  questionAndAnswer: { question: string; answer: string }[];
+  category: string;
+}
 export type {
   Productsprops,
   contactUSProps,
+  faqProps,
   teamProps,
   serviesProps,
   searchProps,

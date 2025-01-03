@@ -30,6 +30,7 @@ import {
   FaDesktop,
   FaShoppingCart,
   FaEnvelope,
+  FaQuestionCircle,
 } from "react-icons/fa";
 import {
   MdAddCircleOutline,
@@ -448,6 +449,11 @@ const menuItems: propsMenuItem[] = [
     name: "Category",
     icon: BiCategoryAlt,
     url: "/dashboard/category",
+  },
+  {
+    name: "FAQ",
+    icon: FaQuestionCircle,
+    url: "/dashboard/faq",
   },
   {
     name: "Add Item",
