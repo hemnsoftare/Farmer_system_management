@@ -92,10 +92,6 @@ interface ProductInfoProps {
   discount?: number;
 }
 
-interface FAQProps {
-  title: string;
-  QA: { questions: string[]; answers: string[] }[];
-}
 interface errorCheckOutProps {
   fullName: string;
   phoneNumber: string;
@@ -189,7 +185,7 @@ interface teamProps {
   imageUrl: string;
 }
 interface faqProps {
-  id: string;
+  id?: string;
   questionAndAnswer: { question: string; answer: string }[];
   category: string;
 }
@@ -212,7 +208,6 @@ export type {
   typeFilter,
   imageHeaderProps,
   ProductInfoProps,
-  FAQProps,
   errorCheckOutProps,
   SearchCategoryProps,
   propsMenuItem,

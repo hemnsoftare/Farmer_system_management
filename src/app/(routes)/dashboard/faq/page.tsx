@@ -88,6 +88,8 @@ const Page = () => {
         });
       } else {
         addFAQ(category, questionAndAnswer);
+        setfaq((prev) => [...prev, { category, questionAndAnswer }]);
+
         setCategory("");
         setquestionAndAnswer([]);
         refquestion.current.value = "";
@@ -107,12 +109,12 @@ const Page = () => {
   }, []);
 
   return (
-    <main className="flex flex-col items-start w-screen justify-between gap-8 px-3 md:px-4 sm:px-8 py-8">
+    <div className="flex flex-col items-start w-full justify-between gap-8 px-4 md:px-6 lg:px-10 py-8 box-border">
       {/* Form Section */}
-      <div className="flex w-full items-start    gap-4  justify-between flex-col md:flex-row">
+      <div className="flex w-full items-start gap-6 justify-between flex-col md:flex-row">
         <form
           onSubmit={handlesubmit}
-          className="w-full sm:w-1/2 bg-white shadow-md rounded-lg p-6"
+          className="w-full md:w-1/2 bg-white shadow-md rounded-lg p-6"
         >
           <h2 className="text-24 font-semibold mb-6 text-gray-800">
             Add a New Question
@@ -172,7 +174,6 @@ const Page = () => {
               placeholder="Enter the answer"
             ></textarea>
           </div>
-          {/* Add Question Button */}
           {error.questionAndAnswer && (
             <p className="text-red-500 mb-3 -mt-4 text-sm">
               {error.questionAndAnswer}
@@ -185,7 +186,7 @@ const Page = () => {
           >
             Add Question
           </button>
-          {/* Submit Button */}\
+          {/* Submit Button */}
           <footer className="w-full flex items-center justify-between gap-3">
             <button
               type="submit"
@@ -193,14 +194,14 @@ const Page = () => {
             >
               {id ? "Edit FAQ" : "Add FAQ"}
             </button>
-            <button className="w-full border-blue-500 md:hover:bg-blue-200 active:bg-blue-200  border text-blue-600 font-semibold py-2 px-4 rounded-lg transition-all duration-300">
+            <button className="w-full border-blue-500 md:hover:bg-blue-200 active:bg-blue-200 border text-blue-600 font-semibold py-2 px-4 rounded-lg transition-all duration-300">
               Cancel
             </button>
           </footer>
         </form>
 
         {/* Preview Section */}
-        <div className="flex min-w-full max-w-full  md:max-w-1/2 md:min-w-1/2 flex-col bg-gray-100 shadow-lg rounded-lg p-6">
+        <div className="flex w-full md:w-1/2 flex-col bg-gray-100 shadow-lg rounded-lg p-6">
           <h2 className="text-24 font-semibold mb-4 text-gray-800">
             Preview the Question
           </h2>
@@ -258,8 +259,8 @@ const Page = () => {
 
       {/* FAQ Display Section */}
       {faq.length > 0 && (
-        <div className="flex flex-col border-2 p-3 rounded-lg w-full gap-8">
-          <div className="flex  w-full flex-col gap-2">
+        <div className="flex flex-col border-2 p-3 shadow-lg shadow-gray-300 rounded-lg w-full gap-8">
+          <div className="flex w-full flex-col gap-2">
             <h2 className="text-lg font-semibold text-gray-800">
               Table of Contents
             </h2>
@@ -267,7 +268,7 @@ const Page = () => {
               <button
                 key={item.category}
                 onClick={() => setIndexItem(index)}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-all duration-300 ${
+                className={`flex items-center font-semibold gap-3 px-4 py-2 rounded-lg text-left transition-all duration-300 ${
                   IndexItem === index
                     ? "bg-blue-100 text-blue-600 border-l-4 border-blue-600"
                     : "bg-white text-gray-700 hover:bg-gray-100"
@@ -286,16 +287,16 @@ const Page = () => {
             ))}
           </div>
           <div className="flex-1 border w-full bg-white p-2 md:p-6 rounded-lg shadow-md">
-            <div className="w-full flex items-center  justify-between ">
-              <h2 className="md:text-xl text-16  font-semibold text-gray-800    ">
-                {faq[IndexItem].category}
+            <div className="w-full flex items-center justify-between">
+              <h2 className="md:text-xl text-16 font-semibold text-gray-800">
+                {faq[IndexItem]?.category}
               </h2>
-              <div className="flex items-center gap-1  md:gap-4">
+              <div className="flex items-center gap-1 md:gap-4">
                 <button
                   onClick={() => {
                     setfaq((prev) => prev.filter((_, i) => i !== IndexItem));
                     setIndexItem(0);
-                    deleteFAQ(faq[IndexItem].id);
+                    deleteFAQ(faq[IndexItem]?.id);
                   }}
                   className="text-red-600 hover:bg-red-200 md:px-4 py-1 px-1 rounded-lg duration-300 transition-all active:bg-red-200 font-semibold"
                 >
@@ -303,28 +304,28 @@ const Page = () => {
                 </button>
                 <button
                   onClick={() => {
-                    setCategory(faq[IndexItem].category);
-                    setquestionAndAnswer(faq[IndexItem].questionAndAnswer);
-                    setid(faq[IndexItem].id);
+                    setCategory(faq[IndexItem]?.category);
+                    setquestionAndAnswer(faq[IndexItem]?.questionAndAnswer);
+                    setid(faq[IndexItem]?.id);
                     setIndexItem(0);
                   }}
                   className="text-blue-600 hover:bg-blue-200 px-4 py-1 rounded-lg duration-300 transition-all active:bg-blue-200 font-semibold"
                 >
-                  Edite
+                  Edit
                 </button>
               </div>
             </div>
-            <Accordion type="single" collapsible className="w-full ">
-              {faq[IndexItem].questionAndAnswer.map((Item, index) => (
+            <Accordion type="single" collapsible className="w-full">
+              {faq[IndexItem]?.questionAndAnswer.map((Item, index) => (
                 <AccordionItem
                   className="border-b  last:border-none"
                   key={index}
                   value={`item-${index}`}
                 >
-                  <AccordionTrigger className="text-base sm:text-lg font-medium text-gray-800 py-3">
+                  <AccordionTrigger className="text-14 sm:text-15 font-medium text-gray-800 py-3">
                     {Item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  <AccordionContent className="text-sm sm:text-12 text-gray-600 leading-relaxed">
                     {Item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -333,7 +334,7 @@ const Page = () => {
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 };
 

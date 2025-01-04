@@ -196,7 +196,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
                   setproducts((prev) =>
                     prev.map(
                       (itemp) =>
-                        itemp.name === item.name
+                        itemp.id === item.id
                           ? {
                               ...itemp,
                               numberFavorite: itemp.numberFavorite - 1,
@@ -204,13 +204,13 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
                           : itemp // Keep other items unchanged
                     )
                   );
-                  setfavoriteId((pre) => [...pre, item.name]);
+                  setfavoriteId((pre) => [...pre, item.id]);
                 }}
                 deleteFavoriteId={() => {
                   setproducts((prev) =>
                     prev.map(
                       (itemp) =>
-                        itemp.name === item.name
+                        itemp.id === item.id
                           ? {
                               ...itemp,
                               numberFavorite: itemp.numberFavorite - 1,
@@ -220,7 +220,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
                   );
 
                   setfavoriteId(
-                    (prev) => prev.filter((itemp) => itemp !== item.name) // Remove the product name from favorites
+                    (prev) => prev.filter((itemp) => itemp !== item.id) // Remove the product name from favorites
                   );
                 }}
                 itemDb={item}

@@ -106,7 +106,7 @@ const NewProducts = ({
           />{" "}
           {product.isDiscount && product.discount && product.discount > 0 && (
             <p
-              className={`group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute ${title === "dashboard" ? "flex" : "flex sm:hidden"}  text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-[2] duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 `}
+              className={`group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute ${title === "dashboard" ? "flex" : "flex "}  text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-[2] duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 `}
             >
               {product?.discount} $
             </p>
@@ -138,8 +138,8 @@ const NewProducts = ({
           <h3
             className={`lg:text-16 text-14 md:text-10 ${
               title === "sale" || title === "dashboard"
-                ? "sm:h-[34px] h-[40px]"
-                : "sm:h-[53px] h-[40px]"
+                ? "sm:h-[34px] h-[30px]"
+                : "sm:h-[33px] h-[30px]"
             }  overflow-hidden mb-2  text-secondary-400 font-[500]`}
           >
             {product.name}
@@ -161,24 +161,16 @@ const NewProducts = ({
                   : " sm:group-hover:opacity-0 opacity-100 sm:group-hover:hidden"
               } flex relative text-black mt-1 sm:mt-4 justify-between`}
             >
+              <span className="text-12 dark:text-neutral-500 sm:text-16">
+                {product.price}$
+              </span>
               {product.isDiscount && (
-                <span className="line-through text-11 sm:text-12 absolute dark:text-neutral-400 decoration-secondary  group-hover:opacity-0 -top-4 left-0 text-neutral-600">
+                <span className="line-through text-11 sm:text-12  dark:text-neutral-400 decoration-secondary  group-hover:opacity-0  text-neutral-600">
                   $
                   {product.discount &&
                     (product.discount * 0.01 * product.price).toFixed(2)}
                 </span>
               )}
-              <span className="text-12 dark:text-neutral-500 sm:text-16">
-                {product.price}$
-              </span>
-              {title !== "dashboard" &&
-                product.isDiscount &&
-                product.discount &&
-                product.discount > 0 && (
-                  <p className="group-hover:opacity-0 hidden sm:flex -mr-5 bg-gradient-to-r to-transparent dark:from-red-500 from-red-300 z-[2] duration-300 transition-all top-4 px-3 py-1 rounded-l-full   text-sm text-secondary-500 ">
-                    -{product?.discount} $
-                  </p>
-                )}
               {/* mobile btn add yui to cart */}
               {title === "dashboard" && (
                 <div className="flex gap-2 item-center">

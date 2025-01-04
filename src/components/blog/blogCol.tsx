@@ -2,55 +2,47 @@ import Image from "next/image";
 import React from "react";
 import { LuTimer } from "react-icons/lu";
 import { MdOutlineDateRange } from "react-icons/md";
-import { BlogColProps } from "@/type";
+import { BlogProps } from "@/type";
 
-const BlogCol = ({ blog }: { blog: BlogColProps }) => {
+const BlogCol = ({ blog }: { blog: BlogProps }) => {
+  const formattedDate = new Date(blog.date).toLocaleDateString(); // Format date for better readability
+
   return (
-    <div className="flex flex-col justify-center group gap-1 sm:gap-4 dark:shadow-neutral-700 shadow-gray-200 shadow-md hover:shadow-lg rounded-lg duration-300 transition-all overflow-hidden items-center min-h-[250px] max-h-[250px] xl:min-h-[336px] lg:min-h-[320px] sm:h-[336px] min-w-[150px] ">
+    <article className="flex border w-full flex-col md:min-w-[340px] md:max-w-[340px]  gap-2 rounded-xl overflow-hidden shadow-lg ">
+      {/* Image */}
+
       <Image
-        src={blog.imageSrc}
-        alt="image blog"
-        width={322}
-        height={204}
-        className=" sm:w-full xl:min-h-[200px] lg:min-h-[170px] min-h-[120px] object-cover  sm:group-hover:w-full sm:group-hover:-translate-y-[30px] duration-300"
+        src={blog.image}
+        alt={blog.title}
+        width={350}
+        height={200}
+        className=" w-full md:min-h-[300px] min-h-[170px] max-h-[170px] md:max-h-[300px] object-cover"
       />
-      <div className="flex flex-col sm:group-hover:-translate-y-[30px] px-1 sm:px-4 sm:group-hover:h-full  pt-0 overflow- duration-300 justify-start  sm:justify-between items-center">
-        <div className="flex w-full justify-between  items-center">
-          <p className="flex gap-1 items-center justify-center">
-            <MdOutlineDateRange color="#717171" />
-            <span className="text-neutral-500 text-8 sm:text-[12px]">
-              {blog.date}
-            </span>
-          </p>
-          <p className="flex items-center justify-center gap-1">
-            <LuTimer color="#717171" />
-            <span className="text-neutral-500 text-8 sm:text-[12px]">
-              {blog.readTime}
-            </span>
-          </p>
+
+      {/* Metadata */}
+      <div className="flex w-full items-center justify-between px-3 text-9 md:text-sm text-gray-600">
+        <div className="flex gap-2 items-center">
+          <MdOutlineDateRange />
+          <time dateTime={blog.date.toISOString()}>{formattedDate}</time>
         </div>
-        <div className="flex flex-col mt-3  sm:mt-1 justify-start">
-          <h2 className="sm:text-20 dark:text-neutral-500 lg:min-h-[34px] sm:mb-1 max-h-[20px] min-h-[20px] text-11 font-semibold sm:hover:text-red-600 text-black  w-full  overflow-hidden">
-            {blog.title}
-          </h2>
-          <p className="w-full h-[47px] dark:text-neutral-600 text-black overflow-hidden mt-3 text-10 sm:text-[16px]">
-            {blog.description}
-          </p>
-        </div>
-        <div className="w-full  opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 z-10 flex justify-between items-center">
-          <span className="text-secondary-400 text-10 sm:text-18">
-            read more
-          </span>
-          <Image
-            src={blog.saveIconSrc}
-            alt="save icon"
-            width={20}
-            height={20}
-            className="size-[15px] sm:size-[25px]"
-          />
+        <div className="flex gap-2 items-center">
+          <LuTimer />
+          <span>3 min read</span>{" "}
+          {/* You could dynamically calculate the reading time if needed */}
         </div>
       </div>
-    </div>
+
+      {/* Content */}
+      <div className="flex flex-col px-3 pb-1">
+        <h2 className="md:text-xl text-14 capitalize font-semibold text-gray-800 truncate">
+          {blog.title}
+        </h2>
+        <p className="text-gray-600 text-12 md:text-13 line-clamp-2 min-h-[38px] max-h-[38px]">
+          {blog.description}
+        </p>
+      </div>
+    </article>
   );
 };
+
 export default BlogCol;

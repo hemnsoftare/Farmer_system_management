@@ -1,8 +1,7 @@
 "use client";
-import { faq } from "@/util/data";
 import Image from "next/image";
-import React, { useState } from "react";
-import { FAQProps } from "../../../type";
+import React, { useEffect, useState } from "react";
+import { faqProps } from "../../../type";
 import {
   Accordion,
   AccordionContent,
@@ -10,14 +9,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FaCaretRight } from "react-icons/fa6";
-
+import { getFAQ } from "@/lib/action/uploadimage";
+import { Skeleton } from "@/components/ui/skeleton";
 const Page = () => {
-  const [questions] = useState<FAQProps[]>(faq);
+  const [load, setload] = useState(false);
   const [IndexItem, setIndexItem] = useState<number>(0);
-  const showQ = questions[IndexItem];
-
+  const [faq, setfaq] = useState<faqProps[]>([]);
+  useEffect(() => {
+    const getdata = async () => {
+      setload(true);
+      const data = await getFAQ().finally(() => setload(false));
+      setfaq(data);
+    };
+    getdata();
+  }, []);
   return (
-    <div className="flex flex-col gap-10 px-5 sm:px-10 xl:px-20 justify-center py-4 items-center ">
+    <div className="flex flex-col gap-10 px-5 sm:px-10 xl:px-20 justify-center py-4 items-center">
       {/* Breadcrumbs */}
       <h2 className="self-start text-sm sm:text-base pt-10 text-gray-700">
         Home &gt;{" "}
@@ -40,52 +47,68 @@ const Page = () => {
           <h2 className="text-lg font-semibold text-gray-800">
             Table of Contents
           </h2>
-          <div className="flex flex-col gap-2">
-            {questions.map((item, index) => (
-              <button
-                key={item.title}
-                onClick={() => setIndexItem(index)}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-all duration-300 ${
-                  IndexItem === index
-                    ? "bg-blue-100 text-blue-600 border-l-4 border-blue-600"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                <FaCaretRight
-                  size={16}
-                  className={`transition-transform ${
+          {load ? (
+            <div className="flex w-full flex-col gap-2">
+              {/* Skeleton loading placeholders */}
+              <Skeleton className="h-6 w-3/4 rounded-md" />
+              <Skeleton className="h-6 w-2/3 rounded-md" />
+              <Skeleton className="h-6 w-5/6 rounded-md" />
+              <Skeleton className="h-6 w-1/2 rounded-md" />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {faq.map((item, index) => (
+                <button
+                  key={item.category}
+                  onClick={() => setIndexItem(index)}
+                  className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-all duration-300 ${
                     IndexItem === index
-                      ? "rotate-90 text-blue-600"
-                      : "rotate-0 text-gray-500"
+                      ? "bg-blue-100 text-blue-600 border-l-4 border-blue-600"
+                      : "bg-white text-gray-700 hover:bg-gray-100"
                   }`}
-                />
-                <span className="text-sm sm:text-base">{item.title}</span>
-              </button>
-            ))}
-          </div>
+                >
+                  <FaCaretRight
+                    size={16}
+                    className={`transition-transform ${
+                      IndexItem === index
+                        ? "rotate-90 text-blue-600"
+                        : "rotate-0 text-gray-500"
+                    }`}
+                  />
+                  <span className="text-sm sm:text-base">{item.category}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* FAQ Content */}
         <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            {showQ.title}
-          </h2>
-          <Accordion type="single" collapsible className="w-full">
-            {showQ.QA.map((Item, index) => (
-              <AccordionItem
-                className="border-b last:border-none"
-                key={index}
-                value={`item-${index}`}
-              >
-                <AccordionTrigger className="text-base sm:text-lg font-medium text-gray-800 py-3">
-                  {Item.questions[0]}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                  {Item.answers[0]}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {faq.length > 0 && !load ? (
+            <>
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                {faq[IndexItem]?.category}
+              </h2>
+              <Accordion type="single" collapsible className="w-full">
+                {faq[IndexItem]?.questionAndAnswer.map((Item, index) => (
+                  <AccordionItem
+                    className="border-b last:border-none"
+                    key={index}
+                    value={`item-${index}`}
+                  >
+                    <AccordionTrigger className="text-base sm:text-lg font-medium text-gray-800 py-3">
+                      {Item.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                      {Item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </>
+          ) : (
+            <p className="text-gray-500">No FAQs available.</p>
+          )}
         </div>
       </div>
     </div>
