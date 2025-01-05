@@ -11,7 +11,7 @@ import {
   Cart,
   Category,
   CommentProps,
-  FAQProps,
+  // FAQProps,
   FilterProps,
   footerProps,
   Productsprops,
@@ -342,102 +342,6 @@ const filterItems: FilterProps[] = [
   { name: "brand", item: ["asus", "lenov", "mac", "widows"] },
   { name: "color", item: ["white", "silver", "gold", "black", "pinck"] },
 ];
-const faq: FAQProps[] = [
-  {
-    title: "General",
-    QA: [
-      {
-        questions: ["Can I  products Tech Heim using installment payments?"],
-        answers: [
-          "Yes, Tech Heim offers the option to purchase products using both cash and installment payments. This allows you to choose the payment method that suits your needs and budget.",
-        ],
-      },
-      {
-        questions: ["How do I create an account on Tech Heim?"],
-        answers: [
-          "You can create an account on Tech Heim by clicking on the 'Sign Up' button and providing the necessary details, such as your email and a password.",
-        ],
-      },
-      {
-        questions: ["Can I track my order on Tech Heim?"],
-        answers: [
-          "Yes, once your order is confirmed, you will receive an order tracking number which you can use to track your order status through your account dashboard.",
-        ],
-      },
-    ],
-  },
-  {
-    title: "Services",
-    QA: [
-      {
-        questions: ["How can I engage with the magazine content on Tech Heim?"],
-        answers: [
-          "You can actively engage with the magazine content by leaving comments and participating in the question-and-answer section. Feel free to share your thoughts, ask questions, and interact with fellow tech enthusiasts in the community.",
-        ],
-      },
-      {
-        questions: ["What kind of services does Tech Heim offer?"],
-        answers: [
-          "Tech Heim offers a variety of services, including product recommendations, tech news, and customer support for inquiries regarding products and services.",
-        ],
-      },
-      {
-        questions: ["Can I subscribe to Tech Heim's newsletter?"],
-        answers: [
-          "Yes, you can subscribe to the Tech Heim newsletter by entering your email in the subscription form at the bottom of the homepage to receive updates and news.",
-        ],
-      },
-    ],
-  },
-  {
-    title: "Trust & Safety",
-    QA: [
-      {
-        questions: ["Is Tech Heim a secure platform for online shopping?"],
-        answers: [
-          "Yes, Tech Heim provides a warranty on all eligible products. The specific warranty details may vary depending on the manufacturer and product category. Please refer to the product description or contact our customer support for more information.",
-        ],
-      },
-      {
-        questions: ["How does Tech Heim protect my personal information?"],
-        answers: [
-          "Tech Heim uses encryption technologies to ensure the safety of your personal information. Your data is stored securely and is never shared with third-party vendors without your consent.",
-        ],
-      },
-      {
-        questions: ["Does Tech Heim offer buyer protection?"],
-        answers: [
-          "Yes, Tech Heim offers buyer protection on all transactions. If there are any issues with your order, you can reach out to customer support for assistance.",
-        ],
-      },
-    ],
-  },
-  {
-    title: "Billing",
-    QA: [
-      {
-        questions: [
-          "How can I get assistance with my purchase or any other inquiry?",
-        ],
-        answers: [
-          "Please reach out to our customer support for assistance with your purchase or any other inquiries.",
-        ],
-      },
-      {
-        questions: ["What payment methods does Tech Heim accept?"],
-        answers: [
-          "Tech Heim accepts various payment methods, including credit/debit cards, PayPal, and installment plans through select providers.",
-        ],
-      },
-      {
-        questions: ["Can I request a refund on my purchase?"],
-        answers: [
-          "Yes, you can request a refund if your purchase meets the refund policy criteria. Please contact customer support for more details.",
-        ],
-      },
-    ],
-  },
-];
 
 const menuItems: propsMenuItem[] = [
   {
@@ -540,7 +444,6 @@ export {
   categories,
   Sort,
   filterItems,
-  faq,
   menuItems,
   colors,
 };
