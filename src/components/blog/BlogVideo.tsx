@@ -1,20 +1,10 @@
-"use client";
 import { BlogProps } from "@/type";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
 
 const BlogVideo = ({ item }: { item: BlogProps }) => {
-  const [isPlaying, setIsPlaying] = useState(false); // State to control playback
-
-  const handleVideoClick = () => {
-    setIsPlaying((prev) => !prev); // Toggle play/pause state
-  };
-
   return (
-    <div
-      className="w-full flex-col flex relative overflow-hidden lg:w-full  items-center rounded-xl shadow-lg justify-between gap-1 sm:gap-4"
-      onClick={handleVideoClick} // Toggle play/pause on click
-    >
+    <div className="w-full flex-col flex relative overflow-hidden lg:w-full  items-center rounded-xl shadow-lg justify-between gap-1 sm:gap-4">
       <div className="relative w-full pb-[56.25%]">
         {" "}
         {/* 16:9 Aspect Ratio */}

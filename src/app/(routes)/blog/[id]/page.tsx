@@ -86,11 +86,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       </main>
 
       {/* Blog Rows */}
-      <div className="flex flex-col gap-2 items-center lg:mt-28 mt-2 lg:w-[43%] justify-center md:w-full">
-        {blogs.map((item, index) => (
-          <BlogRow key={item.id} type="blog_single_page" />
-        ))}
-      </div>
+      <div className="flex flex-col gap-2 items-center lg:mt-28 mt-2 lg:w-[43%] justify-center md:w-full"></div>
     </div>
   );
 };
