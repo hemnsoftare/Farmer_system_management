@@ -15,13 +15,13 @@ const Blog = () => {
         </Link>
       </div>
       <div className="flex w-full gap-4 justify-center items-center">
-        <BlogCol blog={blogs[0]} />
+        {/* <BlogCol blog={blogs[0]} />
 
         <div className="flex flex-col gap-4">
           <BlogRow />
 
           <BlogRow />
-        </div>
+        </div> */}
       </div>
     </div>
   );
