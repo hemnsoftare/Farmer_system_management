@@ -10,7 +10,7 @@ import Servies from "@/components/home/Servies";
 import { app } from "@/config/firebaseConfig";
 import { setUser } from "@/lib/action/uploadimage";
 import { ProductFormInput } from "@/type";
-import { useUser } from "@clerk/nextjs";
+import { useUser, useClerk } from "@clerk/nextjs";
 import {
   collection,
   getDocs,
@@ -29,6 +29,7 @@ export default function Home() {
   const [loadNew, setloadNew] = useState(true);
   const [loadBestSale, setloadBestSale] = useState(true);
   const { user } = useUser();
+  const { proxyUrl } = useClerk();
   console.log(user);
   const db = getFirestore(app);
   useEffect(() => {

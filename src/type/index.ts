@@ -189,8 +189,20 @@ interface faqProps {
   questionAndAnswer: { question: string; answer: string }[];
   category: string;
 }
+interface commentProps {
+  fullName: string;
+  image: string;
+  userId: string;
+  comment: string;
+  commentReplay: string;
+  like: number;
+  disLike: number;
+  date: Date;
+}
+
 export type {
   Productsprops,
+  commentProps,
   contactUSProps,
   faqProps,
   teamProps,

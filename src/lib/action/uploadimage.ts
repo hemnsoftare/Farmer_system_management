@@ -2,6 +2,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import {
   addDoc,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -15,6 +16,7 @@ import {
   where,
 } from "firebase/firestore";
 import {
+  BlogProps,
   catagoryProps,
   contactUSProps,
   faqProps,
@@ -25,6 +27,7 @@ import {
   teamProps,
   typeFilter,
   UserType,
+  commentProps,
 } from "@/type";
 import { app, storage } from "@/config/firebaseConfig";
 import { OrderType } from "@/type";
@@ -402,4 +405,39 @@ export const updateFAQ = async ({ item }: { item: faqProps }) => {
     questionAndAnswer: item.questionAndAnswer,
     category: item.category,
   });
+};
+
+export const getBlog = async (id: string): Promise<BlogProps> => {
+  const data = getDoc(doc(db, "blogs", id));
+  const blogData = (await data).data() as BlogProps;
+
+  return blogData;
+};
+export const getBlogs = async (): Promise<BlogProps[]> => {
+  const data = await getDocs(collection(db, "blogs"));
+  const results: BlogProps[] = [];
+  data.forEach((item) =>
+    results.push({ ...(item.data() as BlogProps), id: item.id })
+  );
+  return results;
+};
+export const setComments = async ({
+  comments,
+  id,
+}: {
+  comments: any;
+  id: string;
+}) => {
+  const docRef = doc(db, "blogs", id);
+
+  // Add the new comment to the comments array using arrayUnion
+  await updateDoc(docRef, {
+    comments: arrayUnion({ ...comments }), // This will add the new comment to the array
+  });
+};
+export const getAllComments = async (id: string): Promise<commentProps[]> => {
+  const blogsSnapshot = await getDoc(doc(db, "blogs", id));
+  const allComments: commentProps[] = blogsSnapshot.data() as commentProps[];
+
+  return allComments;
 };
