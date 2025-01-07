@@ -11,7 +11,7 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { LuHistory } from "react-icons/lu";
-import { FaHeart, FaRegUser } from "react-icons/fa";
+import { FaBlog, FaHeart, FaRegUser } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import { RiAccountCircleLine } from "react-icons/ri";
 
@@ -63,6 +63,13 @@ const UserHeader = () => {
             {" "}
             <FaHeart color=" #f45e0c" className="size-[23px]" />{" "}
             <span> Favorite Products</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2  border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+          <Link href={"/saveBlog"} className="flex items-center gap-2">
+            {" "}
+            <FaBlog color=" #f45e0c" className="size-[23px]" />{" "}
+            <span> Save Blog</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">

@@ -285,40 +285,6 @@ const blogs: BlogColProps[] = [
     creator: "aso afan sadiq",
   },
 ];
-const comments: CommentProps[] = [
-  {
-    id: 1,
-
-    imageSrc: "/blog1.png",
-    author: "hemn software",
-    date: "March 30, 2023",
-    content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore, dignissimos quae? Magnam facere, tempora laborum eos quam reprehenderit delectus nihil? At repudiandae incidunt quod asperiores esse ea iste eaque non, itaque nam, animi cum recusandae delectus quia aperiam obcaecati rerum cupiditate, aliquam tenetur fugit. Ea doloremque soluta, ipsum autem atque sint commodi ut quos numquam cumque ab voluptate illo voluptatem, possimus minus voluptas nemo delectus. Necessitatibus placeat dolores eveniet laborum deserunt asperiores sint accusamus quaerat similique! Ipsa enim voluptates adipisci impedit porro quidem saepe reprehenderit quibusdam natus, deleniti nobis reiciendis eveniet facilis, corporis molestiae officiis sapiente laudantium laborum libero quo minus! Quos, dolor nam voluptatibus consequatur provident veritatis rerum quas dignissimos, harum praesentium aliquam aperiam neque itaque voluptas quis possimus!",
-    showMore: false, // Toggle for showing more content
-    likes: 12,
-    dislikes: 12,
-    isLike: {
-      like: true, // User has liked this post
-      disLike: false, // User has disliked this post
-    },
-  },
-  {
-    id: 2,
-    imageSrc: "/blog1.png",
-    author: "jane doe",
-    date: "April 1, 2023",
-    content:
-      "Another example of a post with some content here. This post also has a lot of text to demonstrate how the 'show more' functionality works.",
-    showMore: false,
-    likes: 8,
-    dislikes: 2,
-    isLike: {
-      like: false,
-      disLike: true,
-    },
-  },
-  // Add more objects as needed
-];
 
 const categories: Category[] = [
   { name: "mobile", icon: HiOutlineDevicePhoneMobile },
@@ -440,7 +406,6 @@ export {
   blogs,
   footer,
   carts,
-  comments,
   categories,
   Sort,
   filterItems,

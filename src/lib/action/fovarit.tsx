@@ -7,7 +7,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { favorite } from "@/type";
+import { blogFavriteProps, favorite } from "@/type";
 import { app, storage } from "@/config/firebaseConfig";
 import { idText } from "typescript";
 
@@ -99,6 +99,93 @@ export const getAllItemNames = async (userId: string): Promise<string[]> => {
     return itemNames;
   } catch (error) {
     console.error("Error fetching item names:", error);
+    return [];
+  }
+};
+
+export const addFavoriteBlog = async ({ item }: { item: blogFavriteProps }) => {
+  try {
+    const itemsRef = collection(db, "saveBlog", item.userId, "items");
+    console.log("itemsRef initialized:", itemsRef);
+
+    const querySnapshot = await getDocs(itemsRef);
+    console.log("Query Snapshot:", querySnapshot);
+
+    const updatedFavorites = item.numberOffavorites + 1;
+
+    // Update blogs collection
+    console.log("Updating blogs collection for blogId:", item.blogId);
+    await updateDoc(doc(db, "blogs", item.blogId), {
+      numberOffavorites: updatedFavorites,
+    });
+    console.log("Updated numberOffavorites in blogs");
+
+    // Save item in saveBlog
+    console.log(
+      "Saving item in saveBlog subcollection for userId:",
+      item.userId
+    );
+    await setDoc(doc(db, "saveBlog", item.userId, "items", item.id), {
+      ...item,
+      numberOffavorites: updatedFavorites,
+    });
+    console.log("Saved item in saveBlog subcollection");
+  } catch (error) {
+    console.error("Error in addFavoriteBlog function:", error);
+  }
+};
+export const getallsaveid = async (userId: string): Promise<string[]> => {
+  try {
+    const itemsRef = collection(db, "saveBlog", userId, "items");
+    const querySnapshot = await getDocs(itemsRef);
+    const itemNames = querySnapshot.docs.map((doc) => doc.id);
+    console.log(itemNames);
+    return itemNames;
+  } catch (error) {
+    console.error("Error fetching item names:", error);
+    return [];
+  }
+};
+export const deleteSave = async ({
+  id,
+  numberOffavorites,
+  userId,
+}: {
+  userId: string;
+  numberOffavorites: number;
+  id: string;
+}) => {
+  try {
+    await deleteDoc(doc(db, "saveBlog", userId, "items", id)).then((res) =>
+      console.log("delete the products in favorite")
+    );
+    console.log(numberOffavorites);
+    const nmf = numberOffavorites - 1;
+    console.log(nmf);
+    await updateDoc(doc(db, "blos", id), {
+      numberOffavorites: nmf,
+    }).then((res) => console.log("update in number favorite"));
+  } catch (error) {
+    console.error("Error deleting favorite item:", error);
+  }
+};
+export const getSaveBlog = async (userId: any) => {
+  try {
+    // Reference to the user's `items` subcollection
+    const itemsRef = collection(db, "saveBlog", userId, "items");
+
+    // Fetch all documents from the `items` subcollection
+    const querySnapshot = await getDocs(itemsRef);
+
+    // Extract data from each document
+    const items = querySnapshot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    console.log(items);
+    return items;
+  } catch (error) {
+    console.error("Error fetching favorite items:", error);
     return [];
   }
 };

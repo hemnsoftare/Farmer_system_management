@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 // import React, { useEffect, useState } from "react";
 // import { BlogColProps, BlogProps } from "../../../../type";
 // import { blogs } from "@/util/data";
@@ -101,21 +101,29 @@
 // };
 
 // export default Page;
-"use client";
+
 import React, { useEffect, useState } from "react";
 import { BlogProps } from "../../../../type";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 import Link from "next/link";
-import { getAllComments, getBlog, getBlogs } from "@/lib/action/uploadimage";
+import { getBlog, getBlogs } from "@/lib/action/uploadimage";
 import BlogRow from "@/components/blog/BlogRow";
 import { LiaCommentDots } from "react-icons/lia";
 import { AiOutlineLike } from "react-icons/ai";
 import { BiSolidLike } from "react-icons/bi";
 import { useUser } from "@clerk/nextjs";
-import HardCooment from "@/components/blog/Comments";
+// import C from "@/components/blog/C";
+import { IoMdHeartEmpty } from "react-icons/io";
+import {
+  addFavoriteBlog,
+  deleteSave,
+  getallsaveid,
+} from "@/lib/action/fovarit";
+import { useToast } from "@/hooks/use-toast";
 
 const Page = ({ params }: { params: { id: string } }) => {
+  const { toast } = useToast();
   const id = params.id;
   const [blog, setBlog] = useState<BlogProps>({
     id: "",
@@ -136,6 +144,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   });
 
   const [blogs, setBlogs] = useState<BlogProps[]>([]);
+  const [idSave, setidSave] = useState([]);
   const { user } = useUser();
 
   useEffect(() => {
@@ -145,12 +154,8 @@ const Page = ({ params }: { params: { id: string } }) => {
       try {
         const data = await getBlog(id);
         const blogList = await getBlogs();
-        const comments = await getAllComments(id);
-
-        console.log("Blog data:", data);
-        console.log("Related blogs:", blogList);
-        console.log("Comments:", comments);
-
+        const getid = await getallsaveid(user.id);
+        setidSave(getid);
         setBlogs(blogList);
         setBlog({ ...data });
       } catch (error) {
@@ -159,10 +164,10 @@ const Page = ({ params }: { params: { id: string } }) => {
     };
 
     getData();
-  }, [id]);
+  }, [id, user]);
 
   return (
-    <div className="flex flex-col lg:flex-row py-9 px-3 gap-6 w-full">
+    <div className="flex flex-col lg:flex-row py-9 px-3 gap-4 w-full">
       {/* Main Content Section */}
       <main className="flex flex-col w-full lg:w-[65%] gap-6">
         {/* Breadcrumb */}
@@ -177,7 +182,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         </span>
 
         {/* Blog Content */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-3">
           <h2 className="text-xl sm:text-2xl font-bold">{blog.title}</h2>
           <p className="text-neutral-500 text-sm">
             By {blog.user} on {new Date(blog.date).toLocaleDateString()}
@@ -205,12 +210,70 @@ const Page = ({ params }: { params: { id: string } }) => {
           )}
 
           <p className="text-sm leading-relaxed text-neutral-600">
-            {blog.description}
+            {blog.description} Lorem ipsum dolor sit, amet consectetur
+            adipisicing elit. Amet, facilis. Fugiat tenetur vero ullam quasi
+            aliquid vel, in fugit aperiam autem quas! Optio vel, quam labore
+            omnis consectetur reiciendis consequatur doloribus adipisci
+            voluptatibus mollitia itaque quo, reprehenderit aperiam praesentium
+            saepe similique sapiente eum. Quam, aliquam earum, illum deleniti
+            quo beatae consequuntur dolorum eos reiciendis aperiam ipsa
+            molestias deserunt rem?
           </p>
+          <footer className="flex w-full gap-4 items-center ">
+            <button
+              disabled={idSave.includes(id)}
+              onClick={async () => {
+                try {
+                  await addFavoriteBlog({
+                    item: {
+                      blogId: id,
+                      description: blog.description,
+                      id: id,
+                      numberOffavorites: blog.numberOffavorites,
+                      title: blog.title,
+                      type: blog.type,
+                      userId: user.id || "",
+                      image: blog.image || "",
+                      video: blog.video || "",
+                    },
+                  });
+                  setidSave((pre) => [...pre, id]);
+                  toast({ title: "Blog saved successfully!" });
+                } catch (error) {
+                  console.error("Failed to save blog:", error);
+                  toast({ title: "Failed to save blog" });
+                }
+              }}
+              className="px-6 py-1 disabled:bg-blue-300 w-[150px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
+            >
+              Save
+            </button>
+
+            <button
+              disabled={!idSave.includes(id)}
+              onClick={async () => {
+                try {
+                  await deleteSave({
+                    id,
+                    numberOffavorites: blog.numberOffavorites,
+                    userId: user.id,
+                  });
+                  setidSave((pre) => pre.filter((item) => item !== id));
+                  toast({ title: "Blog saved successfully!" });
+                } catch (error) {
+                  console.error("Failed to save blog:", error);
+                  toast({ title: "Failed to save blog" });
+                }
+              }}
+              className=" px-6 disabled:text-blue-300  py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
+            >
+              un save{" "}
+            </button>
+          </footer>
         </div>
 
         {/* Comment and Like Section */}
-        <div className="flex cursor-pointer justify-end gap-4 px-10">
+        {/* <div className="flex cursor-pointer justify-end gap-4 px-10">
           <div className="flex gap-2 hover:bg-blue-500 duration-300 transition-all px-2 rounded-md items-center">
             <LiaCommentDots />
             <span className="text-14">12 Comments</span>
@@ -219,10 +282,10 @@ const Page = ({ params }: { params: { id: string } }) => {
             {true ? <BiSolidLike color="blue" /> : <AiOutlineLike />}
             <span className="text-14">123 Likes</span>
           </div>
-        </div>
+        </div> */}
 
         {/* Comments Section */}
-        {id && <HardCooment blogId={"DTOdnzwS5pjvvqCvwbDA"} />}
+        {/* <C blogId={id} /> */}
       </main>
 
       {/* Sidebar Section */}

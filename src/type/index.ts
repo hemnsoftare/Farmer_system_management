@@ -49,17 +49,17 @@ interface LikeStatus {
   disLike: boolean; // Indicates if the post is disliked by the user
 }
 
-interface CommentProps {
-  id: number; // Unique identifier for the post
-  imageSrc: string; // Source path for the author's image
-  author: string; // Name of the author
-  date: string; // Publication date of the post
-  content: string; // Text content of the post
-  showMore: boolean; // Controls whether the full content is displayed
-  likes: number; // Number of likes the post has received
-  dislikes: number; // Number of dislikes the post has received
-  isLike: LikeStatus; // Like status object tracking user interaction
-}
+// interface CommentProps {
+//   id: number; // Unique identifier for the post
+//   imageSrc: string; // Source path for the author's image
+//   author: string; // Name of the author
+//   date: string; // Publication date of the post
+//   content: string; // Text content of the post
+//   showMore: boolean; // Controls whether the full content is displayed
+//   likes: number; // Number of likes the post has received
+//   dislikes: number; // Number of dislikes the post has received
+//   isLike: LikeStatus; // Like status object tracking user interaction
+// }
 
 // Type representing an array of Post objects
 
@@ -189,20 +189,29 @@ interface faqProps {
   questionAndAnswer: { question: string; answer: string }[];
   category: string;
 }
-interface commentProps {
-  fullName: string;
-  image: string;
+// interface commentProps {
+//   fullName: string;
+//   image: string;
+//   userId: string;
+//   comment: string;
+//   commentReplay: string;
+//   like: number;
+//   date: Date;
+// }
+interface blogFavriteProps {
+  id: string;
+  title: string;
+  description: string;
+  type: "image" | "video";
   userId: string;
-  comment: string;
-  commentReplay: string;
-  like: number;
-  disLike: number;
-  date: Date;
+  image?: string;
+  video?: string;
+  blogId: string;
+  numberOffavorites: number;
 }
-
 export type {
   Productsprops,
-  commentProps,
+  // commentProps,
   contactUSProps,
   faqProps,
   teamProps,
@@ -214,9 +223,10 @@ export type {
   userProps,
   Cart,
   BlogColProps,
-  CommentProps,
+  // CommentProps,
   Category,
   FilterProps,
+  blogFavriteProps,
   typeFilter,
   imageHeaderProps,
   ProductInfoProps,
@@ -276,3 +286,23 @@ export interface favorite {
     color: string;
   }[];
 }
+
+export type CommentProps = {
+  id: string;
+  content: string;
+  userId: string;
+  fullName: string;
+  profileImage: string;
+  date: Date;
+  likes: string[];
+  dislikes: string[];
+  replies: ReplyProps[];
+};
+
+export type ReplyProps = {
+  userId: string;
+  content: string;
+  fullName: string;
+  profileImage: string;
+  date: Date;
+};

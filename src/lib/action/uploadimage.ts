@@ -27,7 +27,7 @@ import {
   teamProps,
   typeFilter,
   UserType,
-  commentProps,
+  // commentProps,
 } from "@/type";
 import { app, storage } from "@/config/firebaseConfig";
 import { OrderType } from "@/type";
@@ -434,10 +434,34 @@ export const setComments = async ({
   await updateDoc(docRef, {
     comments: arrayUnion({ ...comments }), // This will add the new comment to the array
   });
+  console.log("in set commment su css");
 };
-export const getAllComments = async (id: string): Promise<commentProps[]> => {
-  const blogsSnapshot = await getDoc(doc(db, "blogs", id));
-  const allComments: commentProps[] = blogsSnapshot.data() as commentProps[];
-
-  return allComments;
-};
+// export const getAllComments = async (id: string): Promise<commentProps[]> => {
+//   const blogsSnapshot = await getDoc(doc(db, "blogs", id));
+//   const data = blogsSnapshot.data();
+//   const allComments = (data?.comments || []) as commentProps[]; // Ensure it's always an array
+//   return allComments;
+// };
+// export const Addlike = async ({
+//   blogID,
+//   comment,
+//   date,
+//   like,
+//   userIdLike,
+// }: {
+//   blogID: string;
+//   comment: string;
+//   date: Date;
+//   like: number;
+//   userIdLike: string;
+// }) => {
+//   const getblogComment = await getDoc(doc(db, "blogs", blogID));
+//   const data: commentProps[] = getblogComment.data().comments as commentProps[];
+//   const currentComment = data.filter(
+//     (item) =>
+//       item.comment === comment &&
+//       item.date === date &&
+//       like === item.like &&
+//       userIdLike === item.userId
+//   );
+// };

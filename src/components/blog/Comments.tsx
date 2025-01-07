@@ -1,95 +1,96 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import CommentItem from "./CommentItem";
-import { useUser } from "@clerk/nextjs";
-import { getAllComments, setComments } from "@/lib/action/uploadimage";
-import { commentProps } from "@/type";
+// "use client";
 
-const HardCooment = ({ blogId }: { blogId: string }) => {
-  console.log("Comments component rendered");
-  console.log("Received blog ID:", blogId);
+// // import { useEffect, useState, useRef } from "react";
+// // import CommentItem from "./CommentItem";
+// // import { useUser } from "@clerk/nextjs";
+// // import { getAllComments, setComments } from "@/lib/action/uploadimage";
+// // import { commentProps } from "@/type";
 
-  // const refComment = React.useRef<HTMLTextAreaElement>(null);
-  // const [comments, setCommentsState] = useState<commentProps[]>([]);
-  // const { user } = useUser();
+// const HardComment = ({ blogId }: { blogId: string }) => {
+//   console.log("hard comments");
+//   return <h1>in commments</h1>;
+//   // Debugging
+//   // console.log("Rendered HardComment for Blog ID:", blogId);
 
-  // useEffect(() => {
-  //   console.log("useEffect triggered for blog ID:", blogId);
+//   // // State and Refs
+//   // const refComment = useRef<HTMLTextAreaElement>(null);
+//   // const [comments, setCommentsState] = useState<commentProps[]>([]);
+//   // const { user } = useUser();
 
-  //   const fetchComments = async () => {
-  //     try {
-  //       console.log("Fetching comments from API...");
-  //       const data = await getAllComments(blogId);
-  //       console.log("Fetched comments data:", data);
-  //       setCommentsState(data as commentProps[]);
-  //     } catch (error) {
-  //       console.error("Error fetching comments:", error);
-  //     }
-  //   };
+//   // // Fetch comments when component loads
+//   // useEffect(() => {
+//   //   const fetchComments = async () => {
+//   //     try {
+//   //       const data = await getAllComments(blogId);
+//   //       setCommentsState(data as commentProps[]);
+//   //     } catch (error) {
+//   //       console.error("Failed to fetch comments:", error);
+//   //     }
+//   //   };
 
-  //   fetchComments();
-  // }, [blogId]);
+//   //   fetchComments();
+//   // }, [blogId]);
 
-  // const handleAddComment = async () => {
-  //   if (!user) {
-  //     alert("You need to log in to comment!");
-  //     return;
-  //   }
-  //   const comment: commentProps = {
-  //     fullName: user.fullName || "Anonymous",
-  //     image: user.imageUrl || "",
-  //     userId: user.id || "",
-  //     comment: refComment.current?.value.trim() || "",
-  //     commentReplay: "",
-  //     like: 0,
-  //     disLike: 0,
-  //     date: new Date(),
-  //   };
+//   // // Handle adding a new comment
+//   // const handleAddComment = async () => {
+//   //   try {
+//   //     const newComment: commentProps = {
+//   //       fullName: user?.fullName || "Anonymous",
+//   //       image: user?.imageUrl || "",
+//   //       userId: user?.id || "",
+//   //       comment: refComment.current.value,
+//   //       commentReplay: "",
+//   //       like: 0,
+//   //       disLike: 0,
+//   //       date: new Date(),
+//   //     };
 
-  //   if (!comment.comment) {
-  //     alert("Comment cannot be empty!");
-  //     return;
-  //   }
+//   //     // Save comment via API
+//   //     await setComments({ comments: newComment, id: blogId }).finally(() => {
+//   //       console.log("hi bye");
+//   //     });
 
-  //   try {
-  //     console.log("Submitting new comment:", comment);
-  //     await setComments({ comments: comment, id: blogId });
-  //     console.log("Comment successfully added!");
+//   //     // Update local state with the new comment
+//   //     console.log("add coment ");
+//   //     // Clear the text area
+//   //     refComment.current.value = "";
+//   //   } catch (error) {
+//   //     console.error("Failed to add comment:", error);
+//   //   }
+//   // };
 
-  //     if (refComment.current) refComment.current.value = "";
+//   // return (
+//   //   <main className="bg-gray-50 border shadow-lg rounded-lg flex flex-col p-4 gap-4 w-full">
+//   //     {/* Comment Input Section */}
+//   //     <div className="flex items-center gap-2">
+//   //       <textarea
+//   //         ref={refComment}
+//   //         rows={2}
+//   //         className="border border-neutral-400 px-4 py-2 rounded-lg w-full outline-none resize-none"
+//   //         placeholder="Write your comment here..."
+//   //       ></textarea>
+//   //       <button
+//   //         onClick={handleAddComment}
+//   //         className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+//   //       >
+//   //         Submit
+//   //       </button>
+//   //     </div>
 
-  //     setCommentsState((prev) => [comment, ...prev]);
-  //   } catch (error) {
-  //     console.error("Error adding comment:", error);
-  //   }
-  // };
+//   //     {/* Display Comments Section */}
+//   //     {comments.length > 0 ? (
+//   //       <div className="flex flex-col gap-4">
+//   //         {comments.map((item, index) => (
+//   //           <CommentItem key={index} comment={item} />
+//   //         ))}
+//   //       </div>
+//   //     ) : (
+//   //       <p className="text-sm text-gray-500">
+//   //         No comments yet. Be the first to comment!
+//   //       </p>
+//   //     )}
+//   //   </main>
+//   // );
+// };
 
-  return (
-    <main className="bg-gray-50 border shadow-lg rounded-lg flex flex-col p-3 gap-4 w-full px-3">
-      <div className="flex items-center gap-2">
-        <textarea
-          // ref={refComment}
-          rows={1}
-          className="border-neutral-400 px-5 py-2 border outline-none rounded-lg bg-white w-full"
-          placeholder="Write your comment here..."
-        ></textarea>
-        <button
-          // onClick={handleAddComment}
-          className="text-blue-800 px-4 py-2 border rounded-lg border-blue-500 hover:bg-white"
-        >
-          Submit
-        </button>
-      </div>
-
-      {/* {comments.length > 0 ? (
-        comments.map((item) => (
-          <CommentItem key={item.date.toString()} comment={item} />
-        ))
-      ) : (
-        <p className="text-sm text-gray-500">No comments yet. Be the first!</p>
-      )} */}
-    </main>
-  );
-};
-
-export default HardCooment;
+// export default HardComment;

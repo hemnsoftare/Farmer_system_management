@@ -93,7 +93,7 @@ const Header = () => {
     setGrandTotal(calculatedGrandTotal);
   }, [cartItems]);
 
-  if (pathName.startsWith("/s") || pathName.includes("dashboard")) {
+  if (pathName.startsWith("/si") || pathName.includes("dashboard")) {
     return null;
   }
 

@@ -34,7 +34,7 @@ const BlogPage = () => {
       </span>
       <div className=" lg:flex-row flex gap-4  md:flex-col flex-col  w-full ">
         <div className=" lg:w-[70%] md:w-full flex flex-col gap-4 ">
-          <div className="grid  w-full grid-cols-2  md:items-center gap-2 divide-y-2 divide-transparent  h-fit py-4   md:grid-cols-3 justify-start items-start content-start ">
+          <div className="grid  w-full grid-cols-2  md:items-center gap-2 divide-y-2 divide-transparent  h-fit py-4  2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-3 justify-start items-start content-start ">
             {blog
               .filter((item) => item.type === "image")
               .slice(0, 6)
@@ -66,7 +66,7 @@ const BlogPage = () => {
           </div>
         </div>
 
-        <div className="flex lg:w-[30%] w-full flex-col gap-3">
+        <div className="flex mr-6 lg:w-[29%] flex-col gap-3">
           <span className="text-20 font-semibold">video</span>
           {blog
             .filter((item) => item.type === "video")
@@ -76,6 +76,8 @@ const BlogPage = () => {
               </Link>
             ))}
         </div>
+        <br />
+        <br />
       </div>
     </div>
   );
