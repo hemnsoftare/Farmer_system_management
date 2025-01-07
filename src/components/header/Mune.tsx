@@ -193,6 +193,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
       {/* Custom Secondary Color (Updated to a new background color) */}
       <SheetContent
         side={"left"}
+        onTouchMoveCapture={() => setShowSheet(false)}
         className="bg-gradient-to-r mr-0 border-0 from-teal-500 to-blue-600 text-white p-6 rounded-e-xl shadow-lg transition-all"
       >
         <SheetHeader>
