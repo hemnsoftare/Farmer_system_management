@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".", // Required for using relative paths
     "paths": {
-      "@/*": ["src/*"] // Maps `@` to the `src` directory
+      "@/*": [
+        "src/*"
+      ] // Maps `@` to the `src` directory
     },
     "lib": [
       "dom",
@@ -24,7 +26,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",

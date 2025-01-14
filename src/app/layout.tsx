@@ -2,10 +2,7 @@ import type { Viewport } from "next";
 import type { Metadata } from "next";
 import "./globals.css";
 import dynamic from "next/dynamic";
-
-const ClientProviders = dynamic(() => import("./ClientProviders"), {
-  ssr: false, // Disable server-side rendering for this component
-});
+import ClientProviders from "./ClientProviders";
 
 export const metadata: Metadata = {
   title: "Tech-Hiem",
@@ -32,7 +29,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#fff2f" />
         {/* Next.js will inject metadata automatically */}
       </head>
-      <body className="transition-colors duration-300 bg-white dark:text-neutral-500 text-black dark:bg-black">
+      <body className="transition-colors duration-300 bg-white dark:text-neutral-200 text-black dark:bg-black">
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

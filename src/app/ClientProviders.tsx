@@ -12,7 +12,7 @@ import FoooterMob from "@/components/home/FoooterMob";
 import { ThemeProvider, useTheme } from "next-themes";
 import Search from "@/components/home/Search";
 import { usePathname } from "next/navigation";
-
+import "@liveblocks/react-ui/styles.css";
 export default function ClientProviders({
   children,
 }: {
@@ -21,40 +21,42 @@ export default function ClientProviders({
   const { theme } = useTheme();
   const pathName = usePathname();
   return (
-    <ThemeProvider
-      defaultTheme="system"
-      attribute="class"
-      value={{
-        light: "light",
-        dark: "dark",
-        blue: "blue",
-        green: "green",
-        red: "red",
-      }}
-    >
-      <ReduxProvider store={store}>
-        <ClerkProvider>
-          <ContextProvider>
-            <ToastProvider>
-              <div
-                className={`${
-                  pathName.startsWith("/dash")
-                    ? " relative  dark:bg-black"
-                    : "md:px-[30px] klg:px-[40px] relative dark:bg-black"
-                }`}
-              >
-                <Header />
-                <Search />
-                {children}
-              </div>
+    <>
+      <ThemeProvider
+        defaultTheme="system"
+        attribute="class"
+        value={{
+          light: "light",
+          dark: "dark",
+          blue: "blue",
+          green: "green",
+          red: "red",
+        }}
+      >
+        <ReduxProvider store={store}>
+          <ClerkProvider>
+            <ContextProvider>
+              <ToastProvider>
+                <div
+                  className={`${
+                    pathName.startsWith("/dash")
+                      ? " relative  dark:bg-black"
+                      : "md:px-[30px] lg:px-[40px] relative dark:bg-black"
+                  }`}
+                >
+                  <Header />
+                  <Search />
+                  {children}
+                </div>
 
-              <Footer />
-              <FoooterMob />
-              <Toaster />
-            </ToastProvider>
-          </ContextProvider>
-        </ClerkProvider>
-      </ReduxProvider>
-    </ThemeProvider>
+                <Footer />
+                <FoooterMob />
+                <Toaster />
+              </ToastProvider>
+            </ContextProvider>
+          </ClerkProvider>
+        </ReduxProvider>
+      </ThemeProvider>
+    </>
   );
 }

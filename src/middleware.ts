@@ -3,7 +3,19 @@ import { authMiddleware, clerkMiddleware } from "@clerk/nextjs/server";
 
 // const {user}=useUser()
 // const isAdmin = user?.publicMetadata?.role === "admin";
-export default clerkMiddleware();
+import { NextResponse } from "next/server";
+
+export function middleware(req) {
+  const token = req.cookies.get("token")?.value;
+  console.log(token);
+  if (!token) {
+    // Redirect to login if the token is missing
+    // return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // Continue to the requested page
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
@@ -20,7 +32,7 @@ export const config = {
 // const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 // export default clerkMiddleware((auth, req) => {
-//   // Protect all routes starting with `/admin`
+// Protect all routes starting with `/admin`
 //   if (isAdminRoute(req) && auth().sessionClaims?.metadata?.role !== "admin") {
 //     const url = new URL("/", req.url);
 //     return NextResponse.redirect(url);
@@ -29,9 +41,9 @@ export const config = {
 
 // export const config = {
 //   matcher: [
-//     // Skip Next.js internals and all static files, unless found in search params
+// Skip Next.js internals and all static files, unless found in search params
 //     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-//     // Always run for API routes
+// Always run for API routes
 //     "/(api|trpc)(.*)",
 //   ],
 // };

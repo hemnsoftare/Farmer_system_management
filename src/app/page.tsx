@@ -21,7 +21,8 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
-
+import { useInboxNotifications } from "@liveblocks/react/suspense";
+import { InboxNotification, InboxNotificationList } from "@liveblocks/react-ui";
 export default function Home() {
   console.log("in page");
   const [productNew, setproductNew] = useState<ProductFormInput[]>([]);
@@ -68,9 +69,17 @@ export default function Home() {
       });
     }
   }, [user]);
-
+  // const { inboxNotifications } = useInboxNotifications();
   return (
     <div className="flex flex-col justify-center items-center gap-12">
+      {/* <InboxNotificationList>
+        {inboxNotifications.map((inboxNotification) => (
+          <InboxNotification
+            key={inboxNotification.id}
+            inboxNotification={inboxNotification}
+          />
+        ))}
+      </InboxNotificationList> */}
       <Hero />
       <Catagory />
       <Sales />
