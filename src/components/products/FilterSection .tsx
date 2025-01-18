@@ -44,7 +44,7 @@ const FilterSection = ({
       <ul
         className={`${
           isOpen ? "h-fit opacity-100" : "h-0 opacity-0"
-        } duration-300 w-full transition-all overflow-hidden`}
+        } duration-700 w-full transition-all overflow-hidden`}
       >
         {items.map((item, index) => {
           // Check if the item is an object with name and color or a string

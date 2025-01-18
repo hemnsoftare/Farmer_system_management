@@ -5,12 +5,15 @@ import { useUser } from "@clerk/nextjs";
 import { getfavorite } from "@/lib/action/fovarit";
 import { favorite } from "@/type";
 import CardFavorite from "./_components/CardFavorite";
+import { motion } from "framer-motion";
+
 const Page = () => {
   const [load, setload] = useState(false);
   const [state, setstate] = useState(0);
   const [products, setproducts] = useState<favorite[]>([]);
   const [favorriteid, setfavorriteid] = useState<string[]>([]);
   const { user } = useUser();
+
   useEffect(() => {
     const getdata = async () => {
       setload(true);
@@ -33,56 +36,86 @@ const Page = () => {
     };
     getdata();
   }, [state]);
-  console.log(products);
+
   return (
     <div className="flex items-center w-full py-8 gap-3 justify-center flex-col">
-      <h1 className="self-start px-3 text-26 sm:text-30 my-3 font-semibold">
+      {/* Title animation */}
+      <motion.h1
+        className="self-start px-3 text-26 sm:text-30 my-3 font-semibold"
+        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         Favorite Products
-      </h1>
+      </motion.h1>
 
+      {/* Products Grid animation */}
       {!load && products.length > 0 ? (
-        <div className="grid grid-cols-2 px-2 gap-2  sm:flex sm:flex-wrap   w-full items-center justify-center">
+        <motion.div
+          className="grid grid-cols-2 px-2 gap-2 sm:flex sm:flex-wrap w-full items-center justify-center"
+          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           {products.map((itemorder) => (
-            <CardFavorite
-              click={() => setstate((pre) => pre + 1)}
-              item={itemorder}
-              userId={user.id}
+            <motion.div
               key={itemorder.id}
-              addFavoriteid={() => {
-                setproducts((pre) =>
-                  pre.map((item) =>
-                    itemorder.id !== item.id
-                      ? item
-                      : { ...item, numberFavorite: item.numberFavorite + 1 }
-                  )
-                );
-                setfavorriteid((pre) => [...pre, itemorder.id]);
-              }}
-              favoriteId={favorriteid}
-              deleteFavoriteId={() => {
-                setproducts((pre) =>
-                  pre.map((item) =>
-                    itemorder.id !== item.id
-                      ? item
-                      : { ...item, numberFavorite: item.numberFavorite - 1 }
-                  )
-                );
-                setfavorriteid((pre) =>
-                  pre.map((item) => (item !== itemorder.id ? item : null))
-                );
-              }}
-            />
+              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <CardFavorite
+                click={() => setstate((pre) => pre + 1)}
+                item={itemorder}
+                userId={user.id}
+                addFavoriteid={() => {
+                  setproducts((pre) =>
+                    pre.map((item) =>
+                      itemorder.id !== item.id
+                        ? item
+                        : { ...item, numberFavorite: item.numberFavorite + 1 }
+                    )
+                  );
+                  setfavorriteid((pre) => [...pre, itemorder.id]);
+                }}
+                favoriteId={favorriteid}
+                deleteFavoriteId={() => {
+                  setproducts((pre) =>
+                    pre.map((item) =>
+                      itemorder.id !== item.id
+                        ? item
+                        : { ...item, numberFavorite: item.numberFavorite - 1 }
+                    )
+                  );
+                  setfavorriteid((pre) =>
+                    pre.filter((item) => item !== itemorder.id)
+                  );
+                }}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ) : load ? (
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-3"
+          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <Loader />
           <Loader />
           <Loader />
           <Loader />
-        </div>
+        </motion.div>
       ) : (
-        <h1 className="text-30 font-black my-[200px]">have not product</h1>
+        <motion.h1
+          className="text-30 font-black my-[200px]"
+          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          No products found
+        </motion.h1>
       )}
     </div>
   );

@@ -7,16 +7,16 @@ const Banner = () => {
     <div className="bg-[#223949] dark:bg-[#18232E] relative w-full sm:max-w-[1000px] self-center duration-200 transition-all shadow-md sm:hover:shadow-lg sm:hover:shadow-[#223949] dark:sm:hover:shadow-[#18232E] shadow-[#223949] dark:shadow-[#18232E]  md:px-[25px] lg:px-[100px] h-[250px] sm:h-[420px] py-8 sm:py-12 rounded-md flex overflow-hidden items-center justify-between">
       <div className="flex justify-between sm:gap-7 gap-4 w-full items-center flex-col">
         <motion.h1
-          initial={{ translateY: 100 }}
-          whileInView={{ translateY: 0 }}
+          initial={{ y: 100 }}
+          whileInView={{ y: 0 }}
           transition={{ duration: 0.8, type: "spring" }}
           className="lg:text-[44px] md:text-34 font-semibold uppercase text-white dark:text-gray-200"
         >
           Smart Watch
         </motion.h1>
         <motion.p
-          initial={{ translateX: 300 }}
-          whileInView={{ translateX: 0 }}
+          initial={{ x: 300 }}
+          whileInView={{ x: 0 }}
           transition={{ duration: 0.8, type: "spring" }}
           className="lg:text-[24px] w-[130px] sm:w-full md:text-20 text-14 text-center text-white dark:text-gray-300"
         >
@@ -32,8 +32,8 @@ const Banner = () => {
         </motion.button>
       </div>
       <motion.div
-        initial={{ translateX: 80 }}
-        whileInView={{ translateX: 0 }}
+        initial={{ x: 80 }}
+        whileInView={{ x: 0 }}
         transition={{ duration: 0.9, type: "spring" }}
         className="z-[2]"
       >
@@ -49,14 +49,14 @@ const Banner = () => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.9, type: "spring" }}
-        className="absolute dark:hidden -right-[210px] h-full md:-right-[150px] lg:-right-[100px] top-auto"
+        className="absolute dark:hidden w-full -right-[210px] h-full md:-right-[150px] lg:-right-[100px] top-auto"
       >
         <Image
           src={"shape3.svg"}
           alt=""
           width={533}
           height={250}
-          className=""
+          className="w-full h-full"
         />
       </motion.div>
       <motion.div className="dark:block absolute scale-[1.5] hidden -right-[210px] h-full md:-right-[50px] lg:-right-[50px] rounded-l-full top-auto bg-secondary-500 min-w-[300px] max-w-[300px]">

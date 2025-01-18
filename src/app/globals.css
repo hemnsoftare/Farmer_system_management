@@ -167,18 +167,17 @@ body {
 }
 
 /* Hides scrollbar but allows scrolling */
-* {
-  scrollbar-width: none; /* Firefox: customizes scrollbar appearance */
-  scrollbar-color: transparent transparent; /* Firefox: makes scrollbar transparent */
+/* * {
+  scrollbar-width: none; 
+  scrollbar-color: transparent transparent; 
 }
-
 *::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera: hides scrollbar */
+  display: none; 
 }
 
 * {
-  -ms-overflow-style: none; /* IE/Edge: hides scrollbar */
-}
+  -ms-overflow-style: none; 
+} */
 
 @layer base {
   * {

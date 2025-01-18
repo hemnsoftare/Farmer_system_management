@@ -104,7 +104,7 @@ const MyComponent = ({ params }) => {
     getdata();
   }, [user]);
   return (
-    <div className="flex flex-col w-full gap-5 px-3  pt-5 ">
+    <motion.div className="flex flex-col w-full gap-5 px-3  pt-5 ">
       <p className="text-16 dark:text-gray-500 py-6">
         <Link
           href={"/"}
@@ -256,7 +256,7 @@ const MyComponent = ({ params }) => {
         )}{" "}
       </div>
       <br />
-    </div>
+    </motion.div>
   );
 };
 

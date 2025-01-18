@@ -39,7 +39,7 @@ const Hero = () => {
       <motion.div className="flex sm:mt-12 relative md:flex-row m-0 flex-col-reverse min-h-[410px] md:min-h-fit overflow-hidden above-405:px-3 mt-0 md:items-center items-start w-full justify-center md:justify-between ">
         <motion.div
           transition={{ duration: 0.3 }}
-          initial={{ x: -150, opacity: 0.5 }}
+          initial={{ x: -150, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           className="flex w-full  md:w-[300px] z-[2] justify-between   md:justify-center flex-col md:py-4 h-full items-center gap-8"
         >

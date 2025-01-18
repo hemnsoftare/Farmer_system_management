@@ -15,6 +15,7 @@ import { app } from "../../config/firebaseConfig";
 import FilterSection from "./FilterSection ";
 import { cn } from "@/lib/utils";
 import { on } from "events";
+import { motion } from "framer-motion";
 
 const FilterItem = ({
   onFilter,
@@ -109,7 +110,11 @@ const FilterItem = ({
   };
 
   return (
-    <div className="flex flex-col h-full duration-300 transition-all dark:text-secondary w-full items-center justify-start">
+    <motion.div
+      layout
+      key="df"
+      className="flex flex-col h-full duration-300 transition-all dark:text-secondary w-full items-center justify-start"
+    >
       <FilterSection
         title="brand"
         items={category?.brands || []}
@@ -204,7 +209,7 @@ const FilterItem = ({
           </button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

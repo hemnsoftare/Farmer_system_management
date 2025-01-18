@@ -60,16 +60,16 @@ const Page = () => {
         {about.descriptions.map((item, index) => (
           <div key={item.title} className="flex flex-col gap-2">
             <motion.h2
-              initial={{ translateX: index % 2 == 0 ? 80 : -80, opacity: 0 }}
-              whileInView={{ translateX: 0, opacity: 1 }}
+              initial={{ x: index % 2 == 0 ? 80 : -80, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9, type: "spring" }}
               className="text-20 font-semibold"
             >
               {item.title}
             </motion.h2>
             <motion.p
-              initial={{ translateX: index % 2 == 1 ? 80 : -80, opacity: 0 }}
-              whileInView={{ translateX: 0, opacity: 1 }}
+              initial={{ x: index % 2 == 1 ? 80 : -80, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9, type: "spring" }}
               className="text-14"
             >
@@ -79,8 +79,8 @@ const Page = () => {
         ))}
       </div>
       <motion.div
-        initial={{ translateY: 80, translateX: 100, opacity: 0 }}
-        whileInView={{ translateY: 0, translateX: 0, opacity: 1 }}
+        initial={{ y: 80, x: 100, opacity: 0 }}
+        whileInView={{ y: 0, x: 0, opacity: 1 }}
         transition={{ duration: 0.9, type: "spring" }}
         className="w-full h-full flex md:flex-row flex-wrap flex-col gap-4"
       >

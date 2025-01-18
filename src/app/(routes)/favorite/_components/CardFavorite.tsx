@@ -72,7 +72,7 @@ const CardFavorite = ({
         alt={item.name}
         width={150}
         height={150}
-        className="w-full sm:h-[240px] above-405:min-h-[170px] min-h-[140px] max-h-[140px] above-405:max-h-[170px] object-cover rounded-lg "
+        className="w-full sm:min-h-[200px] sm:max-h-[200px] above-405:min-h-[190px] min-h-[140px] max-h-[140px] above-405:max-h-[190px] rounded-lg "
       />
 
       {/* Item Name */}

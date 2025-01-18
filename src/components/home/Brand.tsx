@@ -4,14 +4,14 @@ import React from "react";
 import { motion } from "framer-motion";
 const Brand = () => {
   return (
-    <div className="flex flex-col px-3 dark:bg-neutral-800 rounded-lg items-center w-full justify-center">
+    <motion.div className="flex flex-col px-3 overflow-hidden    dark:bg-neutral-800 rounded-lg items-center w-full justify-center">
       <div className="flex justify-between border-b-4 w-full  pb-4 border-neutral-400">
         <h3 className="sm:text-[32px] text-[20px] pl-3 dark:text-white ">
           Top Brand
         </h3>
       </div>
       <motion.div
-        initial={{ translateY: 150 }}
+        initial={{ translateY: 60 }}
         whileInView={{ translateY: 0 }}
         transition={{ duration: 0.4, type: "spring" }}
         className="flex gap-2 items-center w-full justify-between  sm:justify-center md:gap-4 lg:gap-5"
@@ -33,7 +33,7 @@ const Brand = () => {
           );
         })}
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

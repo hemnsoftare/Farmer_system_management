@@ -5,7 +5,7 @@ import ReactPlayer from "react-player";
 
 const BlogVideo = ({ item }: { item: BlogProps }) => {
   return (
-    <div className="w-full flex-col flex relative overflow-hidden lg:w-full  items-center rounded-xl shadow-lg justify-between gap-1 sm:gap-4">
+    <div className=" flex-col flex relative overflow-hidden w-full  items-center rounded-xl shadow-lg justify-between gap-1 sm:gap-4">
       <div className="relative w-full pb-[56.25%]">
         {" "}
         {/* 16:9 Aspect Ratio */}

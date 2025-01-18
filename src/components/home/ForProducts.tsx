@@ -76,7 +76,7 @@ const ForProducts = ({
       whileInView={{ y: 0, x: 0, opacity: 1 }}
       exit={{ y: -100, opacity: 0.2 }}
       transition={{ duration: 0.6, type: "spring" }}
-      className=" mt-3 w-full overflow-x- py-7 sm:overflow-x-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-4 relative px- justify-center  items-center"
+      className=" mt-3 w-full  py-7 overflow-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-4 relative px- justify-center  items-center"
     >
       {products &&
         products
@@ -84,7 +84,7 @@ const ForProducts = ({
           .map((product, index) => (
             <div
               key={product.name}
-              className={`${index === 4 && "hidden sm:block"}`}
+              className={`${index === 4 && "hidden sm:block"} overflow-hidden`}
             >
               <NewProducts
                 favoriteId={favoriteId}

@@ -11,17 +11,18 @@ import { blogFavriteProps } from "@/type";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const Page = () => {
   const [saveblog, setsaveblog] = useState<blogFavriteProps[]>([]);
   const [idBlogSave, setidBlogSave] = useState<string[]>([]);
   const { user, isLoaded } = useUser();
   const { toast } = useToast();
-  const [loading, setLoading] = useState<boolean>(false); // Added loading state
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getdata = async () => {
-      setLoading(true); // Set loading to true while fetching data
+      setLoading(true);
       try {
         const data = await getSaveBlog(user.id);
         const dataId = await getallsaveid(user.id);
@@ -30,13 +31,12 @@ const Page = () => {
       } catch (error) {
         toast({ title: "Error fetching saved blogs", variant: "destructive" });
       } finally {
-        setLoading(false); // Set loading to false when the data is fetched
+        setLoading(false);
       }
     };
     if (isLoaded) getdata();
   }, [isLoaded, user, toast]);
 
-  // Display message if no blogs are saved
   if (loading) {
     return (
       <div className="w-full px-5 flex flex-col my-8 items-center justify-center">
@@ -66,29 +66,40 @@ const Page = () => {
         <span className="text-blue-700">Save Blog</span>
       </p>
       <h1 className="font-semibold text-28">Save Blog</h1>
-      <div className="w-full grid md:grid-cols-2 my-5 lg:grid-cols-3 gap-3 items-center justify-center">
+
+      {/* Animate the grid of cards */}
+      <motion.div
+        className="w-full grid md:grid-cols-2 my-5 lg:grid-cols-3 gap-3 items-center justify-center"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         {saveblog.map((item) => (
-          <SaveBlogCard
+          <motion.div
             key={item.id}
-            disabledBtn={idBlogSave.includes(item.id)}
-            blog={item}
-            onSave={() => {
-              addFavoriteBlog({ item });
-              setidBlogSave((pre) => [...pre, item.id]);
-              toast({ title: "Saved the blog" });
-            }}
-            onUnsave={() => {
-              deleteSave({
-                id: item.id,
-                numberOffavorites: item.numberOffavorites,
-                userId: user.id,
-              });
-              setidBlogSave((pre) => pre.filter((id) => id !== item.id));
-              toast({ title: "Un-saved the blog" });
-            }}
-          />
+            whileInView={{ opacity: 1, y: 0, x: 0 }}
+            initial={{ opacity: 0, y: 50, x: 50 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <SaveBlogCard
+              disabledBtn={idBlogSave.includes(item.id)}
+              blog={item}
+              onSave={() => {
+                addFavoriteBlog({ item });
+                setidBlogSave((pre) => [...pre, item.id]);
+                toast({ title: "Saved the blog" });
+              }}
+              onUnsave={() => {
+                deleteSave({
+                  id: item.id,
+                  numberOffavorites: item.numberOffavorites,
+                  userId: user.id,
+                });
+                setidBlogSave((pre) => pre.filter((id) => id !== item.id));
+                toast({ title: "Un-saved the blog" });
+              }}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ const BlogCol = ({ blog }: { blog: BlogProps }) => {
   const formattedDate = new Date(blog.date).toLocaleDateString(); // Format date for better readability
 
   return (
-    <article className="flex border w-full flex-col  md:max-w-[340px]  gap-2 rounded-xl overflow-hidden shadow-lg ">
+    <article className="flex border w-full flex-col    gap-2 rounded-xl overflow-hidden shadow-lg ">
       {/* Image */}
 
       <Image

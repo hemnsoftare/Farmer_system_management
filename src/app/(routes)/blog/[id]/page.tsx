@@ -117,10 +117,10 @@ import {
   getallsaveid,
 } from "@/lib/action/fovarit";
 import { useToast } from "@/hooks/use-toast";
-
+import { motion } from "framer-motion";
 const Page = ({ params }) => {
   const { toast } = useToast();
-  const iduse:any = React.use(params);
+  const iduse: any = React.use(params);
   const id = iduse.id;
   console.log(id);
 
@@ -169,7 +169,12 @@ const Page = ({ params }) => {
         {/* Main Content Section */}
         <main className="flex flex-col w-full lg:w-[65%] gap-6">
           {/* Breadcrumb */}
-          <span className="text-sm font-light">
+          <motion.span
+            className="text-sm font-light"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <Link href="/" className="hover:text-blue-600">
               home
             </Link>
@@ -177,18 +182,40 @@ const Page = ({ params }) => {
             <Link href="/blog" className="hover:text-blue-600">
               blog
             </Link>
-          </span>
+          </motion.span>
 
           {/* Blog Content */}
-          <div className="flex flex-col gap-3">
-            <h2 className="text-xl sm:text-2xl font-bold">{blog.title}</h2>
-            <p className="text-neutral-500 text-sm">
+          <motion.div
+            className="flex flex-col gap-3"
+            initial={{ opacity: 0, y: 1 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h2
+              className="text-xl sm:text-2xl font-bold"
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              {blog.title}
+            </motion.h2>
+            <motion.p
+              className="text-neutral-500 text-sm"
+              initial={{ opacity: 0, y: 70 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
               By {blog.user} on {new Date(blog.date).toLocaleDateString()}
-            </p>
+            </motion.p>
 
             {/* Conditional Rendering for Video or Image */}
             {blog.type === "video" ? (
-              <div className="w-full aspect-video">
+              <motion.div
+                className="w-full aspect-video"
+                initial={{ opacity: 0, scale: 0.9, y: 100 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
                 <ReactPlayer
                   url={blog.video}
                   width="100%"
@@ -196,18 +223,29 @@ const Page = ({ params }) => {
                   controls
                   className="rounded-xl overflow-hidden"
                 />
-              </div>
+              </motion.div>
             ) : (
-              <Image
-                src={blog.image}
-                alt="Blog Cover"
-                width={900}
-                height={400}
-                className="object-cover shadow-lg rounded-xl w-full max-h-[400px]"
-              />
+              <motion.div
+                initial={{ opacity: 0, y: 100, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8 }}
+              >
+                <Image
+                  src={blog.image}
+                  alt="Blog Cover"
+                  width={900}
+                  height={400}
+                  className="object-cover shadow-lg rounded-xl w-full max-h-[400px]"
+                />
+              </motion.div>
             )}
 
-            <p className="text-sm leading-relaxed text-neutral-600">
+            <motion.p
+              className="text-sm leading-relaxed text-neutral-600"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9 }}
+            >
               {blog.description} Lorem ipsum dolor sit, amet consectetur
               adipisicing elit. Amet, facilis. Fugiat tenetur vero ullam quasi
               aliquid vel, in fugit aperiam autem quas! Optio vel, quam labore
@@ -216,9 +254,16 @@ const Page = ({ params }) => {
               praesentium saepe similique sapiente eum. Quam, aliquam earum,
               illum deleniti quo beatae consequuntur dolorum eos reiciendis
               aperiam ipsa molestias deserunt rem?
-            </p>
-            <footer className="flex w-full gap-4 items-center ">
-              <button
+            </motion.p>
+
+            {/* Footer Buttons */}
+            <motion.footer
+              className="flex w-full gap-4 items-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              <motion.button
                 disabled={idSave.includes(id) || !user}
                 onClick={async () => {
                   try {
@@ -243,11 +288,13 @@ const Page = ({ params }) => {
                   }
                 }}
                 className="px-6 py-1 disabled:bg-blue-300 w-[150px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Save
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
                 disabled={!idSave.includes(id) || !user}
                 onClick={async () => {
                   try {
@@ -257,21 +304,23 @@ const Page = ({ params }) => {
                       userId: user.id,
                     });
                     setidSave((pre) => pre.filter((item) => item !== id));
-                    toast({ title: "Blog saved successfully!" });
+                    toast({ title: "Blog removed successfully!" });
                   } catch (error) {
-                    console.error("Failed to save blog:", error);
-                    toast({ title: "Failed to save blog" });
+                    console.error("Failed to remove blog:", error);
+                    toast({ title: "Failed to remove blog" });
                   }
                 }}
-                className=" px-6 disabled:text-blue-300  py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
+                className="px-6 disabled:text-blue-300 py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                un save{" "}
-              </button>
-            </footer>
-          </div>
-
-          {/* Comment and Like Section */}
-          {/* <div className="flex cursor-pointer justify-end gap-4 px-10">
+                Unsave
+              </motion.button>
+            </motion.footer>
+          </motion.div>
+        </main>
+        {/* Comment and Like Section */}
+        {/* <div className="flex cursor-pointer justify-end gap-4 px-10">
           <div className="flex gap-2 hover:bg-blue-500 duration-300 transition-all px-2 rounded-md items-center">
             <LiaCommentDots />
             <span className="text-14">12 Comments</span>
@@ -281,21 +330,56 @@ const Page = ({ params }) => {
             <span className="text-14">123 Likes</span>
           </div>
         </div> */}
-
-          {/* Comments Section */}
-          {/* <C blogId={id} /> */}
-        </main>
-
+        {/* Comments Section */}
+        {/* <C blogId={id} /> */}
         {/* Sidebar Section */}
         <aside className="flex flex-col lg:w-[35%] w-full gap-4">
-          <div className="w-full p-4 bg-white gap-4 flex flex-col justify-center items-center shadow-md rounded-lg">
-            <h3 className="text-lg font-semibold mb-3">Related Blogs</h3>
-            {blogs
-              .filter((item) => item.type === "image")
-              .map((item) => (
-                <BlogRow item={item} key={item.id} />
-              ))}
-          </div>
+          <motion.div
+            className="w-full p-4 bg-white gap-4 flex flex-col justify-center items-center shadow-md rounded-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.h3
+              className="text-lg font-semibold mb-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              Related Blogs
+            </motion.h3>
+
+            <motion.div
+              className="flex flex-col gap-4 w-full"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0, y: 100 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    delayChildren: 0.4,
+                    staggerChildren: 0.2,
+                  },
+                },
+              }}
+            >
+              {blogs
+                .filter((item) => item.type === "image")
+                .map((item) => (
+                  <motion.div
+                    key={item.id}
+                    variants={{
+                      hidden: { opacity: 0, y: 50, x: 50 },
+                      visible: { opacity: 1, y: 0, x: 0 },
+                    }}
+                  >
+                    <BlogRow item={item} />
+                  </motion.div>
+                ))}
+            </motion.div>
+          </motion.div>
         </aside>
       </div>
     );

@@ -19,6 +19,7 @@ import {
   query,
 } from "firebase/firestore";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
 export default function Home() {
@@ -68,7 +69,7 @@ export default function Home() {
   }, [user]);
   // const { inboxNotifications } = useInboxNotifications();
   return (
-    <div className="flex flex-col justify-center items-center gap-12">
+    <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
       {/* <InboxNotificationList>
         {inboxNotifications.map((inboxNotification) => (
           <InboxNotification
@@ -77,10 +78,8 @@ export default function Home() {
           />
         ))}
       </InboxNotificationList> */}
-      <Hero />
-      <Catagory />
-      <Sales />
-      <div className="flex flex-col px-3 dark:text-white w-full items-center justify-center">
+      <Hero /> <Catagory /> <Sales />
+      <motion.div className="flex flex-col px-3 dark:text-white w-full items-center justify-center">
         <div
           id="newProducts"
           className="flex transition-all px-2 duration-300 items-center justify-between w-full border-b-4 pb-4 border-neutral-400"
@@ -97,8 +96,7 @@ export default function Home() {
         </div>
 
         <ForProducts load={loadNew} products={productNew} />
-      </div>
-
+      </motion.div>
       <Reklam />
       <div className="flex flex-col px-3 w-full  items-center justify-center">
         <div className="flex justify-between px-2 dark:text-white items-center border-b-4 w-full pb-4 border-neutral-400">
@@ -116,13 +114,14 @@ export default function Home() {
         <ForProducts load={loadBestSale} products={productSale} />
       </div>
       <Brand />
-      <div className="w-full flex items-center justify-center px-3">
+      <div className="w-full overflow-hidden flex items-center justify-center px-3">
         <Banner />
       </div>
+      <Servies />
+      {/*
       {/* 
       <Blog /> 
-      */}
-      <Servies />
+       */}
     </div>
   );
 }
