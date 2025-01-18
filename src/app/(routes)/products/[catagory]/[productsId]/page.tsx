@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, use, useEffect } from "react";
 
 import ForProducts from "@/components/home/ForProducts";
 import HeaderProduct from "@/components/products/HeaderProduct";
@@ -9,11 +9,9 @@ import { getproductByCategory } from "@/lib/action/uploadimage";
 import Link from "next/link";
 import { app } from "@/config/firebaseConfig";
 import LoadingProducts from "@/components/products/loadingProducts";
-const SingleProduct = ({
-  params,
-}: {
-  params: { catagory: string; productsId: string };
-}) => {
+const SingleProduct = ({ params }) => {
+  const param: any = use(params);
+  console.log(params);
   const [product, setProduct] = useState<ProductFormInput>();
   const [load, setload] = useState(false);
   const [similarProducts, setSimilarProducts] = useState<ProductFormInput[]>(
@@ -25,17 +23,17 @@ const SingleProduct = ({
   useEffect(() => {
     const getProduct = async () => {
       setload(true);
-      const productId = params.productsId;
+      const productId = param.productsId;
       const refDoc = await getDoc(doc(db, "Products", productId));
       setProduct(refDoc.data() as ProductFormInput);
       console.log(refDoc.data());
-      const productsByCategory = await getproductByCategory(params.catagory);
+      const productsByCategory = await getproductByCategory(param.catagory);
       setSimilarProducts(productsByCategory);
       setload(false);
     };
 
     getProduct();
-  }, [db, params.catagory, params.productsId]); // Add dependencies here
+  }, [db, param.catagory, param.productsId]); // Add dependencies here
 
   return (
     <div className="flex flex-col w-full py-4">
@@ -45,7 +43,7 @@ const SingleProduct = ({
         </Link>{" "}
         &gt;
         <Link
-          href={`/products/${params.catagory}`}
+          href={`/products/${param.catagory}`}
           className="hover:text-blue-800 hover:underline"
         >
           products

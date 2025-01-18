@@ -109,12 +109,8 @@ import ReactPlayer from "react-player";
 import Link from "next/link";
 import { getBlog, getBlogs } from "@/lib/action/uploadimage";
 import BlogRow from "@/components/blog/BlogRow";
-import { LiaCommentDots } from "react-icons/lia";
-import { AiOutlineLike } from "react-icons/ai";
-import { BiSolidLike } from "react-icons/bi";
 import { useUser } from "@clerk/nextjs";
 // import C from "@/components/blog/C";
-import { IoMdHeartEmpty } from "react-icons/io";
 import {
   addFavoriteBlog,
   deleteSave,
@@ -122,158 +118,160 @@ import {
 } from "@/lib/action/fovarit";
 import { useToast } from "@/hooks/use-toast";
 
-const Page = ({ params }: { params: { id: string } }) => {
+const Page = ({ params }) => {
   const { toast } = useToast();
-  const id = params.id;
-  const [blog, setBlog] = useState<BlogProps>({
-    id: "",
-    title: "",
-    description: "",
-    video: "",
-    image: "",
-    type: "image", // Default type
-    date: new Date(),
-    user: "",
-    numberOfLikes: 0,
-    numberOfDislikes: 0,
-    numberOfComments: 0,
-    comments: [],
-    numberOfViews: 0,
-    numberOffavorites: 0,
-    numberOfSearches: 0,
-  });
+  const iduse:any = React.use(params);
+  const id = iduse.id;
+  console.log(id);
+
+  console.log("dfjkdfjklsdfjksdfjklsdfjkdfjkdfjkl");
+  // const id = params.id;
+  const [blog, setBlog] = useState<BlogProps>();
 
   const [blogs, setBlogs] = useState<BlogProps[]>([]);
   const [idSave, setidSave] = useState([]);
   const { user } = useUser();
-
+  console.log(user);
   useEffect(() => {
-    if (!id) return; // Don't fetch data if id is missing
-
     const getData = async () => {
       try {
+        console.log("in get data");
         const data = await getBlog(id);
         const blogList = await getBlogs();
-        const getid = await getallsaveid(user.id);
-        setidSave(getid);
-        setBlogs(blogList);
         setBlog({ ...data });
+        setBlogs(blogList);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+    if (id) getData();
+  }, [id]);
+  console.log(blog);
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        console.log(user.id);
+
+        const getid = await getallsaveid(user.id);
+        setidSave(getid);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
     getData();
-  }, [id, user]);
+  }, [user]);
+  console.log(blog);
 
-  return (
-    <div className="flex flex-col lg:flex-row py-9 px-3 gap-4 w-full">
-      {/* Main Content Section */}
-      <main className="flex flex-col w-full lg:w-[65%] gap-6">
-        {/* Breadcrumb */}
-        <span className="text-sm font-light">
-          <Link href="/" className="hover:text-blue-600">
-            home
-          </Link>
-          &gt;
-          <Link href="/blog" className="hover:text-blue-600">
-            blog
-          </Link>
-        </span>
+  if (blog)
+    return (
+      <div className="flex flex-col lg:flex-row py-9 px-3 gap-4 w-full">
+        {/* Main Content Section */}
+        <main className="flex flex-col w-full lg:w-[65%] gap-6">
+          {/* Breadcrumb */}
+          <span className="text-sm font-light">
+            <Link href="/" className="hover:text-blue-600">
+              home
+            </Link>
+            &gt;
+            <Link href="/blog" className="hover:text-blue-600">
+              blog
+            </Link>
+          </span>
 
-        {/* Blog Content */}
-        <div className="flex flex-col gap-3">
-          <h2 className="text-xl sm:text-2xl font-bold">{blog.title}</h2>
-          <p className="text-neutral-500 text-sm">
-            By {blog.user} on {new Date(blog.date).toLocaleDateString()}
-          </p>
+          {/* Blog Content */}
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl sm:text-2xl font-bold">{blog.title}</h2>
+            <p className="text-neutral-500 text-sm">
+              By {blog.user} on {new Date(blog.date).toLocaleDateString()}
+            </p>
 
-          {/* Conditional Rendering for Video or Image */}
-          {blog.type === "video" ? (
-            <div className="w-full aspect-video">
-              <ReactPlayer
-                url={blog.video}
-                width="100%"
-                height="100%"
-                controls
-                className="rounded-xl overflow-hidden"
+            {/* Conditional Rendering for Video or Image */}
+            {blog.type === "video" ? (
+              <div className="w-full aspect-video">
+                <ReactPlayer
+                  url={blog.video}
+                  width="100%"
+                  height="100%"
+                  controls
+                  className="rounded-xl overflow-hidden"
+                />
+              </div>
+            ) : (
+              <Image
+                src={blog.image}
+                alt="Blog Cover"
+                width={900}
+                height={400}
+                className="object-cover shadow-lg rounded-xl w-full max-h-[400px]"
               />
-            </div>
-          ) : (
-            <Image
-              src={blog.image}
-              alt="Blog Cover"
-              width={900}
-              height={400}
-              className="object-cover shadow-lg rounded-xl w-full max-h-[400px]"
-            />
-          )}
+            )}
 
-          <p className="text-sm leading-relaxed text-neutral-600">
-            {blog.description} Lorem ipsum dolor sit, amet consectetur
-            adipisicing elit. Amet, facilis. Fugiat tenetur vero ullam quasi
-            aliquid vel, in fugit aperiam autem quas! Optio vel, quam labore
-            omnis consectetur reiciendis consequatur doloribus adipisci
-            voluptatibus mollitia itaque quo, reprehenderit aperiam praesentium
-            saepe similique sapiente eum. Quam, aliquam earum, illum deleniti
-            quo beatae consequuntur dolorum eos reiciendis aperiam ipsa
-            molestias deserunt rem?
-          </p>
-          <footer className="flex w-full gap-4 items-center ">
-            <button
-              disabled={idSave.includes(id)}
-              onClick={async () => {
-                try {
-                  await addFavoriteBlog({
-                    item: {
-                      blogId: id,
-                      description: blog.description,
-                      id: id,
+            <p className="text-sm leading-relaxed text-neutral-600">
+              {blog.description} Lorem ipsum dolor sit, amet consectetur
+              adipisicing elit. Amet, facilis. Fugiat tenetur vero ullam quasi
+              aliquid vel, in fugit aperiam autem quas! Optio vel, quam labore
+              omnis consectetur reiciendis consequatur doloribus adipisci
+              voluptatibus mollitia itaque quo, reprehenderit aperiam
+              praesentium saepe similique sapiente eum. Quam, aliquam earum,
+              illum deleniti quo beatae consequuntur dolorum eos reiciendis
+              aperiam ipsa molestias deserunt rem?
+            </p>
+            <footer className="flex w-full gap-4 items-center ">
+              <button
+                disabled={idSave.includes(id) || !user}
+                onClick={async () => {
+                  try {
+                    await addFavoriteBlog({
+                      item: {
+                        blogId: id,
+                        description: blog.description,
+                        id: id,
+                        numberOffavorites: blog.numberOffavorites,
+                        title: blog.title,
+                        type: blog.type,
+                        userId: user.id || "",
+                        image: blog.image || "",
+                        video: blog.video || "",
+                      },
+                    });
+                    setidSave((pre) => [...pre, id]);
+                    toast({ title: "Blog saved successfully!" });
+                  } catch (error) {
+                    console.error("Failed to save blog:", error);
+                    toast({ title: "Failed to save blog" });
+                  }
+                }}
+                className="px-6 py-1 disabled:bg-blue-300 w-[150px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
+              >
+                Save
+              </button>
+
+              <button
+                disabled={!idSave.includes(id) || !user}
+                onClick={async () => {
+                  try {
+                    await deleteSave({
+                      id,
                       numberOffavorites: blog.numberOffavorites,
-                      title: blog.title,
-                      type: blog.type,
-                      userId: user.id || "",
-                      image: blog.image || "",
-                      video: blog.video || "",
-                    },
-                  });
-                  setidSave((pre) => [...pre, id]);
-                  toast({ title: "Blog saved successfully!" });
-                } catch (error) {
-                  console.error("Failed to save blog:", error);
-                  toast({ title: "Failed to save blog" });
-                }
-              }}
-              className="px-6 py-1 disabled:bg-blue-300 w-[150px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
-            >
-              Save
-            </button>
+                      userId: user.id,
+                    });
+                    setidSave((pre) => pre.filter((item) => item !== id));
+                    toast({ title: "Blog saved successfully!" });
+                  } catch (error) {
+                    console.error("Failed to save blog:", error);
+                    toast({ title: "Failed to save blog" });
+                  }
+                }}
+                className=" px-6 disabled:text-blue-300  py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
+              >
+                un save{" "}
+              </button>
+            </footer>
+          </div>
 
-            <button
-              disabled={!idSave.includes(id)}
-              onClick={async () => {
-                try {
-                  await deleteSave({
-                    id,
-                    numberOffavorites: blog.numberOffavorites,
-                    userId: user.id,
-                  });
-                  setidSave((pre) => pre.filter((item) => item !== id));
-                  toast({ title: "Blog saved successfully!" });
-                } catch (error) {
-                  console.error("Failed to save blog:", error);
-                  toast({ title: "Failed to save blog" });
-                }
-              }}
-              className=" px-6 disabled:text-blue-300  py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
-            >
-              un save{" "}
-            </button>
-          </footer>
-        </div>
-
-        {/* Comment and Like Section */}
-        {/* <div className="flex cursor-pointer justify-end gap-4 px-10">
+          {/* Comment and Like Section */}
+          {/* <div className="flex cursor-pointer justify-end gap-4 px-10">
           <div className="flex gap-2 hover:bg-blue-500 duration-300 transition-all px-2 rounded-md items-center">
             <LiaCommentDots />
             <span className="text-14">12 Comments</span>
@@ -284,23 +282,24 @@ const Page = ({ params }: { params: { id: string } }) => {
           </div>
         </div> */}
 
-        {/* Comments Section */}
-        {/* <C blogId={id} /> */}
-      </main>
+          {/* Comments Section */}
+          {/* <C blogId={id} /> */}
+        </main>
 
-      {/* Sidebar Section */}
-      <aside className="flex flex-col lg:w-[35%] w-full gap-4">
-        <div className="w-full p-4 bg-white gap-4 flex flex-col justify-center items-center shadow-md rounded-lg">
-          <h3 className="text-lg font-semibold mb-3">Related Blogs</h3>
-          {blogs
-            .filter((item) => item.type === "image")
-            .map((item) => (
-              <BlogRow item={item} key={item.id} />
-            ))}
-        </div>
-      </aside>
-    </div>
-  );
+        {/* Sidebar Section */}
+        <aside className="flex flex-col lg:w-[35%] w-full gap-4">
+          <div className="w-full p-4 bg-white gap-4 flex flex-col justify-center items-center shadow-md rounded-lg">
+            <h3 className="text-lg font-semibold mb-3">Related Blogs</h3>
+            {blogs
+              .filter((item) => item.type === "image")
+              .map((item) => (
+                <BlogRow item={item} key={item.id} />
+              ))}
+          </div>
+        </aside>
+      </div>
+    );
+  return;
 };
 
 export default Page;

@@ -2,10 +2,10 @@
 import CardTeam from "@/components/about/CardTeam";
 import { getAboutUs, getTeam } from "@/lib/action/uploadimage";
 import { teamProps } from "@/type";
-import { image } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 const Page = () => {
   const [about, setabout] = useState({
     description: "",
@@ -46,20 +46,44 @@ const Page = () => {
         alt="about image "
         width={600}
         height={400}
-        className="w-full rounded-md md:h-full max-h-[450px] "
+        className="w-full shadow-lg shadow-slate-500 mb-3 rounded-md md:h-full max-h-[450px] "
       />
-      <p className="text-neutral-400 dark:text-neutral-600 px-3  text-12 sm:text-16 line-clamp-0 indent-2 -mt-2 ">
+      <motion.p
+        initial={{ translateX: 80, opacity: 0 }}
+        whileInView={{ translateX: 0, opacity: 1 }}
+        transition={{ duration: 0.9, type: "spring" }}
+        className="text-neutral-400 dark:text-neutral-600 px-3  text-12 sm:text-16 line-clamp-0 indent-2 -mt-2 "
+      >
         {about.description}
-      </p>
+      </motion.p>
       <div className="">
-        {about.descriptions.map((item) => (
+        {about.descriptions.map((item, index) => (
           <div key={item.title} className="flex flex-col gap-2">
-            <h2 className="text-20 font-semibold">{item.title}</h2>
-            <p className="text-14">{item.description}</p>
+            <motion.h2
+              initial={{ translateX: index % 2 == 0 ? 80 : -80, opacity: 0 }}
+              whileInView={{ translateX: 0, opacity: 1 }}
+              transition={{ duration: 0.9, type: "spring" }}
+              className="text-20 font-semibold"
+            >
+              {item.title}
+            </motion.h2>
+            <motion.p
+              initial={{ translateX: index % 2 == 1 ? 80 : -80, opacity: 0 }}
+              whileInView={{ translateX: 0, opacity: 1 }}
+              transition={{ duration: 0.9, type: "spring" }}
+              className="text-14"
+            >
+              {item.description}
+            </motion.p>
           </div>
         ))}
       </div>
-      <div className="w-full h-full flex md:flex-row flex-wrap flex-col gap-4">
+      <motion.div
+        initial={{ translateY: 80, translateX: 100, opacity: 0 }}
+        whileInView={{ translateY: 0, translateX: 0, opacity: 1 }}
+        transition={{ duration: 0.9, type: "spring" }}
+        className="w-full h-full flex md:flex-row flex-wrap flex-col gap-4"
+      >
         {team.map((item) => (
           <CardTeam
             key={item.description}
@@ -70,7 +94,7 @@ const Page = () => {
             role={item.position}
           />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

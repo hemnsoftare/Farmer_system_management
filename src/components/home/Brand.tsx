@@ -1,9 +1,7 @@
 import { brand } from "@/util/data";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import { MdNavigateNext } from "react-icons/md";
-
+import { motion } from "framer-motion";
 const Brand = () => {
   return (
     <div className="flex flex-col px-3 dark:bg-neutral-800 rounded-lg items-center w-full justify-center">
@@ -12,7 +10,12 @@ const Brand = () => {
           Top Brand
         </h3>
       </div>
-      <div className="flex gap-2 items-center w-full justify-between  sm:justify-center md:gap-4 lg:gap-5">
+      <motion.div
+        initial={{ translateY: 150 }}
+        whileInView={{ translateY: 0 }}
+        transition={{ duration: 0.4, type: "spring" }}
+        className="flex gap-2 items-center w-full justify-between  sm:justify-center md:gap-4 lg:gap-5"
+      >
         {brand.map((item) => {
           return (
             <Image
@@ -29,7 +32,7 @@ const Brand = () => {
             />
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 };

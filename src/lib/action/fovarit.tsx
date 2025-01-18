@@ -8,8 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { blogFavriteProps, favorite } from "@/type";
-import { app, storage } from "@/config/firebaseConfig";
-import { idText } from "typescript";
+import { app } from "@/config/firebaseConfig";
 
 const db = getFirestore(app);
 
@@ -91,6 +90,7 @@ export const deleteFavorite = async (
   }
 };
 export const getAllItemNames = async (userId: string): Promise<string[]> => {
+  if (!userId) return [];
   try {
     const itemsRef = collection(db, "favorite", userId, "items");
     const querySnapshot = await getDocs(itemsRef);

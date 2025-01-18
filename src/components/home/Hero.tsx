@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
+import { motion } from "framer-motion";
 const Hero = () => {
   return (
     <>
@@ -36,9 +36,14 @@ const Hero = () => {
         />
       </div> 
       */}
-      <div className="flex sm:mt-12 relative md:flex-row flex-col-reverse min-h-[410px] md:min-h-fit overflow-hidden above-405:px-3 mt-0 md:items-center items-start w-full justify-center md:justify-between ">
-        <div className="flex w-full  md:w-[300px] z-[2] justify-between   md:justify-center flex-col md:py-4 h-full items-center gap-8">
-          <h1 className="lg:text-35 text-secondary-600 dark:text-primary-200 xl:text-45 relative md:bottom-0 bottom-12 text-48 md:text-29 font-bold capitalize ">
+      <motion.div className="flex sm:mt-12 relative md:flex-row m-0 flex-col-reverse min-h-[410px] md:min-h-fit overflow-hidden above-405:px-3 mt-0 md:items-center items-start w-full justify-center md:justify-between ">
+        <motion.div
+          transition={{ duration: 0.3 }}
+          initial={{ x: -150, opacity: 0.5 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          className="flex w-full  md:w-[300px] z-[2] justify-between   md:justify-center flex-col md:py-4 h-full items-center gap-8"
+        >
+          <h1 className="lg:text-35 mt-8 text-secondary dark:text-primary-200 xl:text-45 relative  text-48 md:text-29 font-bold capitalize ">
             Tech Heim
           </h1>
           <div className=" flex items-center gap-2 -mb-[190px] md:mb-0 box-content md:justify-center justify-between h-full flex-col">
@@ -49,22 +54,32 @@ const Hero = () => {
                 the digital <br className="lg:block hidden " /> revolution&quot;
               </span>
             </h3>
-            <Link href={"#newProducts"} className="transition-all duration-300">
-              <button className="capitalize px-7 py-2 text-15 lg:text-16 sm:text-20 -mb-6 above-405:px-7 sm:hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-10 bg-secondary text-white sm:py-4 rounded-lg mt-auto">
+            <Link
+              href={"#newProducts"}
+              className="transition-all w-full md:w-fit duration-300"
+            >
+              <button className="capitalize px-7 w-full  md:w-fit py-2 text-15 lg:text-16 sm:text-20 -mb-6 above-405:px-7 sm:hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-10 bg-secondary text-white sm:py-4 rounded-lg mt-auto">
                 explore more
               </button>
             </Link>
           </div>
-        </div>
+        </motion.div>
 
-        <Image
-          src={"hero.svg"}
-          alt="image hero"
-          className="mr-0 xl:w-[60%]  opacity-75 md:opacity-100   md:static brightness-95  absolute left-0 right-0 top-9 scale-[1.24] w-screen h-[370px]  sm:scale-[1]  sm:h-auto md:self-end  lg:w-[50%] sm:w-[60%] "
-          width={628}
-          height={400}
-        />
-      </div>
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          whileInView={{ opacity: 1, x: 1 }}
+          transition={{ duration: 0.8 }}
+          className=" mr-0 xl:w-[60%] opacity-75 md:opacity-100 md:static brightness-95 absolute left-0 right-0 -top-7 scale-[1.24] w-screen h-[370px] sm:scale-[1] sm:h-auto md:self-end lg:w-[50%] sm:w-[60%]"
+        >
+          <Image
+            src="/hero.svg"
+            alt="image hero"
+            className="w-full h-full"
+            width={628}
+            height={400}
+          />
+        </motion.div>
+      </motion.div>
     </>
   );
 };

@@ -10,7 +10,7 @@ import Servies from "@/components/home/Servies";
 import { app } from "@/config/firebaseConfig";
 import { setUser } from "@/lib/action/uploadimage";
 import { ProductFormInput } from "@/type";
-import { useUser, useClerk } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import {
   collection,
   getDocs,
@@ -21,8 +21,6 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
-import { useInboxNotifications } from "@liveblocks/react/suspense";
-import { InboxNotification, InboxNotificationList } from "@liveblocks/react-ui";
 export default function Home() {
   console.log("in page");
   const [productNew, setproductNew] = useState<ProductFormInput[]>([]);
@@ -30,7 +28,6 @@ export default function Home() {
   const [loadNew, setloadNew] = useState(true);
   const [loadBestSale, setloadBestSale] = useState(true);
   const { user } = useUser();
-  const { proxyUrl } = useClerk();
   console.log(user);
   const db = getFirestore(app);
   useEffect(() => {

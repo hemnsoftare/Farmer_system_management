@@ -5,14 +5,13 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { ProductFormInput, Productsprops } from "@/type";
 import { Loader } from "@/app/loader";
 import Link from "next/link";
-import { IoIosHeart } from "react-icons/io";
 import { useUser } from "@clerk/nextjs";
 import { addfavorite, deleteFavorite } from "@/lib/action/fovarit";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FileEdit } from "lucide-react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { deleteProducts } from "@/lib/action/uploadimage";
-
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 const NewProducts = ({
   title,
   itemDb,
@@ -35,20 +34,32 @@ const NewProducts = ({
     e.stopPropagation(); // Prevent click event from propagating to the <Link>
     e.preventDefault(); // Prevent default behavior of the <Link>
   };
-
+  const router = useRouter();
   const product: ProductFormInput | undefined = itemDb;
   const { user } = useUser();
   if (load) return <Loader />;
   if (product) {
     return (
-      <Link
-        href={
-          title !== "dashboard"
-            ? `/products/${product.category}/${product.id}`
-            : "#"
-        }
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        // href={
+        //   title !== "dashboard"
+        //     ? `/products/${product.category}/${product.id}`
+        //     : "#"
+        // }
         // style={{ boxShadow: shadowColor }} // Apply custom shadow here
 
+        onClick={() => {
+          router.push(
+            `${
+              title !== "dashboard"
+                ? `/products/${product.category}/${product.id}`
+                : "#"
+            }`
+          );
+        }}
         key={product.name}
         className={`${
           title === "sale"
@@ -191,7 +202,7 @@ const NewProducts = ({
             </div>
           </div>
         </div>
-      </Link>
+      </motion.div>
     );
   }
 };

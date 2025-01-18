@@ -8,7 +8,7 @@ import { ProductFormInput } from "@/type";
 import { Loader } from "@/app/loader";
 import { useUser } from "@clerk/nextjs";
 import { getAllItemNames } from "@/lib/action/fovarit";
-
+import { motion } from "framer-motion";
 const ForProducts = ({
   products,
   load,
@@ -71,7 +71,13 @@ const ForProducts = ({
       </div>
     );
   return (
-    <div className=" mt-3 w-full overflow-x- py-7 sm:overflow-x-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-4 relative px- justify-center  items-center">
+    <motion.div
+      initial={{ y: 100, x: 40, opacity: 0 }}
+      whileInView={{ y: 0, x: 0, opacity: 1 }}
+      exit={{ y: -100, opacity: 0.2 }}
+      transition={{ duration: 0.6, type: "spring" }}
+      className=" mt-3 w-full overflow-x- py-7 sm:overflow-x-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-4 relative px- justify-center  items-center"
+    >
       {products &&
         products
           .slice(startProducts, startProducts + limit)
@@ -112,7 +118,7 @@ const ForProducts = ({
               />
             </div>
           ))}
-    </div>
+    </motion.div>
   );
 };
 

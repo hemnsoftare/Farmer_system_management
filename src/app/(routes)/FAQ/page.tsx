@@ -11,54 +11,98 @@ import {
 import { FaCaretRight } from "react-icons/fa6";
 import { getFAQ } from "@/lib/action/uploadimage";
 import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
+
 const Page = () => {
-  const [load, setload] = useState(false);
+  const [load, setLoad] = useState(false);
   const [IndexItem, setIndexItem] = useState<number>(0);
-  const [faq, setfaq] = useState<faqProps[]>([]);
+  const [faq, setFaq] = useState<faqProps[]>([]);
+
   useEffect(() => {
-    const getdata = async () => {
-      setload(true);
-      const data = await getFAQ().finally(() => setload(false));
-      setfaq(data);
+    const getData = async () => {
+      setLoad(true);
+      const data = await getFAQ().finally(() => setLoad(false));
+      setFaq(data);
     };
-    getdata();
+    getData();
   }, []);
+
+  // Framer Motion Variants
+  const fadeIn = {
+    initial: { opacity: 0, y: 50 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 },
+  };
+
+  const listVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const itemVariant = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0 },
+  };
+
   return (
-    <div className="flex flex-col gap-10 px-5 sm:px-10 xl:px-20 justify-center py-4 items-center">
+    <motion.div
+      className="flex flex-col gap-10 px-5 sm:px-10 xl:px-20 justify-center py-4 items-center"
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+    >
       {/* Breadcrumbs */}
-      <h2 className="self-start text-sm sm:text-base pt-10 text-gray-700">
+      <motion.h2
+        className="self-start text-sm sm:text-base pt-10 text-gray-700"
+        variants={fadeIn}
+      >
         Home &gt;{" "}
         <span className="text-primary border-b-2 border-primary">FAQs</span>
-      </h2>
+      </motion.h2>
 
       {/* Hero Image */}
-      <Image
-        src={"/FAQ.png"}
-        alt="FAQ Illustration"
-        width={500}
-        height={600}
-        className="w-full sm:w-[80%] rounded-lg shadow-gray-500 shadow-lg"
-      />
+      <motion.div className="w-full sm:w-[80%]" variants={fadeIn}>
+        <Image
+          src={"/FAQ.png"}
+          alt="FAQ Illustration"
+          width={500}
+          height={600}
+          className=" w-full h-full rounded-lg shadow-gray-500 shadow-lg"
+        />
+      </motion.div>
 
       {/* FAQ Section */}
-      <div className="flex flex-col sm:flex-row w-full sm:w-[80%] justify-center gap-8">
+      <motion.div
+        className="flex flex-col sm:flex-row w-full sm:w-[80%] justify-center gap-8"
+        variants={listVariant}
+      >
         {/* Table of Contents */}
-        <div className="flex flex-col gap-5 w-full sm:w-1/3">
+        <motion.div
+          className="flex flex-col gap-5 w-full sm:w-1/3"
+          variants={fadeIn}
+        >
           <h2 className="text-lg font-semibold text-gray-800">
             Table of Contents
           </h2>
           {load ? (
             <div className="flex w-full flex-col gap-2">
-              {/* Skeleton loading placeholders */}
               <Skeleton className="h-6 w-3/4 rounded-md" />
               <Skeleton className="h-6 w-2/3 rounded-md" />
               <Skeleton className="h-6 w-5/6 rounded-md" />
               <Skeleton className="h-6 w-1/2 rounded-md" />
             </div>
           ) : (
-            <div className="flex flex-col gap-2">
+            <motion.div
+              className="flex flex-col gap-2"
+              initial="hidden"
+              animate="visible"
+              variants={listVariant}
+            >
               {faq.map((item, index) => (
-                <button
+                <motion.button
                   key={item.category}
                   onClick={() => setIndexItem(index)}
                   className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-all duration-300 ${
@@ -66,6 +110,7 @@ const Page = () => {
                       ? "bg-blue-100 text-blue-600 border-l-4 border-blue-600"
                       : "bg-white text-gray-700 hover:bg-gray-100"
                   }`}
+                  variants={itemVariant}
                 >
                   <FaCaretRight
                     size={16}
@@ -76,14 +121,17 @@ const Page = () => {
                     }`}
                   />
                   <span className="text-sm sm:text-base">{item.category}</span>
-                </button>
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
         {/* FAQ Content */}
-        <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
+        <motion.div
+          className="flex-1 bg-white p-6 rounded-lg shadow-md"
+          variants={fadeIn}
+        >
           {faq.length > 0 && !load ? (
             <>
               <h2 className="text-xl font-semibold text-gray-800 mb-4">
@@ -109,9 +157,9 @@ const Page = () => {
           ) : (
             <p className="text-gray-500">No FAQs available.</p>
           )}
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

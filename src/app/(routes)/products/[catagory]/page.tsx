@@ -9,15 +9,14 @@ import Filtered from "@/components/products/Filter";
 import { getProducts } from "@/lib/action/uploadimage";
 import Link from "next/link";
 import { Loader } from "@/app/loader";
-import ForProducts from "@/components/home/ForProducts";
 import { getAllItemNames } from "@/lib/action/fovarit";
 import { useUser } from "@clerk/nextjs";
-import { brand } from "@/util/data";
-import { set } from "zod";
-
-const MyComponent = ({ params }: { params: { catagory: string } }) => {
+import { motion } from "framer-motion";
+const MyComponent = ({ params }) => {
+  const cate: { catagory: string } = React.use(params);
+  console.log(cate);
   const [filter, setFilter] = useState<{ [key: string]: boolean }>({});
-  const [selected, setSelected] = useState(params.catagory.replace("%20", " "));
+  const [selected, setSelected] = useState(cate.catagory.replace("%20", " "));
   const [openFilter, setopenFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState<typeFilter>({
     brand: [],
@@ -125,7 +124,7 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
             price: [1, 100000],
           });
         }}
-        catagory={params.catagory}
+        catagory={cate.catagory}
       />
       <HeaderDilter
         key={selected}
@@ -192,59 +191,69 @@ const MyComponent = ({ params }: { params: { catagory: string } }) => {
             type="page"
           />
         </div>
-
         {load ? (
           <div className="flex w-full items-center justify-between px-3">
             <Loader />
             <Loader />
           </div>
         ) : products.length > 0 ? (
-          <div className="sm:col-span-3 col-span-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full">
+          <motion.div
+            className="sm:col-span-3 col-span-4 grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-3 w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {products.map((item) => (
-              <NewProducts
+              <motion.div
                 key={item.name}
-                favoriteId={favoriteId}
-                addFavoriteid={() => {
-                  setproducts((prev) =>
-                    prev.map(
-                      (itemp) =>
-                        itemp.id === item.id
-                          ? {
-                              ...itemp,
-                              numberFavorite: itemp.numberFavorite - 1,
-                            } // Update numberFavorite
-                          : itemp // Keep other items unchanged
-                    )
-                  );
-                  setfavoriteId((pre) => [...pre, item.id]);
-                }}
-                deleteFavoriteId={() => {
-                  setproducts((prev) =>
-                    prev.map(
-                      (itemp) =>
-                        itemp.id === item.id
-                          ? {
-                              ...itemp,
-                              numberFavorite: itemp.numberFavorite - 1,
-                            } // Update numberFavorite
-                          : itemp // Keep other items unchanged
-                    )
-                  );
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <NewProducts
+                  favoriteId={favoriteId}
+                  addFavoriteid={() => {
+                    setproducts((prev) =>
+                      prev.map(
+                        (itemp) =>
+                          itemp.id === item.id
+                            ? {
+                                ...itemp,
+                                numberFavorite: itemp.numberFavorite - 1,
+                              } // Update numberFavorite
+                            : itemp // Keep other items unchanged
+                      )
+                    );
+                    setfavoriteId((pre) => [...pre, item.id]);
+                  }}
+                  deleteFavoriteId={() => {
+                    setproducts((prev) =>
+                      prev.map(
+                        (itemp) =>
+                          itemp.id === item.id
+                            ? {
+                                ...itemp,
+                                numberFavorite: itemp.numberFavorite - 1,
+                              } // Update numberFavorite
+                            : itemp // Keep other items unchanged
+                      )
+                    );
 
-                  setfavoriteId(
-                    (prev) => prev.filter((itemp) => itemp !== item.id) // Remove the product name from favorites
-                  );
-                }}
-                itemDb={item}
-                title="catagory"
-              />
+                    setfavoriteId(
+                      (prev) => prev.filter((itemp) => itemp !== item.id) // Remove the product name from favorites
+                    );
+                  }}
+                  itemDb={item}
+                  title="category"
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         ) : (
           <h2 className="font-bold flex items-center justify-center col-span-3 text-30 text-center w-full ">
             No products available
           </h2>
-        )}
+        )}{" "}
       </div>
       <br />
     </div>

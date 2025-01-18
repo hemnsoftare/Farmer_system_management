@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { motion } from "framer-motion";
 
 const CardTeam = ({
   name,
@@ -18,10 +19,27 @@ const CardTeam = ({
   onDelete?: () => void;
   onEdit?: () => void;
 }) => {
+  // Animation Variants
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hover: { scale: 1.05, transition: { duration: 0.3 } },
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center gap-4 w-full md:w-[300px] h-auto border rounded-3xl shadow-lg p-6 hover:shadow-xl transition-all">
+    <motion.div
+      className="flex flex-col items-center justify-center gap-4 w-full md:w-[300px] h-auto border rounded-3xl shadow-lg p-6 hover:shadow-xl transition-all"
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      whileHover="hover"
+      viewport={{ once: true, amount: 0.2 }}
+    >
       {/* Profile Picture */}
-      <div className="relative w-44 h-44">
+      <motion.div
+        className="relative w-44 h-44"
+        whileHover={{ rotate: 5, transition: { duration: 0.3 } }}
+      >
         <Image
           src={imageUrl || "/default-profile.png"}
           alt={name || "Team Member"}
@@ -29,24 +47,48 @@ const CardTeam = ({
           height={176}
           className="rounded-full min-h-[175px] max-h-[176px] min-w-[176px] max-w-[176px] border-4"
         />
-      </div>
-      {/* Name */}
-      <h2 className="text-lg font-semibold text-gray-800">{name || "Name"}</h2>
+      </motion.div>
+
+      <motion.h2
+        className="text-lg font-semibold text-gray-800"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        {name || "Name"}
+      </motion.h2>
+
       {/* Role */}
-      <h3 className="text-md font-medium text-gray-600">
+      <motion.h3
+        className="text-md font-medium text-gray-600"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
         {role || "Role not specified"}
-      </h3>
-      {/* Role/Description */}
-      <p className="text-sm text-gray-600 text-center">
+      </motion.h3>
+
+      {/* Description */}
+      <motion.p
+        className="text-sm text-gray-600 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+      >
         {description || "No description provided."}
         perferendis laboriosam eos numquam natus consectetur saepe
         necessitatibus consequatur veniam voluptatem ab veritatis, tenetur
         aliquam a.
-      </p>
+      </motion.p>
 
       {/* Dashboard Buttons */}
       {isDashboard && (
-        <div className="flex gap-2 mt-4">
+        <motion.div
+          className="flex gap-2 mt-4"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+        >
           <button
             onClick={onEdit}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
@@ -59,9 +101,9 @@ const CardTeam = ({
           >
             Delete
           </button>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

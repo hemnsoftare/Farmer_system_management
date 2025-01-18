@@ -40,8 +40,8 @@ export default function ClientProviders({
                 <div
                   className={`${
                     pathName.startsWith("/dash")
-                      ? " relative  dark:bg-black"
-                      : "md:px-[30px] lg:px-[40px] relative dark:bg-black"
+                      ? " relative  dark:bg-black "
+                      : "md:px-[30px] lg:px-[40px] relative transition-colors duration-300 bg-white dark:text-neutral-200 text-black dark:bg-black"
                   }`}
                 >
                   <Header />

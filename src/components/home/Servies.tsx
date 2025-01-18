@@ -1,16 +1,17 @@
 import { servies } from "@/util/data";
-import Image from "next/image";
 import React from "react";
-import { BiSolidTimer } from "react-icons/bi";
-import { FaDesktop, FaShippingFast } from "react-icons/fa";
-import { MdOutlineVerified } from "react-icons/md";
-
+import { motion } from "framer-motion";
 const Servies = () => {
   return (
     <div className="flex items-center mb-3 px-2 w-full justify-between  dark:text-gray-100">
-      {servies.map((item) => {
+      {servies.map((item, index) => {
         return (
-          <div
+          <motion.div
+            initial={{
+              translateX: index % 2 === 0 ? -180 : 180,
+            }}
+            whileInView={{ translateX: 0 }}
+            transition={{ duration: 0.4, type: "tween" }}
             key={item.name}
             className="flex flex-col sm:flex-row group duration-300 items-center gap-1"
           >
@@ -24,7 +25,7 @@ const Servies = () => {
             <p className="text-10 above-405:text-11 lg:text-17 w-full dark:text-gray-500 h-full sm:group-hover:translate-x-[30px] duration-300 sm:group-hover:text-primary-400 sm:group-hover:scale-[1.2]  dark:sm:group-hover:text-blue-400">
               {item.name}
             </p>
-          </div>
+          </motion.div>
         );
       })}
     </div>

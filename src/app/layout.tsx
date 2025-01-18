@@ -24,12 +24,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="orange" className="">
+    <html lang="en">
       <head>
+        <style>
+          {`
+          html {
+            color-scheme: light dark;
+          }
+        `}
+        </style>
         <meta name="theme-color" content="#fff2f" />
         {/* Next.js will inject metadata automatically */}
       </head>
-      <body className="transition-colors duration-300 bg-white dark:text-neutral-200 text-black dark:bg-black">
+      <body className="">
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

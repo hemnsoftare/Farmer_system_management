@@ -5,7 +5,7 @@ import { getConactUs } from "@/lib/action/uploadimage";
 import { contactUSProps } from "@/type";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 const Page = () => {
   const [load, setLoad] = useState(false);
   const [contacts, setContacts] = useState<contactUSProps[]>([]);
@@ -26,24 +26,41 @@ const Page = () => {
         </Link>{" "}
         &gt; <span className="">Contact Us</span>
       </h2>
-      <div className="w-full flex py-7 px-1  overflow-x-auto md:flex-wrap gap-3 items-center justify-start md:justify-center">
+      <motion.div
+        transition={{
+          duration: 0.9,
+          staggerChildren: 0.3,
+        }}
+        className="w-full flex py-7 px-1  overflow-x-auto md:flex-wrap gap-3 items-center justify-start md:justify-center"
+      >
         {!load ? (
-          contacts.map((item) => (
-            <CardContactUs
+          contacts.map((item, index) => (
+            <motion.div
+              initial={{
+                y: index % 2 === 0 ? -100 : 100,
+                x: index % 2 === 0 ? -100 : 100,
+                opacity: 0,
+              }}
+              animate={{ y: 0, x: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
               key={item.title}
-              formMessage={item.formMessage}
-              imageUrl={item.imageUrl}
-              id={item.id}
-              showActions={false}
-              title={item.title}
-            />
+              className=""
+            >
+              <CardContactUs
+                formMessage={item.formMessage}
+                imageUrl={item.imageUrl}
+                id={item.id}
+                showActions={false}
+                title={item.title}
+              />
+            </motion.div>
           ))
         ) : (
           <>
             <LoadingSpinner /> <LoadingSpinner /> <LoadingSpinner />
           </>
         )}
-      </div>
+      </motion.div>
       <div className="flex flex-col sm:flex-row items-start mt-8 sm:px-24 px-2 sm:gap-10 justify-center">
         <div className="flex flex-col w-full sm:w-[40%] items-start gap-3 justify-normal">
           <h2 className="font-semibold">Message us</h2>

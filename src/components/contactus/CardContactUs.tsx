@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 // Interface for CardContactUs props
@@ -23,7 +24,7 @@ const CardContactUs: React.FC<CardContactUsProps> = ({
 }) => {
   return (
     <div className="flex flex-col min-w-[120px] md:min-h-[234px] md:max-h-[234px] md:min-w-[214px] md:max-w-[214px] items-center justify-center gap-2  border-gray-300 p-2 rounded-2xl md:rounded-xl shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col overflow-hidden w-full items-center gap-4">
         <Image
           src={imageUrl}
           alt={title}
@@ -34,9 +35,12 @@ const CardContactUs: React.FC<CardContactUsProps> = ({
         <h2 className="text-12 md:text-20 font-semibold text-gray-800">
           {title}
         </h2>
-        <p className="text-center text-10 md:text-16 text-gray-600">
+        <Link
+          href={formMessage}
+          className="text-center line-clamp-1   text-10 md:text-16 text-gray-600"
+        >
           {formMessage}
-        </p>
+        </Link>
       </div>
 
       {showActions && (
