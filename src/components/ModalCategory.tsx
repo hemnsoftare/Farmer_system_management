@@ -1,6 +1,6 @@
 "use client";
 import { uploadImage } from "@/lib/action/uploadimage";
-import { catagoryProps } from "@/type";
+import { catagoryProps } from "@/lib/action";
 import { colors as availableColors } from "@/util/data";
 import Image from "next/image";
 import React, { FormEvent, useRef, useState } from "react";

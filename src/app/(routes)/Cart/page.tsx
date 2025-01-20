@@ -11,7 +11,7 @@ import {
 import { z } from "zod";
 import Success from "@/components/Cart/success";
 import { useDispatch, useSelector } from "react-redux";
-import { ItemCartProps, OrderType } from "@/type";
+import { ItemCartProps, OrderType } from "@/lib/action";
 import { setOrder } from "@/lib/action/uploadimage";
 import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { removeAll } from "@/lib/action/Order";

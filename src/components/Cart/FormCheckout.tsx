@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import { errorCheckOutProps } from "@/type";
+import { errorCheckOutProps } from "@/lib/action";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import InputCheckout from "./InputCheckout";
 import { DialogTrigger } from "../ui/dialog";

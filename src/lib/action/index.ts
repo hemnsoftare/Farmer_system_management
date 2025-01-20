@@ -153,6 +153,11 @@ interface SearchCategoryProps {
   id: string;
   numberOfSearches: number;
 }
+interface SearchTeamProps {
+  fullName: string;
+  id: string;
+  numOfSearch: number;
+}
 interface BlogProps {
   id?: string; // Unique identifier for
   title: string; // Blog title
@@ -224,6 +229,7 @@ export type {
   Cart,
   BlogColProps,
   // CommentProps,
+  SearchTeamProps,
   Category,
   FilterProps,
   blogFavriteProps,

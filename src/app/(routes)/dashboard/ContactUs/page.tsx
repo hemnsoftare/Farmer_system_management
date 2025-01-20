@@ -9,7 +9,7 @@ import {
   UpdateContactUUs,
   uploadImage,
 } from "@/lib/action/uploadimage";
-import { contactUSProps } from "@/type";
+import { contactUSProps } from "@/lib/action";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { z } from "zod";

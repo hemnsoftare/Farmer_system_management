@@ -3,7 +3,7 @@ import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
 import { app } from "@/config/firebaseConfig";
 import { deleteProducts, getProducts } from "@/lib/action/uploadimage";
-import { ProductFormInput } from "@/type";
+import { ProductFormInput } from "@/lib/action";
 import {
   collection,
   getDocs,

@@ -1,6 +1,6 @@
 // store/cartSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ItemCartProps } from "@/type";
+import { ItemCartProps } from "@/lib/action";
 
 // Load cart data from localStorage if it exists
 export const loadCartFromLocalStorage = (): ItemCartProps[] => {

@@ -1,4 +1,4 @@
-import { blogFavriteProps } from "@/type";
+import { blogFavriteProps } from "@/lib/action";
 import Image from "next/image";
 import React from "react";
 import ReactPlayer from "react-player";

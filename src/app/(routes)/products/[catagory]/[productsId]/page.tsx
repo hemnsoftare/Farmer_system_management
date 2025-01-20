@@ -3,7 +3,7 @@ import React, { useState, use, useEffect } from "react";
 
 import ForProducts from "@/components/home/ForProducts";
 import HeaderProduct from "@/components/products/HeaderProduct";
-import { ProductFormInput } from "@/type";
+import { ProductFormInput } from "@/lib/action";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { getproductByCategory } from "@/lib/action/uploadimage";
 import Link from "next/link";

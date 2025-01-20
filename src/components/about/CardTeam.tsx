@@ -28,6 +28,7 @@ const CardTeam = ({
 
   return (
     <motion.div
+      id={name}
       className="flex flex-col items-center justify-center gap-4 w-full md:w-[300px] h-auto border rounded-3xl shadow-lg p-6 hover:shadow-xl transition-all"
       variants={cardVariants}
       initial="hidden"

@@ -2,7 +2,7 @@
 import CardContactUs from "@/components/contactus/CardContactUs";
 import LoadingSpinner from "@/components/contactus/LoadingSpinner";
 import { getConactUs } from "@/lib/action/uploadimage";
-import { contactUSProps } from "@/type";
+import { contactUSProps } from "@/lib/action";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";

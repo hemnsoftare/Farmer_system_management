@@ -3,7 +3,7 @@ import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { cont } from "../ConTextData";
 import { useContext, useEffect, useState } from "react";
-import { OrderType } from "@/type";
+import { OrderType } from "@/lib/action";
 import { getAllOrder } from "@/lib/action/uploadimage";
 import Link from "next/link";
 import {

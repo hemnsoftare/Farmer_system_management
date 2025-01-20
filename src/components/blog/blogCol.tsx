@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { LuTimer } from "react-icons/lu";
 import { MdOutlineDateRange } from "react-icons/md";
-import { BlogProps } from "@/type";
+import { BlogProps } from "@/lib/action";
 
 const BlogCol = ({ blog }: { blog: BlogProps }) => {
   const formattedDate = new Date(blog.date).toLocaleDateString(); // Format date for better readability

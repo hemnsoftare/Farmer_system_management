@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Blog from "./_components/Blog";
-import { BlogProps } from "@/type";
+import { BlogProps } from "@/lib/action";
 import {
   collection,
   deleteDoc,

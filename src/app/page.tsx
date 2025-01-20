@@ -9,7 +9,7 @@ import Sales from "@/components/home/Sales";
 import Servies from "@/components/home/Servies";
 import { app } from "@/config/firebaseConfig";
 import { setUser } from "@/lib/action/uploadimage";
-import { ProductFormInput } from "@/type";
+import { ProductFormInput } from "@/lib/action";
 import { useUser } from "@clerk/nextjs";
 import {
   collection,

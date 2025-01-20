@@ -1,4 +1,4 @@
-import { BlogProps } from "@/type";
+import { BlogProps } from "@/lib/action";
 import Image from "next/image";
 import React from "react";
 import { MdOutlineDateRange } from "react-icons/md";

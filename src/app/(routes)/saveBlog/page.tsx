@@ -7,7 +7,7 @@ import {
   getallsaveid,
   getSaveBlog,
 } from "@/lib/action/fovarit";
-import { blogFavriteProps } from "@/type";
+import { blogFavriteProps } from "@/lib/action";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

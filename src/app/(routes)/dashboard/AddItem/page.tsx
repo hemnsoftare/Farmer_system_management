@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import InputCheckout from "@/components/Cart/InputCheckout";
-import { catagoryProps, ProductFormInput } from "../../../../type";
+import { catagoryProps, ProductFormInput } from "../../../../lib/action";
 import Image from "next/image";
 
 import {

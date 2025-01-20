@@ -2,7 +2,7 @@
 import React from "react";
 import { PiCheckFatFill } from "react-icons/pi";
 
-import { OrderType } from "@/type";
+import { OrderType } from "@/lib/action";
 import { useRouter } from "next/navigation";
 
 const Success = ({ order }: { order: OrderType | undefined }) => {

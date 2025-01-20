@@ -4,7 +4,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import CartItem from "./CartItem";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { ItemCartProps } from "@/type";
+import { ItemCartProps } from "@/lib/action";
 import { loadCartFromLocalStorage } from "@/lib/action/Order";
 const CartHeader = ({
   onclose,

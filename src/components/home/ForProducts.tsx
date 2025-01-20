@@ -4,7 +4,7 @@ import { IoChevronBack } from "react-icons/io5";
 import { MdNavigateNext } from "react-icons/md";
 import NewProducts from "./NewProducts";
 import { newProdcuts } from "@/util/data";
-import { ProductFormInput } from "@/type";
+import { ProductFormInput } from "@/lib/action";
 import { Loader } from "@/app/loader";
 import { useUser } from "@clerk/nextjs";
 import { getAllItemNames } from "@/lib/action/fovarit";

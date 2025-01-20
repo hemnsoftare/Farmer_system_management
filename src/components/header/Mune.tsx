@@ -159,7 +159,7 @@ import {
   FaPhone,
   FaInfoCircle,
 } from "react-icons/fa";
-import { catagoryProps } from "@/type";
+import { catagoryProps } from "@/lib/action";
 import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 const Mune = ({ category }: { category: catagoryProps[] }) => {

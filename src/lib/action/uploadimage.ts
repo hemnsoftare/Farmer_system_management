@@ -24,13 +24,14 @@ import {
   SearchBlogsProps,
   SearchCategoryProps,
   searchProps,
+  SearchTeamProps,
   teamProps,
   typeFilter,
   UserType,
   // commentProps,
-} from "@/type";
+} from "@/lib/action";
 import { app, storage } from "@/config/firebaseConfig";
-import { OrderType } from "@/type";
+import { OrderType } from "@/lib/action";
 import { number, string } from "zod";
 import { title } from "process";
 
@@ -251,6 +252,27 @@ export const SearchCategory = async (
 
   return results;
 };
+
+export const search_Team = async (
+  searchValue: string
+): Promise<SearchTeamProps[]> => {
+  const data = await getDocs(collection(db, "team"));
+  const results: SearchTeamProps[] = [];
+  data.forEach(async (item) => {
+    if (
+      item.data().fullName.toLowerCase().includes(searchValue.toLowerCase())
+    ) {
+      results.push({
+        id: item.id as string,
+        fullName: item.data().fullName as string,
+        numOfSearch: item.data().numOfSearch as number,
+      });
+    }
+  });
+
+  return results;
+};
+
 export const getAllOrder = async (): Promise<OrderType[]> => {
   const getorder = await getDocs(collection(db, "order"));
   const data: OrderType[] = [];
@@ -348,6 +370,7 @@ export const setMemeber = async (
   await addDoc(collection(db, "team"), {
     fullName,
     position,
+    numOfSearch: Math.floor(Math.random() * 100),
     description,
     imageUrl,
   });

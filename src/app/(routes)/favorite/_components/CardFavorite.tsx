@@ -1,5 +1,5 @@
 import { addfavorite, deleteFavorite } from "@/lib/action/fovarit";
-import { favorite } from "@/type";
+import { favorite } from "@/lib/action";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

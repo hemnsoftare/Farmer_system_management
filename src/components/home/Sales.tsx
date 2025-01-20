@@ -16,7 +16,7 @@ import {
   where,
 } from "firebase/firestore";
 import { app } from "../../config/firebaseConfig";
-import { ProductFormInput } from "@/type";
+import { ProductFormInput } from "@/lib/action";
 import { Loader } from "@/app/loader";
 import { getAllItemNames } from "@/lib/action/fovarit";
 import { useUser } from "@clerk/nextjs";

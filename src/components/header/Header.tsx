@@ -15,7 +15,7 @@ import {
 } from "@clerk/nextjs";
 import { IoCartOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { catagoryProps, ItemCartProps } from "@/type";
+import { catagoryProps, ItemCartProps } from "@/lib/action";
 import { usePathname } from "next/navigation";
 import { IoMdMenu } from "react-icons/io";
 import Mune from "./Mune";

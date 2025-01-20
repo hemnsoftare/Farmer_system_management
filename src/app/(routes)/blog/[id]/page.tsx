@@ -103,7 +103,7 @@
 // export default Page;
 
 import React, { useEffect, useState } from "react";
-import { BlogProps } from "../../../../type";
+import { BlogProps } from "../../../../lib/action";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 import Link from "next/link";

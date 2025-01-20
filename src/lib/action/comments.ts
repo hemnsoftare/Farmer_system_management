@@ -1,5 +1,5 @@
 import { app } from "@/config/firebaseConfig";
-import { CommentProps } from "@/type";
+import { CommentProps } from "@/lib/action";
 import {
   doc,
   collection,

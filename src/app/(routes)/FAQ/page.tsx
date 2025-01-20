@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { faqProps } from "../../../type";
+import { faqProps } from "../../../lib/action";
 import {
   Accordion,
   AccordionContent,

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { CiShop } from "react-icons/ci";
 import { GoVerified } from "react-icons/go";
 import { TbTruckDelivery } from "react-icons/tb";
-import { ProductInfoProps } from "@/type";
+import { ProductInfoProps } from "@/lib/action";
 import { useDispatch, useSelector } from "react-redux";
 import { GrRadialSelected } from "react-icons/gr";
 import { motion } from "framer-motion";

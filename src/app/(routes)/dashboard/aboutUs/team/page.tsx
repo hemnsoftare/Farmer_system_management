@@ -9,7 +9,7 @@ import {
   UpdateTeam,
   uploadImage,
 } from "@/lib/action/uploadimage";
-import { teamProps } from "@/type";
+import { teamProps } from "@/lib/action";
 import { current } from "@reduxjs/toolkit";
 import { ref } from "firebase/storage";
 import Image from "next/image";

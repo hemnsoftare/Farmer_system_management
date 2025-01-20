@@ -2,7 +2,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { Switch } from "../ui/switch";
-import { catagoryProps, typeFilter } from "@/type";
+import { catagoryProps, typeFilter } from "@/lib/action";
 import { Slider } from "@nextui-org/react";
 import {
   collection,

@@ -18,7 +18,7 @@ import {
   propsMenuItem,
   serviesProps,
   userProps,
-} from "../type";
+} from "../lib/action";
 
 import { IconType } from "react-icons";
 import {

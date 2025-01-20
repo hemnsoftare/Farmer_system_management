@@ -5,7 +5,7 @@ import BlogRow from "@/components/blog/BlogRow";
 import { blogs } from "@/util/data";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { BlogProps } from "@/type";
+import { BlogProps } from "@/lib/action";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "@/config/firebaseConfig";
 import { motion } from "framer-motion";

@@ -7,7 +7,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { blogFavriteProps, favorite } from "@/type";
+import { blogFavriteProps, favorite } from "@/lib/action";
 import { app } from "@/config/firebaseConfig";
 
 const db = getFirestore(app);

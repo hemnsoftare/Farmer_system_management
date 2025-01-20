@@ -1,4 +1,4 @@
-import { OrderType } from "@/type";
+import { OrderType } from "@/lib/action";
 import {
   Body,
   Button,

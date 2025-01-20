@@ -3,7 +3,7 @@ import { Loader } from "@/app/loader";
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { getfavorite } from "@/lib/action/fovarit";
-import { favorite } from "@/type";
+import { favorite } from "@/lib/action";
 import CardFavorite from "./_components/CardFavorite";
 import { motion } from "framer-motion";
 

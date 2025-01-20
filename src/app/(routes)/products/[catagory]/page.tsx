@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import HeaderDilter from "@/components/products/HeaderFilter";
 import FilterItem from "@/components/products/FilterItem";
 import NewProducts from "@/components/home/NewProducts";
-import { ProductFormInput, typeFilter } from "../../../../type";
+import { ProductFormInput, typeFilter } from "../../../../lib/action";
 import Filtered from "@/components/products/Filter";
 import { getProducts } from "@/lib/action/uploadimage";
 import Link from "next/link";

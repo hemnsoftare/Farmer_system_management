@@ -1,4 +1,4 @@
-import { ItemCartProps } from "@/type";
+import { ItemCartProps } from "@/lib/action";
 import Image from "next/image";
 import React from "react";
 

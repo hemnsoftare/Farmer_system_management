@@ -1,7 +1,7 @@
 "use client";
 import { Loader } from "@/app/loader";
 import { app } from "@/config/firebaseConfig";
-import { OrderType } from "@/type";
+import { OrderType } from "@/lib/action";
 import { useUser } from "@clerk/nextjs";
 import {
   collection,

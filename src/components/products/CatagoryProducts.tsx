@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { getFireBase } from "@/lib/action/uploadimage";
-import { catagoryProps } from "@/type";
+import { catagoryProps } from "@/lib/action";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
 

@@ -1,7 +1,7 @@
 "use client";
 import CardTeam from "@/components/about/CardTeam";
 import { getAboutUs, getTeam } from "@/lib/action/uploadimage";
-import { teamProps } from "@/type";
+import { teamProps } from "@/lib/action";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

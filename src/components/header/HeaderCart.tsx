@@ -13,7 +13,7 @@ import { IoCartOutline } from "react-icons/io5";
 import CartHeader from "./CartHeader";
 import { useSelector } from "react-redux";
 import { loadCartFromLocalStorage } from "@/lib/action/Order";
-import { ItemCartProps } from "@/type";
+import { ItemCartProps } from "@/lib/action";
 import CartItem from "./CartItem";
 import { TiShoppingCart } from "react-icons/ti";
 

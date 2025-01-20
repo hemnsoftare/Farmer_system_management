@@ -16,7 +16,7 @@ import { LiaCameraSolid } from "react-icons/lia";
 import { IoGameControllerOutline, IoGitNetworkOutline } from "react-icons/io5";
 import Image from "next/image";
 import Link from "next/link";
-import { catagoryProps } from "@/type";
+import { catagoryProps } from "@/lib/action";
 import { getFireBase } from "@/lib/action/uploadimage";
 
 const ProductsHeader = ({ category }: { category: catagoryProps[] }) => {

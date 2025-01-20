@@ -11,7 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { ProductFormInput } from "@/type";
+import { ProductFormInput } from "@/lib/action";
 import { app } from "@/config/firebaseConfig";
 const Page = () => {
   const [prodcts, setproducts] = useState<ProductFormInput[]>();

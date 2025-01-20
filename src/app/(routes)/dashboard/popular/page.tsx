@@ -1,7 +1,7 @@
 "use client";
 import ForProducts from "@/components/home/ForProducts";
 import { app } from "@/config/firebaseConfig";
-import { ProductFormInput } from "@/type";
+import { ProductFormInput } from "@/lib/action";
 import {
   collection,
   doc,

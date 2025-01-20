@@ -17,7 +17,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import FilterItem from "./FilterItem";
-import { typeFilter } from "@/type";
+import { typeFilter } from "@/lib/action";
 import { on } from "events";
 
 const HeaderDilter = ({

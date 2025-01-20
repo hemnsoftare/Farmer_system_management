@@ -1,5 +1,5 @@
 import React from "react";
-import { typeFilter } from "@/type";
+import { typeFilter } from "@/lib/action";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const Filtered = ({

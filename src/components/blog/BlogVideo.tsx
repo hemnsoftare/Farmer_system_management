@@ -1,4 +1,4 @@
-import { BlogProps } from "@/type";
+import { BlogProps } from "@/lib/action";
 import Link from "next/link";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
