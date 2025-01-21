@@ -7,14 +7,14 @@ const Reklam = () => {
       initial={{ opacity: 0.3 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.9 }}
-      className="sm:flex block sm:px-4 overflow-hidden  px-2 items-start justify-center gap-3 w-full sm:max-h-[400px]"
+      className="sm:flex block sm:px-4 overflow-hidden py-8 rounded-lg px-2 items-start justify-center gap-3 w-full "
     >
       {/* Left Section */}
       <motion.div
         initial={{ x: -300 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.9, type: "spring" }}
-        className="flex sm:min-h-[390px] sm:max-w-[500px] relative px-2 w-full py-0 bg-gradient-to-br from-[#1975B9] via-[#30BCCE] to-[#B0E9C9] lg:max-w-[600px] xl:max-w-[700px] ms:p-3 bg-blue-300 dark:from-[#0A3D64] dark:via-[#185D5D] dark:to-[#397A6F] rounded-lg h-full overflow-hidden"
+        className="flex sm:min-h-[390px] shadow-lg shadow-[#57a4ae] sm:max-w-[500px] relative px-2 w-full py-0 bg-gradient-to-br from-[#1975B9] via-[#30BCCE] to-[#B0E9C9] lg:max-w-[600px] xl:max-w-[700px] ms:p-3 bg-blue-300 dark:from-[#0A3D64] dark:via-[#185D5D] dark:to-[#397A6F] rounded-lg h-full overflow-hidden"
       >
         <Image
           src={"/circal.png"}
@@ -77,7 +77,7 @@ const Reklam = () => {
         initial={{ x: 300 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.9, type: "spring" }}
-        className="flex flex-col mt-2 sm:min-h-[390px] sm:max-w-[500px] sm:mt-0 bg-[#005690] dark:bg-[#022E4B] h-full overflow-hidden rounded-lg w-full relative justify-between py-8 items-center"
+        className="flex flex-col mt-2 sm:min-h-[390px] shadow-[#005690] shadow-lg shrink-0 sm:max-w-[500px] sm:mt-0 bg-[#005690] dark:bg-[#022E4B] h-full overflow-hidden rounded-lg w-full relative justify-between py-8 items-center"
       >
         <Image
           src={"shape1.svg"}

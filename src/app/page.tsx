@@ -22,6 +22,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
+import SearchComponent from "@/components/home/Search";
 export default function Home() {
   console.log("in page");
   const [productNew, setproductNew] = useState<ProductFormInput[]>([]);
@@ -70,6 +71,7 @@ export default function Home() {
   // const { inboxNotifications } = useInboxNotifications();
   return (
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
+      <SearchComponent />
       {/* <InboxNotificationList>
         {inboxNotifications.map((inboxNotification) => (
           <InboxNotification

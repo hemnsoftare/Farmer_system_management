@@ -82,6 +82,7 @@ const SearchComponent = () => {
 
   useEffect(() => {
     const getData = async () => {
+      console.log(user, "searchhhhhhhhhhhhhhhhhhhh");
       if (user) {
         const searchBy = await getDoc(doc(db, "searchSetting", user.id || ""));
         setSearchBy(searchBy.data() as { search: string[] });
@@ -91,7 +92,7 @@ const SearchComponent = () => {
       }
     };
     getData();
-  }, []);
+  }, [db, user]);
 
   const renderResults = (
     title: string,
@@ -127,8 +128,6 @@ const SearchComponent = () => {
     );
   };
 
-  if (pathName !== "/") return null;
-
   return (
     <>
       {searchValue.length > 0 && (
@@ -151,11 +150,11 @@ const SearchComponent = () => {
             type="search"
             value={searchValue}
             onChange={(e) => onChangeHandle(e.target.value)}
-            className="w-full py-2 rounded-full dark:bg-neutral-800 dark:text-white outline-none focus:bg-gray-200 duration-300 px-3 border border-gray-300"
+            className="w-full py-2 rounded-full placeholder:text-secondary shadow-sm  shadow-secondary dark:bg-neutral-800 dark:text-white outline-none focus:bg-secondary-100/15 duration-300 px-3 bsorder border-secondary"
             placeholder="Search"
           />
 
-          <IoSearch className="absolute top-3 right-4 text-gray-500" />
+          <IoSearch className="absolute top-3 right-4 text-secondary" />
 
           <ul
             className={`absolute w-full bg-white pb-2 dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-12 z-[100] ${

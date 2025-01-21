@@ -162,13 +162,21 @@ const Header = () => {
           href={"/ContactUs"}
         >
           Contact Us
-        </Link>
+        </Link>{" "}
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/About"}
         >
           About Us
         </Link>
+        <SignedOut>
+          <Link
+            className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+            href={"/setting"}
+          >
+            Setting
+          </Link>
+        </SignedOut>
         <DropdownMenu>
           <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
             Mode

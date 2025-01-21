@@ -140,10 +140,10 @@ const SettingsPage = () => {
   }, [user, db]);
   return (
     <div className="w-full flex items-center justify-center">
-      <div className="md:w-1/2 w-full px-4 py-10 flex flex-col items-center justify-center bg-gray-50 min-h-screen">
+      <div className="md:w-1/2 w-full px-4 py-10 flex flex-col  items-center justify-center  min-h-screen">
         {/* Page Title */}
         <motion.h1
-          className="font-bold text-5xl text-gray-800 mb-12 text-center"
+          className="font-bold text-5xl dark:text-gray-400 text-gray-800 mb-12 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -153,49 +153,54 @@ const SettingsPage = () => {
 
         {/* User Greeting */}
         {isSignedIn && (
-          <h2 className="text-xl font-medium text-gray-700 mb-8">
+          <h2 className="text-xl font-medium dark:text-gray-400 text-gray-700 mb-8">
             Hello,{" "}
-            <span className="font-bold text-gray-800">{user.fullName}</span>
+            <span className="font-bold dark:text-gray-300 text-gray-800">
+              {user.fullName}
+            </span>
           </h2>
         )}
 
         {/* Login/Signup Section */}
         <motion.div
-          className="w-full max-w-1/2 p-6 bg-white shadow-lg rounded-lg mb-10 flex flex-col items-center gap-4"
+          className="w-full max-w-1/2 p-6 dark:bg-gray-700 bg-white shadow-lg rounded-lg mb-10 flex justify-center flex-col items-center gap-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
+          <h2 className="text-2xl font-semibold dark:text-gray-400 text-gray-800 text-center mb-6">
+            Account
+          </h2>
           <SignedOut>
-            <div className="flex gap-4">
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-500 transition-all">
+            <div className="flex   gap-4">
+              <button className="px-4 py-2 w-full md:w-fit bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-500 transition-all">
                 <SignInButton>Login</SignInButton>
               </button>
-              <button className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-500 transition-all">
+              <button className="px-4 py-2 w-full md:w-fit bg-green-600 text-white rounded-lg shadow-md hover:bg-green-500 transition-all">
                 <SignUpButton>Signup</SignUpButton>
               </button>
             </div>
           </SignedOut>
 
           <SignedIn>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex w-full items-center justify-center  flex-wrap gap-4">
               <button
                 onClick={() => user.delete()}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg shadow-md flex items-center gap-2 hover:bg-red-500 transition-all"
+                className="px-4 py-2 w-full  md:w-fit bg-red-600 text-white rounded-lg shadow-md flex items-center gap-2 hover:bg-red-500 transition-all"
               >
                 <MdDelete size={20} />
                 Delete Account
               </button>
               <Link
                 href={"/user-profile"}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md flex items-center gap-2 hover:bg-green-500 transition-all"
+                className="px-4 py-2 bg-green-600 w-full  md:w-fit text-white rounded-lg shadow-md flex items-center gap-2 hover:bg-green-500 transition-all"
               >
                 <MdOutlineManageAccounts size={20} />
                 Manage Account
               </Link>
 
               <SignOutButton>
-                <span className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md flex items-center gap-2 hover:bg-blue-500 transition-all">
+                <span className="px-4 py-2 bg-blue-600 w-full  md:w-fit text-white rounded-lg shadow-md flex items-center gap-2 hover:bg-blue-500 transition-all">
                   <FiLogOut size={20} />
                   Logout
                 </span>
@@ -206,18 +211,18 @@ const SettingsPage = () => {
 
         {/* Theme Selection */}
         <motion.div
-          className="w-full max-w-1/2 p-6 bg-white shadow-lg rounded-lg mb-10"
+          className="w-full max-w-1/2 p-6 dark:bg-gray-700 bg-white shadow-lg rounded-lg mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+          <h2 className="text-2xl font-semibold dark:text-gray-400 text-gray-800 text-center mb-6">
             Theme
           </h2>
-          <div className="flex gap-6 justify-center">
+          <div className="flex md:gap-6 gap-2 justify-center">
             <button
               onClick={() => handleThemeChange("light")}
-              className={`px-6 py-3 rounded-lg shadow-md flex items-center justify-center gap-2 transition-all ${
+              className={`px-6 py-3 rounded-lg shadow-md text-black flex items-center justify-center gap-2 transition-all ${
                 theme === "light" ? "bg-blue-600 text-white" : "bg-gray-200"
               }`}
             >
@@ -226,8 +231,10 @@ const SettingsPage = () => {
             </button>
             <button
               onClick={() => handleThemeChange("dark")}
-              className={`px-6 py-3 rounded-lg shadow-md flex items-center justify-center gap-2 transition-all ${
-                theme === "dark" ? "bg-blue-600 text-white" : "bg-gray-200"
+              className={`px-6 py-3 rounded-lg shadow-md text-black flex items-center justify-center gap-2 transition-all ${
+                theme === "dark"
+                  ? "bg-blue-600 text-white"
+                  : "text-black bg-gray-200"
               }`}
             >
               <FiMoon size={20} />
@@ -235,7 +242,7 @@ const SettingsPage = () => {
             </button>
             <button
               onClick={() => handleThemeChange("system")}
-              className={`px-6 py-3 rounded-lg shadow-md flex items-center justify-center gap-2 transition-all ${
+              className={`px-6 py-3 rounded-lg shadow-md flex text-black items-center justify-center gap-2 transition-all ${
                 theme === "system" ? "bg-blue-600 text-white" : "bg-gray-200"
               }`}
             >
@@ -246,12 +253,12 @@ const SettingsPage = () => {
 
         {/* Manage Data */}
         <motion.div
-          className="w-full max-w-1/2 p-6 bg-white shadow-lg rounded-lg mb-10"
+          className="w-full max-w-1/2 p-6 bg-white dark:bg-gray-700 shadow-lg rounded-lg mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+          <h2 className="text-2xl font-semibold dark:text-gray-400 text-gray-800 text-center mb-6">
             Manage Data
           </h2>
           <div className="flex w-full flex-col gap-4">
@@ -273,12 +280,12 @@ const SettingsPage = () => {
 
         {/* Search Options */}
         <motion.div
-          className="w-full max-w-1/2 p-6 bg-white shadow-lg rounded-lg mb-10"
+          className="w-full dark:bg-gray-700 max-w-1/2 p-6 bg-white shadow-lg rounded-lg mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+          <h2 className="text-2xl font-semibold dark:text-gray-400 text-gray-800 text-center mb-6">
             Search Options
           </h2>
           <ul className="flex flex-col gap-4">

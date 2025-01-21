@@ -43,7 +43,7 @@ const Hero = () => {
           whileInView={{ x: 0, opacity: 1 }}
           className="flex w-full  md:w-[300px] z-[2] justify-between   md:justify-center flex-col md:py-4 h-full items-center gap-8"
         >
-          <h1 className="lg:text-35 mt-8 text-secondary dark:text-primary-200 xl:text-45 relative  text-48 md:text-29 font-bold capitalize ">
+          <h1 className="lg:text-35 mt-8 text-secondary dark:text-primary-200 xl:text-60 relative  text-48 md:text-29 font-bold capitalize ">
             Tech Heim
           </h1>
           <div className=" flex items-center gap-2 -mb-[190px] md:mb-0 box-content md:justify-center justify-between h-full flex-col">

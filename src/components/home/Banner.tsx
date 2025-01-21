@@ -49,7 +49,7 @@ const Banner = () => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.9, type: "spring" }}
-        className="absolute dark:hidden w-full -right-[210px] h-full md:-right-[150px] lg:-right-[100px] top-auto"
+        className="absolute dark:hidden w-1/2 -right-[10px] h-full md:-right-[50px] lg:-right-[50px] top-auto"
       >
         <Image
           src={"shape3.svg"}

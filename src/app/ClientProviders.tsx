@@ -45,7 +45,6 @@ export default function ClientProviders({
                   }`}
                 >
                   <Header />
-                  <Search />
                   {children}
                 </div>
 

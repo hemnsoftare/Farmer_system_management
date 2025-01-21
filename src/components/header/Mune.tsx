@@ -135,13 +135,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetOverlay,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
@@ -150,7 +150,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { IoMdMenu } from "react-icons/io";
+import { IoMdMenu, IoMdClose } from "react-icons/io";
 import {
   FaHome,
   FaBox,
@@ -164,153 +164,140 @@ import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 const Mune = ({ category }: { category: catagoryProps[] }) => {
   const [showSheet, setShowSheet] = useState(false);
-  const [activeLink, setActiveLink] = useState<string>("");
+  const router = usePathname();
 
-  const handleOverlayClick = () => {
-    setShowSheet(false);
-  };
+  const handleOverlayClick = () => setShowSheet(false);
 
-  const handleHideSheet = () => {
-    setTimeout(() => {
-      setShowSheet(false);
-    }, 500);
-  };
-
-  const handleActiveLink = (link: string) => {
-    setActiveLink(link);
-  };
+  const isActive = router;
 
   return (
     <Sheet open={showSheet} onOpenChange={setShowSheet}>
       <SheetTrigger
         onClick={() => setShowSheet(true)}
-        className="text-black dark:text-white hover:text-blue-500 transition-all duration-300"
+        className="text-orange-700 dark:text-gray-200 hover:text-blue-500 transition-all duration-300"
       >
         <IoMdMenu size={30} />
       </SheetTrigger>
-      <SheetOverlay onClick={handleOverlayClick} className="bg-black/80" />
-
-      {/* Custom Secondary Color (Updated to a new background color) */}
+      <SheetOverlay onClick={handleOverlayClick} className="bg-gray-900/80" />
       <SheetContent
         side={"left"}
-        onTouchMoveCapture={() => setShowSheet(false)}
-        className="bg-gradient-to-r mr-0 border-0 from-teal-500 to-blue-600 text-white p-6 rounded-e-xl shadow-lg transition-all"
+        onTouchMove={handleOverlayClick}
+        className="bg-gray-900 text-gray-100 p-8 rounded-tr-[30px] rounded-br-[50px] shadow-lg"
       >
-        <SheetHeader>
-          <SheetTitle className="flex justify-between items-center space-x-3">
-            <Image
-              src={"/logo.svg"}
-              alt="logo"
-              width={48}
-              height={53}
-              className="w-[60px] h-[60px]"
-            />
-            <span className="text-2xl font-semibold">Menu</span>
-          </SheetTitle>
+        <SheetHeader className="flex justify-between items-center">
+          <Image
+            src={"/logo.svg"}
+            alt="logo"
+            width={48}
+            height={53}
+            className="w-12 h-12"
+          />
+          <button
+            onClick={() => setShowSheet(false)}
+            className="text-gray-400 hover:text-white transition"
+          >
+            <IoMdClose size={30} />
+          </button>
         </SheetHeader>
-
         <SheetDescription>
-          <ul className="w-full flex flex-col mt-8 gap-6">
-            {/* Home Link with Icon */}
+          <ul className="mt-8 flex flex-col gap-5">
             <Link
-              onClick={() => {
-                setShowSheet(false);
-                handleActiveLink("home");
-              }}
-              href={"/"}
-              className={`flex items-center gap-4 px-5 py-3 text-lg font-medium rounded-lg hover:bg-teal-700 transition-all duration-300 ${activeLink === "home" ? "bg-teal-800 text-white" : "text-gray-200"}`}
+              href="/"
+              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                isActive === "/"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              }`}
             >
-              <FaHome size={20} />
+              <FaHome size={22} />
               Home
             </Link>
-
-            {/* Products Accordion with Icon */}
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="flex items-center gap-4 px-5 py-3 text-lg font-medium rounded-lg hover:bg-teal-700 transition-all duration-300">
-                  <FaBox size={20} />
+                <AccordionTrigger className="flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition">
+                  <FaBox size={22} />
                   Products
                 </AccordionTrigger>
-                <AccordionContent className="flex flex-col space-y-4">
+                <AccordionContent className="pl-8 flex flex-col gap-4 mt-3">
                   {category.map((item) => (
                     <Link
-                      onClick={() => {
-                        handleHideSheet();
-                        handleActiveLink(item.name);
-                      }}
                       key={item.name}
                       href={`/products/${item.name}`}
-                      className={`flex items-center gap-4 px-5 py-3 text-lg font-medium rounded-lg hover:bg-teal-700 transition-all duration-300 ${activeLink === item.name ? "bg-teal-800 text-white" : "text-gray-200"}`}
+                      className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                        isActive.includes(`/products/${item.name}`)
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                      }`}
                     >
                       <Image
                         src={item.image.link}
                         alt={item.name}
-                        width={30}
-                        height={30}
-                        className="object-contain"
+                        width={24}
+                        height={24}
+                        className="w-7 h-7 object-contain"
                       />
-                      <span>{item.name}</span>
+                      {item.name}
                     </Link>
                   ))}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-
-            {/* Static Links with Icons */}
             <Link
-              onClick={() => {
-                handleHideSheet();
-                handleActiveLink("blog");
-              }}
-              href={"/blog"}
-              className={`flex items-center gap-4 px-5 py-3 text-lg font-medium rounded-lg hover:bg-teal-700 transition-all duration-300 ${activeLink === "blog" ? "bg-teal-800 text-white" : "text-gray-200"}`}
+              href="/blog"
+              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                isActive.includes("/blog")
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              }`}
             >
-              <FaBlog size={20} />
+              <FaBlog size={22} />
               Blog
             </Link>
             <Link
-              onClick={() => {
-                handleHideSheet();
-                handleActiveLink("FAQ");
-              }}
-              href={"/FAQ"}
-              className={`flex items-center gap-4 px-5 py-3 text-lg font-medium rounded-lg hover:bg-teal-700 transition-all duration-300 ${activeLink === "FAQ" ? "bg-teal-800 text-white" : "text-gray-200"}`}
+              href="/FAQ"
+              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                isActive.includes("/FAQ")
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              }`}
             >
-              <FaQuestionCircle size={20} />
+              <FaQuestionCircle size={22} />
               FAQ
             </Link>
             <Link
-              onClick={() => {
-                handleHideSheet();
-                handleActiveLink("contact");
-              }}
-              href={"/ContactUs"}
-              className={`flex items-center gap-4 px-5 py-3 text-lg font-medium rounded-lg hover:bg-teal-700 transition-all duration-300 ${activeLink === "contact" ? "bg-teal-800 text-white" : "text-gray-200"}`}
+              href="/ContactUs"
+              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                isActive.includes("/ContactUs")
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              }`}
             >
-              <FaPhone size={20} />
+              <FaPhone size={22} />
               Contact Us
             </Link>
             <Link
-              onClick={() => {
-                handleHideSheet();
-                handleActiveLink("about");
-              }}
-              href={"/About"}
-              className={`flex items-center gap-4 px-5 py-3 text-lg font-medium rounded-lg hover:bg-teal-700 transition-all duration-300 ${activeLink === "about" ? "bg-teal-800 text-white" : "text-gray-200"}`}
+              href="/About"
+              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                isActive.includes("/About")
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              }`}
             >
-              <FaInfoCircle size={20} />
+              <FaInfoCircle size={22} />
               About
             </Link>
-
-            {/* Authentication Buttons */}
             <SignedOut>
-              <div className="flex items-center justify-center gap-6 mt-8">
-                <div className="px-6 py-2 text-lg text-teal-600 font-medium border-2 border-teal-600 rounded-lg hover:bg-teal-600 hover:text-white transition-all duration-300">
-                  <SignInButton>Login</SignInButton>
-                </div>
-                <div className="px-6 py-2 text-lg bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all duration-300">
-                  <SignUpButton>Sign Up</SignUpButton>
-                </div>
+              <div className="flex gap-5 mt-10">
+                <SignInButton>
+                  <button className="w-full px-6 py-3 text-lg font-semibold bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition">
+                    Login
+                  </button>
+                </SignInButton>
+                <SignUpButton>
+                  <button className="w-full px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition">
+                    Sign Up
+                  </button>
+                </SignUpButton>
               </div>
             </SignedOut>
           </ul>
