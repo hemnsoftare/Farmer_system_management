@@ -1,4 +1,7 @@
+import createNextInterPlugin from 'next-intl/plugin';
 /** @type {import('next').NextConfig} */
+
+ const withnextIntl = createNextInterPlugin()
 const nextConfig = {
   reactStrictMode: false,
   images: {
@@ -19,4 +22,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withnextIntl(nextConfig);

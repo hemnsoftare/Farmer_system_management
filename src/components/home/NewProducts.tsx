@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { ProductFormInput, Productsprops } from "@/lib/action";
-import { Loader } from "@/app/loader";
+import { Loader } from "@/app/[locale]/loader";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { addfavorite, deleteFavorite } from "@/lib/action/fovarit";

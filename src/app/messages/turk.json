@@ -1,0 +1,129 @@
+{
+  "header": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "contactus": "Bize Ulaşın",
+    "login": "Giriş Yap",
+    "signup": "Kaydol",
+    "logout": "Çıkış Yap",
+    "setting": "Ayarlar",
+    "blog": "Blog",
+    "faq": "SSS",
+    "theme": "Tema",
+    "dark": "Karanlık",
+    "light": "Açık",
+    "system": "Sistem",
+    "language": "Dil",
+    "english": "İngilizce",
+    "turkish": "Türkçe",
+    "kurdish": "Kürtçe",
+    "arabic": "Arapça",
+    "products": "Ürünler",
+    "search": "Arama",
+    "dashboard": "Kontrol Paneli"
+  },
+  "UserHeader": {
+    "manageAccount": "Hesabı Yönet",
+    "historyOrder": "Sipariş Geçmişi",
+    "favoriteProduct": "Favori Ürünler",
+    "setting": "Ayarlar",
+    "logout": "Çıkış Yap",
+    "SaveBlog": "Blog Kaydet"
+  },
+  "cart": {
+    "cart": "Sepet",
+    "total": "Toplam",
+    "checkout": "Ödeme Yap",
+    "emptyCart": "Sepetiniz boş.",
+    "continueShopping": "Alışverişe Devam Et",
+    "remove": "Kaldır",
+    "quantity": "Miktar",
+    "price": "Fiyat",
+    "product": "Ürün",
+    "totalPrice": "Toplam Fiyat",
+    "emptyCartMessage": "Sepetiniz boş",
+    "items": "Ürünler",
+    "viewAll": "Hepsini Gör",
+    "grandtotal": "Genel Toplam",
+    "processToCheckout": "Ödeme İşlemi",
+    "messageRemove": "Sepetteki Ürünü Kaldır"
+  },
+  "search": {
+    "Search": "Arama",
+    "messageNotFound": "Aramanız için sonuç bulunamadı",
+    "Products": "Ürün bulunamadı",
+    "Blogs": "Blog bulunamadı",
+    "Team Member": "Ekip üyesi bulunamadı",
+    "Category": "Kategori bulunamadı",
+    "allowSearch": "Arama yapmanıza izin verilmiyor",
+    "product": "Ürün",
+    "blog": "Blog",
+    "team": "Ekip",
+    "category": "Kategori"
+  },
+  "hero": {
+    "title": "Tech Heim",
+    "quote": "Dijital devrime katılın",
+    "buttonText": "Daha fazlasını keşfedin"
+  },
+  "category": {
+    "accessories": "Aksesuarlar",
+    "camera": "Kamera",
+    "laptop": "Dizüstü Bilgisayar",
+    "smart Phone": "Akıllı Telefon",
+    "gaming": "Oyun",
+    "smart Watch": "Akıllı Saat"
+  },
+  "sales": {
+    "title": "İndirimdeki Ürünler",
+    "button_shop_now": "Şimdi Alışveriş Yap!",
+    "button_view_all": "Hepsini Gör"
+  },
+  "newProduct": {
+    "title": "Yeni Ürünler",
+    "bestSalary": "En İyi Fiyat",
+    "button_view_all": "Hepsini Gör"
+  },
+  "reklem": {
+    "iphone": "iPhone 15 Serisi",
+    "countdown": "8 Gün",
+    "tagline": "İlk olmak güzel hissettiriyor",
+    "message": "Geleceğin telefonlarına hazır olun. Daha önce hiç olmadığı gibi yeniliği deneyimleyin. Büyük iPhone 15 ön satışını bekleyin.",
+    "playstation": "PlayStation 5",
+    "edition": "Dijital Sürüm + 2TB",
+    "number": "8",
+    "day": "Gün"
+  },
+  "topBrand": {
+    "title": "En İyi Marka"
+  },
+  "banner": {
+    "smartWatch": "Akıllı Saat",
+    "variousDesignsAndBrands": "Çeşitli tasarımlar ve markalar",
+    "view": "Gör"
+  },
+  "servies": {
+    "latestAndGreatest": "En Yeni ve En İyi",
+    "guarantee": "Garanti",
+    "freeShipping": "1000$ üzeri Ücretsiz Kargo",
+    "support": "7/24 Destek"
+  },
+  "footer": {
+    "company": "Şirket",
+    "about_us": "Hakkımızda",
+    "blog": "Blog",
+    "returns": "İadeler",
+    "order_status": "Sipariş Durumu",
+    "info": "Bilgi",
+    "how_it_works": "Nasıl Çalışır?",
+    "our_promises": "Sözlerimiz",
+    "faq": "SSS",
+    "contact_us": "Bize Ulaşın",
+    "address": "123 Ana Cadde, Anytown, ABD",
+    "phone": "+1 (555) 123 4567",
+    "email": "TechHermSupport@gmail.com",
+    "social_media": "Sosyal Medya",
+    "sign_up": "Haberler ve Güncellemeler için Kaydolun",
+    "email_address": "E-posta Adresi"
+  }
+}

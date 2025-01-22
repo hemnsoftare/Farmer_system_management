@@ -30,6 +30,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 const Header = () => {
   const pathName = usePathname();
@@ -43,6 +46,13 @@ const Header = () => {
   const [grandTotal, setGrandTotal] = useState(0);
   const [scrollDirection, setScrollDirection] = useState("None");
   const [lastScrollY, setLastScrollY] = useState(0);
+  const router = useRouter();
+
+  // client components
+  const t = useTranslations("header");
+
+  // seerver componnets
+  // const t = await getTranslations("header");
   useEffect(() => {
     const getdata = async () => {
       const cate: catagoryProps[] = await getFireBase("category");
@@ -96,7 +106,9 @@ const Header = () => {
   if (pathName.startsWith("/si") || pathName.includes("dashboard")) {
     return null;
   }
-
+  const changelanguage = (lang: string) => {
+    router.push(`/${lang}`);
+  };
   return (
     <div
       className={` ${
@@ -142,63 +154,97 @@ const Header = () => {
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/"}
         >
-          Home
+          {t("home")}
         </Link>
-        <ProductsHeader category={category} />
+        <ProductsHeader category={category} lng={t("products")} />
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/blog"}
         >
-          Blog
+          {t("blog")}
         </Link>
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/FAQ"}
         >
-          FAQ
+          {t("faq")}
         </Link>
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/ContactUs"}
         >
-          Contact Us
-        </Link>{" "}
+          {t("contactus")}
+        </Link>
+
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/About"}
         >
-          About Us
+          {t("about")}
         </Link>
         <SignedOut>
           <Link
             className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
             href={"/setting"}
           >
-            Setting
+            {t("setting")}
           </Link>
         </SignedOut>
         <DropdownMenu>
           <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
-            Mode
+            {t("theme")}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
             <DropdownMenuItem
               className="sm:hover:bg-slate-500 duration-300"
               onClick={() => setTheme("light")}
             >
-              Light
+              {t("light")}
             </DropdownMenuItem>
             <DropdownMenuItem
               className="sm:hover:bg-slate-500 duration-300"
               onClick={() => setTheme("dark")}
             >
-              dark
+              {t("dark")}
             </DropdownMenuItem>
             <DropdownMenuItem
               className="sm:hover:bg-slate-500 duration-300"
               onClick={() => setTheme("orange")}
             >
-              orange
+              {t("system")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* langouge */}
+        <DropdownMenu>
+          <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
+            {t("language")}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
+            <DropdownMenuItem
+              className="sm:hover:bg-slate-500 duration-300"
+              onClick={() => changelanguage("en")}
+            >
+              {t("english")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="sm:hover:bg-slate-500 duration-300"
+              onClick={() => changelanguage("kurd")}
+            >
+              {t("kurdish")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="sm:hover:bg-slate-500 duration-300"
+              onClick={() => changelanguage("turk")}
+            >
+              {t("turkish")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="sm:hover:bg-slate-500 duration-300"
+              onClick={() => changelanguage("ar")}
+            >
+              {t("arabic")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -210,7 +256,7 @@ const Header = () => {
             className="bg-secondary-400 px-3 py-1 duration-300 transition-all text-white rounded-lg hover:bg-secondary-600"
             href={"/dashboard/PersonalData"}
           >
-            Dashboard
+            {t("dashboard")}
           </Link>
         )}
         <div onClick={() => setisopenCart(!isopenCart)} className="relative">
@@ -223,10 +269,10 @@ const Header = () => {
           <SignedOut>
             <div className="flex items-center justify-center gap-3">
               <div className="text-primary text-12 px-3 py-1">
-                <SignInButton> Login</SignInButton>
+                <SignInButton> {t("login")}</SignInButton>
               </div>
               <div className="px-3 py-1 text-8 sm:text-12 bg-blue-700 text-white rounded-lg">
-                <SignUpButton> Sign Up </SignUpButton>
+                <SignUpButton>{t("signup")}</SignUpButton>
               </div>
             </div>
           </SignedOut>

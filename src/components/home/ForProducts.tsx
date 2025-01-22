@@ -5,7 +5,7 @@ import { MdNavigateNext } from "react-icons/md";
 import NewProducts from "./NewProducts";
 import { newProdcuts } from "@/util/data";
 import { ProductFormInput } from "@/lib/action";
-import { Loader } from "@/app/loader";
+import { Loader } from "@/app/[locale]/loader";
 import { useUser } from "@clerk/nextjs";
 import { getAllItemNames } from "@/lib/action/fovarit";
 import { motion } from "framer-motion";

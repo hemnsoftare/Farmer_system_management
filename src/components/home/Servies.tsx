@@ -1,8 +1,19 @@
-import { servies } from "@/util/data";
 import React from "react";
 import { motion } from "framer-motion";
+import { serviesProps } from "@/lib/action";
+import { FaDesktop, FaShippingFast } from "react-icons/fa";
+import { MdOutlineVerified } from "react-icons/md";
+import { BiSolidTimer } from "react-icons/bi";
+import { useTranslations } from "next-intl";
 
 const Servies = () => {
+  const t = useTranslations("servies");
+  const servies: serviesProps[] = [
+    { name: t("latestAndGreatest"), image: FaDesktop },
+    { name: t("guarantee"), image: MdOutlineVerified },
+    { name: t("freeShipping"), image: FaShippingFast },
+    { name: t("support"), image: BiSolidTimer },
+  ];
   return (
     <motion.div className="flex items-center overflow-hidden mb-3 px-2 w-full justify-between dark:text-gray-100">
       {servies.map((item, index) => {

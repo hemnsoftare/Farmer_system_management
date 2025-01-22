@@ -1,0 +1,131 @@
+{
+    "header": {
+        "home": "الصفحة الرئيسية",
+        "about": "عنّا",
+        "contactus": "اتصل بنا",
+        "login": "تسجيل الدخول",
+        "signup": "التسجيل",
+        "logout": "تسجيل الخروج",
+        "setting": "الإعدادات",
+        "blog": "مدونة",
+        "faq": "الأسئلة المتكررة",
+        "theme": "السمة",
+        "dark": "داكن",
+        "turkish": "التركية",
+        "light": "فاتح",
+        "system": "النظام",
+        "language": "اللغة",
+        "english": "الإنجليزية",
+        "kurdish": "الكردية",
+        "arabic": "العربية",
+        "products": "المنتجات",
+        "search": "بحث",
+        "dashboard": "لوحة القيادة"
+    },
+    "UserHeader": {
+        "manageAccount": "إدارة الحساب",
+        "historyOrder": "تاريخ الطلب",
+        "favoriteProduct": "المنتج المفضل",
+        "setting": "الإعدادات",
+        "logout": "تسجيل الخروج",
+        "SaveBlog": "حفظ المدونة"
+    },
+    "cart": {
+        "cart": "عربة التسوق",
+        "total": "المجموع",
+        "checkout": "الدفع",
+        "emptyCart": "عربتك فارغة.",
+        "continueShopping": "استمر في التسوق",
+        "remove": "إزالة",
+        "quantity": "الكمية",
+        "price": "السعر",
+        "product": "المنتج",
+        "totalPrice": "السعر الكلي",
+        "emptyCartMessage": "عربتك فارغة",
+        "items": "العناصر",
+        "viewAll": "عرض الكل",
+        "grandtotal": "المجموع الكلي",
+        "processToCheckout": "إتمام الدفع",
+        "messageRemove": "إزالة المنتج من العربة"
+    }
+    ,
+               "hero": {
+               "title": "Tech Heim",
+               "quote": "انضم إلى الثورة الرقمية",
+               "buttonText": "اكتشف المزيد"
+               }
+,
+"category":{
+  "accessories": "إكسسوارات",
+  "camera": "كاميرا",
+  "laptop": "حاسوب محمول",
+  "smart Phone": "هاتف ذكي",
+  "gaming": "ألعاب",
+  "smart Watch": "ساعة ذكية"
+}
+, "sales":{
+  "title": "المنتجات المعروضة للبيع",
+  "button_shop_now": "! تسوق الآن!",
+  "button_view_all": "عرض الكل"
+}
+,"newProduct":{
+  "bestSalary": "أفضل راتب",
+  "title": "منتجات جديدة",
+  "button_view_all": "عرض الكل"
+} ,"reklem": {
+    "iphone": "سلسلة iPhone 15",
+    "countdown": "8 أيام",
+    "tagline": "إنه شعور رائع أن تكون أول من يمتلكه",
+    "message": "استعد للهواتف المستقبلية. اكتشف الابتكار مثلما لم يحدث من قبل. ترقب البيع المسبق الكبير لهاتف iPhone 15.",
+    "playstation": "بلاي ستيشن 5",
+    "edition": "الإصدار الرقمي + 2 تيرابايت",
+    "number": "8",
+    "day": "أيام"
+  },
+  "topBrand": {"title": "أفضل علامة تجارية"}
+
+, "bammer" : {
+  "smartWatch": "ساعة ذكية",
+  "variousDesignsAndBrands": "تصاميم وعلامات تجارية متنوعة",
+  "view": "عرض"
+}
+,"servies":{
+  "latestAndGreatest": "الأحدث والأفضل",
+  "guarantee": "ضمان",
+  "freeShipping": "شحن مجاني لأكثر من 1000$",
+  "support": "دعم 24/7"
+},"footer": {
+    "company": "الشركة",
+    "about_us": "من نحن",
+    "blog": "المدونة",
+    "returns": "مرتجعات",
+    "order_status": "حالة الطلب",
+    "info": "معلومات",
+    "how_it_works": "كيف يعمل؟",
+    "our_promises": "وعودنا",
+    "faq": "الأسئلة الشائعة",
+    "contact_us": "اتصل بنا",
+    "address": "شارع 123 الرئيسي، أي تاون، الولايات المتحدة الأمريكية",
+    "phone": "+1 (555) 123 4567",
+    "email": "TechHermSupport@gmail.com",
+    "social_media": "وسائل التواصل الاجتماعي",
+    "sign_up": "اشترك في النشرة الإخبارية للحصول على آخر التحديثات",
+    "email_address": "عنوان البريد الإلكتروني"
+  }
+, "search": {
+    "Search": "گەڕان",
+    "messageNotFound": "هیچ ئەنجامێک نەدۆزرایەوە بۆ گەڕانی تۆ",
+    "Products": "هیچ بەرهەمێک نەدۆزرایەوە",
+    "Blogs": "هیچ بڵاگەیەک نەدۆزرایەوە",
+    "Team Member": "هیچ ئەندامێک لە تیمەوە نەدۆزرایەوە",
+    "Category": "هیچ هاوپۆلەک نەدۆزرایەوە",
+    "allowSearch": "تۆ ڕێگە پێنەدراوی بۆ گەڕان",
+    "product": "بەرهەم",
+    "blog": "بڵاگ",
+    "team": "تیم",
+    "category": "هاوپۆل"
+  }
+
+
+
+}

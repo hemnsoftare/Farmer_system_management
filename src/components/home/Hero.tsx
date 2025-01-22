@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 const Hero = () => {
+  const t = useTranslations("hero");
   return (
     <>
       {/* <div className="relative md:hidden h-screen overflow-hidden flex flex-col w-screen ">
@@ -44,22 +46,24 @@ const Hero = () => {
           className="flex w-full  md:w-[300px] z-[2] justify-between   md:justify-center flex-col md:py-4 h-full items-center gap-8"
         >
           <h1 className="lg:text-35 mt-8 text-secondary dark:text-primary-200 xl:text-60 relative  text-48 md:text-29 font-bold capitalize ">
-            Tech Heim
+            {t("title")}
           </h1>
           <div className=" flex items-center gap-2 -mb-[190px] md:mb-0 box-content md:justify-center justify-between h-full flex-col">
             <h3 className="font-[500] dark:text-neutral-500 text-22  text-center w-full md:text-20 lg:text-24">
-              &quot;Join
+              {t("quote")}
+
+              {/* &quot;Join
               <span className="text-secondary">
                 {" "}
                 the digital <br className="lg:block hidden " /> revolution&quot;
-              </span>
+              </span> */}
             </h3>
             <Link
               href={"#newProducts"}
               className="transition-all w-full md:w-fit duration-300"
             >
               <button className="capitalize px-7 w-full  md:w-fit py-2 text-15 lg:text-16 sm:text-20 -mb-6 above-405:px-7 sm:hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-10 bg-secondary text-white sm:py-4 rounded-lg mt-auto">
-                explore more
+                {t("buttonText")}
               </button>
             </Link>
           </div>

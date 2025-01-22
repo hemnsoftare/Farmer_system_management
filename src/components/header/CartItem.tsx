@@ -11,10 +11,12 @@ import { removeItem, updateItem } from "@/lib/action/Order";
 import { useToast } from "@/hooks/use-toast";
 const CartItem = ({
   item,
+  lngRemove,
   type,
 }: {
   type?: "headerItem";
   item: ItemCartProps;
+  lngRemove?: string;
 }) => {
   const { toast } = useToast();
 
@@ -69,7 +71,7 @@ const CartItem = ({
                         color="red"
                         style={{ marginRight: "8px" }}
                       />
-                      <span>Remove Product in Cart</span>
+                      <span>{lngRemove}</span>
                     </div>
                   ),
                   style: {

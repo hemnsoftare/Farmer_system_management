@@ -17,14 +17,16 @@ import {
 } from "firebase/firestore";
 import { app } from "../../config/firebaseConfig";
 import { ProductFormInput } from "@/lib/action";
-import { Loader } from "@/app/loader";
+import { Loader } from "@/app/[locale]/loader";
 import { getAllItemNames } from "@/lib/action/fovarit";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 const Sales = () => {
   const [load, setload] = useState(true);
   const [start, setStart] = useState(0);
   const { user } = useUser();
+  const t = useTranslations("sales");
   const [products, setproducts] = useState<ProductFormInput[]>([]);
   const [favoriteId, setfavoriteId] = useState([]);
   const db = getFirestore(app);
@@ -66,13 +68,13 @@ const Sales = () => {
         className="absolute left-0 z-[0] -top-5"
       />
       <div className="flex w-full sm:w-[20%] z-20 text-white items-center  flex-col gap-3 ">
-        <h1 className="text-white mt-8 font-bold text-29 sm:text-23 ">
-          Products On Sale
+        <h1 className="text-white text-center mt-8 font-bold text-29 sm:text-23 ">
+          {t("title")}
         </h1>
-        <h2>Shop Now!</h2>
+        <h2>{t("button_shop_now")}</h2>
         <br />
-        <button className="mt-auto bg-blue-500 z-30 sm:hover:bg-blue-700 text-white mb-3 font-bold py-2 px-12 rounded">
-          <Link href={"/viewAll?type=discount"}> View All</Link>
+        <button className="mt-auto bg-blue-500 z-30 sm:hover:bg-blue-700 text-white mb-3 font-bold py-2 px-12 rounded-lg">
+          <Link href={"/viewAll?type=discount"}>{t("button_view_all")}</Link>
         </button>
       </div>
       {load && (

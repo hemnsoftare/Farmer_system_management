@@ -12,7 +12,9 @@ import { LuTwitter } from "react-icons/lu";
 import { RiCopyrightLine } from "react-icons/ri";
 import { SignUpButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 const Footer = () => {
+  const t = useTranslations("footer");
   const pathName = usePathname();
   if (
     pathName.startsWith("/si") ||
@@ -30,16 +32,14 @@ const Footer = () => {
         <div className="flex justify-between w-full items-center">
           <FooterItem />
           <div className="flex flex-col w-fit items-center gap-4">
-            <h2 className="font-semibold text-[16px]">
-              Sign up for New and updates
-            </h2>
+            <h2 className="font-semibold text-[16px]">{t("sign_up")}</h2>
             <SignUpButton>
               <fieldset className="relative border group w-full focus-within:border-blue-700 border-gray-300 px-2 rounded-lg">
                 <legend
                   className="text-blue-700 absolute bg-primary-800  -top-3 left-2 text-sm hidden group-focus-within:block
                duration-300 transition-all  px-2"
                 >
-                  E-mail address
+                  {t("email_address")}
                 </legend>
                 <div className="flex items-center gap-2">
                   <FaUserAlt className="w-[24px] h-[24px] group-focus-within:text-blue-700" />

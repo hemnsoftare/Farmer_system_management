@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 const Banner = () => {
+  const t = useTranslations("banner");
   return (
     <div className="bg-[#223949] dark:bg-[#18232E] relative w-full sm:max-w-[1000px] self-center duration-200 transition-all shadow-md sm:hover:shadow-lg sm:hover:shadow-[#223949] dark:sm:hover:shadow-[#18232E] shadow-[#223949] dark:shadow-[#18232E]  md:px-[25px] lg:px-[100px] h-[250px] sm:h-[420px] py-8 sm:py-12 rounded-md flex overflow-hidden items-center justify-between">
       <div className="flex justify-between sm:gap-7 gap-4 w-full items-center flex-col">
@@ -12,7 +14,7 @@ const Banner = () => {
           transition={{ duration: 0.8, type: "spring" }}
           className="lg:text-[44px] md:text-34 font-semibold uppercase text-white dark:text-gray-200"
         >
-          Smart Watch
+          {t("smartWatch")}
         </motion.h1>
         <motion.p
           initial={{ x: 300 }}
@@ -20,7 +22,7 @@ const Banner = () => {
           transition={{ duration: 0.8, type: "spring" }}
           className="lg:text-[24px] w-[130px] sm:w-full md:text-20 text-14 text-center text-white dark:text-gray-300"
         >
-          Various designs and brands
+          {t("variousDesignsAndBrands")}
         </motion.p>
         <motion.button
           initial={{ opacity: 0 }}
@@ -28,7 +30,7 @@ const Banner = () => {
           transition={{ duration: 0.8, type: "spring" }}
           className="px-12 ml-3 mt-5 sm:hover:bg-secondary-600 duration-300 transition-all py-[6px] text-[16px] font-bold text-[#223949] dark:text-[#18232E] rounded-md bg-secondary-400 dark:bg-secondary-500"
         >
-          <Link href={"#"}> view</Link>
+          <Link href={"#"}>{t("view")}</Link>
         </motion.button>
       </div>
       <motion.div

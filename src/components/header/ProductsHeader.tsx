@@ -19,7 +19,13 @@ import Link from "next/link";
 import { catagoryProps } from "@/lib/action";
 import { getFireBase } from "@/lib/action/uploadimage";
 
-const ProductsHeader = ({ category }: { category: catagoryProps[] }) => {
+const ProductsHeader = ({
+  category,
+  lng,
+}: {
+  category: catagoryProps[];
+  lng: string;
+}) => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -29,7 +35,7 @@ const ProductsHeader = ({ category }: { category: catagoryProps[] }) => {
               href={"/products/laptop"}
               className="hover:underline underline-offset-4 md:text-12 lg:text-16 duration-200 transition-all hover:text-primary text-lg font-[400]"
             >
-              Products
+              {lng}
             </Link>
           </NavigationMenuTrigger>
           <NavigationMenuContent className="bg-white p-4 dark:bg-black w-[130px] rounded-md shadow-lg">

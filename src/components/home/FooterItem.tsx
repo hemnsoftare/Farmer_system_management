@@ -3,8 +3,37 @@ import React from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPhoneVolume } from "react-icons/fa6";
-import { footer } from "@/util/data";
+import { footerProps } from "@/lib/action";
+import { useTranslations } from "next-intl";
 const FooterItem = () => {
+  const t = useTranslations("footer");
+  const footer: footerProps[] = [
+    {
+      name: t("company"),
+      item: [
+        { name: t("about_us") },
+        { name: t("contact_us") },
+        { name: t("returns") },
+        { name: t("order_status") },
+      ],
+    },
+    {
+      name: t("info"),
+      item: [
+        { name: t("how_it_works") },
+        { name: t("our_promises") },
+        { name: t("faq") },
+      ],
+    },
+    {
+      name: t("contact_us"),
+      item: [
+        { name: t("address"), icon: "location" },
+        { name: t("phone"), icon: "phone" },
+        { name: t("email"), icon: "eamil" },
+      ],
+    },
+  ];
   return (
     <div className="flex justify-between flex-1 mr-6   items-center lg:gap-8 md:gap-4">
       {footer.map((items) => (

@@ -1,37 +1,40 @@
+"use client";
+import { useTranslations } from "next-intl";
 import { Carattere } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
 const Catagory = () => {
+  const t = useTranslations("category");
   const catagory: { name: string; image: string; path: string }[] = [
     {
-      name: "accessoiries",
+      name: t("accessories"),
       image: "/a.png",
       path: "accessoiries",
     },
     {
-      name: "camera",
+      name: t("camera"),
       image: "/c.png",
       path: "camera",
     },
     {
-      name: "laptop",
+      name: t("laptop"),
       image: "/l.png",
       path: "laptop",
     },
     {
-      name: "smart phone",
+      name: t("smart Phone"),
       image: "/s.png",
       path: "smartPhone",
     },
     {
-      name: "gaming",
+      name: t("gaming"),
       image: "/g.png",
       path: "gaming",
     },
     {
-      name: "smart watch",
+      name: t("smart Watch"),
       image: "/sw.png",
       path: "smartWatch",
     },

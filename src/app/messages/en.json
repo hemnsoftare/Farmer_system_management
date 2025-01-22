@@ -1,0 +1,137 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About US",
+        "contactus": "Contact us",
+        "login": "Login",
+        "signup": "sign Up",
+        "logout": "Logout",
+        "setting": "Setting",
+        "blog": "Blog",
+        "faq": "FAQ",
+        "turkish": "Turkish",
+        "theme": "theme",
+        "dark": "Dark",
+        "light": "Light",
+        "system": "System",
+        "language": "Language",
+        "english": "English",
+        "kurdish": "Kurdish",
+        "arabic": "Arabic",
+        "products": "Products",
+        "search": "Search",
+        "dashboard": "Dashboard"
+    } ,
+    "UserHeader":{
+          "manageAccount": "Manage Account",
+          "historyOrder": "History Order",
+          "favoriteProduct": "Favorite Product",
+          "setting": "Setting",
+          "logout": "Logout",
+          "SaveBlog": "Save Blog"
+
+
+        },
+        "cart":{
+          "cart": "Cart",
+          "total": "Total",
+          "checkout": "Checkout",
+          "emptyCart": "Your cart is empty.",
+          "continueShopping": "Continue Shopping",
+          "remove": "Remove",
+          "quantity": "Quantity",
+          "price": "Price",
+          "product": "Product",
+          "totalPrice": "Total Price",
+          "emptyCartMessage": "Your cart is empty",
+          "items": "Items",
+          "viewAll": "View All",
+          "grandtotal": "Grand total",
+          "processToCheckout": "Process to checkout",
+          "messageRemove":"Remove Product in Cart"
+       
+        },
+          "search":{
+               "Search":"Search",
+               "messageNotFound":"  No results found for your search",
+               "Products":"No products found",
+                "Blogs":"No blogs found",
+               "Team Member":"No team found",
+               "Category":"No category found",
+               "allowSearch":"you are not allowed to search",
+               "product":"Product",
+               "blog":"Blog",
+               "team":"Team",
+               "category":"Category"
+
+     },
+           "hero": {
+            "title": "Tech Heim",
+               "quote": "Join the digital revolution",
+               "buttonText": "Explore more"
+          },
+          "category":{
+                         "accessories": "Accessories",
+                         "camera": "Camera",
+                         "laptop": "Laptop",
+                         "smart Phone": "Smart Phone",
+                         "gaming": "Gaming",
+                         "smart Watch": "Smart Watch"
+                         }
+,
+"sales":{
+  "title": "Products On Sale",
+  "button_shop_now": "Shop Now!",
+  "button_view_all": "View All"
+}
+,"newProduct":{
+  "title": "New Products",
+  "bestSalary": "Best Salary",
+  "button_view_all": "View All"
+}
+, "reklem":{
+    "iphone": "iPhone 15 Series",
+    "countdown": "8 Days",
+    "tagline": "It feels good to be the first",
+    "message": "Get ready for future phones. Experience innovation like never before. Stay tuned for the big iPhone 15 pre-sale.",
+    "playstation": "PlayStation 5",
+    "edition": "Digital Edition + 2TB",
+    "number":"8",
+     "day":"Days"
+  }
+,
+  "topBrand": {"title" : "Top Brand"}
+, "banner":{
+  "smartWatch": "Smart Watch",
+  "variousDesignsAndBrands": "Various designs and brands",
+  "view": "View"
+}, 
+"servies":{
+  "latestAndGreatest": "Latest and Greatest",
+  "guarantee": "Guarantee",
+  "freeShipping": "Free Shipping over 1000$",
+  "support": "24/7 Support"
+}
+,"footer": {
+    "company": "Company",
+    "about_us": "About Us",
+    "blog": "Blog",
+    "returns": "Returns",
+    "order_status": "Order Status",
+    "info": "Info",
+    "how_it_works": "How it Works?",
+    "our_promises": "Our Promises",
+    "faq": "FAQ",
+    "contact_us": "Contact Us",
+    "address": "123 Main Street, Anytown, USA",
+    "phone": "+1 (555) 123 4567",
+    "email": "TechHermSupport@gmail.com",
+    "social_media": "Social Media",
+    "sign_up": "Sign up for News and Updates",
+    "email_address": "Email Address"
+  }
+
+
+
+
+}

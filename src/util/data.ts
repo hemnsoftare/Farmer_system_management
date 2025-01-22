@@ -41,6 +41,7 @@ import {
 import { MenuItemProps } from "@nextui-org/react";
 import { BiCategoryAlt, BiSolidTimer } from "react-icons/bi";
 import { FaUsersLine } from "react-icons/fa6";
+
 const newProdcuts: Productsprops[] = [
   {
     price: 12,
@@ -165,39 +166,7 @@ const brand: [
   "/huawei.svg",
   "/lenovo.svg",
 ];
-const servies: serviesProps[] = [
-  { name: "Latest and Greatest", image: FaDesktop },
-  { name: "Guarantee", image: MdOutlineVerified },
-  { name: "Free Shipping over 1000$", image: FaShippingFast },
-  { name: "24/7 Support", image: BiSolidTimer },
-];
-const footer: footerProps[] = [
-  {
-    name: "Company",
-    item: [
-      { name: "about us" },
-      { name: "blog" },
-      { name: "returns" },
-      { name: "order status" },
-    ],
-  },
-  {
-    name: "Info",
-    item: [
-      { name: "How it works?" },
-      { name: "our promises" },
-      { name: "FAQ" },
-    ],
-  },
-  {
-    name: "Contact us",
-    item: [
-      { name: "123 Main Street, Anytown, USA", icon: "location" },
-      { name: "+1 (555) 123-4567", icon: "phone" },
-      { name: "TechHeimSupport@gmail.com", icon: "eamil" },
-    ],
-  },
-];
+
 const user: userProps = {
   name: "hemnsoftware",
   email: "hamnfarhad14@gmail.com",
@@ -402,9 +371,7 @@ export {
   bestSellers,
   user,
   brand,
-  servies,
   blogs,
-  footer,
   carts,
   categories,
   Sort,

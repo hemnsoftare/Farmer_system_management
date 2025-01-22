@@ -1,7 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "use-intl";
 const Reklam = () => {
+  const t = useTranslations("reklem");
   return (
     <motion.div
       initial={{ opacity: 0.3 }}
@@ -32,8 +34,9 @@ const Reklam = () => {
         />
         <div className="flex w-full flex-col items-start justify-between gap-2">
           <h2 className="font-bold p-2 mt-[100px] text-[20px] sm:text-2xl dark:text-white">
-            iPhone{" "}
-            <span className="text-white dark:text-[#30BCCE]">15 Series</span>
+            {t("iphone")}
+            {/* iPhone{" "}
+            <span className="text-white dark:text-[#30BCCE]">15 Series</span> */}
           </h2>
           <Image
             src={"/5iphone.svg"}
@@ -56,18 +59,17 @@ const Reklam = () => {
                     8
                   </span>
                   <span className="text-11 sm:text-16 dark:text-gray-300">
-                    Days
+                    {t("day")}
                   </span>
                 </button>
               ))}
           </div>
           <div className="flex flex-col w-[90%] items-start mt-12 justify-start">
             <h1 className="font-bold text-15 sm:text-20 dark:text-white">
-              It feels good to be the first
+              {t("tagline")}
             </h1>
             <p className="text-neutral-700 dark:text-gray-300 sm:text-16 text-justify sm:text-start text-12 pl-3">
-              Get ready for future phones. Experience innovation like never
-              before. Stay tuned for the big iPhone 15 pre-sale.
+              {t("message")}
             </p>
           </div>
         </main>
@@ -94,7 +96,7 @@ const Reklam = () => {
           className="object-cover absolute transform rotate-[180deg] bottom-0 right-0"
         />
         <h1 className="text-[#FCC870] dark:text-[#FFAA60] xl:text-center lg:text-end md:text-end text-end w-full px-4 text-2xl">
-          PlayStation 5
+          {t("playstation")}
         </h1>
         <div className="flex flex-col gap-3 items-center pl-2 w-full mt-16 justify-center">
           <Image
@@ -105,7 +107,7 @@ const Reklam = () => {
             className="sm:w-[190px] w-[210px] h-[140px] sm:h-[130px] z-[1]"
           />
           <h3 className="text-20 text-start px-3 sm:text-center font-bold w-full z-[1] text-[#FCC870] dark:text-[#FFAA60]">
-            Digital Edition + 2TB
+            {t("edition")}
           </h3>
         </div>
       </motion.div>

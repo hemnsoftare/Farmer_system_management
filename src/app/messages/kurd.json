@@ -1,0 +1,131 @@
+{
+    "header": {
+        "home": "سەرەتا",
+        "about": "سەبارەت بە ئێمە",
+        "contactus": "پەیوەندیمان بکە",
+        "login": "چوونە ژوورەوە",
+        "signup": "تۆماری کردن",
+        "logout": "چوونە دەرەوە",
+        "setting": "ڕووکاری",
+        "blog": "بلۆگ",
+        "faq": "پرسەکانى زۆر ڕوون",
+        "theme": "تیمە",
+        "turkish": "تورکی",
+        "dark": "تەمەنی سیاە",
+        "light": "تەمەنی ڕوون",
+        "system": "سیستەم",
+        "language": "زمان",
+        "english": "ئینگلیزی",
+        "kurdish": "کوردی",
+        "arabic": "عەرەبی",
+        "products": "کالا",
+        "search": "گەڕاندن",
+        "dashboard": "بەشی فەرمی"
+    },
+    "UserHeader": {
+        "manageAccount": "بەڕێوەبردنی هەساب",
+        "historyOrder": "تاریخی فەرمانی پێشوو",
+        "favoriteProduct": "کالاە فەورەیەکان",
+        "setting": "ڕووکاری",
+        "logout": "چوونە دەرەوە",
+        "SaveBlog": "هەڵگرتنی بلۆگ"
+    },
+    "cart": {
+        "cart": "عەڕەبە",
+        "total": "کۆیە",
+        "checkout": "چوونە بەرەو پەیوەندیدا",
+        "emptyCart": "عەڕەبەکەت ڕوونە.",
+        "continueShopping": "جیاکردنەوەی کڕین",
+        "remove": "سڕینەوە",
+        "quantity": "ژمارە",
+        "price": "قیمە",
+        "product": "کالا",
+        "totalPrice": "قیمەی تەواو",
+        "emptyCartMessage": "عەڕەبەکەت ڕوونە",
+        "items": "توشەکان",
+        "viewAll": "بینینی هەموو",
+        "grandtotal": "کۆیەی کۆیە",
+        "processToCheckout": "پەیوەندیدانی پەیوەندیدا",
+        "messageRemove": "سڕینەوەی کالا لە عەڕەبە"
+    },
+
+  "hero": {
+    "title": "Tech Heim",
+    "quote": "بە شەڕە دیجیتاڵەوە بەهەوڵە بەرەوپێش",
+    "buttonText": "زیاتر فێرببە"
+  }
+,"category":{
+  "accessories": "پەیوەندیدار",
+  "camera": "کەمێرا",
+  "laptop": "لەپتوپ",
+  "smart Phone": "تەلەفۆنە هەوشێوە",
+  "gaming": "گیمینگ",
+  "smart Watch": "ساعة هەوشێوە"
+}
+,
+"sales":{
+  "title": "کاڵاکانی فرۆشتن",
+  "button_shop_now": "! بازاڕکردن ئێستا ",
+  "button_view_all": "بینینی هەموو"
+}
+, "newProduct":{
+  "bestSalary": "باشترین مووەندی",
+  "title": "کاڵاکانی نوێ",
+  "button_view_all": "بینینی هەموو"
+},
+  "reklem": {
+    "iphone": "ژێنەڕاڵی ئایفۆن 15",
+    "countdown": "8 ڕۆژ",
+    "tagline": "هەستێکی خۆشە کە یەکەم بیت",
+    "message": "ئامادە بۆ تەلەفۆنەکانی داهاتوو. ئەزموونی نوێکردنەوەی وەک هەرگیز پێش ئێستا نەبووە. بۆ فرۆشتنی پێشەوەی ئایفۆن 15ی گەورە چاوەڕێ بکەن.",
+    "playstation": "پلەی ستەیشن 5",
+    "edition": "وەشانی دیجیتاڵ + 2 تێرابایت",
+    "number":"8",
+    "day":"ڕۆژ"
+  }
+,
+  "topBrand":{ "title": "باشترین براند"
+}
+, "banner" : {
+  "smartWatch": "ساعةی زاناک",
+  "variousDesignsAndBrands": "جۆراوجۆر دیزاین و براند",
+  "view": "بینین"
+}
+,"servies":{
+  "latestAndGreatest": "دواترین و باشترین",
+  "guarantee": "دەستپێک",
+  "freeShipping": "گەیاندنی خاوەند بێ بەرامبەر ١٠٠٠$",
+  "support": "پشتگیری ٢٤/٧"
+}, 
+"footer": {
+    "company": "کۆمپانیا",
+    "about_us": "دەربارەی ئێمە",
+    "blog": "بڵۆگ",
+    "returns": "گەڕاندنەوە",
+    "order_status": "بارودۆخی فەرمان",
+    "info": "زانیاری",
+    "how_it_works": "چۆن کار دەکات؟",
+    "our_promises": "وەعدەکانمان",
+    "faq": "پرسیار و وەڵامە باوەکان",
+    "contact_us": "پەیوەندی بە ئێمەوە بکە",
+    "address": "ڕووبەری سەرەکی ١٢٣، ئەنی تاون، ئەمریکا",
+    "phone": "+1 (555) 123 4567",
+    "email": "TechHermSupport@gmail.com",
+    "social_media": "تۆڕەکانی کۆمەڵایەتی",
+    "sign_up": "تۆماربکە بۆ هەواڵ و نوێکردنەوەکان",
+    "email_address": "ئادرێسی ئیمەیل"
+  }, "search": {
+    "Search": "گەڕان",
+    "messageNotFound": "هیچ ئەنجامێک نەدۆزرایەوە بۆ گەڕانی تۆ",
+    "Products": "هیچ بەرهەمێک نەدۆزرایەوە",
+    "Blogs": "هیچ بڵاگەیەک نەدۆزرایەوە",
+    "Team Member": "هیچ ئەندامێک لە تیمەوە نەدۆزرایەوە",
+    "Category": "هیچ هاوپۆلەک نەدۆزرایەوە",
+    "allowSearch": "تۆ ڕێگە پێنەدراوی بۆ گەڕان",
+    "product": "بەرهەم",
+    "blog": "بڵاگ",
+    "team": "تیم",
+    "category": "هاوپۆل"
+  }
+
+}

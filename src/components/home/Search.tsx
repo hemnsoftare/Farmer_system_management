@@ -19,6 +19,7 @@ import { IoSearch } from "react-icons/io5";
 import { useUser } from "@clerk/nextjs";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { app } from "@/config/firebaseConfig";
+import { useTranslations } from "next-intl";
 
 const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -33,7 +34,7 @@ const SearchComponent = () => {
   });
   const [show, setShow] = useState(false);
   const { user } = useUser();
-  const pathName = usePathname();
+  const t = useTranslations("search");
   const db = getFirestore(app);
 
   const onChangeHandle = (value: string) => {
@@ -106,6 +107,15 @@ const SearchComponent = () => {
       <>
         <p className="px-3 py-2 w-full flex justify-between font-semibold items-center duration-300 bg-gray-300 cursor-pointer">
           {title}
+          {t(
+            title === "Products"
+              ? "product"
+              : title === "Category"
+                ? "category"
+                : title === "Team Member"
+                  ? "team"
+                  : "blog"
+          )}
         </p>
         {data.length > 0 ? (
           data.map((item) => (
@@ -121,7 +131,7 @@ const SearchComponent = () => {
           ))
         ) : (
           <p className="px-3 py-2 w-full text-center bg-gray-50 text-neutral-500">
-            No {title.toLowerCase()} found
+            {t(title)}
           </p>
         )}
       </>
@@ -151,7 +161,7 @@ const SearchComponent = () => {
             value={searchValue}
             onChange={(e) => onChangeHandle(e.target.value)}
             className="w-full py-2 rounded-full placeholder:text-secondary shadow-sm  shadow-secondary dark:bg-neutral-800 dark:text-white outline-none focus:bg-secondary-100/15 duration-300 px-3 bsorder border-secondary"
-            placeholder="Search"
+            placeholder={t("Search")}
           />
 
           <IoSearch className="absolute top-3 right-4 text-secondary" />
@@ -202,9 +212,17 @@ const SearchComponent = () => {
                     (item) => item.numberOfSearches.toFixed(0)
                   )}
               </>
+            ) : !search_by.search.includes("blog") &&
+              !search_by.search.includes("category") &&
+              !search_by.search.includes("product") &&
+              !search_by.search.includes("team_member") ? (
+              <p className="px-3 z-10 py-4 w-full text-center text-neutral-500">
+                {t("allowSearch")}
+                you are not allowed to search
+              </p>
             ) : (
-              <p className="px-3 py-4 w-full text-center text-neutral-500">
-                No results found for your search
+              <p className="px-3 z-10 py-4 w-full text-center text-neutral-500">
+                {t("messageNotFound")}
               </p>
             )}
           </ul>

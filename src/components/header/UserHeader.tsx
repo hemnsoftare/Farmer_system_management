@@ -13,12 +13,12 @@ import { MdOutlineManageAccounts } from "react-icons/md";
 import { LuHistory } from "react-icons/lu";
 import { FaBlog, FaHeart, FaRegUser } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
-import { RiAccountCircleLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
-import Setting from "./setting";
+import { useTranslations } from "next-intl";
 
 const UserHeader = () => {
   const { user } = useUser(); // Access the current user data
+  const t = useTranslations("UserHeader");
 
   // Ensure user data and profileImageUrl are available
   const profileImageUrl = user?.imageUrl || "/default-profile-image.png";
@@ -26,23 +26,22 @@ const UserHeader = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none border-none">
-        {/* Use the user's profile image URL */}
-        <FaRegUser className="object-cover w-5    h-5 md:h-6 md:w-6" />
+        <FaRegUser className="object-cover w-5 h-5 md:h-6 md:w-6" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className=" z-50 dark:bg-black border dark:border-white/50 mt-3 bg-white">
-        <DropdownMenuLabel className="flex gap-2 border-b-2  dark:border-neutral-700 border-neutral-100 items-center justify-between">
+      <DropdownMenuContent className="z-50 dark:bg-black border dark:border-white/50 mt-3 bg-white">
+        <DropdownMenuLabel className="flex gap-2 border-b-2 dark:border-neutral-700 border-neutral-100 items-center justify-between">
           <Image
-            src={profileImageUrl} // Use the computed image URL
+            src={profileImageUrl}
             alt="user"
             width={24}
             height={24}
-            className="object-cover min-h-[34px] max-h-[34px] min-w-[34px] max-w-[34px]  rounded-full"
+            className="object-cover min-h-[34px] max-h-[34px] min-w-[34px] max-w-[34px] rounded-full"
           />
           <div className="flex gap-0 items-start justify-center flex-col">
             <span className="capitalize text-blue-800 text-[12px] ">
               {user?.fullName}
             </span>
-            <span className=" text-[10px] cursor-pointer hover:text-blue-700 hover:underline underline-offset-4 ">
+            <span className="text-[10px] cursor-pointer hover:text-blue-700 hover:underline underline-offset-4">
               {user?.primaryEmailAddress?.emailAddress}
             </span>
           </div>
@@ -50,42 +49,37 @@ const UserHeader = () => {
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link href={"/user-profile"} className="flex gap-2 items-center">
             <MdOutlineManageAccounts color=" #f45e0c" className="size-[23px]" />
-            <span> Manage Account</span>
+            <span>{t("manageAccount")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link href={"/historyOrder"} className="flex items-center gap-2">
-            {" "}
-            <LuHistory color=" #f45e0c" className="size-[23px]" />{" "}
-            <span> Histroy Order</span>
-          </Link>
-        </DropdownMenuItem>{" "}
-        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2  border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          <Link href={"/favorite"} className="flex items-center gap-2">
-            {" "}
-            <FaHeart color=" #f45e0c" className="size-[23px]" />{" "}
-            <span> Favorite Products</span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2  border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          <Link href={"/saveBlog"} className="flex items-center gap-2">
-            {" "}
-            <FaBlog color=" #f45e0c" className="size-[23px]" />{" "}
-            <span> Save Blog</span>
-          </Link>
-        </DropdownMenuItem>{" "}
-        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2  border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          <Link href={"/setting"} className="flex items-center gap-2">
-            {" "}
-            <IoSettingsOutline color=" #f45e0c" className="size-[23px]" />{" "}
-            <span> Setting </span>
+            <LuHistory color=" #f45e0c" className="size-[23px]" />
+            <span>{t("historyOrder")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
-          {/* Sign out button */}
+          <Link href={"/favorite"} className="flex items-center gap-2">
+            <FaHeart color=" #f45e0c" className="size-[23px]" />
+            <span>{t("favoriteProduct")}</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+          <Link href={"/saveBlog"} className="flex items-center gap-2">
+            <FaBlog color=" #f45e0c" className="size-[23px]" />
+            <span>{t("SaveBlog")}</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
+          <Link href={"/setting"} className="flex items-center gap-2">
+            <IoSettingsOutline color=" #f45e0c" className="size-[23px]" />
+            <span>{t("setting")}</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <span className="w-full flex items-center gap-2">
             <CiLogout color=" #f45e0c" className="size-[23px]" />
-            <SignOutButton> LOG OUT</SignOutButton>
+            <SignOutButton>{t("logout")}</SignOutButton>
           </span>
         </DropdownMenuItem>
       </DropdownMenuContent>

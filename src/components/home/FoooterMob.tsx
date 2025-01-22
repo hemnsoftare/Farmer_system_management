@@ -14,11 +14,40 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { footer } from "@/util/data";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuTwitter } from "react-icons/lu";
 import { usePathname } from "next/navigation";
+import { footerProps } from "@/lib/action";
+import { useTranslations } from "next-intl";
 const FoooterMob = () => {
+  const t = useTranslations("footer");
+  const footer: footerProps[] = [
+    {
+      name: t("company"),
+      item: [
+        { name: t("about_us") },
+        { name: t("contact_us") },
+        { name: t("returns") },
+        { name: t("order_status") },
+      ],
+    },
+    {
+      name: t("info"),
+      item: [
+        { name: t("how_it_works") },
+        { name: t("our_promises") },
+        { name: t("faq") },
+      ],
+    },
+    {
+      name: t("contact_us"),
+      item: [
+        { name: t("address"), icon: "location" },
+        { name: t("phone"), icon: "phone" },
+        { name: t("email"), icon: "eamil" },
+      ],
+    },
+  ];
   const pathName = usePathname();
   if (
     pathName.startsWith("/si") ||
