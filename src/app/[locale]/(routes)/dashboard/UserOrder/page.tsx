@@ -42,6 +42,7 @@ const Page = () => {
   return (
     <div className="flex flex-col lg:flex-row overflow-hidden justify-start w-full gap-2 px-2 items-start">
       {/* Order History Section */}
+      <br />
       <div className="w-full py-9">
         <h2 className="font-semibold text-20">Order History</h2>
         <h2 className="text-17 text-neutral-500">
