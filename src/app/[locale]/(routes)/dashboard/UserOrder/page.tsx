@@ -49,7 +49,7 @@ const Page = () => {
         </h2>
         {/* Table Container */}
         <div className="overflow-x-auto">
-          <table className="border w-full min-w-[600px]">
+          <table className="border w-full md:min-w-[600px]">
             <thead className="bg-neutral-200 text-10 md:text-16">
               <tr>
                 <th>id</th>
