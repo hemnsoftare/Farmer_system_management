@@ -113,18 +113,80 @@
     "email_address": "عنوان البريد الإلكتروني"
   }
 , "search": {
-    "Search": "گەڕان",
-    "messageNotFound": "هیچ ئەنجامێک نەدۆزرایەوە بۆ گەڕانی تۆ",
-    "Products": "هیچ بەرهەمێک نەدۆزرایەوە",
-    "Blogs": "هیچ بڵاگەیەک نەدۆزرایەوە",
-    "Team Member": "هیچ ئەندامێک لە تیمەوە نەدۆزرایەوە",
-    "Category": "هیچ هاوپۆلەک نەدۆزرایەوە",
-    "allowSearch": "تۆ ڕێگە پێنەدراوی بۆ گەڕان",
-    "product": "بەرهەم",
-    "blog": "بڵاگ",
-    "team": "تیم",
-    "category": "هاوپۆل"
-  }
+    "Search": "بحث",
+    "messageNotFound": "لم يتم العثور على أي نتائج لبحثك",
+    "Products": "لم يتم العثور على أي منتج",
+    "Blogs": "لم يتم العثور على أي مدونة",
+    "Team Member": "لم يتم العثور على أي عضو في الفريق",
+    "Category": "لم يتم العثور على أي فئة",
+    "allowSearch": "غير مسموح لك بالبحث",
+    "product": "منتج",
+    "blog": "مدونة",
+    "team": "فريق",
+    "category": "فئة"
+}
+
+,  "viewAll": {
+    "last" : "آخر",
+    "last4DiscountProducts": " منتجات خصم",
+    "last7NumberSaleProducts": " منتجات مباعة",
+    "last7NewProducts": "منتجات جديدة",  "message": "لا توجد منتجات"
+  },"products":{
+  "home": "الرئيسية",
+  "products": "المنتجات",
+  "filters": "التصفية",
+  "clearAll": "مسح الكل",
+  "sortBy": "ترتيب حسب",
+  "newest": "الأحدث",
+  "low": "الأقل",
+  "to": "إلى",
+  "high": "الأعلى",
+  "brand": "العلامة التجارية",
+  "color": "اللون",
+  "discount": "الخصم",
+  "price": "السعر",
+   "noProductsAvailable": "لا توجد منتجات متاحة",
+    "priceRange": "نطاق السعر",  "back": "الرجوع",
+  "apply": "تطبيق",  "similarProducts": "منتجات مشابهة",
+  "addToCart": "أضف إلى السلة",
+  "successAction": "إجراء ناجح"
+},
+"productInfo":{
+  "totalPrice": "السعر الكلي",
+  "discount": "خصم",
+  "price": "السعر",
+  "brand": "العلامة التجارية",
+  "selectColor": "اختر اللون",
+  "freeDelivery": "توصيل مجاني",
+  "guaranteed": "مضمون",
+  "inStock": "متوفر"
+},
+  "blog": {
+    "recent_posts": "أحدث المشاركات",
+    "videos": "فيديوهات",
+    "home": "الرئيسية",
+    "blog": "مدونة",
+    "save": "حفظ",
+    "unsave": "إلغاء الحفظ","more": "المزيد",
+    "Related_Blogs": "مدونات ذات صلة"
+  },
+  "faq": {
+    "home": "الرئيسية",
+    "faqs": "الأسئلة الشائعة",
+    "table_of_contents": "جدول المحتويات"
+  },
+  "contact": {
+    "home": "الرئيسية",
+    "contact_us": "اتصل بنا",
+    "message_us": "أرسل لنا رسالة",
+    "description": "نحن هنا لمساعدتك في كل خطوة. سواء كان لديك سؤال، تحتاج إلى دعم تقني، أو ترغب فقط في مشاركة ملاحظاتك، فإن فريقنا المخصص مستعد للاستماع وتقديم المساعدة الفورية.",
+    "submit": "إرسال",
+    "message": "رسالة"
+  }, "about": {
+      "home": "الرئيسية",
+      "about_us": "معلومات عنا"
+    }
+
 
 
 

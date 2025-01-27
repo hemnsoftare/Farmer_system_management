@@ -73,14 +73,14 @@ const Page = () => {
           </Link>
         </div>
       </h1>
-      <div className="w-full flex-wrap flex items-center justify-between">
+      <div className="w-full flex-wrap flex items-center jbustify-center gap-3">
         <CatagoryProducts
           catagory={category}
           handleSelected={setcategory}
           title="products"
         />
       </div>
-      <div className="grid lg:grid-cols-4 w-full grid-cols-2 gap-3 xl:grid-cols-5 ">
+      <div className=" flex flex-wrap gap-4  justify-center items-center  bg-blue-50 w-full  ">
         {prodcts &&
           prodcts.map((item) => (
             <NewProducts

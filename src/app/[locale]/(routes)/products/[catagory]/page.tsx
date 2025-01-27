@@ -12,6 +12,7 @@ import { Loader } from "@/app/[locale]/loader";
 import { getAllItemNames } from "@/lib/action/fovarit";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 const MyComponent = ({ params }) => {
   const cate: { catagory: string } = React.use(params);
   console.log(cate);
@@ -24,6 +25,7 @@ const MyComponent = ({ params }) => {
     discount: false,
     price: [1, 100000],
   });
+  const t = useTranslations("products");
   const [products, setproducts] = useState<ProductFormInput[]>([]);
   const [sortBy, setsortBy] = useState<string>("new");
   const [load, setload] = useState(true);
@@ -110,9 +112,9 @@ const MyComponent = ({ params }) => {
           href={"/"}
           className="hover:text-blue-800 dark:text-blue-600 px-2 hover:underline"
         >
-          home
+          {t("home")}
         </Link>
-        &gt; <span className="cursor-pointer"> products </span>
+        &gt; <span className="cursor-pointer"> {t("products")} </span>
       </p>
       <CatagoryProducts
         handleSelected={(name) => {
@@ -251,9 +253,9 @@ const MyComponent = ({ params }) => {
           </motion.div>
         ) : (
           <h2 className="font-bold flex items-center justify-center col-span-3 text-30 text-center w-full ">
-            No products available
+            {t("noProductsAvailable")}
           </h2>
-        )}{" "}
+        )}
       </div>
       <br />
     </motion.div>

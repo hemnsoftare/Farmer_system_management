@@ -130,8 +130,72 @@
     "sign_up": "Sign up for News and Updates",
     "email_address": "Email Address"
   }
-
-
-
+,
+"viewAll": {
+    "last":"Last",
+    "last4DiscountProducts": " discount products",
+    "last7NumberSaleProducts": "number sale products",
+    "message": "Have not product",
+    "last7NewProducts": "new products"
+  }
+, "products":{
+  "home": "Home",
+  "products": "Products",
+  "filters": "Filters",
+  "clearAll": "Clear All",
+  "sortBy": "Sort By",
+  "newest": "Newest",
+  "low": "Low",
+  "to": "to",
+  "high": "High",
+  "brand": "Brand",
+  "color": "Color",
+  "discount": "Discount",
+  "price": "Price",
+   "noProductsAvailable": "No products available",
+   "priceRange": "Price Range",
+   "back": "Back",
+  "apply": "Apply",
+   "similarProducts": "Similar products", "addToCart": "Add to Cart",
+  "successAction": "Success action"
+   
+} ,
+"productInfo":{
+  "totalPrice": "Total Price",
+  "discount": "Discount",
+  "price": "Price",
+  "brand": "Brand",
+  "selectColor": "Select Color",
+  "freeDelivery": "Free Delivery",
+  "guaranteed": "Guaranteed",
+  "inStock": "In Stock"
+}
+,
+"blog": {
+    "recent_posts": "Recent Posts",
+    "videos": "Videos",
+    "home": "Home",
+    "blog": "Blog",
+    "save": "Save",
+    "unsave": "Unsave",
+    "Related_Blogs": "Related Blogs",
+    "more": "more"
+  },
+  "faq": {
+    "home": "Home",
+    "faqs": "FAQs",
+    "table_of_contents": "Table of Contents"
+  },
+  "contact": {
+    "home": "Home",
+    "contact_us": "Contact Us",
+    "message_us": "Message Us",
+    "description": "We are here to assist you every step of the way. Whether you have a question, need technical support, or simply want to share your feedback, our dedicated team is ready to listen and provide prompt assistance.",
+    "submit": "Submit",
+    "message": "Message"
+  }, "about": {
+      "home": "Home",
+      "about_us": "About Us"
+    }
 
 }

@@ -73,14 +73,6 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
       <SearchComponent />
-      {/* <InboxNotificationList>
-        {inboxNotifications.map((inboxNotification) => (
-          <InboxNotification
-            key={inboxNotification.id}
-            inboxNotification={inboxNotification}
-          />
-        ))}
-      </InboxNotificationList> */}
       <Hero /> <Catagory /> <Sales />
       <motion.div className="flex flex-col px-3 dark:text-white w-full items-center justify-center">
         <div

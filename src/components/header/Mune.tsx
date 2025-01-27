@@ -161,13 +161,34 @@ import {
 } from "react-icons/fa";
 import { catagoryProps } from "@/lib/action";
 import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-
+import { useTranslations } from "next-intl";
+import { LoginButton, SingUp } from "./Header";
+import { lang } from "@/lib/action/uploadimage";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 const Mune = ({ category }: { category: catagoryProps[] }) => {
   const [showSheet, setShowSheet] = useState(false);
   const router = usePathname();
-
+  const r = useRouter();
+  const handleHideSheet = () => {
+    setTimeout(() => {
+      setShowSheet(false);
+    }, 500);
+  };
+  const t = useTranslations("header");
   const handleOverlayClick = () => setShowSheet(false);
+  const changelanguage = (lang: string) => {
+    // Get the current URL
+    const currentPath = window.location.pathname; // Use the browser's `pathname`
+    const newPath = currentPath.replace(/^\/[a-z]{2}/, `/${lang}`); // Replace the language prefix
 
+    // Push the new path
+    r.push(newPath);
+  };
   const isActive = router;
 
   return (
@@ -207,18 +228,25 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 isActive === "/"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }`}
+              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
             >
               <FaHome size={22} />
-              Home
+              {t("home")}
             </Link>
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition">
+                <AccordionTrigger
+                  className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
+                    lang === "ar" || lang === "ku"
+                      ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2"
+                      : "flex-row border-b-0 border-r-0 border-l-2 border-t-2"
+                  } w-full border border-secondary`}
+                >
                   <FaBox size={22} />
-                  Products
+                  {t("products")}
                 </AccordionTrigger>
-                <AccordionContent className="pl-8 flex flex-col gap-4 mt-3">
+
+                <AccordionContent className=" w-full flex flex-col gap-4 mt-3">
                   {category.map((item) => (
                     <Link
                       key={item.name}
@@ -227,7 +255,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                         isActive.includes(`/products/${item.name}`)
                           ? "bg-blue-500 text-white"
                           : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-                      }`}
+                      }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
                     >
                       <Image
                         src={item.image.link}
@@ -242,16 +270,58 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
+                {t("language")}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
+                <DropdownMenuItem
+                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+                  onClick={() => changelanguage("en")}
+                >
+                  {t("english")}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+                  onClick={() => changelanguage("ku")}
+                >
+                  {t("kurdish")}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+                  onClick={() => changelanguage("tr")}
+                >
+                  {t("turkish")}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+                  onClick={() => changelanguage("ar")}
+                >
+                  {t("arabic")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Link
+              href="/setting"
+              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                isActive.includes("/settin")
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
+            >
+              <FaBlog size={22} />
+              {t("setting")}
+            </Link>
             <Link
               href="/blog"
               className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
                 isActive.includes("/blog")
                   ? "bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }`}
+              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
             >
               <FaBlog size={22} />
-              Blog
+              {t("blog")}
             </Link>
             <Link
               href="/FAQ"
@@ -259,10 +329,10 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 isActive.includes("/FAQ")
                   ? "bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }`}
+              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary `}
             >
               <FaQuestionCircle size={22} />
-              FAQ
+              {t("faq")}
             </Link>
             <Link
               href="/ContactUs"
@@ -270,10 +340,10 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 isActive.includes("/ContactUs")
                   ? "bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }`}
+              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary `}
             >
               <FaPhone size={22} />
-              Contact Us
+              {t("contactus")}
             </Link>
             <Link
               href="/About"
@@ -281,23 +351,23 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 isActive.includes("/About")
                   ? "bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }`}
+              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary `}
             >
               <FaInfoCircle size={22} />
-              About
+              {t("about")}
             </Link>
             <SignedOut>
               <div className="flex gap-5 mt-10">
-                <SignInButton>
-                  <button className="w-full px-6 py-3 text-lg font-semibold bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition">
-                    Login
-                  </button>
-                </SignInButton>
-                <SignUpButton>
-                  <button className="w-full px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition">
-                    Sign Up
-                  </button>
-                </SignUpButton>
+                <button className="w-full px-6 py-3 text-lg font-semibold bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition">
+                  <SignInButton>
+                    <LoginButton />
+                  </SignInButton>
+                </button>
+                <button className="w-full px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition">
+                  <SignUpButton>
+                    <SingUp />
+                  </SignUpButton>
+                </button>
               </div>
             </SignedOut>
           </ul>

@@ -9,6 +9,7 @@ import { getproductByCategory } from "@/lib/action/uploadimage";
 import Link from "next/link";
 import { app } from "@/config/firebaseConfig";
 import LoadingProducts from "@/components/products/loadingProducts";
+import { useTranslations } from "next-intl";
 const SingleProduct = ({ params }) => {
   const param: any = use(params);
   console.log(params);
@@ -19,7 +20,7 @@ const SingleProduct = ({ params }) => {
   );
 
   const db = getFirestore(app);
-
+  const t = useTranslations("products");
   useEffect(() => {
     const getProduct = async () => {
       setload(true);
@@ -39,16 +40,16 @@ const SingleProduct = ({ params }) => {
     <div className="flex flex-col w-full py-4">
       <span className="lg:text-12 mb-4 px-3 md:text-12">
         <Link href="/" className="hover:text-blue-800 hover:underline">
-          home
+          {t("home")}
         </Link>{" "}
         &gt;
         <Link
           href={`/products/${param.catagory}`}
           className="hover:text-blue-800 hover:underline"
         >
-          products
+          {t("products")}
         </Link>{" "}
-        &gt; laptop
+        &gt; {param.catagory}
       </span>
       <header className="flex flex-col dark:text-gray-600 sm:flex-row w-full sm:items-start justify-center items-center sm:justify-start gap-4">
         {load ? (
@@ -62,7 +63,7 @@ const SingleProduct = ({ params }) => {
         <hr />
         <div className="flex mt-6 py-3 flex-col w-full">
           <h2 className="font-semibold px-3 dark:text-gray-500 text-22">
-            Similar products
+            {t("similarProducts")}
           </h2>
           <div className="flex flex-nowrap w-full px-3 items-center overflow-x-auto sm:overflowx-x-hidden   justify-start">
             <ForProducts products={similarProducts} />

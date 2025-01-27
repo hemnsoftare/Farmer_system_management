@@ -10,7 +10,6 @@ import Footer from "@/components/home/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import FoooterMob from "@/components/home/FoooterMob";
 import { ThemeProvider, useTheme } from "next-themes";
-import Search from "@/components/home/Search";
 import { usePathname } from "next/navigation";
 import "@liveblocks/react-ui/styles.css";
 export default function ClientProviders({
@@ -39,9 +38,9 @@ export default function ClientProviders({
               <ToastProvider>
                 <div
                   className={`${
-                    pathName.startsWith("/dash")
-                      ? " relative  dark:bg-black "
-                      : "md:px-[30px] lg:px-[40px] relative transition-colors duration-300 bg-white dark:text-neutral-200 text-black dark:bg-black"
+                    pathName.includes("/dash")
+                      ? " relative px-0 w-full bg-gray-50 dark:bg-black "
+                      : "md:px-[30px] lg:px-[40px] relative transition-colors duration-300 bg-gray-50 dark:text-neutral-200 text-black dark:bg-slate-900"
                   }`}
                 >
                   <Header />

@@ -125,5 +125,70 @@
     "social_media": "Sosyal Medya",
     "sign_up": "Haberler ve Güncellemeler için Kaydolun",
     "email_address": "E-posta Adresi"
+  },
+   "viewAll":{
+    "last" : "Son",
+    "last4DiscountProducts": " indirim ürünü",
+    "last7NumberSaleProducts": " satış ürünü",
+    "last7NewProducts": "yeni ürün",
+        "message": "Ürün yok"
+
   }
+  , "products":{
+  "home": "Ana Sayfa",
+  "products": "Ürünler",
+  "filters": "Filtreler",
+  "clearAll": "Tümünü Temizle",
+  "sortBy": "Sırala",
+  "newest": "En Yeni",
+  "low": "Düşük",
+  "to": "ile",
+  "high": "Yüksek",
+  "brand": "Marka",
+  "color": "Renk",
+  "discount": "İndirim",
+  "price": "Fiyat",
+    "noProductsAvailable": "Ürün mevcut değil",
+      "priceRange": "Fiyat Aralığı", "back": "Geri",
+  "apply": "Uygula","similarProducts": "Benzer ürünler",
+   "addToCart": "Sepete Ekle",
+  "successAction": "Başarılı işlem"
+},
+"productInfo":{
+  "totalPrice": "Toplam Fiyat",
+  "discount": "İndirim",
+  "price": "Fiyat",
+  "brand": "Marka",
+  "selectColor": "Renk Seç",
+  "freeDelivery": "Ücretsiz Teslimat",
+  "guaranteed": "Garantili",
+  "inStock": "Stokta Var"
+},
+"blog": {
+    "recent_posts": "Son Gönderiler",
+    "videos": "Videolar",
+    "home": "Ana Sayfa",
+    "blog": "Blog",
+    "save": "Kaydet",
+    "unsave": "Kaydı Kaldır",
+    "more": "Daha Fazla",
+    "Related_Blogs": "İlgili Bloglar"
+  },
+  "faq": {
+    "home": "Ana Sayfa",
+    "faqs": "Sıkça Sorulan Sorular",
+    "table_of_contents": "İçindekiler Tablosu"
+  },
+  "contact": {
+    "home": "Ana Sayfa",
+    "contact_us": "Bize Ulaşın",
+    "message_us": "Bize Mesaj Gönderin",
+    "description": "Her adımda size yardımcı olmak için buradayız. Bir sorunuz varsa, teknik desteğe ihtiyacınız varsa veya yalnızca geri bildirimlerinizi paylaşmak istiyorsanız, özel ekibimiz sizi dinlemeye ve hızlı bir şekilde yardımcı olmaya hazır.",
+    "submit": "Gönder",
+    "message": "Mesaj"
+  }
+,  "about": {
+      "home": "Ana Sayfa",
+      "about_us": "Hakkımızda"
+    }
 }

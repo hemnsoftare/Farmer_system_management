@@ -49,17 +49,17 @@ const Page = () => {
           Track, return or purchase items
         </h2>
         {/* Table Container */}
-        <div className="overflow-x-auto">
-          <table className="border w-full md:min-w-[600px]">
-            <thead className="bg-neutral-200 text-10 md:text-16">
+        <div className="overflow-x-auto px-2">
+          <table className="border-collapse w-full rounded-lg overflow-hidden">
+            <thead className="bg-gradient-to-r w-full from-indigo-500 to-purple-500 text-white text-sm md:text-base">
               <tr>
-                <th>id</th>
-                <th className="">User</th>
-                <th className="">Orders Item</th>
-                <th className="">Transaction ID</th>
-                <th className="">Email</th>
-                <th className="">Total Price</th>
-                <th className="">Order Date</th>
+                <th className="py-3 px-4">#</th>
+                <th className="py-3 px-4 min-w-[120px]">User</th>
+                <th className="py-3 px-4 min-w-[120px]">Orders Item</th>
+                <th className="py-3 px-4 min-w-[120px]">Transaction ID</th>
+                <th className="py-3 px-4 min-w-[120px]">Email</th>
+                <th className="py-3 px-4 min-w-[120px]">Total Price</th>
+                <th className="py-3 px-4 min-w-[120px]">Order Date</th>
               </tr>
             </thead>
             <tbody>
@@ -77,15 +77,19 @@ const Page = () => {
                         setshowOrder(true);
                         handleShowCartSlider();
                       }}
-                      className={` ${index % 2 == 0 ? "bg-neutral-50" : "bg-neutral-200"} text-neutral-500 text-9 md:text-14 transition-all duration-300 cursor-pointer border md:hover:bg-neutral-50 px-1 py-1 text-center`}
+                      className={`${
+                        index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
+                      } hover:bg-indigo-100 text-gray-700 text-sm md:text-base transition-all duration-300 cursor-pointer border-b`}
                     >
-                      <td>{index + 1}</td>
-                      <td>{item.fullName}</td>
-                      <td>{item.orderItems.length}</td>
-                      <td>{item.id}</td>
-                      <td>{item.email}</td>
-                      <td>{item.totalAmount}</td>
-                      <td>{formattedDate}</td>
+                      <td className="py-3 px-4 text-center">{index + 1}</td>
+                      <td className="py-3 px-4">{item.fullName}</td>
+                      <td className="py-3 px-4 text-center">
+                        {item.orderItems.length}
+                      </td>
+                      <td className="py-3 px-4">{item.id}</td>
+                      <td className="py-3 px-4">{item.email}</td>
+                      <td className="py-3 px-4">${item.totalAmount}</td>
+                      <td className="py-3 px-4">{formattedDate}</td>
                     </tr>
                   );
                 })}

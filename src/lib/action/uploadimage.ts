@@ -488,3 +488,5 @@ export const setComments = async ({
 //       userIdLike === item.userId
 //   );
 // };
+export const lang =
+  typeof window !== "undefined" ? window.location.pathname.split("/")[1] : "fa";

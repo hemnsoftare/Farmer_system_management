@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import ProductsHeader from "./ProductsHeader";
 import UserHeader from "./UserHeader";
 import CartHeader from "./CartHeader";
-import Search from "../home/Search";
+// import Search from "../home/Search";
 import {
   SignedIn,
   SignedOut,
@@ -19,20 +19,17 @@ import { catagoryProps, ItemCartProps } from "@/lib/action";
 import { usePathname } from "next/navigation";
 import { IoMdMenu } from "react-icons/io";
 import Mune from "./Mune";
-import { getFireBase } from "@/lib/action/uploadimage";
+import { getFireBase, lang } from "@/lib/action/uploadimage";
 import { useTheme } from "next-themes";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 
 const Header = () => {
   const pathName = usePathname();
@@ -107,8 +104,16 @@ const Header = () => {
     return null;
   }
   const changelanguage = (lang: string) => {
-    router.push(`/${lang}`);
+    // Get the current URL
+    const currentPath = window.location.pathname; // Use the browser's `pathname`
+    const newPath = currentPath.replace(/^\/[a-z]{2}/, `/${lang}`); // Replace the language prefix
+
+    // Push the new path
+    router.push(newPath);
   };
+
+  let login = t("login");
+  let signup = t("signup");
   return (
     <div
       className={` ${
@@ -121,10 +126,10 @@ const Header = () => {
          flex relative z-[50] top-0 right-0 left-0  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
     >
       {/* logo */}
-      <Link href={"/"} className="hidden sm:block">
-        {" "}
+      <Link href={"/"} w-full className="hidden sm:block">
         <Image
           src={"/logo.svg"}
+          w-full
           alt="logo"
           width={48}
           height={53}
@@ -153,6 +158,7 @@ const Header = () => {
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/"}
+          w-full
         >
           {t("home")}
         </Link>
@@ -160,18 +166,21 @@ const Header = () => {
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/blog"}
+          w-full
         >
           {t("blog")}
         </Link>
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/FAQ"}
+          w-full
         >
           {t("faq")}
         </Link>
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/ContactUs"}
+          w-full
         >
           {t("contactus")}
         </Link>
@@ -179,36 +188,36 @@ const Header = () => {
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/About"}
+          w-full
         >
           {t("about")}
         </Link>
-        <SignedOut>
-          <Link
-            className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
-            href={"/setting"}
-          >
-            {t("setting")}
-          </Link>
-        </SignedOut>
+        <Link
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          href={"/setting"}
+          w-full
+        >
+          {t("setting")}
+        </Link>
         <DropdownMenu>
           <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
             {t("theme")}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
             <DropdownMenuItem
-              className="sm:hover:bg-slate-500 duration-300"
+              className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
               onClick={() => setTheme("light")}
             >
               {t("light")}
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="sm:hover:bg-slate-500 duration-300"
+              className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
               onClick={() => setTheme("dark")}
             >
               {t("dark")}
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="sm:hover:bg-slate-500 duration-300"
+              className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
               onClick={() => setTheme("orange")}
             >
               {t("system")}
@@ -217,44 +226,45 @@ const Header = () => {
         </DropdownMenu>
 
         {/* langouge */}
-        <DropdownMenu>
-          <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
-            {t("language")}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
-            <DropdownMenuItem
-              className="sm:hover:bg-slate-500 duration-300"
-              onClick={() => changelanguage("en")}
-            >
-              {t("english")}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="sm:hover:bg-slate-500 duration-300"
-              onClick={() => changelanguage("kurd")}
-            >
-              {t("kurdish")}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="sm:hover:bg-slate-500 duration-300"
-              onClick={() => changelanguage("turk")}
-            >
-              {t("turkish")}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="sm:hover:bg-slate-500 duration-300"
-              onClick={() => changelanguage("ar")}
-            >
-              {t("arabic")}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       {/* right */}
+      <DropdownMenu>
+        <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
+          {t("language")}
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
+          <DropdownMenuItem
+            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            onClick={() => changelanguage("en")}
+          >
+            {t("english")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            onClick={() => changelanguage("ku")}
+          >
+            {t("kurdish")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            onClick={() => changelanguage("tr")}
+          >
+            {t("turkish")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            onClick={() => changelanguage("ar")}
+          >
+            {t("arabic")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <div className="flex gap-2 items-center">
         {isAdmin && (
           <Link
             className="bg-secondary-400 px-3 py-1 duration-300 transition-all text-white rounded-lg hover:bg-secondary-600"
             href={"/dashboard/PersonalData"}
+            w-full
           >
             {t("dashboard")}
           </Link>
@@ -268,11 +278,15 @@ const Header = () => {
         <div className="hidden sm:block">
           <SignedOut>
             <div className="flex items-center justify-center gap-3">
-              <div className="text-primary text-12 px-3 py-1">
-                <SignInButton> {t("login")}</SignInButton>
+              <div className="text-primary cursor-pointer text-12 px-3 py-1">
+                <SignInButton>
+                  <LoginButton />
+                </SignInButton>
               </div>
-              <div className="px-3 py-1 text-8 sm:text-12 bg-blue-700 text-white rounded-lg">
-                <SignUpButton>{t("signup")}</SignUpButton>
+              <div className="px-3 py-1 text-8 cursor-pointer sm:text-12 bg-blue-700 text-white rounded-lg">
+                <SignUpButton>
+                  <SingUp />
+                </SignUpButton>
               </div>
             </div>
           </SignedOut>
@@ -289,3 +303,19 @@ const Header = () => {
 };
 
 export default Header;
+export const LoginButton = () => {
+  const t = useTranslations("header");
+  return (
+    <div className="flex items-center gap-2">
+      <span>{t("login")}</span>
+    </div>
+  );
+};
+export const SingUp = () => {
+  const t = useTranslations("header");
+  return (
+    <div className="flex items-center gap-2">
+      <span>{t("signup")}</span>
+    </div>
+  );
+};

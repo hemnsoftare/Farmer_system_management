@@ -30,8 +30,8 @@ const SearchComponent = () => {
   );
   const [searchTeam, setSearchTeam] = useState<SearchTeamProps[]>([]);
   const [search_by, setSearchBy] = useState<{ search: string[] }>({
-    search: [],
-  });
+    search: ["blog"],
+  }); // Default fallback
   const [show, setShow] = useState(false);
   const { user } = useUser();
   const t = useTranslations("search");
@@ -83,15 +83,29 @@ const SearchComponent = () => {
 
   useEffect(() => {
     const getData = async () => {
-      console.log(user, "searchhhhhhhhhhhhhhhhhhhh");
-      if (user) {
-        const searchBy = await getDoc(doc(db, "searchSetting", user.id || ""));
-        setSearchBy(searchBy.data() as { search: string[] });
-      } else {
-        const data = localStorage.getItem("search");
-        if (data) setSearchBy(JSON.parse(data));
+      let searchBy = { search: ["blog"] }; // Default fallback
+
+      try {
+        if (user) {
+          const docSnapshot = await getDoc(
+            doc(db, "searchSetting", user.id || "")
+          );
+          if (docSnapshot.exists()) {
+            searchBy = docSnapshot.data() as { search: string[] };
+          }
+        } else {
+          const localData = localStorage.getItem("search");
+          if (localData) {
+            searchBy = JSON.parse(localData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching search settings:", error);
       }
+
+      setSearchBy(searchBy);
     };
+
     getData();
   }, [db, user]);
 
@@ -160,7 +174,7 @@ const SearchComponent = () => {
             type="search"
             value={searchValue}
             onChange={(e) => onChangeHandle(e.target.value)}
-            className="w-full py-2 rounded-full placeholder:text-secondary shadow-sm  shadow-secondary dark:bg-neutral-800 dark:text-white outline-none focus:bg-secondary-100/15 duration-300 px-3 bsorder border-secondary"
+            className="w-full py-2 rounded-full placeholder:text-secondary shadow-sm shadow-secondary dark:bg-neutral-800 dark:text-white outline-none focus:bg-secondary-100/15 duration-300 px-3 border border-secondary"
             placeholder={t("Search")}
           />
 
@@ -212,13 +226,9 @@ const SearchComponent = () => {
                     (item) => item.numberOfSearches.toFixed(0)
                   )}
               </>
-            ) : !search_by.search.includes("blog") &&
-              !search_by.search.includes("category") &&
-              !search_by.search.includes("product") &&
-              !search_by.search.includes("team_member") ? (
+            ) : !search_by.search.length ? (
               <p className="px-3 z-10 py-4 w-full text-center text-neutral-500">
                 {t("allowSearch")}
-                you are not allowed to search
               </p>
             ) : (
               <p className="px-3 z-10 py-4 w-full text-center text-neutral-500">

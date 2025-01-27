@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { CiShop } from "react-icons/ci";
 import { GoVerified } from "react-icons/go";
 import { TbTruckDelivery } from "react-icons/tb";
-import { ProductInfoProps } from "@/lib/action";
-import { useDispatch, useSelector } from "react-redux";
 import { GrRadialSelected } from "react-icons/gr";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+
 const HeaderproductInfo = ({
   productinfos,
   onQuantity,
@@ -17,13 +17,18 @@ const HeaderproductInfo = ({
   quantity: number;
   selectedColor: string;
   onSelectedColor: (item: { name: string; color: string }) => void;
-  productinfos?: ProductInfoProps;
+  productinfos?: {
+    name: string;
+    colors: { name: string; color: string }[];
+    brand: string;
+    price: number;
+    discount: number;
+    infos: { title: string; description: string }[];
+  };
   onQuantity: (type: "increase" | "decrease") => void;
 }) => {
-  console.log(selectedColor);
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  console.log(state);
+  const t = useTranslations("productInfo");
+
   return (
     <>
       {/* Product Name */}
@@ -45,7 +50,7 @@ const HeaderproductInfo = ({
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <CiShop color="blue" className="lg:w-5 lg:h-5 w-5 h-5" />
-          <span>in stock</span>
+          <span>{t("inStock")}</span>
         </motion.span>
         <motion.span
           className="flex md:text-12 text-12 lg:text-16 items-center gap-2"
@@ -57,7 +62,7 @@ const HeaderproductInfo = ({
             color="blue"
             className="lg:w-5 lg:h-5 w-5 h-5 md:w-4 md:h-4"
           />
-          <span>Guaranteed</span>
+          <span>{t("guaranteed")}</span>
         </motion.span>
         <motion.span
           className="flex md:text-12 text-12 lg:text-16 items-center gap-2"
@@ -69,7 +74,7 @@ const HeaderproductInfo = ({
             color="blue"
             className="lg:w-6 lg:h-5 min-w-5 min-h-5"
           />
-          <span>Free Delivery</span>
+          <span>{t("freeDelivery")}</span>
         </motion.span>
       </div>
 
@@ -80,7 +85,7 @@ const HeaderproductInfo = ({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
       >
-        <span>Select color</span>
+        <span>{t("selectColor")}</span>
         <div className="flex gap-2 items-center justify-center">
           {productinfos?.colors.map((item) => (
             <motion.div
@@ -100,31 +105,6 @@ const HeaderproductInfo = ({
         </div>
       </motion.div>
 
-      {/* Product Info List */}
-      <motion.ul
-        className="text-neutral-500 list-disc lg:w-[70%] md:w-[90%] w-[80%] flex flex-col items-center justify-between"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.9 }}
-      >
-        <motion.li className="w-full md:text-12 lg:text-14 flex justify-between items-center">
-          <span>Brand</span>
-          <span className="font-semibold">{productinfos?.brand}</span>
-        </motion.li>
-        {productinfos?.infos.map((item) => (
-          <motion.li
-            key={item.title}
-            className="w-full md:text-12 lg:text-14 flex justify-between items-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <span>{item.title}</span>
-            <span className="font-semibold">{item.description}</span>
-          </motion.li>
-        ))}
-      </motion.ul>
-
       {/* Price and Quantity Section */}
       <motion.div
         className="flex justify-between flex-col w-[80%] lg:w-[70%] md:w-[90%] items-start"
@@ -133,10 +113,10 @@ const HeaderproductInfo = ({
         transition={{ duration: 0.5, delay: 1 }}
       >
         <span className="flex items-center w-full justify-between">
-          <span className="flex items-center gap-2">
-            <span className="text-17">Price:</span>
-            <span className="font-serif">{productinfos?.price}</span>$
-          </span>
+          <p className="flex items-center gap-2">
+            <p className="text-17">{t("price")}:</p>
+            <p className="font-serif">{productinfos?.price}</p>$
+          </p>
           <span className="flex items-center -mr-2 gap-2">
             <button
               onClick={() => onQuantity("decrease")}
@@ -156,13 +136,13 @@ const HeaderproductInfo = ({
           </span>
         </span>
         {productinfos?.discount !== 0 && (
-          <span>
-            <span>discount : </span>
-            <span className="font-serif">{productinfos?.discount}%</span>
-          </span>
+          <p className="flex items-center gap-3">
+            <p>{t("discount")}: </p>
+            <p className="font-serif">{productinfos?.discount}%</p>
+          </p>
         )}
-        <span>
-          <span>total price : </span>
+        <p className="flex items-center justify-center gap-3">
+          <p>{t("totalPrice")}: </p>
           <span>
             <span className="font-serif">
               {productinfos?.price
@@ -177,7 +157,7 @@ const HeaderproductInfo = ({
               $
             </span>
           </span>
-        </span>
+        </p>
       </motion.div>
     </>
   );

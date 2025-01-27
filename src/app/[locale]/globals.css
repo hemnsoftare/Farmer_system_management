@@ -167,17 +167,17 @@ body {
 }
 
 /* Hides scrollbar but allows scrolling */
-/* * {
-  scrollbar-width: none; 
-  scrollbar-color: transparent transparent; 
+.hidden-scrollbar::-webkit-scrollbar {
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
 }
 *::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
 * {
-  -ms-overflow-style: none; 
-} */
+  -ms-overflow-style: none;
+}
 
 @layer base {
   * {

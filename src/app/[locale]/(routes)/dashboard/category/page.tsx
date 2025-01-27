@@ -151,7 +151,7 @@ const ModalCategory = () => {
   }, [db]);
   console.log(brands);
   return (
-    <div className="p-6 md:p-10 bg-gray-100 dark:bg-gray-900 min-h-screen rounded-lg shadow-md">
+    <div className="p-6 md:p-10  dark:bg-gray-900 min-h-screen rounded-lg shadow-md">
       <h1 className="font-bold text-2xl md:text-3xl text-center text-gray-800 dark:text-white mb-6">
         Add Category
       </h1>

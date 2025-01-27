@@ -19,7 +19,7 @@ import createMiddleware from "next-intl/middleware";
 // }
 
 export default createMiddleware({
-  locales: ["en", "kurd", "ar"],
+  locales: ["en", "ku", "tr", "ar"],
   defaultLocale: "en",
 });
 export const config = {

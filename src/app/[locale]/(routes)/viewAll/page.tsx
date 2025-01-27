@@ -16,6 +16,7 @@ import { ProductFormInput } from "@/lib/action";
 import { Loader } from "@/app/[locale]/loader";
 import { useUser } from "@clerk/nextjs";
 import { getAllItemNames } from "@/lib/action/fovarit";
+import { useTranslations } from "next-intl";
 
 const Page = () => {
   const [type, settype] = useState("");
@@ -31,6 +32,7 @@ const Page = () => {
   const [load, setload] = useState(true);
   const [favoriteId, setfavoriteId] = useState([]);
   const { user } = useUser();
+  const t = useTranslations("viewAll");
   useEffect(() => {
     const getData = async (col: string) => {
       setload(true);
@@ -86,7 +88,14 @@ const Page = () => {
   return (
     <div className="flex items-center w-full py-8 gap-3 justify-center flex-col">
       <h1 className="self-start px-3  dark:text-gray-600 text-26 sm:text-30 my-3 font-semibold">
-        Last {products.length < 30 ? products.length : "30"} {type} products
+        {t("last")} {products.length < 30 ? products.length : "30"}{" "}
+        {t(
+          type === "New"
+            ? "last7NewProducts"
+            : type === "discount"
+              ? "last4DiscountProducts"
+              : "last7NumberSaleProducts"
+        )}
       </h1>
       <CatagoryProducts
         handleSelected={(name) => {
@@ -144,7 +153,7 @@ const Page = () => {
           <Loader />
         </div>
       ) : (
-        <h1 className="text-30 font-black my-[200px]">have not product</h1>
+        <h1 className="text-30 font-black my-[200px]">{t("message")}</h1>
       )}
     </div>
   );

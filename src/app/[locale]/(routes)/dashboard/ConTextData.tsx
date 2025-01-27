@@ -50,7 +50,11 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   };
 
   // Provide the context value to the children
-  return <cont.Provider value={val_context}>{children}</cont.Provider>;
+  return (
+    <cont.Provider value={val_context}>
+      <div className="w-screen">{children}</div>
+    </cont.Provider>
+  );
 };
 
 export default ContextProvider;

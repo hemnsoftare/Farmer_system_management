@@ -6,7 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 const Page = () => {
+  const t = useTranslations("about");
   const [about, setabout] = useState({
     description: "",
     imageUrl: "",
@@ -33,13 +35,13 @@ const Page = () => {
     <div className="flex w-full  sm:px-40 flex-col py-8 gap-4 px-2 sm:gap-4 ">
       <h2>
         <Link href={"/"} className="hover:text-blue-800 hover:underline">
-          home
+          {t("home")}
         </Link>
         &gt;{" "}
-        <span className="text-blue-600 cursor-pointer underline underline-offset-4">
+        <p className=" inline text-blue-600 cursor-pointer underline underline-offset-4">
           {" "}
-          about us
-        </span>{" "}
+          {t("about_us")}
+        </p>{" "}
       </h2>
       <Image
         src={about.imageUrl}

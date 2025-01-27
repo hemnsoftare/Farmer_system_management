@@ -27,7 +27,7 @@ const Layout = ({
   const handleHideSlider = () => setShowSlider(false);
 
   return (
-    <div className="flex relative items-start h-full w-screen">
+    <div className="flex relative h-screen bg-gray-500 min-w-screen">
       {/* Mobile Tabs Toggle */}
       <button
         onClick={() => setshowtabs((pre) => !pre)}
@@ -42,7 +42,7 @@ const Layout = ({
 
       {/* Mobile Sidebar */}
       <div
-        className={`transition-all duration-500 flex-col gap-3 z-50 absolute top-12 left-3 ${
+        className={`transition-all  md:hidden duration-500 flex-col gap-3 z-50 absolute top-12 left-3 ${
           showtabs ? "max-w-[220px] opacity-100 flex" : "max-w-0 opacity-0"
         }`}
       >
@@ -90,8 +90,8 @@ const Layout = ({
       {/* Desktop Sidebar */}
       <div
         className={`${
-          showSlider ? "sm:w-[260px] w-full" : "sm:-translate-x-[260px] sm:w-0"
-        } hidden md:flex transition-all duration-300 overflow-y-auto h-screen px-3 gap-5 py-9 flex-col bg-cyan-800 items-start`}
+          showSlider ? "sm:w-[260px] w-full" : "sm:-translate-x-[560px] sm:w-0"
+        } hidden md:flex transition-all duration-300  overflow-y-auto h-screen px-3 gap-5 py-9 flex-col bg-cyan-800 items-start`}
       >
         <div className="flex text-white gap-3 items-center mb-4 justify-center">
           {user && (
@@ -101,7 +101,7 @@ const Layout = ({
                 alt="User Avatar"
                 width={50}
                 height={50}
-                className="rounded-full"
+                className="rounded-full min-w-[70px] min-h-[70px] max-w-[70px] max-h-[70px]"
               />
               <h2 className="text-lg font-medium">{user.fullName}</h2>
             </>
@@ -115,7 +115,7 @@ const Layout = ({
               item.name !== "Home" &&
               pathname.includes(item.url || "null") &&
               "rounded-l-lg border-l-4 bg-gradient-to-l from-cyan-400 to-transparent border-l-cyan-400"
-            } w-full text-white flex text-md py-2 cursor-pointer hover:bg-cyan-500 transition-all items-center px-5 gap-2`}
+            } w-full text-white flex text-md py-2 cursor-pointer rounded-lg hover:bg-cyan-500 transition-all items-center px-5 gap-2`}
           >
             <item.icon
               color="white"
@@ -142,8 +142,8 @@ const Layout = ({
       {/* Main Content */}
       <div
         className={`transition-all duration-300 ${
-          showSlider ? "sm:w-[calc(100%-260px)]" : "w-full"
-        } bg-white h-full`}
+          showSlider ? "w-full md:w-[calc(100%-260px)]" : "w-secreen"
+        } bg-white h-screen overflow-auto`}
       >
         {children}
       </div>

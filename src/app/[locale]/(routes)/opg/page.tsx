@@ -6,7 +6,7 @@ const page = () => {
   return (
     <div className="w-full flex items-center justify-center ">
       {/* <OrganizationSwitcher /> */}
-      <OrganizationList appearance={{ elements: { footer: "hidden" } }} />
+      {/* <OrganizationList appearance={{ elements: { footer: "hidden" } }} /> */}
     </div>
   );
 };

@@ -16,6 +16,7 @@ import FilterSection from "./FilterSection ";
 import { cn } from "@/lib/utils";
 import { on } from "events";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const FilterItem = ({
   onFilter,
@@ -43,6 +44,7 @@ const FilterItem = ({
   const [brand, setBrand] = useState<string[]>([]);
   const [discount, setDiscount] = useState<boolean>(false);
   const [category, setcategory] = useState<catagoryProps | undefined>();
+  const t = useTranslations("products");
 
   useEffect(() => {
     if (filters) {
@@ -116,14 +118,14 @@ const FilterItem = ({
       className="flex flex-col h-full duration-300 transition-all dark:text-secondary w-full items-center justify-start"
     >
       <FilterSection
-        title="brand"
+        title={t("brand")}
         items={category?.brands || []}
         filterKey="brand"
         selectedItems={brand}
         handleCheckboxChange={handleCheckboxChange}
       />
       <FilterSection
-        title="color"
+        title={t("color")}
         items={category?.colors || []}
         filterKey="color"
         selectedItems={color}
@@ -131,7 +133,7 @@ const FilterItem = ({
       />
       {/* Discount */}
       <div className="flex items-center border-b-2 py-2 w-full justify-between px-4">
-        <label htmlFor="discount">Discount</label>
+        <label htmlFor="discount">{t("discount")}</label>
         <Switch
           onClick={() => setDiscount((prev) => !prev)}
           className=" "
@@ -144,7 +146,7 @@ const FilterItem = ({
           onClick={() => handleOpen("price")}
           className="cursor-pointer px-4 py-1 rounded-lg sm:dark:hover:bg-neutral-700 sm:hover:bg-slate-100 duration-300 flex justify-between items-center w-full transition-all"
         >
-          <span>price</span>
+          <span>{t("price")}</span>
           <span
             className={`${filter["price"] ? "rotate-180" : "rotate-0"} transform duration-300`}
           >
@@ -156,7 +158,7 @@ const FilterItem = ({
         >
           <Slider
             size="lg"
-            label="Price Range"
+            label={t("priceRange")}
             maxValue={100000}
             step={100}
             defaultValue={price}
@@ -199,13 +201,13 @@ const FilterItem = ({
             }}
             className="w-1/2 text-center py-2 bg-secondary-400 text-white rounded-lg"
           >
-            Apply
+            {t("apply")}
           </button>
           <button
             onClick={() => closeFiltered?.()}
             className="w-1/2 text-center py-2 border-secondary-400 border-2 text-secondary-400 rounded-lg"
           >
-            Back
+            {t("back")}
           </button>
         </div>
       )}

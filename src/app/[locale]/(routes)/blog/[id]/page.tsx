@@ -118,13 +118,13 @@ import {
 } from "@/lib/action/fovarit";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 const Page = ({ params }) => {
   const { toast } = useToast();
+  const t = useTranslations("blog");
   const iduse: any = React.use(params);
   const id = iduse.id;
-  console.log(id);
 
-  console.log("dfjkdfjklsdfjksdfjklsdfjkdfjkdfjkl");
   // const id = params.id;
   const [blog, setBlog] = useState<BlogProps>();
 
@@ -176,11 +176,11 @@ const Page = ({ params }) => {
             transition={{ duration: 0.5 }}
           >
             <Link href="/" className="hover:text-blue-600">
-              home
+              {t("home")}
             </Link>
             &gt;
             <Link href="/blog" className="hover:text-blue-600">
-              blog
+              {t("blog")}
             </Link>
           </motion.span>
 
@@ -287,11 +287,11 @@ const Page = ({ params }) => {
                     toast({ title: "Failed to save blog" });
                   }
                 }}
-                className="px-6 py-1 disabled:bg-blue-300 w-[150px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
+                className="px-6 py-1 disabled:bg-blue-300 w-[180px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Save
+                {t("save")}
               </motion.button>
 
               <motion.button
@@ -310,11 +310,11 @@ const Page = ({ params }) => {
                     toast({ title: "Failed to remove blog" });
                   }
                 }}
-                className="px-6 disabled:text-blue-300 py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
+                className="px-6 disabled:text-blue-300 py-1 w-[180px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Unsave
+                {t("unsave")}
               </motion.button>
             </motion.footer>
           </motion.div>
@@ -346,7 +346,7 @@ const Page = ({ params }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              Related Blogs
+              {t("Related_Blogs")}
             </motion.h3>
 
             <motion.div

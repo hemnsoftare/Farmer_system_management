@@ -59,11 +59,11 @@ const ForProducts = ({
   };
   if (load)
     return (
-      <div className="flex mt-4 px-3 justify-between w-full items-center gap-4">
+      <div className="flex mt-4 px-3 py-8  justify-center w-full items-center gap-4">
         <Loader />
 
         <Loader />
-        <div className="hidden sm:flex w-full items-center justify-start gap-2">
+        <div className="hidden sm:flex w-full items-center justify-center gap-2">
           <Loader />
 
           <Loader />
@@ -76,15 +76,18 @@ const ForProducts = ({
       whileInView={{ y: 0, x: 0, opacity: 1 }}
       exit={{ y: -100, opacity: 0.2 }}
       transition={{ duration: 0.6, type: "spring" }}
-      className=" mt-3 w-full  py-7 overflow-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-4 relative px- justify-center  items-center"
+      className=" mt-3 w-full   overflow-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-6 relative px- justify-center  items-center"
     >
       {products &&
         products
-          .slice(startProducts, startProducts + limit)
+          .slice(
+            title !== "dashboard" ? startProducts : 0,
+            title !== "dashboard" ? startProducts + limit : products.length
+          )
           .map((product, index) => (
             <div
               key={product.name}
-              className={`${index === 4 && "hidden sm:block"} overflow-hidden`}
+              className={`${index === 4 && "hidden sm:block"} py-2 md:py-6   `}
             >
               <NewProducts
                 favoriteId={favoriteId}

@@ -12,12 +12,13 @@ import { FaCaretRight } from "react-icons/fa6";
 import { getFAQ } from "@/lib/action/uploadimage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const Page = () => {
   const [load, setLoad] = useState(false);
   const [IndexItem, setIndexItem] = useState<number>(0);
   const [faq, setFaq] = useState<faqProps[]>([]);
-
+  const t = useTranslations("faq");
   useEffect(() => {
     const getData = async () => {
       setLoad(true);
@@ -59,8 +60,10 @@ const Page = () => {
         className="self-start text-sm sm:text-base pt-10 text-gray-700"
         variants={fadeIn}
       >
-        Home &gt;{" "}
-        <span className="text-primary border-b-2 border-primary">FAQs</span>
+        {t("home")} &gt;{" "}
+        <span className="text-primary border-b-2 border-primary">
+          {t("faqs")}
+        </span>
       </motion.h2>
 
       {/* Hero Image */}
@@ -85,7 +88,7 @@ const Page = () => {
           variants={fadeIn}
         >
           <h2 className="text-lg font-semibold text-gray-800">
-            Table of Contents
+            {t("table_of_contents")}
           </h2>
           {load ? (
             <div className="flex w-full flex-col gap-2">

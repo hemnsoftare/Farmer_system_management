@@ -2,19 +2,19 @@
 import BlogVideo from "@/components/blog/BlogVideo";
 import BlogCol from "@/components/blog/blogCol";
 import BlogRow from "@/components/blog/BlogRow";
-import { blogs } from "@/util/data";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BlogProps } from "@/lib/action";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "@/config/firebaseConfig";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const BlogPage = () => {
   const [blog, setblog] = useState<BlogProps[]>([]);
   const [load, setload] = useState(false);
   const db = getFirestore(app);
-
+  const t = useTranslations("blog");
   useEffect(() => {
     const getBlogs = async () => {
       setload(true);
@@ -38,14 +38,14 @@ const BlogPage = () => {
   return (
     <div className="flex flex-col w-full max-w-screen mb-7 px-4 md:px-2 lg:px-1 dark:text-gray-200">
       {/* Breadcrumb Navigation */}
-      <motion.span
-        className="py-4"
+      <motion.p
+        className="py-4 flex  gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <Link href={"/"}>home</Link> &gt; blog{" "}
-      </motion.span>
+        <Link href={"/"}>{t("home")}</Link> &gt; {t("blog")}{" "}
+      </motion.p>
 
       {/* Main Content */}
       <motion.div
@@ -96,7 +96,7 @@ const BlogPage = () => {
             variants={fadeInUp}
             viewport={{ once: true }}
           >
-            <h2 className="text-lg font-semibold">Recent Posts</h2>
+            <h2 className="text-lg font-semibold">{t("recent_posts")}</h2>
             {!load && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {blog.length > 0 &&
@@ -128,7 +128,7 @@ const BlogPage = () => {
           variants={fadeInUp}
           viewport={{ once: true }}
         >
-          <h2 className="text-lg font-semibold">Videos</h2>
+          <h2 className="text-lg font-semibold">{t("videos")}</h2>
           <div className="w-full flex flex-col gap-4">
             {blog
               .filter((item) => item.type === "video")
@@ -141,7 +141,7 @@ const BlogPage = () => {
                   viewport={{ once: true }}
                 >
                   <Link href={"/blog/" + blog.id}>
-                    <BlogVideo item={blog} />
+                    <BlogVideo more={t("more")} item={blog} />
                   </Link>
                 </motion.div>
               ))}

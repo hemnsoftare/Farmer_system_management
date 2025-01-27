@@ -16,10 +16,11 @@ import { ItemCartProps } from "@/lib/action";
 import { Toast } from "../ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { FaCartArrowDown } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
   const { toast } = useToast();
-
+  const t = useTranslations("products");
   const cartItems = useSelector(
     (state: { cart: ItemCartProps[] }) => state.cart || []
   );
@@ -81,7 +82,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
           style={{ display: "flex", alignItems: "center", color: "#008000" }}
         >
           <FaCartArrowDown color="#008000" style={{ marginRight: "8px" }} />
-          <span>Success action </span>
+          <span>{t("successAction")}</span>
         </div>
       ),
       style: {
@@ -136,7 +137,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
           className={` flex px-3 bg-primary dark:bg-blue-900 w-[80%] sm:hover:bg-blue-700 items-center mb-2 lg:w-[79%] self-center md:w-full py-2 rounded-lg duration-300 justify-center gap-2 text-white`}
         >
           <MdOutlineShoppingCart />
-          <span>Add to Cart</span>
+          <span>{t("addToCart")}</span>
         </button>
       </div>
     </>

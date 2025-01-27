@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
 
-const BlogVideo = ({ item }: { item: BlogProps }) => {
+const BlogVideo = ({ item, more }: { item: BlogProps; more: string }) => {
   return (
     <div className=" flex-col flex relative overflow-hidden w-full  items-center rounded-xl shadow-lg justify-between gap-1 sm:gap-4">
       <div className="relative w-full pb-[56.25%]">
@@ -26,7 +26,7 @@ const BlogVideo = ({ item }: { item: BlogProps }) => {
           href={`/blog/${item.id}`}
           className="px-5 py-1 text-white rounded-lg bg-secondary-400 active:bg-secondary-600 duration-300 transition-all md:hover:bg-secondary-600"
         >
-          more{" "}
+          {more}{" "}
         </Link>
       </p>
     </div>
