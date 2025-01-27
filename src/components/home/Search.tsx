@@ -83,7 +83,7 @@ const SearchComponent = () => {
 
   useEffect(() => {
     const getData = async () => {
-      let searchBy = { search: ["blog"] }; // Default fallback
+      let searchBy = { search: ["blog", "product"] }; // Default fallback
 
       try {
         if (user) {
@@ -102,7 +102,6 @@ const SearchComponent = () => {
       } catch (error) {
         console.error("Error fetching search settings:", error);
       }
-
       setSearchBy(searchBy);
     };
 

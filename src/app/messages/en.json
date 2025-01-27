@@ -196,6 +196,49 @@
   }, "about": {
       "home": "Home",
       "about_us": "About Us"
+    },
+    
+    "setting": {
+    "title": "Settings",
+    "account": {
+      "title": "Account",
+      "login": "Login",
+      "signup": "Sign Up",
+      "deleteAccount": "Delete Account",
+      "manageAccount": "Manage Account",
+      "logout": "Logout"
+    },
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": {
+      "title": "Language",
+      "english": "English",
+      "kurdish": "Kurdish",
+      "turkish": "Turkish",
+      "arabic": "Arabic"
+    },
+    "manageData": {
+      "title": "Manage Data",
+      "clearFavorites": "Clear Favorites",
+      "clearOrderHistory": "Clear Order History",
+      "clearSavedBlogs": "Clear Saved Blogs", 
+      "mclearBlogs": "Are you sure you want to clear your saved blogs?",
+    "mclearOrderHistory": "Are you sure you want to clear your order history?",
+    "mclearFavorites": "Are you sure you want to clear your favorites?",
+    "hello": "Hello",  "cancel": "Cancel",
+    "confirm": "Confirm"
+    },
+    "searchOptions": {
+      "title": "Search Options",
+      "category": "Category",
+      "product": "Product",
+      "blog": "Blog",
+      "teamMember": "Team Member"
     }
+  }
 
 }

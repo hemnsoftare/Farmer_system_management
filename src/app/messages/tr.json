@@ -190,5 +190,49 @@
 ,  "about": {
       "home": "Ana Sayfa",
       "about_us": "Hakkımızda"
+    },
+    
+    "setting": {
+    "title": "Ayarlar",
+    "account": {
+      "title": "Hesap",
+      "login": "Giriş Yap",
+      "signup": "Kayıt Ol",
+      "deleteAccount": "Hesabı Sil",
+      "manageAccount": "Hesabı Yönet",
+      "logout": "Çıkış Yap"
+    },
+    "theme": {
+      "title": "Tema",
+      "light": "Açık",
+      "dark": "Koyu",
+      "system": "Sistem"
+    },
+    "language": {
+      "title": "Dil",
+      "english": "İngilizce",
+      "kurdish": "Kürtçe",
+      "turkish": "Türkçe",
+      "arabic": "Arapça"
+    },
+    "manageData": {
+      "title": "Verileri Yönet",
+      "clearFavorites": "Favorileri Temizle",
+      "clearOrderHistory": "Sipariş Geçmişini Temizle",
+      "clearSavedBlogs": "Kaydedilen Blogları Temizle",
+       "mclearBlogs": "Kaydedilen bloglarınızı silmek istediğinizden emin misiniz?",
+    "mclearOrderHistory": "Sipariş geçmişinizi silmek istediğinizden emin misiniz?",
+    "mclearFavorites": "Favorilerinizi silmek istediğinizden emin misiniz?",
+    "hello": "Merhaba", 
+     "cancel": "İptal",
+    "confirm": "Onayla"
+    },
+    "searchOptions": {
+      "title": "Arama Seçenekleri",
+      "category": "Kategori",
+      "product": "Ürün",
+      "blog": "Blog",
+      "teamMember": "Takım Üyesi"
     }
+  }
 }

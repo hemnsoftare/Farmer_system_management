@@ -229,7 +229,7 @@ const Header = () => {
       </div>
       {/* right */}
       <DropdownMenu>
-        <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
+        <DropdownMenuTrigger className="hover:underline hidden md:block border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
           {t("language")}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">

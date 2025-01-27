@@ -185,7 +185,49 @@
   }, "about": {
       "home": "الرئيسية",
       "about_us": "معلومات عنا"
+    }, 
+    "setting": {
+    "title": "الإعدادات",
+    "account": {
+      "title": "الحساب",
+      "login": "تسجيل الدخول",
+      "signup": "إنشاء حساب",
+      "deleteAccount": "حذف الحساب",
+      "manageAccount": "إدارة الحساب",
+      "logout": "تسجيل الخروج"
+    },
+    "theme": {
+      "title": "المظهر",
+      "light": "فاتح",
+      "dark": "داكن",
+      "system": "النظام"
+    },
+    "language": {
+      "title": "اللغة",
+      "english": "الإنجليزية",
+      "kurdish": "الكردية",
+      "turkish": "التركية",
+      "arabic": "العربية"
+    },
+    "manageData": {
+      "title": "إدارة البيانات",
+      "clearFavorites": "مسح المفضلة",
+      "clearOrderHistory": "مسح سجل الطلبات",
+      "clearSavedBlogs": "مسح المدونات المحفوظة",
+       "mclearBlogs": "هل أنت متأكد أنك تريد مسح المدونات المحفوظة لديك؟",
+    "mclearOrderHistory": "هل أنت متأكد أنك تريد مسح سجل الطلبات لديك؟",
+    "mclearFavorites": "هل أنت متأكد أنك تريد مسح المفضلات لديك؟",
+    "hello": "مرحباً",  "cancel": "إلغاء",
+    "confirm": "تأكيد"
+    },
+    "searchOptions": {
+      "title": "خيارات البحث",
+      "category": "الفئة",
+      "product": "المنتج",
+      "blog": "المدونة",
+      "teamMember": "أعضاء الفريق"
     }
+  }
 
 
 

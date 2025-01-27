@@ -56,7 +56,7 @@ const NewProducts = ({
         key={product.name}
         className={`${
           title === "sale"
-            ? "bg-white border dark:bg-neutral-900/90 h-full min-w-[130px]"
+            ? "bg-white border dark:bg-neutral-900/90 h-full min-w-[190px]"
             : "sm:h-fit border h-full lg:min-w-[230px] lg:max-w-[230px] sm:w-full max-w-[250px]"
         } flex sm:gap-5  border-neutral-200 shadow-lg dark:shadow-secondary-500 dark:border-secondary shadow-neutral-200 md:shadow-neutral-400 overflow-hidden flex-col group relative items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3`}
       >
@@ -106,7 +106,11 @@ const NewProducts = ({
             alt="image"
             width={167}
             height={111}
-            className=" rounded-lg w-full above-405:h-[190px]  bg-red-50 min-h-[190px] max-h-[190px] sm:h-[211px] sm:group-hover:scale-[1.03] duration-300 transition-all"
+            className={`rounded-lg  ${
+              title === "sale"
+                ? "w-full above-405:h-[170px] min-h-[160px] max-h-[160px] sm:h-[211px]"
+                : " w-full above-405:h-[190px] min-h-[190px] max-h-[190px] sm:h-[211px]"
+            } bg-red-50 sm:group-hover:scale-[1.03] duration-300 transition-all`}
           />{" "}
           {product.isDiscount && product.discount && product.discount > 0 && (
             <p

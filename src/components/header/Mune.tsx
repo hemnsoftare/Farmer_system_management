@@ -164,12 +164,9 @@ import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { useTranslations } from "next-intl";
 import { LoginButton, SingUp } from "./Header";
 import { lang } from "@/lib/action/uploadimage";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
+import { MdLanguage } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
 const Mune = ({ category }: { category: catagoryProps[] }) => {
   const [showSheet, setShowSheet] = useState(false);
   const router = usePathname();
@@ -180,7 +177,19 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
     }, 500);
   };
   const t = useTranslations("header");
-  const handleOverlayClick = () => setShowSheet(false);
+  let startX = 0;
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    startX = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const deltaX = e.touches[0].clientX - startX;
+
+    if (Math.abs(deltaX) > 50) {
+      setShowSheet(false); // Close on swipe left or right
+    }
+  };
   const changelanguage = (lang: string) => {
     // Get the current URL
     const currentPath = window.location.pathname; // Use the browser's `pathname`
@@ -190,7 +199,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
     r.push(newPath);
   };
   const isActive = router;
-
+  console.log(isActive.length < 4);
   return (
     <Sheet open={showSheet} onOpenChange={setShowSheet}>
       <SheetTrigger
@@ -199,10 +208,15 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
       >
         <IoMdMenu size={30} />
       </SheetTrigger>
-      <SheetOverlay onClick={handleOverlayClick} className="bg-gray-900/80" />
+      <SheetOverlay
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        className="bg-gray-900/80"
+      />
       <SheetContent
         side={"left"}
-        onTouchMove={handleOverlayClick}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         className="bg-gray-900 text-gray-100 p-8 rounded-tr-[30px] rounded-br-[50px] shadow-lg"
       >
         <SheetHeader className="flex justify-between items-center">
@@ -221,14 +235,16 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
           </button>
         </SheetHeader>
         <SheetDescription>
-          <ul className="mt-8 flex flex-col gap-5">
+          <ul className="mt-8 flex flex-col gap-2">
             <Link
               href="/"
-              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
-                isActive === "/"
-                  ? "bg-blue-500 text-white"
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
+                isActive.length < 4
+                  ? lang === "ar" || lang === "ku"
+                    ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
+                    : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
+              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
             >
               <FaHome size={22} />
               {t("home")}
@@ -236,10 +252,10 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
                 <AccordionTrigger
-                  className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
+                  className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
                     lang === "ar" || lang === "ku"
-                      ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2"
-                      : "flex-row border-b-0 border-r-0 border-l-2 border-t-2"
+                      ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
+                      : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
                   } w-full border border-secondary`}
                 >
                   <FaBox size={22} />
@@ -251,11 +267,13 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                     <Link
                       key={item.name}
                       href={`/products/${item.name}`}
-                      className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+                      className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                         isActive.includes(`/products/${item.name}`)
-                          ? "bg-blue-500 text-white"
+                          ? lang === "ar" || lang === "ku"
+                            ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
+                            : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                           : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-                      }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
+                      }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
                     >
                       <Image
                         src={item.image.link}
@@ -270,100 +288,146 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-            <DropdownMenu>
-              <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
-                {t("language")}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
-                <DropdownMenuItem
-                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
-                  onClick={() => changelanguage("en")}
+            {/* languge  */}
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger
+                  className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
+                    lang === "ar" || lang === "ku"
+                      ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
+                      : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
+                  } w-full border border-secondary`}
                 >
-                  {t("english")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
-                  onClick={() => changelanguage("ku")}
-                >
-                  {t("kurdish")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
-                  onClick={() => changelanguage("tr")}
-                >
-                  {t("turkish")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
-                  onClick={() => changelanguage("ar")}
-                >
-                  {t("arabic")}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <MdLanguage size={23} />
+                  {t("language")}
+                </AccordionTrigger>
+
+                <AccordionContent className=" w-full flex flex-col gap-4 mt-3">
+                  <p
+                    className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
+                      lang === "ar" || lang === "ku"
+                        ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
+                        : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
+                    } w-full border border-secondary`}
+                    onClick={() => changelanguage("en")}
+                  >
+                    {t("english")}
+                  </p>
+                  <p
+                    className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
+                      lang === "ar" || lang === "ku"
+                        ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
+                        : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
+                    } w-full border border-secondary`}
+                    onClick={() => changelanguage("ku")}
+                  >
+                    {t("kurdish")}
+                  </p>
+                  <p
+                    className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
+                      lang === "ar" || lang === "ku"
+                        ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
+                        : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
+                    } w-full border border-secondary`}
+                    onClick={() => changelanguage("tr")}
+                  >
+                    {t("turkish")}
+                  </p>
+                  <p
+                    className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
+                      lang === "ar" || lang === "ku"
+                        ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
+                        : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
+                    } w-full border border-secondary`}
+                    onClick={() => changelanguage("ar")}
+                  >
+                    {t("arabic")}
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
             <Link
               href="/setting"
-              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/settin")
-                  ? "bg-blue-500 text-white"
+                  ? lang === "ar" || lang === "ku"
+                    ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
+                    : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
+              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
             >
-              <FaBlog size={22} />
+              <IoSettingsOutline size={22} />
               {t("setting")}
             </Link>
             <Link
               href="/blog"
-              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/blog")
-                  ? "bg-blue-500 text-white"
+                  ? lang === "ar" || lang === "ku"
+                    ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
+                    : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary  `}
+              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
             >
               <FaBlog size={22} />
               {t("blog")}
             </Link>
             <Link
               href="/FAQ"
-              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/FAQ")
-                  ? "bg-blue-500 text-white"
+                  ? lang === "ar" || lang === "ku"
+                    ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
+                    : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary `}
+              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary `}
             >
               <FaQuestionCircle size={22} />
               {t("faq")}
             </Link>
             <Link
               href="/ContactUs"
-              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/ContactUs")
-                  ? "bg-blue-500 text-white"
+                  ? lang === "ar" || lang === "ku"
+                    ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
+                    : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary `}
+              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary `}
             >
               <FaPhone size={22} />
               {t("contactus")}
             </Link>
             <Link
               href="/About"
-              className={`flex items-center gap-4 px-6 py-4 rounded-lg text-lg font-semibold transition ${
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/About")
-                  ? "bg-blue-500 text-white"
+                  ? lang === "ar" || lang === "ku"
+                    ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
+                    : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2 w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2  flex-row justify-start w-full "}  border border-secondary `}
+              } ${
+                lang === "ar" || lang === "ku"
+                  ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start"
+                  : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "
+              } 
+                  border border-secondary `}
             >
-              <FaInfoCircle size={22} />
+              <FaInfoCircle
+                size={22}
+                color={isActive.includes("/About") ? " #f45e0c" : null}
+              />
               {t("about")}
             </Link>
             <SignedOut>
-              <div className="flex gap-5 mt-10">
-                <button className="w-full px-6 py-3 text-lg font-semibold bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition">
+              <div className="flex w-full gap-3 mt-10">
+                <button className="w-full px-4 py-2 text-15 font-semibold bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 transition">
                   <SignInButton>
                     <LoginButton />
                   </SignInButton>
                 </button>
-                <button className="w-full px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition">
+                <button className="w-full px-4 py-2 text-15 font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition">
                   <SignUpButton>
                     <SingUp />
                   </SignUpButton>
