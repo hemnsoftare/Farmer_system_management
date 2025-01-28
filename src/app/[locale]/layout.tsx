@@ -4,7 +4,8 @@ import dynamic from "next/dynamic";
 import ClientProviders from "./ClientProviders";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import React, { use } from "react";
+import React from "react";
+import { lang } from "@/lib/action/uploadimage";
 
 export const metadata: Metadata = {
   title: "Tech-Hiem",
@@ -26,10 +27,15 @@ export default async function RootLayout({
 }) {
   // Dynamically load messages based on the locale
   let messages = await getMessages();
+  lang();
+
+  // Determine the text direction based on the locale
+  const isRtl = ["ar", "ku"].includes(params.locale); // Add languages that use RTL
+  const dir = isRtl ? "rtl" : "ltr";
 
   return (
     <NextIntlClientProvider locale={params.locale} messages={messages}>
-      <html lang={params.locale}>
+      <html lang={params.locale} dir={dir}>
         <head>
           <style>
             {`
@@ -39,9 +45,12 @@ export default async function RootLayout({
         `}
           </style>
           <meta name="theme-color" content="#fff2f" />
-          {/* Next.js will inject metadata automatically */}
         </head>
-        <body className="bg-gray-50 w-full">
+        <body
+          className={`bg-gray-50 border-t border-secondary-200/50 w-full ${
+            isRtl ? "rtl" : "ltr"
+          }`}
+        >
           <ClientProviders>{children}</ClientProviders>
         </body>
       </html>

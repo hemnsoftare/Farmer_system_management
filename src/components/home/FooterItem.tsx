@@ -1,11 +1,11 @@
+"use client";
 import React from "react";
-
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { footerProps } from "@/lib/action";
 import { useTranslations } from "next-intl";
-const FooterItem = () => {
+const FooterItem = ({ lang }: { lang: boolean }) => {
   const t = useTranslations("footer");
   const footer: footerProps[] = [
     {
@@ -35,20 +35,24 @@ const FooterItem = () => {
     },
   ];
   return (
-    <div className="flex justify-between flex-1 mr-6   items-center lg:gap-8 md:gap-4">
+    <div className="flex justify-between flex-1 mx-6   items-center lg:gap-8 md:gap-4">
       {footer.map((items) => (
         <div
           key={items.name}
-          className="flex justify-between md:text-14 lg:text-16 flex-col gap-2 text-white"
+          className="flex justify-between md:text-14 min-w-[270px] max-w-[270px]  lg:text-16 flex-col gap-2 text-white"
         >
-          <h2 className="text-[16px] font-semibold">{items.name}</h2>
+          <h2
+            className={`text-[16px] w-full ${lang ? "text-right " : "text-left "} font-semibold`}
+          >
+            {items.name}
+          </h2>
           {items.item.map((data) => (
             <p
               key={data.name}
-              className="flex items-center md:text-8 lg:text-10 group cursor-pointer hover:underline hover:text-blue-400 hover:underline-offset-4    gap-2"
+              className={`flex items-center ${lang ? "flex-row" : "flex-row "}   md:text-8 lg:text-10 group cursor-pointer hover:underline hover:text-blue-400 hover:underline-offset-4 w-full   gap-2`}
             >
               {data.icon && (
-                <span className="mr-2">
+                <p className="mr-2">
                   {data.icon === "phone" ? (
                     <FaPhoneVolume className="group-hover:text-blue-400 w-4 h-4 text-white" />
                   ) : data.icon === "location" ? (
@@ -56,9 +60,13 @@ const FooterItem = () => {
                   ) : (
                     <MdOutlineMailOutline className="group-hover:text-blue-400 w-4 h-4" />
                   )}
-                </span>
-              )}{" "}
-              <span className="text-[14px]"> {data.name}</span>
+                </p>
+              )}
+              <p
+                className={`text-[14px] w-full ${lang ? "text-right " : "text-left "} `}
+              >
+                {data.name}
+              </p>
             </p>
           ))}
         </div>

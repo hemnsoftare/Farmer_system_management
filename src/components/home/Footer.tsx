@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import FooterItem from "./FooterItem";
 import {
   FaFacebookSquare,
@@ -16,6 +16,8 @@ import { useTranslations } from "next-intl";
 const Footer = () => {
   const t = useTranslations("footer");
   const pathName = usePathname();
+  const lang = pathName.startsWith("/ar") || pathName.startsWith("/ku");
+  useEffect(() => {}, [pathName]);
   if (
     pathName.startsWith("/si") ||
     pathName.includes("dashboard") ||
@@ -23,14 +25,17 @@ const Footer = () => {
   ) {
     return;
   }
+  console.log(lang);
   return (
     <>
       <div
         className="bg-gradient-to-t px-3 w-full dark:to-black dark:via-blue-950 dark:via-indigo-950 to-primary-700 hidden via-primary-700 from-primary-700 flex-col sm:flex text-white
       py-[20px] overflow-hidden justify-between items-center"
       >
-        <div className="flex justify-between w-full items-center">
-          <FooterItem />
+        <div
+          className={`flex ${lang ? "flex-row-reverse" : "flex-row"} justify-between w-full  items-center`}
+        >
+          <FooterItem lang={lang} />
           <div className="flex flex-col w-fit items-center gap-4">
             <h2 className="font-semibold text-[16px]">{t("sign_up")}</h2>
             <SignUpButton>
@@ -46,10 +51,12 @@ const Footer = () => {
                   <input
                     type="text"
                     disabled
-                    className="mt-2 p-2 group-focus-within:placeholder:text-blue-700 bg-transparent outline-none rounded-md w-full"
-                    placeholder="E-mail Address"
+                    className="mt-2 p-2  group-focus-within:placeholder:text-blue-700 bg-transparent outline-none rounded-md w-full"
+                    placeholder={t("email_address")}
                   />
-                  <MdNavigateNext className="w-[34px] h-[34px]" />
+                  <MdNavigateNext
+                    className={`w-[34px] ${lang ? "rotate-180" : "rotate-0"} h-[34px]`}
+                  />
                 </div>
               </fieldset>
             </SignUpButton>

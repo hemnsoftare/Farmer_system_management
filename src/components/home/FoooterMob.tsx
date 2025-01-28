@@ -49,6 +49,7 @@ const FoooterMob = () => {
     },
   ];
   const pathName = usePathname();
+  const lang = pathName.startsWith("/ar") || pathName.startsWith("/ku");
   if (
     pathName.startsWith("/si") ||
     pathName.includes("dashboard") ||
@@ -59,12 +60,12 @@ const FoooterMob = () => {
   return (
     <div className="bg-gradient-to-t dark:to-black dark:via-blue-950 dark:via-indigo-950 sm:hidden px-3 w-full py-6 to-primary-800  via-primary-800 from-primary-700 flex-col flex text-white">
       <div className="w-full ">
-        <h2 className="text-14">Sign up for News and updates</h2>
+        <h2 className="text-14">{t("sign_up")}</h2>
 
         <button className="flex justify-between items-center py-2 mt-2 px-2 border-2 w-full border-white rounded-lg">
           <span className="flex items-center gap-2">
             <FaRegUser color="white" />
-            <span className="text-12 sm:text-16">E-mail Address</span>
+            <span className="text-12 sm:text-16">{t("email_address")} </span>
           </span>
           <MdNavigateNext color="white" />
         </button>
@@ -75,13 +76,18 @@ const FoooterMob = () => {
             key={section.name}
             value={section.name.toLowerCase().replace(/\s+/g, "-")}
           >
-            <AccordionTrigger className="text-12 sm:text-16">
+            <AccordionTrigger
+              className={`${lang ? "flex-row-reverse" : "flex-row"} flex text-12 w-full sm:text-16`}
+            >
               {section.name}
             </AccordionTrigger>
             <AccordionContent>
               <ul>
                 {section.item.map((item) => (
-                  <li key={item.name} className="flex items-center gap-2">
+                  <li
+                    key={item.name}
+                    className={`flex ${lang ? "text-right flex-row-reverse justify-start" : "text-left flex-row justify-end "}  items-center w-full gap-2`}
+                  >
                     {item.icon && (
                       <span className="mr-2">
                         {item.icon === "phone" ? (

@@ -240,11 +240,11 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               href="/"
               className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.length < 4
-                  ? lang === "ar" || lang === "ku"
+                  ? lang() === "ar" || lang() === "ku"
                     ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
                     : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
+              }${lang() === "ar" || lang() === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
             >
               <FaHome size={22} />
               {t("home")}
@@ -253,7 +253,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               <AccordionItem value="item-1">
                 <AccordionTrigger
                   className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
-                    lang === "ar" || lang === "ku"
+                    lang() === "ar" || lang() === "ku"
                       ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
                       : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
                   } w-full border border-secondary`}
@@ -269,11 +269,11 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                       href={`/products/${item.name}`}
                       className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                         isActive.includes(`/products/${item.name}`)
-                          ? lang === "ar" || lang === "ku"
+                          ? lang() === "ar" || lang() === "ku"
                             ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
                             : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                           : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-                      }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
+                      }${lang() === "ar" || lang() === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
                     >
                       <Image
                         src={item.image.link}
@@ -293,7 +293,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               <AccordionItem value="item-1">
                 <AccordionTrigger
                   className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
-                    lang === "ar" || lang === "ku"
+                    lang() === "ar" || lang() === "ku"
                       ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
                       : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
                   } w-full border border-secondary`}
@@ -305,7 +305,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                 <AccordionContent className=" w-full flex flex-col gap-4 mt-3">
                   <p
                     className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
-                      lang === "ar" || lang === "ku"
+                      lang() === "ar" || lang() === "ku"
                         ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
                         : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
                     } w-full border border-secondary`}
@@ -315,7 +315,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                   </p>
                   <p
                     className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
-                      lang === "ar" || lang === "ku"
+                      lang() === "ar" || lang() === "ku"
                         ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
                         : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
                     } w-full border border-secondary`}
@@ -325,7 +325,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                   </p>
                   <p
                     className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
-                      lang === "ar" || lang === "ku"
+                      lang() === "ar" || lang() === "ku"
                         ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
                         : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
                     } w-full border border-secondary`}
@@ -335,7 +335,7 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
                   </p>
                   <p
                     className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 transition ${
-                      lang === "ar" || lang === "ku"
+                      lang() === "ar" || lang() === "ku"
                         ? "flex-row-reverse border-t-0 border-l-0 border-r-2 border-b-2 "
                         : "flex-row border-b-0 border-r-0 border-l-2 border-t-2 "
                     } w-full border border-secondary`}
@@ -351,11 +351,11 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               href="/setting"
               className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/settin")
-                  ? lang === "ar" || lang === "ku"
+                  ? lang() === "ar" || lang() === "ku"
                     ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
                     : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
+              } ${lang() === "ar" || lang() === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
             >
               <IoSettingsOutline size={22} />
               {t("setting")}
@@ -364,11 +364,11 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               href="/blog"
               className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/blog")
-                  ? lang === "ar" || lang === "ku"
+                  ? lang() === "ar" || lang() === "ku"
                     ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
                     : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
+              } ${lang() === "ar" || lang() === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary  `}
             >
               <FaBlog size={22} />
               {t("blog")}
@@ -377,11 +377,11 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               href="/FAQ"
               className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/FAQ")
-                  ? lang === "ar" || lang === "ku"
+                  ? lang() === "ar" || lang() === "ku"
                     ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
                     : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              }${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary `}
+              }${lang() === "ar" || lang() === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary `}
             >
               <FaQuestionCircle size={22} />
               {t("faq")}
@@ -390,11 +390,11 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               href="/ContactUs"
               className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/ContactUs")
-                  ? lang === "ar" || lang === "ku"
+                  ? lang() === "ar" || lang() === "ku"
                     ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
                     : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-              } ${lang === "ar" || lang === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary `}
+              } ${lang() === "ar" || lang() === "ku" ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start" : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "}  border border-secondary `}
             >
               <FaPhone size={22} />
               {t("contactus")}
@@ -403,12 +403,12 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
               href="/About"
               className={`flex items-center gap-4 px-3 py-2 rounded-lg text-15 font-semibold transition ${
                 isActive.includes("/About")
-                  ? lang === "ar" || lang === "ku"
+                  ? lang() === "ar" || lang() === "ku"
                     ? " bg-gradient-to-tl to-secondary from-black bg-blue-500 text-white "
                     : "  bg-gradient-to-br to-secondary from-black  bg-blue-500 text-white"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700"
               } ${
-                lang === "ar" || lang === "ku"
+                lang() === "ar" || lang() === "ku"
                   ? " border-t-0 border-l-0 border-r-2 border-b-2  w-full flex-row-reverse justify-start"
                   : "  border-b-0 border-r-0 border-l-2 border-t-2   flex-row justify-start w-full "
               } 

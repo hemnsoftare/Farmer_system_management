@@ -12,6 +12,7 @@ import FoooterMob from "@/components/home/FoooterMob";
 import { ThemeProvider, useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import "@liveblocks/react-ui/styles.css";
+import { lang } from "@/lib/action/uploadimage";
 export default function ClientProviders({
   children,
 }: {
@@ -46,7 +47,6 @@ export default function ClientProviders({
                   <Header />
                   {children}
                 </div>
-
                 <Footer />
                 <FoooterMob />
                 <Toaster />

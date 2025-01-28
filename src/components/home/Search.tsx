@@ -4,6 +4,7 @@ import {
   Search,
   SearchCategory,
   SearchBlog as fns,
+  lang,
   search_Team,
 } from "@/lib/action/uploadimage";
 import {
@@ -119,7 +120,6 @@ const SearchComponent = () => {
     return (
       <>
         <p className="px-3 py-2 w-full flex justify-between font-semibold items-center duration-300 bg-gray-300 cursor-pointer">
-          {title}
           {t(
             title === "Products"
               ? "product"
@@ -170,14 +170,18 @@ const SearchComponent = () => {
       <div className="w-full relative md:flex mt-3 justify-center px-5 items-center z-[4]">
         <div className="flex relative group w-full md:w-1/2">
           <input
-            type="search"
+            type="text"
             value={searchValue}
             onChange={(e) => onChangeHandle(e.target.value)}
-            className="w-full py-2 rounded-full placeholder:text-secondary shadow-sm shadow-secondary dark:bg-neutral-800 dark:text-white outline-none focus:bg-secondary-100/15 duration-300 px-3 border border-secondary"
+            className={`${lang() === "ar" || lang() === "ku" ? "text-right " : "text-left "}
+
+              w-full py-2 rounded-full placeholder:text-secondary shadow-sm focus-within:shadow-md focus-within:shadow-secondary/75 shadow-secondary dark:bg-neutral-800 dark:text-white  outline-none focus:bg-secondary-100/15 duration-300 px-4 border-b-2 border-x-2 border-t-[1px] border-secondary`}
             placeholder={t("Search")}
           />
 
-          <IoSearch className="absolute top-3 right-4 text-secondary" />
+          <IoSearch
+            className={`absolute ${lang() === "ar" || lang() === "ku" ? "left-4 " : "right-4 "} top-3  text-secondary`}
+          />
 
           <ul
             className={`absolute w-full bg-white pb-2 dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-12 z-[100] ${

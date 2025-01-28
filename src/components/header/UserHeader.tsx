@@ -50,7 +50,7 @@ const UserHeader = () => {
         >
           <Link
             href={"/user-profile"}
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
           >
             <MdOutlineManageAccounts color="#f45e0c" className="size-[23px]" />
             <span>{t("manageAccount")}</span>
@@ -60,7 +60,7 @@ const UserHeader = () => {
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link
             href={"/historyOrder"}
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
           >
             <LuHistory color=" #f45e0c" className="size-[23px]" />
             <span>{t("historyOrder")}</span>
@@ -69,7 +69,7 @@ const UserHeader = () => {
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link
             href={"/favorite"}
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
           >
             <FaHeart color=" #f45e0c" className="size-[23px]" />
             <span>{t("favoriteProduct")}</span>
@@ -78,7 +78,7 @@ const UserHeader = () => {
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link
             href={"/saveBlog"}
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
           >
             <FaBlog color=" #f45e0c" className="size-[23px]" />
             <span>{t("SaveBlog")}</span>
@@ -87,7 +87,7 @@ const UserHeader = () => {
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <Link
             href={"/setting"}
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
           >
             <IoSettingsOutline color=" #f45e0c" className="size-[23px]" />
             <span>{t("setting")}</span>
@@ -95,7 +95,7 @@ const UserHeader = () => {
         </DropdownMenuItem>
         <DropdownMenuItem className="flex sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3">
           <span
-            className={`w-full flex items-center gap-2 ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} w-full `}
+            className={`w-full flex items-center gap-2 ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} w-full `}
           >
             <CiLogout color=" #f45e0c" className="size-[23px]" />
             <SignOutButton>{t("logout")}</SignOutButton>

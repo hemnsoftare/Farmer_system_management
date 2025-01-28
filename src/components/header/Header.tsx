@@ -30,6 +30,9 @@ import {
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { Lightbulb } from "lucide-react";
+import { CiDark } from "react-icons/ci";
+import { GrSystem } from "react-icons/gr";
 
 const Header = () => {
   const pathName = usePathname();
@@ -106,7 +109,7 @@ const Header = () => {
   const changelanguage = (lang: string) => {
     // Get the current URL
     const currentPath = window.location.pathname; // Use the browser's `pathname`
-    const newPath = currentPath.replace(/^\/[a-z]{2}/, `/${lang}`); // Replace the language prefix
+    const newPath = currentPath.replace(/^\/[a-z]{2}/, `/${lang}`); // Replace the lang()uage prefix
 
     // Push the new path
     router.push(newPath);
@@ -203,29 +206,32 @@ const Header = () => {
           <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
             {t("theme")}
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
+          <DropdownMenuContent className="bg-white dark:text-white dark:bg-neutral-700 ">
             <DropdownMenuItem
-              className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+              className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
               onClick={() => setTheme("light")}
             >
+              <Lightbulb />
               {t("light")}
             </DropdownMenuItem>
             <DropdownMenuItem
-              className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+              className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
               onClick={() => setTheme("dark")}
             >
+              <CiDark />
               {t("dark")}
             </DropdownMenuItem>
             <DropdownMenuItem
-              className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+              className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
               onClick={() => setTheme("orange")}
             >
+              <GrSystem />
               {t("system")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* langouge */}
+        {/* lang()ouge */}
       </div>
       {/* right */}
       <DropdownMenu>
@@ -234,27 +240,57 @@ const Header = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
           <DropdownMenuItem
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
             onClick={() => changelanguage("en")}
           >
+            <Image
+              alt="df"
+              src={"/english.png"}
+              width={25}
+              height={25}
+              className="size-[25px]"
+            />
             {t("english")}
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
             onClick={() => changelanguage("ku")}
           >
+            {" "}
+            <Image
+              alt="df"
+              src={"/kurdish.png"}
+              width={25}
+              height={25}
+              className="size-[25px]"
+            />
             {t("kurdish")}
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
             onClick={() => changelanguage("tr")}
           >
+            {" "}
+            <Image
+              alt="df"
+              src={"/turkish.png"}
+              width={25}
+              height={25}
+              className="size-[25px]"
+            />
             {t("turkish")}
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={`flex ${lang === "ku" || lang === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
             onClick={() => changelanguage("ar")}
           >
+            <Image
+              alt="df"
+              src={"/arabic.png"}
+              width={25}
+              height={25}
+              className="size-[25px]"
+            />
             {t("arabic")}
           </DropdownMenuItem>
         </DropdownMenuContent>
