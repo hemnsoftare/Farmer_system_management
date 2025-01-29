@@ -27,7 +27,7 @@ const HeaderProductImage = ({
               alt="Main Product"
               width={480}
               height={180}
-              className="lg:w-full md:h-[250px] text-center size-[250px] md:w-[380px] lg:h-[300px]"
+              className="lg:w-full md:h-[250px] rounded-lg text-center size-[250px] md:w-[380px] lg:h-[300px]"
             />
           </motion.div>
         </DialogTrigger>

@@ -1,4 +1,5 @@
 import { BlogProps } from "@/lib/action";
+import { lang } from "@/lib/action/uploadimage";
 import Image from "next/image";
 import React from "react";
 import { MdOutlineDateRange } from "react-icons/md";
@@ -10,9 +11,11 @@ const BlogRow = ({
   item: BlogProps;
   type?: "blog_single_page";
 }) => {
+  const l = lang().startsWith("ar") || lang().startsWith("ku");
   return (
     <div
-      className={`w-full h-[146px] flex items-center border overflow-hidden rounded-xl group dark:shadow-neutral-700 shadow-gray-200 shadow-md md:shadow-lg justify-start gap-0`}
+      className={`w-full text-left h-[146px] flex-row-reverse flex items-center border overflow-hidden rounded-xl group dark:shadow-neutral-700 shadow-gray-200 shadow-md md:shadow-lg justify-start gap-0
+        `}
     >
       {/* Dynamic Image */}
       <Image

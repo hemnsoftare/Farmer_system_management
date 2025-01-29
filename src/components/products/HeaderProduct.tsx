@@ -117,7 +117,7 @@ const HeaderProduct = ({ item }: { item: ProductFormInput }) => {
           childImage={item.smallimageUrl}
         />
       </div>
-      <div className="flex lg:w-full w-full dark:bg-neutral-800 dark:hover:bg-neutral-900 shadow-md sm:hover:bg-gray-50 hover:shadow-sm transition-all duration-300 p-2 h-full md:w-[80%] items-center gap-6 flex-col justify-center">
+      <div className="flex lg:w-full w-full dark:bg-neutral-800 dark:text-gray-300 dark:hover:bg-neutral-900 shadow-md sm:hover:bg-gray-50 hover:shadow-sm transition-all duration-300 rounded-lg p-2 h-full md:w-[80%] items-center gap-6 flex-col justify-center">
         <HeaderproductInfo
           productinfos={{
             colors: item.colors,

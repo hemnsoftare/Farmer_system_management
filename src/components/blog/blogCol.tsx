@@ -3,12 +3,20 @@ import React from "react";
 import { LuTimer } from "react-icons/lu";
 import { MdOutlineDateRange } from "react-icons/md";
 import { BlogProps } from "@/lib/action";
-
+import { lang } from "@/lib/action/uploadimage";
+import { motion } from "framer-motion";
 const BlogCol = ({ blog }: { blog: BlogProps }) => {
   const formattedDate = new Date(blog.date).toLocaleDateString(); // Format date for better readability
-
+  const l = lang().startsWith("ar") || lang().startsWith("ku");
+  console.log(l);
   return (
-    <article className="flex border w-full flex-col    gap-2 rounded-xl overflow-hidden shadow-lg ">
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className={`flex border w-full text-left  flex-col gap-2 rounded-xl overflow-hidden shadow-lg  
+       `}
+    >
       {/* Image */}
 
       <Image
@@ -41,7 +49,7 @@ const BlogCol = ({ blog }: { blog: BlogProps }) => {
           {blog.description}
         </p>
       </div>
-    </article>
+    </motion.div>
   );
 };
 

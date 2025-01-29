@@ -41,7 +41,7 @@ export default function ClientProviders({
                   className={`${
                     pathName.includes("/dash")
                       ? " relative px-0 w-full bg-gray-50 dark:bg-black "
-                      : "md:px-[30px] lg:px-[40px] relative transition-colors duration-300 bg-gray-50 dark:text-neutral-200 text-black dark:bg-slate-900"
+                      : "md:px-[30px] lg:px-[40px] relative transition-colors duration-300 bg-gray-50 dark:text-neutral-200 text-black dark:bg-neutral-950"
                   }`}
                 >
                   <Header />

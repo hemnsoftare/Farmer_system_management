@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { ItemCartProps } from "@/lib/action";
 import { useTranslations } from "next-intl";
+import { lang } from "@/lib/action/uploadimage";
 
 const CartHeader = ({
   onclose,
@@ -32,13 +33,16 @@ const CartHeader = ({
     setGrandTotal(calculatedGrandTotal);
   }, [cartItems]);
 
+  const l = lang().startsWith("ar") || lang().startsWith("ku");
   return (
     <>
       <div
         onClick={onclose}
-        className="h-screen fixed top-20 right-0  w-screen backdrop-blur-sm z-[100]"
+        className={`h-screen fixed top-20   w-screen backdrop-blur-sm z-[100]`}
       />
-      <div className="flex gap-4 z-[101] sm:h-fitc sm:w-fit w-screen overflow-hidden absolute top-full dark:bg-gray-800 bg-gray-50 px-4 pb-3 shadow-md right-0 flex-col items-start justify-start">
+      <div
+        className={`flex gap-4 ${l ? "left-0" : " right-0"} z-[101] sm:h-fitc sm:w-fit w-screen overflow-hidden absolute top-full dark:bg-gray-800 bg-gray-50 px-4 pb-3 shadow-md  flex-col items-start justify-start`}
+      >
         <p className="mt-3 w-full flex items-center justify-between">
           <span>
             {total} {t("items")}

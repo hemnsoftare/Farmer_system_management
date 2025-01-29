@@ -38,7 +38,7 @@ const CartItem = ({
           type === "headerItem" ? "w-[154px] h-[100px]" : " w-[150px] h-[100px]"
         }  md:group-hover:scale-[1.1] duration-300 rounded-lg  transition-all `}
       />
-      <div className="flex flex-col h-full  items-start dark:bg-transparent bg-white   shadow-neutral-50    w-full justify-between py-3 gap-2">
+      <div className="flex flex-col h-full  px-3 items-start dark:bg-transparent bg-white   shadow-neutral-50    w-full justify-between py-3 gap-2">
         <h2 className="lg:text-16 md:text-14 w-full font-semibold dark:text-neutral-600 text-neutral-900 text-wrap">
           {item.name}
         </h2>

@@ -43,7 +43,7 @@ const HeaderDilter = ({
   openfilter: boolean;
   filter: { [key: string]: boolean };
 }) => {
-  const [state, setstate] = useState("newest");
+  const [state, setstate] = useState("new");
   const t = useTranslations("products");
   return (
     <div className="flex w-full gap-3  justify-between items-center">
@@ -83,7 +83,7 @@ const HeaderDilter = ({
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <button className=" px-3 dark:text-gray-600 dark:shadow-secondary md:flex hidden   gap-2   border py-1 shadow-center-shadow rounded-lg w-[240px] justify-between items-center">
+      <button className=" px-3 dark:text-gray-600 dark:shadow-secondary md:flex hidden   gap-6   border py-1 shadow-center-shadow rounded-lg w-fit justify-between items-center">
         <span className="flex gap-2 items-center ">
           <VscSettings className="block sm:hidden" />
           <span className="font-semibold">
@@ -99,7 +99,7 @@ const HeaderDilter = ({
           {t("sortBy")} :{" "}
         </span>
         <DropdownMenu modal>
-          <DropdownMenuTrigger className="text-16 font-semibold above-405:text-18  pl-1 text-start  border-e outline-none w-1/2 sm:w-[200px]">
+          <DropdownMenuTrigger className="text-16 w-fit font-semibold above-405:text-18  pl-1 text-start  border-e outline-none  sm:w-[200px]">
             {state === "new"
               ? t("newest")
               : state === "priceA"
@@ -119,13 +119,9 @@ const HeaderDilter = ({
               },
             ].map((item) => (
               <DropdownMenuItem
-                className="text-10 hover:bg-slate-100 duration-300 transition-all"
+                className="text-10 hover:bg-slate-100 w-full  rtl:justify-end ltr:justify-start flex items-center duration-300 transition-all"
                 onClick={() => {
-                  setstate(
-                    item.key !== "priceB" && item.key !== "priceA"
-                      ? "new"
-                      : item.key
-                  );
+                  setstate(item.label);
                   selectedSortBy(item.label);
                 }}
                 key={item.key}

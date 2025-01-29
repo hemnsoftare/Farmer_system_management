@@ -68,13 +68,13 @@ const Header = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (Math.abs(currentScrollY - lastScrollY) > 0.1) {
+      if (Math.abs(currentScrollY - lastScrollY) > 7) {
         // Threshold to avoid small changes
-        if (currentScrollY > lastScrollY) {
+        if (currentScrollY > lastScrollY + 3) {
           setScrollDirection("Increasing");
         } else if (currentScrollY < 30) {
           setScrollDirection("None");
-        } else if (currentScrollY < lastScrollY) {
+        } else if (currentScrollY < lastScrollY + 4) {
           setScrollDirection("Decreasing");
         }
       }
@@ -126,7 +126,7 @@ const Header = () => {
             ? "translate-y-0 "
             : "-translate-y-[200px] text-black "
       } 
-         flex relative z-[50] top-0 right-0 left-0  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
+         flex relative z-[50] top-0 right-0 left-0 bg-white/20 dark:bg-transparent  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
     >
       {/* logo */}
       <Link href={"/"} w-full className="hidden sm:block">
@@ -298,7 +298,7 @@ const Header = () => {
       <div className="flex gap-2 items-center">
         {isAdmin && (
           <Link
-            className="bg-secondary-400 px-3 py-1 duration-300 transition-all text-white rounded-lg hover:bg-secondary-600"
+            className="bg-secondary-400 mx-3 px-3 py-1 duration-300 transition-all text-white rounded-lg hover:bg-secondary-600"
             href={"/dashboard/PersonalData"}
             w-full
           >
@@ -306,8 +306,8 @@ const Header = () => {
           </Link>
         )}
         <div onClick={() => setisopenCart(!isopenCart)} className="relative">
-          <IoCartOutline size={24} className="relative" />
-          <p className="text-8 font-semibold rounded-full p-1 px-2 absolute bg-blue-700 text-white -bottom-1 -right-1">
+          <IoCartOutline size={27} className="relative" />
+          <p className="text-10 font-semibold rounded-full px-2 flex items-center justify-center   py-[2px] absolute bg-blue-700 text-white -bottom-1 -right-2">
             {total}
           </p>
         </div>

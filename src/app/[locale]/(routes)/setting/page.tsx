@@ -386,6 +386,7 @@ const SettingsPage = () => {
                 <li className="flex items-center justify-between">
                   <span>{t("searchOptions.category")}</span>
                   <Switch
+                    className="rtl:flex rtl:flex-row-reverse"
                     checked={searchOption.includes("category")}
                     onClick={() => handleSearchOptionChange("category")}
                   />
@@ -393,6 +394,7 @@ const SettingsPage = () => {
                 <li className="flex items-center justify-between">
                   <span>{t("searchOptions.product")}</span>
                   <Switch
+                    className="rtl:flex rtl:flex-row-reverse"
                     checked={searchOption.includes("product")}
                     onClick={() => handleSearchOptionChange("product")}
                   />
@@ -400,6 +402,7 @@ const SettingsPage = () => {
                 <li className="flex items-center justify-between">
                   <span>{t("searchOptions.blog")}</span>
                   <Switch
+                    className="rtl:flex rtl:flex-row-reverse"
                     checked={searchOption.includes("blog")}
                     onClick={() => handleSearchOptionChange("blog")}
                   />
@@ -407,6 +410,7 @@ const SettingsPage = () => {
                 <li className="flex items-center justify-between">
                   <span>{t("searchOptions.teamMember")}</span>
                   <Switch
+                    className="rtl:flex rtl:flex-row-reverse"
                     checked={searchOption.includes("team_member")}
                     onClick={() => handleSearchOptionChange("team_member")}
                   />

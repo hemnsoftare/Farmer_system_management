@@ -8,7 +8,7 @@ import Reklam from "@/components/home/Reklam";
 import Sales from "@/components/home/Sales";
 import Servies from "@/components/home/Servies";
 import { app } from "@/config/firebaseConfig";
-import { setUser } from "@/lib/action/uploadimage";
+import { lang, setUser } from "@/lib/action/uploadimage";
 import { ProductFormInput } from "@/lib/action";
 import { useUser } from "@clerk/nextjs";
 import {
@@ -70,6 +70,8 @@ export default function Home() {
     }
   }, [user]);
   // const { inboxNotifications } = useInboxNotifications();
+  // console.log(inboxNotifications);
+  const lan = lang().startsWith("ar") || lang().startsWith("ku");
   return (
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
       <SearchComponent />
@@ -87,7 +89,7 @@ export default function Home() {
             className="text-[16px] items-center  justify-center flex gap-2"
           >
             <span className="text-18">{t("button_view_all")}</span>{" "}
-            <MdNavigateNext />
+            <MdNavigateNext className={`${lan ? "rotate-180 " : "rotate-0"}`} />
           </Link>
         </div>
 
@@ -104,7 +106,7 @@ export default function Home() {
             className="text-[16px] items-center justify-center flex gap-2"
           >
             <span className="text-18">{t("button_view_all")}</span>{" "}
-            <MdNavigateNext />
+            <MdNavigateNext className={`${lan ? "rotate-180 " : "rotate-0"}`} />
           </Link>
         </div>
 

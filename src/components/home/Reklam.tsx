@@ -2,8 +2,10 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "use-intl";
+import { lang } from "@/lib/action/uploadimage";
 const Reklam = () => {
   const t = useTranslations("reklem");
+  const l = lang().startsWith("ar") || lang().startsWith("ku");
   return (
     <motion.div
       initial={{ opacity: 0.3 }}
@@ -13,7 +15,7 @@ const Reklam = () => {
     >
       {/* Left Section */}
       <motion.div
-        initial={{ x: -300 }}
+        initial={{ x: l ? 200 : -300 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.9, type: "spring" }}
         className="flex sm:min-h-[390px] shadow-lg shadow-[#57a4ae] sm:max-w-[500px] relative px-2 w-full py-0 bg-gradient-to-br from-[#1975B9] via-[#30BCCE] to-[#B0E9C9] lg:max-w-[600px] xl:max-w-[700px] ms:p-3 bg-blue-300 dark:from-[#0A3D64] dark:via-[#185D5D] dark:to-[#397A6F] rounded-lg h-full overflow-hidden"
@@ -68,7 +70,10 @@ const Reklam = () => {
             <h1 className="font-bold text-15 sm:text-20 dark:text-white">
               {t("tagline")}
             </h1>
-            <p className="text-neutral-700 dark:text-gray-300 sm:text-16 text-justify sm:text-start text-12 pl-3">
+            <p
+              className={`text-neutral-700  dark:text-gray-300 sm:text-16 text-justify sm:text-start text-12
+               ${l ? "pr-3" : "pl-3"}`}
+            >
               {t("message")}
             </p>
           </div>
@@ -76,7 +81,7 @@ const Reklam = () => {
       </motion.div>
       {/* Right Section */}
       <motion.div
-        initial={{ x: 300 }}
+        initial={{ x: l ? -300 : 300 }}
         whileInView={{ x: 0 }}
         transition={{ duration: 0.9, type: "spring" }}
         className="flex flex-col mt-2 sm:min-h-[390px] shadow-[#005690] shadow-lg shrink-0 sm:max-w-[500px] sm:mt-0 bg-[#005690] dark:bg-[#022E4B] h-full overflow-hidden rounded-lg w-full relative justify-between py-8 items-center"

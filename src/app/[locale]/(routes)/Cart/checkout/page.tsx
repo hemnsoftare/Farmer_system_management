@@ -34,11 +34,7 @@ import Email from "@/emails";
 import FormCheckout from "@/components/Cart/FormCheckout";
 import Link from "next/link";
 
-const Page = ({
-  onLocationSelect,
-}: {
-  onLocationSelect: (location: { lat: number; lng: number }) => void;
-}) => {
+const Page = () => {
   const cartItems = useSelector(
     (state: { cart: ItemCartProps[] }) => state.cart || []
   );
@@ -184,8 +180,8 @@ const Page = ({
     lat: number;
     lng: number;
   }>({
-    lat: 37.7749, // Default latitude (San Francisco)
-    lng: -122.4194, // Default longitude
+    lat: 36.1911, // Default latitude (San Francisco)
+    lng: 44.0092, // Default longitude
   });
 
   const handlePlaceSelect = () => {
@@ -200,141 +196,11 @@ const Page = ({
       }
     }
   };
-
+  const onLocationSelect = (location: { lat: number; lng: number }) => {
+    console.log("Selected location:", location);
+  };
   return (
-    <div className="fled py-8 flex-col  justify-center px-2 items-center">
-      <p className="m-3 text-18">
-        <Link href={"/"}>Home &gt;</Link>{" "}
-        <span className=" bgpri  bgpri-offset-4 text-primary"> Cart</span>
-      </p>
-      {/* header  */}
-      {/* <header className="flex mx-auto relative w-fit py-5 self-center items-center gap-20 justify-center">
-        <div className="bg-neutral-400 z-[0] absolute top-[50%] w-full left-0 h-[3px]" />
-        <span className="rounded-full z-[3] border-2 p-2 bg-white border-blue-600">
-          <TbShoppingBag color="blue" className="w-8 h-8" />
-        </span>
-        <span className="rounded-full z-[3] border-2 p-2 bg-neutral-400">
-          <MdOutlineFireTruck color="white" className="w-6 h-6" />
-        </span>
-        <span className="rounded-full z-[3] border-2 p-2 bg-neutral-400">
-          <FaRegCreditCard color="white" className="w-6 h-6" />
-        </span>
-      </header> */}
-      <br />
-      <h2>total price {totalPrice?.totalPrice}</h2>
-      <div className="flex flex-col sm:flex-row  items-start justify-between">
-        <div className="sm:w-[55%] w-full flex flex-col gap-3">
-          {cartItems.map((cart, index) => (
-            <CartItem key={index} lngRemove="u" item={cart} />
-          ))}
-        </div>
-        <br />
-        <div className="flex flex-col gap-3 border-neutral-300 shadow-md sm:w-[35%] w-full p-2 sm:p-3 border-2 rounded-md items-start">
-          <h2 className="font-semibold">Payment Details</h2>
-          <ul className="w-full text-12">
-            <li className="w-full capitalize flex items-center justify-between text-neutral-500">
-              <span>Subtotal</span>
-              <span>${totalPrice?.totalPrice}</span>
-            </li>
-            <li className="w-full capitalize flex items-center justify-between text-neutral-500">
-              <span>Discount</span>
-              <span>-${totalPrice?.discount}</span>
-            </li>
-          </ul>
-          <hr className="bg-neutral-400 w-full h-[1px]" />
-          <p className="flex items-center justify-between w-full">
-            <span className="font-semibold">Grand Total</span>
-            <span className="font-semibold">
-              ${(totalPrice?.totalPrice - totalPrice?.discount).toFixed(2)}
-            </span>
-          </p>
-          <div className="w-full text-center">
-            <Dialog
-              onOpenChange={() =>
-                seterror({
-                  fullName: "",
-                  phoneNumber: "",
-                  streetName: "",
-                  city: "",
-                  Select_region: "",
-                  note: "",
-                })
-              }
-            >
-              <Link
-                href="/Cart/checkout"
-                // disabled={!user && cartItems.length < 1}
-                /* onClick={(e) => {
-                  if (!user) {
-                    e.preventDefault(); // Prevents the dialog from opening
-                    toast({
-                      title: "You need an account to proceed",
-                      description: (
-                        <div className="flex gap-2">
-                          <SignInButton>
-                            <button className="text-white px-3 py-1 rounded-lg  bg-primary ">
-                              Sign In
-                            </button>
-                          </SignInButton>
-                          <SignUpButton>
-                            <button className="text-blue-50   bg-orange-500 rounded-lg px-3 py-1 ">
-                              Sign Up
-                            </button>
-                          </SignUpButton>
-                        </div>
-                      ),
-                    });
-                  } else if (cartItems.length < 1) {
-                    e.preventDefault(); // Prevents the dialog from opening
-                    toast({
-                      description: (
-                        <div className="flex text-red-600 text-14 items-center px-2 font-bold gap-2">
-                          <BsFillCartXFill color="red" />{" "}
-                          <p> have not product in cart</p>
-                        </div>
-                      ),
-                      style: {
-                        backgroundColor: "#fef2f2",
-                        color: "red", // Red color for error
-                        borderColor: "red",
-                        borderWidth: "2px",
-                        borderRadius: "4px",
-                        padding: "8px",
-                      },
-                    });
-                  }
-                }} */
-                className="w-full py-2 px-6 hover:bg-blue-700 duration-300 transition-all bg-primary text-white rounded-lg"
-              >
-                Proceed to checkout
-              </Link>
-              <DialogContent className="md:scale-[0.8]  h-screen w-screen md:w-fit md:h-fit lg:scale-[0.8]">
-                <DialogHeader className="flex flex-col gap-3">
-                  {!showSuccess && !showNotSuccess && (
-                    <DialogTitle>Address details</DialogTitle>
-                  )}
-
-                  {showSuccess && !showNotSuccess && (
-                    <Success
-                      order={order}
-                      // onClose={() => setShowSuccess(false)}
-                    />
-                  )}
-                  {!showSuccess && !showNotSuccess && (
-                    <FormCheckout errors={error} handleSubmit={handleSubmit} />
-                  )}
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
-          </div>
-        </div>
-      </div>
-      {/* <div className="flex mt-12 mb-3 flex-col w-full">
-        <h2 className="font-semibold">
-          Customers who viewed items in your browsing history also viewed
-        </h2>
-        <ForProducts />
-      </div> */}{" "}
+    <div className=" flex flex-col py-8 gap-4 items-center justify-center ">
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
         libraries={libraries}
@@ -362,11 +228,104 @@ const Page = ({
 
           {/* Location Info Box */}
           {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-lg shadow-md text-gray-700 text-sm">
-            📍 Selected Location: {markerPosition.lat.toFixed(5)},{" "}
-            {markerPosition.lng.toFixed(5)}
-          </div> */}
+                  📍 Selected Location: {markerPosition.lat.toFixed(5)},{" "}
+                  {markerPosition.lng.toFixed(5)}
+                </div> */}
         </div>
       </LoadScript>
+      <div className="w-1/2 py-5">
+        {/* <FormCheckout errors={error} handleSubmit={handleSubmit} /> */}
+
+        <section className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-6">
+          {/* Order Summary */}
+          <div className="border-b pb-4">
+            <h2 className="text-2xl font-semibold text-gray-800">Checkout</h2>
+            <p className="text-gray-600">
+              Fill in your details to complete the order.
+            </p>
+          </div>
+
+          {/* Full Name */}
+          <div>
+            <label className="block text-gray-700 font-medium">Full Name</label>
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-gray-700 font-medium">Email</label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+            />
+          </div>
+
+          {/* Phone Number */}
+          <div>
+            <label className="block text-gray-700 font-medium">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              placeholder="Enter your phone number"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+            />
+          </div>
+
+          {/* Address Fields */}
+          <div>
+            <label className="block text-gray-700 font-medium">
+              Street Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your street name"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-gray-700 font-medium">City</label>
+              <input
+                type="text"
+                placeholder="Enter your city"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium">Region</label>
+              <input
+                type="text"
+                placeholder="Enter your region"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
+            </div>
+          </div>
+
+          {/* Order Notes */}
+          <div>
+            <label className="block text-gray-700 font-medium">
+              Order Notes (Optional)
+            </label>
+            <textarea
+              placeholder="Add any special instructions..."
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              rows={3}
+            ></textarea>
+          </div>
+
+          {/* Payment Button */}
+          <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+            Proceed to Payment
+          </button>
+        </section>
+      </div>
     </div>
   );
 };

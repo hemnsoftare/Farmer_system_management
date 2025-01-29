@@ -76,10 +76,10 @@ export default function FormCheckout({
         <label htmlFor="accept">I am the recipient of my order</label>
       </p>
       <div className="flex w-full items-center gap-3">
-        <DialogTrigger className="border-blue-500 w-full text-blue-500 px-4 py-2 font-semibold border rounded-lg">
+        <p className="border-blue-500 w-full text-blue-500 px-4 py-2 font-semibold border rounded-lg">
           {" "}
           back
-        </DialogTrigger>
+        </p>
         <button
           type="submit"
           className="bg-blue-500 w-full text-white px-4 py-2 font-semibold rounded-lg"
