@@ -200,7 +200,7 @@ const Page = () => {
     console.log("Selected location:", location);
   };
   return (
-    <div className=" flex flex-col py-8 gap-4 items-center justify-center ">
+    <div className=" flex flex-col px-1 py-8 gap-4 items-center justify-center ">
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
         libraries={libraries}
@@ -233,11 +233,10 @@ const Page = () => {
                 </div> */}
         </div>
       </LoadScript>
-      <div className="w-1/2 py-5">
-        {/* <FormCheckout errors={error} handleSubmit={handleSubmit} /> */}
-
-        <section className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-6">
-          {/* Order Summary */}
+      <div className="md:w-1/2 w-full  py-5">
+        <FormCheckout errors={error} handleSubmit={handleSubmit} />
+        {/*
+         <section className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-6">
           <div className="border-b pb-4">
             <h2 className="text-2xl font-semibold text-gray-800">Checkout</h2>
             <p className="text-gray-600">
@@ -245,86 +244,70 @@ const Page = () => {
             </p>
           </div>
 
-          {/* Full Name */}
-          <div>
-            <label className="block text-gray-700 font-medium">Full Name</label>
-            <input
-              type="text"
-              placeholder="Enter your full name"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-gray-700 font-medium">Email</label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          {/* Phone Number */}
-          <div>
-            <label className="block text-gray-700 font-medium">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              placeholder="Enter your phone number"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          {/* Address Fields */}
-          <div>
-            <label className="block text-gray-700 font-medium">
-              Street Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your street name"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-          </div>
+          {[
+            { label: "Full Name", type: "text", id: "name" },
+            { label: "Email", type: "email", id: "email" },
+            { label: "Phone Number", type: "tel", id: "phone" },
+            { label: "Street Name", type: "text", id: "street" },
+          ].map(({ label, type, id }) => (
+            <div key={id} className="relative">
+              <input
+                type={type}
+                id={id}
+                className="peer w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:border-blue-500 placeholder-transparent"
+                placeholder={label}
+              />
+              <label
+                htmlFor={id}
+                className="absolute left-3 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600 bg-white px-1"
+              >
+                {label}
+              </label>
+            </div>
+          ))}
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-700 font-medium">City</label>
-              <input
-                type="text"
-                placeholder="Enter your city"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700 font-medium">Region</label>
-              <input
-                type="text"
-                placeholder="Enter your region"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-              />
-            </div>
+            {[
+              { label: "City", id: "city" },
+              { label: "Region", id: "region" },
+            ].map(({ label, id }) => (
+              <div key={id} className="relative">
+                <input
+                  type="text"
+                  id={id}
+                  className="peer w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:border-blue-500 placeholder-transparent"
+                  placeholder={label}
+                />
+                <label
+                  htmlFor={id}
+                  className="absolute left-3 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600 bg-white px-1"
+                >
+                  {label}
+                </label>
+              </div>
+            ))}
           </div>
 
-          {/* Order Notes */}
-          <div>
-            <label className="block text-gray-700 font-medium">
-              Order Notes (Optional)
-            </label>
+          <div className="relative">
             <textarea
-              placeholder="Add any special instructions..."
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              id="note"
+              className="peer w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:border-blue-500 placeholder-transparent"
+              placeholder="Order Notes (Optional)"
               rows={3}
             ></textarea>
+            <label
+              htmlFor="note"
+              className="absolute left-3 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600 bg-white px-1"
+            >
+              Order Notes (Optional)
+            </label>
           </div>
 
-          {/* Payment Button */}
           <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
             Proceed to Payment
           </button>
-        </section>
+        </section> 
+        */}
       </div>
     </div>
   );

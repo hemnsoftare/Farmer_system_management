@@ -40,7 +40,7 @@ const InputCheckout = forwardRef<HTMLInputElement, InputCheckoutProps>(
           placeholder={placeholder}
           className={`${
             !isdisabled ? "border-neutral-300" : "border-neutral-400"
-          } outline-none placeholder:text-neutral-300 group-focus-within:placeholder:text-blue-500 focus:border-blue-600 shadow-inner border-2  rounded-lg text-blue-500 px-5 py-2 w-full focus:shadow-blue-100 shadow-neutral-100`}
+          } outline-none placeholder:text-neutral-500 group-focus-within:placeholder:text-blue-500 focus:border-blue-600 shadow-inner border-2  rounded-lg text-blue-500 px-5 py-2 w-full focus:shadow-blue-100 shadow-neutral-100`}
         />
         {/* <IoIosCloseCircleOutline className="absolute scale-[1.05] right-5 top-[15px]" /> */}
         <p className="text-red-700 ml-2 text-12 text-shadow-lg">

@@ -1,44 +1,16 @@
 "use client"; // Ensure it runs on the client side
 
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  Autocomplete,
-} from "@react-google-maps/api";
-
 const libraries: "places"[] = ["places"];
 import React, { useEffect, useState } from "react";
 import CartItem from "@/components/header/CartItem";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { z } from "zod";
-import Success from "@/components/Cart/success";
+
 import { useDispatch, useSelector } from "react-redux";
-import { ItemCartProps, OrderType } from "@/lib/action";
-import { setOrder } from "@/lib/action/uploadimage";
-import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
-import { removeAll } from "@/lib/action/Order";
-import Plunk from "@plunk/node";
+import { ItemCartProps } from "@/lib/action";
 // import { Email } from "@/emails";//
-import { render } from "@react-email/render";
 
-import { toast } from "@/hooks/use-toast";
-import { BsFillCartXFill } from "react-icons/bs";
-import Email from "@/emails";
-import FormCheckout from "@/components/Cart/FormCheckout";
-import Link from "next/link";
+import { Link } from "navigation";
 
-const Page = ({
-  onLocationSelect,
-}: {
-  onLocationSelect: (location: { lat: number; lng: number }) => void;
-}) => {
+const Page = () => {
   const cartItems = useSelector(
     (state: { cart: ItemCartProps[] }) => state.cart || []
   );
@@ -50,114 +22,6 @@ const Page = ({
     totalPrice: 0,
   });
   const dispatch = useDispatch();
-  const plunk = new Plunk(process.env.NEXT_PUBLIC_PLUNK_API_KEY || "");
-
-  const [showSuccess, setShowSuccess] = useState<boolean>(false);
-  const [showNotSuccess, setShowNotSuccess] = useState(false);
-  const { user } = useUser();
-  const [order, setorder] = useState<OrderType>();
-  const [error, seterror] = useState({
-    fullName: "",
-    phoneNumber: "",
-    streetName: "",
-    city: "",
-    Select_region: "",
-    note: "",
-  });
-  console.log(error);
-  const formSchema = z.object({
-    fullName: z.string().min(1, "Full name is required"),
-    phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
-    streetName: z.string().min(1, "Street name is required"),
-    city: z.string().min(1, "City is required"),
-    Select_region: z.string().min(1, "region is required"),
-    note: z.string().optional(),
-  });
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const datafrom = new FormData(e.currentTarget);
-    const data = Object.fromEntries(datafrom.entries());
-    console.log(data);
-    const validate = formSchema.safeParse(data);
-
-    if (validate.success && user) {
-      setShowSuccess(true);
-      const orders: OrderType = {
-        address: {
-          city: (data.city as string) || "", // Cast to string if needed
-          region: (data.Select_region as string) || "", // Cast to string if needed
-          streetName: (data.streetName as string) || "", // Cast to string if needed
-        },
-        totaldiscountPrice: totalPrice.discount || 0,
-        email: user.emailAddresses || [],
-        fullName: user.fullName || "", // Ensure user is defined
-        orderDate: new Date(), // Current date and time
-        orderItems: cartItems || [], // Default to an empty array if cartItems is undefined
-        phoneNumber: (data.phoneNumber as string) || "", // Cast to string if needed
-        totalAmount: totalPrice?.totalPrice || 0, // Default to 0 if totalPrice is not defined
-        userId: user?.id || "", // Ensure user is defined
-        note: data.note ? (data.note as string) : undefined, // Use undefined if no note is provided
-      };
-
-      const id = await setOrder(orders);
-      setorder({ ...orders, id });
-      dispatch(removeAll());
-      sendEmail({ ...orders });
-    } else {
-      // Initialize an empty error object with all properties as empty strings
-      // setShowNotSuccess(true);
-      const errors: {
-        fullName: string;
-        phoneNumber: string;
-        streetName: string;
-        city: string;
-        Select_region: string;
-        note: string;
-      } = {
-        fullName: "",
-        phoneNumber: "",
-        streetName: "",
-        city: "",
-        Select_region: "",
-        note: "",
-      };
-
-      validate.error &&
-        validate.error.errors.forEach((error) => {
-          const fieldName = error.path[0] as keyof typeof errors;
-          errors[fieldName] = error.message;
-        });
-
-      seterror(errors);
-    }
-  };
-
-  const sendEmail = async (orderDetails: OrderType) => {
-    // Await the render function to ensure emailHtml is a string
-    const emailHtml = await render(<Email order={orderDetails} />);
-    const recipientEmail = orderDetails.email[0]?.emailAddress;
-
-    // Check if email is a valid string
-    if (typeof recipientEmail !== "string" || recipientEmail.trim() === "") {
-      console.log("Error: Recipient email is not a valid string.");
-      return;
-    }
-    plunk.emails
-      .send({
-        to: recipientEmail.trim(), // Trim the recipient email
-        subject: "Order Confirmation",
-        body: emailHtml, // Use the awaited emailHtml string
-      })
-      .then((res) => {
-        toast({ title: "Email sent successfully" });
-      })
-      .catch((error) => {
-        toast({ title: "Email send failed" });
-        console.error("Error sending email:", error);
-      });
-  };
 
   useEffect(() => {
     const totalPriceitem = cartItems.reduce(
@@ -176,30 +40,6 @@ const Page = ({
 
     settotalPrice({ totalPrice: totalPriceitem, discount: totalDiscount });
   }, [cartItems]);
-
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [autocomplete, setAutocomplete] =
-    useState<google.maps.places.Autocomplete | null>(null);
-  const [markerPosition, setMarkerPosition] = useState<{
-    lat: number;
-    lng: number;
-  }>({
-    lat: 37.7749, // Default latitude (San Francisco)
-    lng: -122.4194, // Default longitude
-  });
-
-  const handlePlaceSelect = () => {
-    if (autocomplete) {
-      const place = autocomplete.getPlace();
-      if (place.geometry && place.geometry.location) {
-        const lat = place.geometry.location.lat();
-        const lng = place.geometry.location.lng();
-        setMarkerPosition({ lat, lng });
-        onLocationSelect({ lat, lng }); // Pass location to parent component
-        map?.panTo({ lat, lng });
-      }
-    }
-  };
 
   return (
     <div className="fled py-8 flex-col  justify-center px-2 items-center">
@@ -249,22 +89,10 @@ const Page = ({
             </span>
           </p>
           <div className="w-full text-center">
-            <Dialog
-              onOpenChange={() =>
-                seterror({
-                  fullName: "",
-                  phoneNumber: "",
-                  streetName: "",
-                  city: "",
-                  Select_region: "",
-                  note: "",
-                })
-              }
-            >
-              <Link
-                href="/Cart/checkout"
-                // disabled={!user && cartItems.length < 1}
-                /* onClick={(e) => {
+            <Link
+              href="/Cart/checkout"
+              // disabled={!user && cartItems.length < 1}
+              /* onClick={(e) => {
                   if (!user) {
                     e.preventDefault(); // Prevents the dialog from opening
                     toast({
@@ -304,69 +132,13 @@ const Page = ({
                     });
                   }
                 }} */
-                className="w-full py-2 px-6 hover:bg-blue-700 duration-300 transition-all bg-primary text-white rounded-lg"
-              >
-                Proceed to checkout
-              </Link>
-              <DialogContent className="md:scale-[0.8]  h-screen w-screen md:w-fit md:h-fit lg:scale-[0.8]">
-                <DialogHeader className="flex flex-col gap-3">
-                  {!showSuccess && !showNotSuccess && (
-                    <DialogTitle>Address details</DialogTitle>
-                  )}
-
-                  {showSuccess && !showNotSuccess && (
-                    <Success
-                      order={order}
-                      // onClose={() => setShowSuccess(false)}
-                    />
-                  )}
-                  {!showSuccess && !showNotSuccess && (
-                    <FormCheckout errors={error} handleSubmit={handleSubmit} />
-                  )}
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+              className="w-full py-2 px-6 hover:bg-blue-700 duration-300 transition-all bg-primary text-white rounded-lg"
+            >
+              Proceed to checkout
+            </Link>
           </div>
         </div>
       </div>
-      {/* <div className="flex mt-12 mb-3 flex-col w-full">
-        <h2 className="font-semibold">
-          Customers who viewed items in your browsing history also viewed
-        </h2>
-        <ForProducts />
-      </div> */}{" "}
-      <LoadScript
-        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
-        libraries={libraries}
-      >
-        <div className="relative w-full h-[450px] max-w-3xl mx-auto rounded-lg shadow-xl overflow-hidden">
-          {/* Search Box */}
-
-          {/* Map */}
-          <GoogleMap
-            center={markerPosition}
-            zoom={12}
-            mapContainerStyle={{ width: "100%", height: "100%" }}
-            onLoad={setMap}
-            onClick={(e) => {
-              if (e.latLng) {
-                const lat = e.latLng.lat();
-                const lng = e.latLng.lng();
-                setMarkerPosition({ lat, lng });
-                onLocationSelect({ lat, lng });
-              }
-            }}
-          >
-            <Marker position={markerPosition} />
-          </GoogleMap>
-
-          {/* Location Info Box */}
-          {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-lg shadow-md text-gray-700 text-sm">
-            📍 Selected Location: {markerPosition.lat.toFixed(5)},{" "}
-            {markerPosition.lng.toFixed(5)}
-          </div> */}
-        </div>
-      </LoadScript>
     </div>
   );
 };
