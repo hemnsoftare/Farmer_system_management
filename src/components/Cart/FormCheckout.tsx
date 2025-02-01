@@ -36,7 +36,7 @@ export default function FormCheckout({
         placeholder="enter your street"
         error={errors.streetName}
       />
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center w-full justify-center gap-2">
         {" "}
         <InputCheckout
           label="city"
@@ -76,13 +76,13 @@ export default function FormCheckout({
         <label htmlFor="accept">I am the recipient of my order</label>
       </p>
       <div className="flex w-full items-center gap-3">
-        <p className="border-blue-500 w-full text-blue-500 px-4 py-2 font-semibold border rounded-lg">
+        <p className="border-blue-500 text-center cursor-pointer active:scale-[.95] active:shadow-md active:bg-blue-100 duration-100 transition-all md:hover:bg-blue-100 w-full text-blue-500 px-4 py-2 font-semibold border rounded-lg">
           {" "}
           back
         </p>
         <button
           type="submit"
-          className="bg-blue-500 w-full text-white px-4 py-2 font-semibold rounded-lg"
+          className="bg-blue-500 cursor-pointer active:scale-[.95] active:shadow-md border active:bg-blue-400 md:hover:bg-blue-400 duration-100 transition-all w-full text-white px-4 py-2 font-semibold rounded-lg"
         >
           submit
         </button>

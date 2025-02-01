@@ -60,14 +60,22 @@ const Page = () => {
     Select_region: "",
     note: "",
   });
-  console.log(error);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [autocomplete, setAutocomplete] =
+    useState<google.maps.places.Autocomplete | null>(null);
+  const [markerPosition, setMarkerPosition] = useState<{
+    lat: number;
+    lng: number;
+  }>({ lat: 0, lng: 0 });
   const formSchema = z.object({
     fullName: z.string().min(1, "Full name is required"),
     phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
     streetName: z.string().min(1, "Street name is required"),
     city: z.string().min(1, "City is required"),
-    Select_region: z.string().min(1, "region is required"),
+    Select_region: z.string().min(1, "Region is required"),
     note: z.string().optional(),
+    lat: z.number().min(1),
+    lng: z.number().min(1),
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -87,6 +95,8 @@ const Page = () => {
           streetName: (data.streetName as string) || "", // Cast to string if needed
         },
         totaldiscountPrice: totalPrice.discount || 0,
+        lat: markerPosition.lat || 0,
+        lng: markerPosition.lng || 0,
         email: user.emailAddresses || [],
         fullName: user.fullName || "", // Ensure user is defined
         orderDate: new Date(), // Current date and time
@@ -101,6 +111,7 @@ const Page = () => {
       setorder({ ...orders, id });
       dispatch(removeAll());
       sendEmail({ ...orders });
+      console.log("send");
     } else {
       // Initialize an empty error object with all properties as empty strings
       // setShowNotSuccess(true);
@@ -111,6 +122,8 @@ const Page = () => {
         city: string;
         Select_region: string;
         note: string;
+        lat: number;
+        lng: number;
       } = {
         fullName: "",
         phoneNumber: "",
@@ -118,12 +131,15 @@ const Page = () => {
         city: "",
         Select_region: "",
         note: "",
+        lat: 0,
+        lng: 0,
       };
-
+      console.log("error");
+      console.log(validate.error.errors);
       validate.error &&
         validate.error.errors.forEach((error) => {
           const fieldName = error.path[0] as keyof typeof errors;
-          errors[fieldName] = error.message;
+          errors[fieldName as any] = error.message;
         });
 
       seterror(errors);
@@ -173,17 +189,6 @@ const Page = () => {
     settotalPrice({ totalPrice: totalPriceitem, discount: totalDiscount });
   }, [cartItems]);
 
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [autocomplete, setAutocomplete] =
-    useState<google.maps.places.Autocomplete | null>(null);
-  const [markerPosition, setMarkerPosition] = useState<{
-    lat: number;
-    lng: number;
-  }>({
-    lat: 36.1911, // Default latitude (San Francisco)
-    lng: 44.0092, // Default longitude
-  });
-
   const handlePlaceSelect = () => {
     if (autocomplete) {
       const place = autocomplete.getPlace();
@@ -191,24 +196,44 @@ const Page = () => {
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
         setMarkerPosition({ lat, lng });
-        onLocationSelect({ lat, lng }); // Pass location to parent component
+
         map?.panTo({ lat, lng });
       }
     }
   };
-  const onLocationSelect = (location: { lat: number; lng: number }) => {
-    console.log("Selected location:", location);
+
+  const phoneNumber = "+9647518077516"; // Replace with your WhatsApp number (without + or spaces)
+  const message = encodeURIComponent("Hello! I am interested in your service.");
+
+  const handleWhatsAppClick = () => {
+    // Open WhatsApp chat
+    const orderUrl = encodeURIComponent(
+      `https://yourwebsite.com/Cart/${order.id}`
+    );
+    const message = encodeURIComponent(`Check your order details: ${orderUrl}`);
+
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
   };
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setMarkerPosition({
+        lat: position.coords.latitude || 36.1911,
+        lng: position.coords.longitude || 44.0092,
+      });
+    });
+  }, []);
   return (
     <div className=" flex flex-col px-1 py-8 gap-4 items-center justify-center ">
+      <button className="" onClick={handleWhatsAppClick}>
+        onclick{" "}
+      </button>
+      <h1 className="font-bold text23 md:text-34">checkout</h1>
       <LoadScript
+        language="en"
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
         libraries={libraries}
       >
-        <div className="relative w-full h-[450px] max-w-3xl mx-auto rounded-lg shadow-xl overflow-hidden">
-          {/* Search Box */}
-
-          {/* Map */}
+        <div className="relative md:w-1/2 w-full  h-[450px]  mx-auto rounded-lg shadow-xl overflow-hidden">
           <GoogleMap
             center={markerPosition}
             zoom={12}
@@ -219,22 +244,22 @@ const Page = () => {
                 const lat = e.latLng.lat();
                 const lng = e.latLng.lng();
                 setMarkerPosition({ lat, lng });
-                onLocationSelect({ lat, lng });
               }
+            }}
+            options={{
+              gestureHandling: "greedy", // Enables one-finger drag
+              zoomControl: false, // Optional: Hide zoom buttons
             }}
           >
             <Marker position={markerPosition} />
           </GoogleMap>
-
-          {/* Location Info Box */}
-          {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-lg shadow-md text-gray-700 text-sm">
-                  📍 Selected Location: {markerPosition.lat.toFixed(5)},{" "}
-                  {markerPosition.lng.toFixed(5)}
-                </div> */}
         </div>
       </LoadScript>
       <div className="md:w-1/2 w-full  py-5">
         <FormCheckout errors={error} handleSubmit={handleSubmit} />
+        <input type="hidden" name="lat" value={markerPosition.lat} />
+        <input type="hidden" name="lng" value={markerPosition.lng} />
+
         {/*
          <section className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-6">
           <div className="border-b pb-4">

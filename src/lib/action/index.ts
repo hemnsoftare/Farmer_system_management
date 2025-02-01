@@ -267,6 +267,8 @@ export type OrderType = {
   id?: string;
   userId: string; // Clerk's user ID or Firebase UID
   fullName: string; // Full name of the user
+  lat: number;
+  lng: number;
   phoneNumber: string; // User's contact phone number
   address: {
     streetName: string; // User's street address
