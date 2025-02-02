@@ -1,38 +1,23 @@
 "use client"; // Ensure it runs on the client side
 
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  Autocomplete,
-} from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const libraries: "places"[] = ["places"];
 import React, { useEffect, useState } from "react";
-import CartItem from "@/components/header/CartItem";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import { z } from "zod";
-import Success from "@/components/Cart/success";
 import { useDispatch, useSelector } from "react-redux";
 import { ItemCartProps, OrderType } from "@/lib/action";
 import { setOrder } from "@/lib/action/uploadimage";
-import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { removeAll } from "@/lib/action/Order";
 import Plunk from "@plunk/node";
-// import { Email } from "@/emails";//
 import { render } from "@react-email/render";
 
 import { toast } from "@/hooks/use-toast";
-import { BsFillCartXFill } from "react-icons/bs";
 import Email from "@/emails";
 import FormCheckout from "@/components/Cart/FormCheckout";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const Page = () => {
   const cartItems = useSelector(
@@ -84,9 +69,13 @@ const Page = () => {
     const datafrom = new FormData(e.currentTarget);
     const data = Object.fromEntries(datafrom.entries());
     console.log(data);
-    const validate = formSchema.safeParse(data);
+    const validate = formSchema.safeParse({
+      ...data,
+      lat: markerPosition.lat,
+      lng: markerPosition.lng,
+    });
 
-    if (validate.success && user) {
+    if (validate.success && user && cartItems.length > 0) {
       setShowSuccess(true);
       const orders: OrderType = {
         address: {
@@ -109,9 +98,10 @@ const Page = () => {
 
       const id = await setOrder(orders);
       setorder({ ...orders, id });
-      dispatch(removeAll());
+      handleWhatsAppClick();
       sendEmail({ ...orders });
-      console.log("send");
+      dispatch(removeAll());
+      redirect("/");
     } else {
       // Initialize an empty error object with all properties as empty strings
       // setShowNotSuccess(true);
@@ -134,8 +124,14 @@ const Page = () => {
         lat: 0,
         lng: 0,
       };
-      console.log("error");
-      console.log(validate.error.errors);
+      if (cartItems.length === 0) {
+        toast({
+          title: "Your cart is empty",
+          description: "Please add items to your cart before checkout",
+          style: { color: "red", backgroundColor: "#ffd6ce" },
+        });
+        return;
+      }
       validate.error &&
         validate.error.errors.forEach((error) => {
           const fieldName = error.path[0] as keyof typeof errors;
@@ -202,18 +198,19 @@ const Page = () => {
     }
   };
 
-  const phoneNumber = "+9647518077516"; // Replace with your WhatsApp number (without + or spaces)
-  const message = encodeURIComponent("Hello! I am interested in your service.");
-
   const handleWhatsAppClick = () => {
-    // Open WhatsApp chat
+    const phoneNumber = "9647508927181"; // Remove "+" from the phone number
+    console.log("Handle WhatsApp message send");
+
     const orderUrl = encodeURIComponent(
-      `https://yourwebsite.com/Cart/${order.id}`
+      `https://tech-heim-three.vercel.app/Cart/${order.id}`
     );
     const message = encodeURIComponent(`Check your order details: ${orderUrl}`);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${orderUrl}`;
 
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    window.open(whatsappUrl, "_blank");
   };
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setMarkerPosition({
@@ -222,18 +219,16 @@ const Page = () => {
       });
     });
   }, []);
+  console.log(markerPosition);
   return (
     <div className=" flex flex-col px-1 py-8 gap-4 items-center justify-center ">
-      <button className="" onClick={handleWhatsAppClick}>
-        onclick{" "}
-      </button>
       <h1 className="font-bold text23 md:text-34">checkout</h1>
       <LoadScript
         language="en"
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
         libraries={libraries}
       >
-        <div className="relative md:w-1/2 w-full  h-[450px]  mx-auto rounded-lg shadow-xl overflow-hidden">
+        <div className="relative bg-[#ffd6ce] md:w-1/2 w-full  h-[450px]  mx-auto rounded-lg shadow-xl overflow-hidden">
           <GoogleMap
             center={markerPosition}
             zoom={12}

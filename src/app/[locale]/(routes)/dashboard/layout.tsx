@@ -80,7 +80,7 @@ const Layout = ({
       {/* Sidebar Toggle Button */}
       <button
         className={`absolute top-2 transition-all md:block hidden bg-white p-0 rounded-full duration-300 z-50 ${
-          showSlider ? "rotate-180 left-[200px]" : "rotate-0 left-4"
+          showSlider ? "rotate-180 left-[200px]" : "rotate-0 left-[110px]"
         }`}
         onClick={showSlider ? handleHideSlider : handleShowSlider}
       >
@@ -90,7 +90,7 @@ const Layout = ({
       {/* Desktop Sidebar */}
       <div
         className={`${
-          showSlider ? "sm:w-[260px] w-full" : "sm:-translate-x-[560px] sm:w-0"
+          showSlider ? "sm:w-[260px] " : ""
         } hidden md:flex transition-all duration-300  overflow-y-auto h-screen px-3 gap-5 py-9 flex-col bg-cyan-800 items-start`}
       >
         <div className="flex text-white gap-3 items-center mb-4 justify-center">
@@ -103,7 +103,9 @@ const Layout = ({
                 height={50}
                 className="rounded-full min-w-[70px] min-h-[70px] max-w-[70px] max-h-[70px]"
               />
-              <h2 className="text-lg font-medium">{user.fullName}</h2>
+              {showSlider && (
+                <h2 className="text-lg font-medium">{user.fullName}</h2>
+              )}
             </>
           )}
         </div>
@@ -112,9 +114,9 @@ const Layout = ({
             href={item.url || ""}
             key={item.name}
             className={`${
-              item.name !== "Home" &&
-              pathname.includes(item.url || "null") &&
-              "rounded-l-lg border-l-4 bg-gradient-to-l from-cyan-400 to-transparent border-l-cyan-400"
+              item.name !== "Home" && pathname.includes(item.url || "null")
+                ? "rounded-l-lg border-l-4 bg-gradient-to-l from-cyan-400 to-transparent border-l-cyan-400"
+                : "border-r-2 bg-cyan-700"
             } w-full text-white flex text-md py-2 cursor-pointer rounded-lg hover:bg-cyan-500 transition-all items-center px-5 gap-2`}
           >
             <item.icon
@@ -126,15 +128,17 @@ const Layout = ({
               } w-[20px] shadow-sm shadow-white  rounded-full p-2 box-content`}
             />
 
-            <h2
-              className={`${
-                item.name !== "Home" && pathname.includes(item.url || "null")
-                  ? "text-cyan-200"
-                  : "text-neutral-white"
-              } font-semibold`}
-            >
-              {item.name}
-            </h2>
+            {showSlider && (
+              <h2
+                className={`${
+                  item.name !== "Home" && pathname.includes(item.url || "null")
+                    ? "text-cyan-200"
+                    : "text-neutral-white"
+                } font-semibold`}
+              >
+                {item.name}
+              </h2>
+            )}
           </Link>
         ))}
       </div>
@@ -142,8 +146,10 @@ const Layout = ({
       {/* Main Content */}
       <div
         className={`transition-all duration-300 ${
-          showSlider ? "w-full md:w-[calc(100%-260px)]" : "w-secreen"
-        } bg-white h-screen overflow-auto`}
+          showSlider
+            ? "w-full md:w-[calc(100%-260px)]"
+            : "w-full bg-red-700 border-4  "
+        }  h-screen overflow-auto`}
       >
         {children}
       </div>
