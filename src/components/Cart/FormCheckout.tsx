@@ -8,8 +8,10 @@ import { DialogTrigger } from "../ui/dialog";
 export default function FormCheckout({
   handleSubmit,
   errors,
+  load,
 }: {
   errors?: errorCheckOutProps;
+  load?: boolean;
   handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   return (
@@ -84,7 +86,7 @@ export default function FormCheckout({
           type="submit"
           className="bg-blue-500 cursor-pointer active:scale-[.95] active:shadow-md border active:bg-blue-400 md:hover:bg-blue-400 duration-100 transition-all w-full text-white px-4 py-2 font-semibold rounded-lg"
         >
-          submit
+          {load ? "loading" : "submit"}
         </button>
       </div>
     </form>

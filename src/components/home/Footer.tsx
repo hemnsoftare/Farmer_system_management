@@ -25,7 +25,6 @@ const Footer = () => {
   ) {
     return;
   }
-  console.log(lang);
   return (
     <>
       <div

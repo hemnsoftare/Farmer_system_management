@@ -102,9 +102,13 @@ const HeaderDilter = ({
           <DropdownMenuTrigger className="text-16 w-fit font-semibold above-405:text-18  pl-1 text-start  border-e outline-none  sm:w-[200px]">
             {state === "new"
               ? t("newest")
-              : state === "priceA"
-                ? ` ${t("price")}: ${t("low")} ${t("to")} ${t("high")}`
-                : ` ${t("price")}: ${t("high")} ${t("to")} ${t("low")}`}
+              : state.startsWith("price")
+                ? state.startsWith("priceA")
+                  ? ` ${t("price")}: ${t("low")} ${t("to")} ${t("high")}`
+                  : ` ${t("price")}: ${t("high")} ${t("to")} ${t("low")}`
+                : state.startsWith("a-z")
+                  ? ` Name : A to Z `
+                  : ` Name : Z to A `}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white dark:bg-neutral-black dark:text-white border dark:border-secondary w-full">
             {[
@@ -116,6 +120,14 @@ const HeaderDilter = ({
               {
                 key: ` ${t("price")}: ${t("high")} ${t("to")} ${t("low")}`,
                 label: "priceB",
+              },
+              {
+                key: ` Name : A to Z `,
+                label: "a-z",
+              },
+              {
+                key: ` Name : Z to A `,
+                label: "z-a",
               },
             ].map((item) => (
               <DropdownMenuItem

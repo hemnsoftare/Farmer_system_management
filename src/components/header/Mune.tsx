@@ -199,7 +199,6 @@ const Mune = ({ category }: { category: catagoryProps[] }) => {
     r.push(newPath);
   };
   const isActive = router;
-  console.log(isActive.length < 4);
   return (
     <Sheet open={showSheet} onOpenChange={setShowSheet}>
       <SheetTrigger

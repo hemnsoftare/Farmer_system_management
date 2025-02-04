@@ -93,8 +93,20 @@ export const getProducts = async (
     collection(db, "Products"),
     ...conditions,
     orderBy(
-      sortBy === "new" ? "date" : "price",
-      sortBy === "new" ? "desc" : sortBy === "priceA" ? "asc" : "desc"
+      sortBy === "new"
+        ? "date"
+        : sortBy === "a-z" || sortBy === "z-a"
+          ? "name"
+          : "price",
+      sortBy === "new"
+        ? "desc"
+        : sortBy === "a-z" || sortBy === "z-a"
+          ? sortBy === "a-z"
+            ? "asc"
+            : "desc"
+          : sortBy === "priceA"
+            ? "asc"
+            : "desc"
     )
   );
 

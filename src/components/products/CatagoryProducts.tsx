@@ -53,6 +53,7 @@ const CatagoryProducts = ({
             translateY: index % 2 === 0 ? 80 : -80,
           }}
           animate={{ translateY: 0 }}
+          whileTap={{ scale: 0.9 }} // Ensure active scaling works
           key={item.name}
           onClick={() => {
             handleSelected && handleSelected(item.name);
@@ -60,18 +61,11 @@ const CatagoryProducts = ({
           }}
           className={`${
             item.name.trim() === selected.trim()
-              ? "shadow-blue-300 dark:shadow-secondary shadow-md rounded-lg border-blue-300"
-              : "shadow-slate-100 shadow-lg dark:shadow-secondary rounded-lg"
-          } flex min-w-[120px] text-center border flex-col dark:bg-neutral-200 hover:bg-slate-50 hover:scale-[1.1] px-3 py-1 duration-300 transition-all cursor-pointer items-center justify-center gap-2`}
+              ? "shadow-secondary-200 text-secondary dark:shadow-secondary shadow-md rounded-sm border-secondary"
+              : "shadow-slate-100 shadow-lg dark:shadow-secondary rounded-sm"
+          } flex min-w-[120px] active:scale-[0.55] active:bg-gray-300 text-center border flex-col dark:bg-neutral-200 hover:bg-slate-50 md:hover:scale-[1.1] px-3 py-1 duration-100 transition-all cursor-pointer items-center justify-center gap-2`}
         >
-          <Image
-            src={item.image.link}
-            alt="image"
-            width={20}
-            height={20}
-            className="w-6 md:min-w-[25px] md:min-h-[25px] h-6"
-          />
-          <div className="text-14 flex justify-center items-center dark:text-black gap-2 w-full text-center">
+          <div className="text-16 flex justify-center items-center dark:text-black gap-2 w-full text-center">
             {item.name}
           </div>
         </motion.div>
@@ -79,5 +73,14 @@ const CatagoryProducts = ({
     </div>
   );
 };
+{
+  /* <Image
+  src={item.image.link}
+  alt="image"
+  width={20}
+  height={20}
+  className="w-6 md:min-w-[25px] md:min-h-[25px] h-6"
+/> */
+}
 
 export default CatagoryProducts;

@@ -35,8 +35,6 @@ const Login = ({ type }: { type: "login" | "signUp" }) => {
       setkeep(formError.keep?._errors.join(" "));
       setagree(formError.agree?._errors.join(" "));
     }
-    console.log("object");
-    console.log(fullNAMe, email, agree, keep, password);
   };
   return (
     <form action="" onSubmit={submit}>

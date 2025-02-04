@@ -1,60 +1,59 @@
 "use client";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { Provider as ReduxProvider } from "react-redux";
-import { ToastProvider } from "@/components/ui/toast";
-import ContextProvider from "./(routes)/dashboard/ConTextData";
+import { usePathname } from "next/navigation";
+import { ThemeProvider } from "next-themes";
 import store from "@/lib/action/store";
+import { Provider as ReduxProvider } from "react-redux";
+import ContextProvider from "./(routes)/dashboard/ConTextData";
 import Header from "@/components/header/Header";
 import Footer from "@/components/home/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import FoooterMob from "@/components/home/FoooterMob";
-import { ThemeProvider, useTheme } from "next-themes";
-import { usePathname } from "next/navigation";
-import "@liveblocks/react-ui/styles.css";
-import { lang } from "@/lib/action/uploadimage";
+import { useEffect, useState } from "react";
+
 export default function ClientProviders({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { theme } = useTheme();
   const pathName = usePathname();
+  const [locale, setLocale] = useState("en"); // Default language
+
+  useEffect(() => {
+    // Get locale from URL (assuming Next.js app uses [locale] dynamic route)
+    const lang = window.location.pathname.split("/")[1];
+    setLocale(lang || "en"); // Fallback to English
+  }, []);
+
+  // **Custom Kurdish Translations (Sorani - ckb, Kurmanji - kmr)**
+  const kurdishTexts = {
+    signIn: "چوونەژوورەوە",
+    signUp: "تۆمارکردن",
+    forgotPassword: "وشەی نهێنیت بیرچوە؟",
+    continue: "بەردەوامبە",
+    verificationCode: "کۆدی پشت‌ڕاستکردنەوە",
+  };
+  const localization = {
+    socialButtonsBlockButton: "Sign In 😁😁😁 with {{provider|titleize}}",
+  };
   return (
-    <>
-      <ThemeProvider
-        defaultTheme="system"
-        attribute="class"
-        value={{
-          light: "light",
-          dark: "dark",
-          blue: "blue",
-          green: "green",
-          red: "red",
-        }}
-      >
-        <ReduxProvider store={store}>
-          <ClerkProvider>
-            <ContextProvider>
-              <ToastProvider>
-                <div
-                  className={`${
-                    pathName.includes("/dash")
-                      ? " relative px-0 w-full bg-gray-50 dark:bg-black "
-                      : "md:px-[30px] lg:px-[40px] relative transition-colors duration-300 bg-gray-50 dark:text-neutral-200 text-black dark:bg-neutral-950"
-                  }`}
-                >
-                  <Header />
-                  {children}
-                </div>
-                <Footer />
-                <FoooterMob />
-                <Toaster />
-              </ToastProvider>
-            </ContextProvider>
-          </ClerkProvider>
-        </ReduxProvider>
-      </ThemeProvider>
-    </>
+    <ThemeProvider defaultTheme="system" attribute="class">
+      <ReduxProvider store={store}>
+        <ClerkProvider appearance={{}}>
+          <ContextProvider>
+            <div
+              className={`${pathName.includes("/dash") ? "bg-gray-50 dark:bg-black" : "bg-white"}`}
+            >
+              <Header />
+              {children}
+            </div>
+            <Footer />
+            <FoooterMob />
+            <Toaster />
+          </ContextProvider>
+        </ClerkProvider>
+      </ReduxProvider>
+    </ThemeProvider>
   );
 }

@@ -221,6 +221,7 @@ const Header = () => {
               <CiDark />
               {t("dark")}
             </DropdownMenuItem>
+
             <DropdownMenuItem
               className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} hover:bg-secondary-300 hover:text-white transition-all duration-300 w-full gap-2 justify-start  items-center`}
               onClick={() => setTheme("orange")}
@@ -342,16 +343,16 @@ export default Header;
 export const LoginButton = () => {
   const t = useTranslations("header");
   return (
-    <div className="flex items-center gap-2">
+    <Link href={"/sign-in"} className="flex items-center gap-2">
       <span>{t("login")}</span>
-    </div>
+    </Link>
   );
 };
 export const SingUp = () => {
   const t = useTranslations("header");
   return (
-    <div className="flex items-center gap-2">
+    <Link href={"/sign-up"} className="flex items-center gap-2">
       <span>{t("signup")}</span>
-    </div>
+    </Link>
   );
 };

@@ -187,8 +187,8 @@
 import type { Config } from "tailwindcss";
 
 const config = {
-  darkMode: ["class"], // Handles dark mode via class
   orangeMode: ["class"], // Custom orange mode toggle
+  darkMode: ["class"], // Handles dark mode via class
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",

@@ -15,7 +15,6 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 const MyComponent = ({ params }) => {
   const cate: { catagory: string } = React.use(params);
-  console.log(cate);
   const [filter, setFilter] = useState<{ [key: string]: boolean }>({});
   const [selected, setSelected] = useState(cate.catagory.replace("%20", " "));
   const [openFilter, setopenFilter] = useState(false);
@@ -74,6 +73,7 @@ const MyComponent = ({ params }) => {
     const getData = async () => {
       setload(true);
       try {
+        console.log("filtder product", filterProducts);
         const productsData = await getProducts(
           selected.trim(),
           sortBy,
@@ -141,6 +141,7 @@ const MyComponent = ({ params }) => {
         }}
         onClear={() => {
           setSelected(selected + " ");
+          setopenFilter(!openFilter);
           const data = {
             brand: [],
             color: [],
@@ -173,7 +174,7 @@ const MyComponent = ({ params }) => {
           item={filterProducts.brand}
         />
       </div>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid  grid-cols-4 gap-2">
         <div className="hidden  md:block">
           <FilterItem
             key={selected}
@@ -200,7 +201,7 @@ const MyComponent = ({ params }) => {
           </div>
         ) : products.length > 0 ? (
           <motion.div
-            className="sm:col-span-3 col-span-4 grid grid-cols-2 sm:flex  gap-3 sm:gap-5 w-full"
+            className="sm:col-span-3 col-span-4 grid grid-cols-2 sm:flex md:flex-wrap gap-3 sm:gap-3 w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}

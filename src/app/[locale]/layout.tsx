@@ -34,18 +34,18 @@ export default async function RootLayout({
   const dir = isRtl ? "rtl" : "ltr";
 
   return (
-    <NextIntlClientProvider locale={params.locale} messages={messages}>
-      <html lang={params.locale} dir={dir}>
-        <head>
-          <style>
-            {`
+    <html lang={"en"} dir={dir}>
+      <head>
+        <style>
+          {`
           html {
             color-scheme: light dark;
-          }
-        `}
-          </style>
-          <meta name="theme-color" content="#fff2f" />
-        </head>
+            }
+            `}
+        </style>
+        <meta name="theme-color" content="#fff2f" />
+      </head>
+      <NextIntlClientProvider locale={params.locale} messages={messages}>
         <body
           className={`bg-gray-50 border-t border-secondary-200/50 w-full ${
             isRtl ? "rtl" : "ltr"
@@ -53,7 +53,7 @@ export default async function RootLayout({
         >
           <ClientProviders>{children}</ClientProviders>
         </body>
-      </html>
-    </NextIntlClientProvider>
+      </NextIntlClientProvider>
+    </html>
   );
 }

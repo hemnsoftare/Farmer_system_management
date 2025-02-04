@@ -31,6 +31,7 @@ import { z } from "zod";
 import { colors } from "@nextui-org/react";
 const initialProductFormInput: ProductFormInput = {
   id: undefined, // Optional ID
+  colorsName: [], // Default empty array
   name: "", // Default empty string
   price: 0, // Default price to 0
   brand: "", // Default empty string
@@ -132,7 +133,6 @@ const Page = () => {
     e.preventDefault();
     seterror(initialState);
     const formData = new FormData(e.currentTarget);
-    console.log(imageSmallUrl);
     const data: ProductFormInput = {
       name: formData.get("name")?.toString().trim() || "",
       price: parseFloat(formData.get("price") as string) || 0,
@@ -141,7 +141,7 @@ const Page = () => {
       numSearch: Math.floor(Math.random() * 67), // Generates a whole number between 0 and 66
       category: formData.get("category")?.toString() || "",
       Bigimage: maiinImageNmae || "",
-
+      colorsName: selectedcolor.map((item) => item.name),
       bigimageUrl: selectedImage, // Main image URL
       smallimageUrl: imageSmallUrl, // Small images URL array
       // imageSmall: smallImageName, // File names of small images

@@ -39,7 +39,6 @@ const ForProducts = ({
   useEffect(() => {
     const getdata = async () => {
       const data = await getAllItemNames(user?.id);
-      console.log(data);
       setfavoriteId(data as string[]);
     };
     getdata();
