@@ -80,7 +80,7 @@ const Page = () => {
           title="products"
         />
       </div>
-      <div className=" flex flex-wrap gap-4  justify-center items-center  bg-blue-50 w-full  ">
+      <div className=" md:flex grid grid-cols-2 flex-wrap gap-4  justify-center items-center   w-full  ">
         {prodcts &&
           prodcts.map((item) => (
             <NewProducts

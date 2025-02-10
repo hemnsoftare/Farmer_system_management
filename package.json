@@ -11,6 +11,7 @@
     "email": "email dev"
   },
   "dependencies": {
+    "@clerk/localizations": "^3.10.4",
     "@clerk/nextjs": "^5.5.2",
     "@clerk/themes": "^2.1.35",
     "@liveblocks/client": "^2.15.2",

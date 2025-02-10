@@ -308,13 +308,13 @@ const Page = () => {
   }, [haveId, db]);
 
   return (
-    <div className=" z-0 flex-col py-9 sm:h-screen lg:w-full w-full xl:max-w-[900px]  ">
+    <div className=" z-0 flex-col py-9 sm:h-screen items-center justify-center md:justify-start md:items-start lg:w-full w-full xl:max-w-[900px]  ">
       <h2 className="text-29 font-semibold px-7">Add Product</h2>
       <form
         onSubmit={handleSubmit}
         className="flex md:flex-row flex-col items-start gap-3 px-4    justify-start w-full py-4"
       >
-        <div className="flex sm:px-3 flex-col gap-3  items-center justify-center">
+        <div className="flex sm:px-3 flex-col gap-3 bg-red-50  items-center justify-center">
           <input
             type="file"
             id="imageBig"

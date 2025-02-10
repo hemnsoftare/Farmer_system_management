@@ -42,7 +42,7 @@ const Blog = ({
   ).toLocaleDateString("en-US");
 
   return (
-    <div className="flex min-w-[250px] max-w-[250px] md:min-w-[400px] md:max-w-[400px] flex-col rounded-lg shadow-md overflow-hidden">
+    <div className="flex w-full md:min-w-[400px] md:max-w-[400px] flex-col rounded-lg shadow-md overflow-hidden">
       <div className="relative  w-full">
         {/* Video Display */}
         {type === "video" && video ? (
@@ -88,17 +88,20 @@ const Blog = ({
       </div>
 
       <footer className="flex px-4 justify-end items-center pb-3 rounded-b-lg">
-        {id && (
-          <Link href={`/dashboard/Blog/CreateBlog?id=${id}`}>
-            <FaEdit color="blue" size={22} />
-          </Link>
-        )}
+        <Link
+          href={`/dashboard/Blog/CreateBlog?id=${id}`}
+          className="w-full text-center p-2 rounded-lg bg-blue-900 text-white"
+        >
+          Edit
+        </Link>
 
-        <MdOutlineDeleteOutline
-          onClick={() => handleDelete(id)}
-          color="red"
-          size={22}
-        />
+        <button
+          onClick={() => handleDelete?.(id)}
+          className="text-white rounded-lg bg-red-700 w-full text-center p-2 rounded- hover:text-red-700 ml-4"
+          aria-label="Delete blog post"
+        >
+          Delete
+        </button>
       </footer>
     </div>
   );

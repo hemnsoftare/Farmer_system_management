@@ -27,7 +27,7 @@ const Layout = ({
   const handleHideSlider = () => setShowSlider(false);
 
   return (
-    <div className="flex relative h-screen bg-gray-500 min-w-screen">
+    <div className="flex relative h-screen bg-gray-50 min-w-screen">
       {/* Mobile Tabs Toggle */}
       <button
         onClick={() => setshowtabs((pre) => !pre)}
@@ -89,9 +89,12 @@ const Layout = ({
 
       {/* Desktop Sidebar */}
       <div
+        style={{
+          boxShadow: showSlider ? "11px 0 19px #083344" : "7px 0 9px #083344",
+        }}
         className={`${
           showSlider ? "sm:w-[260px] " : ""
-        } hidden md:flex transition-all duration-300  overflow-y-auto h-screen px-3 gap-5 py-9 flex-col bg-cyan-800 items-start`}
+        } hidden md:flex transition-all duration-300  overflow-y-auto h-screen px-3 gap-5 py-9 flex-col bg-gradient-to-bl to-cyan-950 from-cyan-800 items-start`}
       >
         <div className="flex text-white gap-3 items-center mb-4 justify-center">
           {user && (
@@ -146,9 +149,7 @@ const Layout = ({
       {/* Main Content */}
       <div
         className={`transition-all duration-300 ${
-          showSlider
-            ? "w-full md:w-[calc(100%-260px)]"
-            : "w-full bg-red-700 border-4  "
+          showSlider ? "w-full md:w-[calc(100%-260px)]" : "w-full   "
         }  h-screen overflow-auto`}
       >
         {children}

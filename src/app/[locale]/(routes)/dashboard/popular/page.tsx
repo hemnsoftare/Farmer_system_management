@@ -42,7 +42,7 @@ const Page = () => {
     getdata(select);
   }, [select, db]); // Dependency on `select` state
   return (
-    <div className="flex flex-col px-4 mt-8">
+    <div className="flex flex-col py-7 px-4 mt-8">
       <h1 className="text-30 font-semibold">Poplar Products</h1>
       <div className="flex items-center mt-7 justify-center gap-3">
         {iconArray.map((item) => (
@@ -58,7 +58,7 @@ const Page = () => {
           </div>
         ))}
       </div>
-      <div className="flex items-center flex-wrap justify-center gap-4">
+      <div className="md:flex grid grid-cols-2 items-center my-9 flex-wrap justify-center gap-4">
         {produts && produts.length > 0 ? (
           produts.map((item) => (
             <NewProducts

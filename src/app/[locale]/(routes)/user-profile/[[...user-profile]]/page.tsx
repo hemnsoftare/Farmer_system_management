@@ -10,8 +10,22 @@ const Page = () => {
           elements: {
             root: "bg-gray-800", // Change root background to dark gray for contrast
             sidebar: "bg-gray-800", // Set sidebar background to dark gray
+            footerAction: "hidden",
+            footerAction__alternativeMethods: "hidden",
             footer: "hidden", // Hide the footer if desired
             environmentBadge: "hidden", // Hide the development mode badge if desired
+            footerAction__usePasskey: "hidden",
+            footerAction__havingTrouble: "hidden",
+            footerAction__signIn: "hidden",
+            footerAction__signUp: "hidden",
+            footerPages: "hidden",
+            footerActionLink: "hidden",
+            footerActionText: "hiddden",
+            footerItem: "hidden",
+            footerPagesLink: "hidden",
+            footerPagesLink__terms: "hidden",
+            footerPagesLink__help: "hidden",
+            footerPagesLink__privacy: "hidden",
           },
         }}
       />

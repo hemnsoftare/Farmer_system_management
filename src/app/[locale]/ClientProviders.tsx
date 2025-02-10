@@ -11,39 +11,57 @@ import Footer from "@/components/home/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import FoooterMob from "@/components/home/FoooterMob";
 import { useEffect, useState } from "react";
-
+import { kurdishSoraniLocalization, kuSorani } from "@/util/data";
+import { arSA, enUS, trTR } from "@clerk/localizations";
 export default function ClientProviders({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathName = usePathname();
-  const [locale, setLocale] = useState("en"); // Default language
+  const [locale, setLocale] = useState("en"); // Default to English
 
   useEffect(() => {
-    // Get locale from URL (assuming Next.js app uses [locale] dynamic route)
-    const lang = window.location.pathname.split("/")[1];
-    setLocale(lang || "en"); // Fallback to English
+    if (typeof window !== "undefined") {
+      const lang = window.location.pathname.split("/")[1]; // Extract locale from URL
+      setLocale(lang || "en"); // Fallback to English
+    }
   }, []);
 
-  // **Custom Kurdish Translations (Sorani - ckb, Kurmanji - kmr)**
-  const kurdishTexts = {
-    signIn: "چوونەژوورەوە",
-    signUp: "تۆمارکردن",
-    forgotPassword: "وشەی نهێنیت بیرچوە؟",
-    continue: "بەردەوامبە",
-    verificationCode: "کۆدی پشت‌ڕاستکردنەوە",
-  };
-  const localization = {
-    socialButtonsBlockButton: "Sign In 😁😁😁 with {{provider|titleize}}",
-  };
+  // Select localization object based on detected language
+  const localization = locale === "ku" ? kuSorani : undefined; // Kurdish (Sorani)
+  console.log(locale, localization);
+  let l =
+    locale === "en"
+      ? enUS
+      : locale === "ar"
+        ? arSA
+        : locale === "tr"
+          ? trTR
+          : kurdishSoraniLocalization;
   return (
     <ThemeProvider defaultTheme="system" attribute="class">
       <ReduxProvider store={store}>
-        <ClerkProvider appearance={{}}>
+        <ClerkProvider
+          localization={l}
+          appearance={{
+            elements: {
+              // Hide the default footer
+              footer: {
+                display: "hidden",
+              },
+            },
+          }}
+        >
+          {" "}
+          {/* ✅ Fix applied */}
           <ContextProvider>
             <div
-              className={`${pathName.includes("/dash") ? "bg-gray-50 dark:bg-black" : "bg-white"}`}
+              className={`${
+                pathName.includes("/dash")
+                  ? "bg-gray-50 dark:bg-black"
+                  : "bg-white"
+              }`}
             >
               <Header />
               {children}

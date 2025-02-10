@@ -48,7 +48,7 @@ const Page = () => {
           Create Blog
         </Link>
       </header>
-      <div className="flex flex-wrap items-center mt-7 justify-start gap-4">
+      <div className="md:flex grid grid-cols-1 w-full flex-wrap items-center mt-7 justify-start gap-4">
         {blogs.map((blog) => (
           <Blog
             key={blog.id}

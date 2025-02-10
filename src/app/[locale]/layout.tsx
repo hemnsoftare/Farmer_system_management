@@ -30,7 +30,7 @@ export default async function RootLayout({
   lang();
 
   // Determine the text direction based on the locale
-  const isRtl = ["ar", "ku"].includes(params.locale); // Add languages that use RTL
+  const isRtl = ["ar", "ku"].includes(params.locale || ""); // Add languages that use RTL
   const dir = isRtl ? "rtl" : "ltr";
 
   return (

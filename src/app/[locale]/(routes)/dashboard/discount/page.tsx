@@ -60,12 +60,14 @@ const Page = () => {
       <div className="w-full flex-wrap flex items-center justify-between">
         <CatagoryProducts handleSelected={setcategory} catagory={category} />
       </div>
-      <div className="grid lg:grid-cols-4 grid-cols-2 w-full gap-3 xl:grid-cols-5 ">
-        {prodcts &&
-          prodcts.length > 0 &&
+      <div className="grid lg:grid-cols-4 grid-cols-2 w-full gap-1 xl:grid-cols-5 ">
+        {prodcts && prodcts.length > 0 ? (
           prodcts.map((item) => (
             <NewProducts key={item.name} itemDb={item} title="dashboard" />
-          ))}
+          ))
+        ) : (
+          <h1>No Products</h1>
+        )}
       </div>
     </div>
   );
