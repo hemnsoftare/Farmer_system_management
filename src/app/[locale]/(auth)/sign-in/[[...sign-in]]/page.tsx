@@ -2,27 +2,6 @@
 import { usePathname } from "next/navigation";
 import { SignIn, SignUpButton } from "@clerk/nextjs";
 import type { LocalizationResource } from "@clerk/types";
-export const kuSorani: LocalizationResource = {
-  signIn: {
-    start: {
-      title: "چوونەژوورەوە بۆ تێچ هایم",
-      subtitle: "بەخێربێیت! تکایە بچۆ ژوورەوە بۆ بەردەوامبوون",
-      actionText: "هەژمار ناتەوە؟",
-      actionLink: "دروستکردنی هەژمار",
-    },
-    // elements: {
-    //   emailAddressLabel: "ناونیشانی ئیمەیڵ یان ناوی بەکارهێنەر",
-    //   passwordLabel: "وشەی نهێنی",
-    //   forgotPasswordLink: "وشەی نهێنیت لەبیرکردووە؟",
-    //   primaryButton: "چوونەژوورەوە",
-
-    // },
-    alternativeMethods: {
-      title:
-        "کێشە هەیە؟ دەتوانی هەر یەک لە ڕێوەچوونەکانی خوارەوە بەکارهێنی بۆ چوونەژوورەوە.",
-    },
-  },
-};
 
 export default function Page() {
   const path = usePathname();

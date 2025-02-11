@@ -804,9 +804,9 @@ export const kurdishSoraniLocalization: LocalizationResource = {
   signUp: {
     start: {
       title: "هەژمارێکی نوێ دروست بکە",
-      titleCombined: "هەژمارێکی نوێ دروست بکە",
+      // titleCombined: "هەژمارێکی نوێ دروست بکە",
       subtitle: "بۆ دەستپێکردن، تکایە زانیارییەکانی خۆت بنووسە",
-      subtitleCombined: "بۆ دەستپێکردن، تکایە زانیارییەکانی خۆت بنووسە",
+      // subtitleCombined: "بۆ دەستپێکردن، تکایە زانیارییەکانی خۆت بنووسە",
       actionText: "هەژمارت هەیە؟",
       actionLink: "چوونەژوورەوە",
       actionLink__use_phone: "ژمارەی مۆبایل بەکاربهێنە",
@@ -817,9 +817,9 @@ export const kurdishSoraniLocalization: LocalizationResource = {
   signIn: {
     start: {
       title: "چوونەژوورەوە",
-      titleCombined: "چوونەژوورەوە",
+      // titleCombined: "چوونەژوورەوە",
       subtitle: "بۆ دەستپێکردن، تکایە زانیارییەکانی خۆت بنووسە",
-      subtitleCombined: "بۆ دەستپێکردن، تکایە زانیارییەکانی خۆت بنووسە",
+      // subtitleCombined: "بۆ دەستپێکردن، تکایە زانیارییەکانی خۆت بنووسە",
       actionText: "هەژمارت نییە؟",
       actionLink: "هەژمارێکی نوێ دروست بکە",
       actionLink__use_email: "ئیمەیل بەکاربهێنە",
@@ -938,7 +938,7 @@ export const kurdishSoraniLocalization: LocalizationResource = {
     emailAddressPage: {
       title: "ناونیشانی ئیمەیل",
       verifyTitle: "پشتڕاستکردنەوەی ناونیشانی ئیمەیل",
-      formHint: "ناونیشانی ئیمەیل بنووسە",
+      // formHint: "ناونیشانی ئیمەیل بنووسە",
       emailCode: {
         formTitle: "کۆدی پۆستی ئەلیکترۆنی",
         formSubtitle: "کۆدی ناردنەوەی ناونیشانی ئیمەیل",
@@ -951,10 +951,10 @@ export const kurdishSoraniLocalization: LocalizationResource = {
         resendButton: "دووبارە ناردنەوە",
         successMessage: "ناونیشانی ئیمەیلەکەت بە سەرکەوتوویی پشتڕاستکرایەوە",
       },
-      enterpriseSSOLink: {
-        formSubtitle: "بەستەری ناردنەوەی ناونیشانی ئیمەیل",
-        formButton: "پەیوەندی بکە",
-      },
+      // enterpriseSSOLink: {
+      //   formSubtitle: "بەستەری ناردنەوەی ناونیشانی ئیمەیل",
+      //   formButton: "پەیوەندی بکە",
+      // },
       removeResource: {
         title: "سڕینەوەی ناونیشانی ئیمەیل",
         messageLine1: "دڵنیای لە سڕینەوەی ناونیشانی ئیمەیل؟",
@@ -1205,7 +1205,7 @@ export const kurdishSoraniLocalization: LocalizationResource = {
     membersPage: {
       detailsTitle__emptyRow: "هیچ ئەندامێک نییە",
       action__invite: "بانگهێشتکردن",
-      action__search: "گەڕان",
+      // action__search: "گەڕان",
       start: {
         headerTitle__members: "ئەندامان",
         headerTitle__invitations: "بانگهێشتەکان",
@@ -1272,20 +1272,20 @@ export const kurdishSoraniLocalization: LocalizationResource = {
     next6Days: "٦ ڕۆژی دواتر",
     numeric: "ژمارەیی",
   },
-  waitlist: {
-    start: {
-      title: "چاوەڕوانی",
-      subtitle: "چاوەڕوانی بۆ دەستپێکردن",
-      formButton: "چاوەڕوانی",
-      actionText: "چاوەڕوانی",
-      actionLink: "چاوەڕوانی",
-    },
-    success: {
-      title: "سەرکەوتوو",
-      subtitle: "چاوەڕوانی بۆ دەستپێکردن",
-      message: "چاوەڕوانی بۆ دەستپێکردن",
-    },
-  },
+  // waitlist: {
+  //   start: {
+  //     title: "چاوەڕوانی",
+  //     subtitle: "چاوەڕوانی بۆ دەستپێکردن",
+  //     formButton: "چاوەڕوانی",
+  //     actionText: "چاوەڕوانی",
+  //     actionLink: "چاوەڕوانی",
+  //   },
+  //   success: {
+  //     title: "سەرکەوتوو",
+  //     subtitle: "چاوەڕوانی بۆ دەستپێکردن",
+  //     message: "چاوەڕوانی بۆ دەستپێکردن",
+  //   },
+  // },
 };
 export {
   newProdcuts,
