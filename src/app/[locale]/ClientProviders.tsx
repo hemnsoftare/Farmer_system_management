@@ -13,6 +13,8 @@ import FoooterMob from "@/components/home/FoooterMob";
 import { useEffect, useState } from "react";
 import { kurdishSoraniLocalization, kuSorani } from "@/util/data";
 import { arSA, enUS, trTR } from "@clerk/localizations";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 export default function ClientProviders({
   children,
 }: {
@@ -20,6 +22,7 @@ export default function ClientProviders({
 }) {
   const pathName = usePathname();
   const [locale, setLocale] = useState("en"); // Default to English
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -39,39 +42,40 @@ export default function ClientProviders({
         : locale === "tr"
           ? trTR
           : kurdishSoraniLocalization;
+
   return (
     <ThemeProvider defaultTheme="system" attribute="class">
-      <ReduxProvider store={store}>
-        <ClerkProvider
-          localization={l}
-          appearance={{
-            elements: {
-              // Hide the default footer
-              footer: {
-                display: "hidden",
+      <QueryClientProvider client={queryClient}>
+        <ReduxProvider store={store}>
+          <ClerkProvider
+            localization={l}
+            appearance={{
+              elements: {
+                // Hide the default footer
+                footer: {
+                  display: "hidden",
+                },
               },
-            },
-          }}
-        >
-          {" "}
-          {/* ✅ Fix applied */}
-          <ContextProvider>
-            <div
-              className={`${
-                pathName.includes("/dash")
-                  ? "bg-gray-50 dark:bg-black"
-                  : "bg-white"
-              }`}
-            >
-              <Header />
-              {children}
-            </div>
-            <Footer />
-            <FoooterMob />
-            <Toaster />
-          </ContextProvider>
-        </ClerkProvider>
-      </ReduxProvider>
+            }}
+          >
+            <ContextProvider>
+              <div
+                className={`${
+                  pathName?.includes("/dash")
+                    ? "bg-gray-50 dark:bg-gray-950 dark:text-gray-100"
+                    : "bg-white dark:bg-gray-950 dark:text-gray-100"
+                }`}
+              >
+                <Header />
+                {children}
+              </div>
+              <Footer />
+              <FoooterMob />
+              <Toaster />
+            </ContextProvider>
+          </ClerkProvider>
+        </ReduxProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

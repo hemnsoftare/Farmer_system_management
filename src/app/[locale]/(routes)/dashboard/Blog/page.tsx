@@ -12,14 +12,19 @@ import {
 } from "firebase/firestore";
 import { app } from "@/config/firebaseConfig";
 import { set } from "zod";
+import { toast, useToast } from "@/hooks/use-toast";
 const Page = () => {
   const [blogs, setblogs] = useState<BlogProps[]>([]);
   const db = getFirestore(app);
+  const toast = useToast();
 
   const handleDelete = async (id: string) => {
     try {
-      await deleteDoc(doc(db, "blogs", id));
-      setblogs(blogs.filter((blog) => blog.id !== id));
+      await deleteDoc(doc(db, "blogs", id)).then(() => {
+        console.log("Document successfully deleted!");
+        setblogs(blogs.filter((blog) => blog.id !== id));
+        toast.dismiss("Blog Deleted");
+      });
     } catch (error) {
       console.error("Error deleting document:", error);
     }
@@ -38,7 +43,7 @@ const Page = () => {
   }, [db]);
   console.log(blogs);
   return (
-    <div className="flex flex-col mt-9 items-start px-4">
+    <div className="flex flex-col py-9 items-start px-4">
       <header className="flex w-full items-center justify-between">
         <h1 className="text-30 font-semibold">Blog</h1>
         <Link
@@ -48,7 +53,7 @@ const Page = () => {
           Create Blog
         </Link>
       </header>
-      <div className="md:flex grid grid-cols-1 w-full flex-wrap items-center mt-7 justify-start gap-4">
+      <div className="md:flex px-2 md:px-6 grid  justify-center grid-cols-1 w-full flex-wrap items-center mt-7  gap-4">
         {blogs.map((blog) => (
           <Blog
             key={blog.id}

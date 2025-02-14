@@ -40,9 +40,15 @@ const Blog = ({
   const formattedDate = new Date(
     (date?.seconds || 0) * 1000
   ).toLocaleDateString("en-US");
-
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent click event from propagating to the <Link>
+    e.preventDefault(); // Prevent default behavior of the <Link>
+  };
   return (
-    <div className="flex w-full md:min-w-[400px] md:max-w-[400px] flex-col rounded-lg shadow-md overflow-hidden">
+    <Link
+      href={`/dashboard/Blog/${id}`}
+      className="flex w-full md:min-w-[400px] md:max-w-[400px] flex-col rounded-lg shadow-md overflow-hidden"
+    >
       <div className="relative  w-full">
         {/* Video Display */}
         {type === "video" && video ? (
@@ -82,28 +88,29 @@ const Blog = ({
         </p>
         <h3 className="text-xl font-semibold">{title}</h3>
         <p className="text-sm text-gray-500">{formattedDate}</p>
-        <p className="text-gray-700 md:max-h-[59px] md:min-h-[60px]">
-          {truncatedDescription}
-        </p>
+        <p className="text-gray-700 line-clamp-1">{truncatedDescription}</p>
       </div>
 
       <footer className="flex px-4 justify-end items-center pb-3 rounded-b-lg">
         <Link
           href={`/dashboard/Blog/CreateBlog?id=${id}`}
-          className="w-full text-center p-2 rounded-lg bg-blue-900 text-white"
+          className="w-full active:scale-90 hover:text-white  shadow-blue-600 active:shadow-lg active:text-white transition-all duration-300 text-center p-2 rounded-lg bg-blue-900 text-white"
         >
           Edit
         </Link>
 
         <button
-          onClick={() => handleDelete?.(id)}
-          className="text-white rounded-lg bg-red-700 w-full text-center p-2 rounded- hover:text-red-700 ml-4"
+          onClick={(e) => {
+            handleFavoriteClick(e);
+            handleDelete?.(id);
+          }}
+          className="text-white active:scale-90 hover:text-white shadow-red-400 active:shadow-lg transition-all duration-300 active:text-white rounded-lg bg-red-700 w-full text-center p-2 rounded-  ml-4"
           aria-label="Delete blog post"
         >
           Delete
         </button>
       </footer>
-    </div>
+    </Link>
   );
 };
 

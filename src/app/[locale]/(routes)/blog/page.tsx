@@ -9,6 +9,7 @@ import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "@/config/firebaseConfig";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { getAllBlogs } from "@/lib/action/dashboard";
 
 const BlogPage = () => {
   const [blog, setblog] = useState<BlogProps[]>([]);
@@ -18,13 +19,8 @@ const BlogPage = () => {
   useEffect(() => {
     const getBlogs = async () => {
       setload(true);
-      const data = await getDocs(collection(db, "blogs"));
-      const blogs = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-        date: doc.data().date ? doc.data().date.toDate() : new Date(),
-      })) as BlogProps[];
-      setblog(blogs);
+      const data = await getAllBlogs();
+      setblog(data);
       setload(false);
     };
     getBlogs();

@@ -22,7 +22,7 @@ const NewProducts = ({
   deleteProducts,
 }: {
   title?: string;
-  item?: Productsprops;
+  // item?: Productsprops;
   itemDb?: ProductFormInput;
   load?: boolean;
   favoriteId?: string[];
@@ -49,7 +49,7 @@ const NewProducts = ({
             `${
               title !== "dashboard"
                 ? `/products/${product.category}/${product.id}`
-                : "#"
+                : `/dashboard/Products/${product.id}`
             }`
           );
         }}

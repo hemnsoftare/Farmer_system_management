@@ -19,6 +19,7 @@ interface footerProps {
   item: { name?: string; icon?: any }[];
 }
 interface userProps {
+  id?: string;
   name: string;
   image: string;
   email: string;
@@ -246,6 +247,7 @@ export type {
 
 export type UserType = {
   id: string;
+  image?: string;
   firstName?: string | null;
   lastName?: string | null;
   fullName: string | null;
@@ -284,7 +286,7 @@ export type OrderType = {
   note?: string; // Optional notes provided by the user
 };
 export interface favorite {
-  id: string;
+  id?: string;
   name: string;
   price: number;
   image: string;

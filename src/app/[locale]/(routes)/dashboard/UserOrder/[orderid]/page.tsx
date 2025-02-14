@@ -66,7 +66,7 @@ const OrderPage = ({ params }) => {
     );
   }
   return (
-    <div className="w-full bg-red-100 p-6 space-y-6">
+    <div className="w-full   p-6 space-y-6">
       {/* Order Summary */}
       <h1 className="md:text-46 text-22  capitalize font-semibold ">
         order {order.fullName}
@@ -134,7 +134,7 @@ const OrderPage = ({ params }) => {
           {order.orderItems.map((item) => (
             <div
               key={item.id}
-              className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm"
+              className="flex  items-center space-x-4 p-4 border rounded-lg shadow-sm"
             >
               <Image
                 src={item.image}

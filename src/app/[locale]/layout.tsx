@@ -1,6 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import dynamic from "next/dynamic";
 import ClientProviders from "./ClientProviders";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -10,12 +9,16 @@ import { lang } from "@/lib/action/uploadimage";
 export const metadata: Metadata = {
   title: "Tech-Hiem",
   description: "Tech-Hiem",
-  viewport: "width=device-width, initial-scale=1",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  themeColor: "#F45E0C", // Add theme-color here
+};
+
+export const viewport: Viewport = {
+  themeColor: "#F45E0C",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default async function RootLayout({
@@ -23,10 +26,10 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: any;
+  params: { locale: string };
 }) {
   // Dynamically load messages based on the locale
-  let messages = await getMessages();
+  const messages = await getMessages();
   lang();
 
   // Determine the text direction based on the locale
@@ -34,26 +37,26 @@ export default async function RootLayout({
   const dir = isRtl ? "rtl" : "ltr";
 
   return (
-    <html lang={"en"} dir={dir}>
+    <html lang={params.locale} dir={dir}>
       <head>
         <style>
           {`
           html {
             color-scheme: light dark;
-            }
-            `}
+          }
+          `}
         </style>
         <meta name="theme-color" content="#fff2f" />
       </head>
-      <NextIntlClientProvider locale={params.locale} messages={messages}>
-        <body
-          className={`bg-gray-50 border-t border-secondary-200/50 w-full ${
-            isRtl ? "rtl" : "ltr"
-          }`}
-        >
+      <body
+        className={`bg-gray-50 dark:bg-gray-950 border-t border-secondary-200/50 w-full ${
+          isRtl ? "rtl" : "ltr"
+        }`}
+      >
+        <NextIntlClientProvider locale={params.locale} messages={messages}>
           <ClientProviders>{children}</ClientProviders>
-        </body>
-      </NextIntlClientProvider>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }

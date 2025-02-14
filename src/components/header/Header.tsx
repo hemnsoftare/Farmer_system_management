@@ -126,7 +126,7 @@ const Header = () => {
             ? "translate-y-0 "
             : "-translate-y-[200px] text-black "
       } 
-         flex relative z-[50] top-0 right-0 left-0 bg-white/20 dark:bg-transparent  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
+         flex relative z-[50] md:px-12 top-0 right-0 left-0 bg-white/20 dark:bg-transparent  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
     >
       {/* logo */}
       <Link href={"/"} w-full className="hidden sm:block">
@@ -173,7 +173,7 @@ const Header = () => {
         >
           {t("blog")}
         </Link>
-        <Link
+        {/* <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
           href={"/FAQ"}
           w-full
@@ -186,7 +186,7 @@ const Header = () => {
           w-full
         >
           {t("contactus")}
-        </Link>
+        </Link> */}
 
         <Link
           className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"

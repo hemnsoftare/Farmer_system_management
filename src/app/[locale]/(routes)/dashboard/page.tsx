@@ -1,88 +1,170 @@
 "use client";
-
+import CountUp from "react-countup";
+import {
+  getAllBlogs,
+  getAllFavorite,
+  getAllProducts,
+  getAllTeam,
+  getAllUsers,
+} from "@/lib/action/dashboard";
+import { getAllSaveBlog } from "@/lib/action/fovarit";
+import { getAllOrder } from "@/lib/action/uploadimage";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-// import { Card } from '@/components/ui/card';
-import { useEffect, useState } from "react";
-// import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line } from 'recharts';
-
+import { useRouter } from "next/navigation";
+import {
+  FaUsers,
+  FaBox,
+  FaClipboardList,
+  FaHeart,
+  FaBookmark,
+  FaUserTie,
+} from "react-icons/fa";
 const DashboardPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const sampleData = [
-    { name: "Jan", sales: 4000, profit: 2400 },
-    { name: "Feb", sales: 3000, profit: 1398 },
-    { name: "Mar", sales: 2000, profit: 9800 },
-    { name: "Apr", sales: 2780, profit: 3908 },
-    { name: "May", sales: 1890, profit: 4800 },
-  ];
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
-  }, []);
-
+  const router = useRouter().push;
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["dashboard"],
+    queryFn: async () => {
+      const users = await getAllUsers();
+      const blogs = await getAllBlogs();
+      const orders = await getAllOrder();
+      const team = await getAllTeam();
+      const products = await getAllProducts();
+      const favorites = await getAllFavorite();
+      const savedBlogs = await getAllSaveBlog();
+      return { users, blogs, orders, team, products, favorites, savedBlogs };
+    },
+  });
   return (
-    <div className="min-h-screen bg-gradient-to-br  p-8">
+    <div className="min-h-screen p-10  text-white">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="space-y-8"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="space-y-10"
       >
-        {/* Header */}
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold text-cyan-800">Dashboard</h1>
+          <h1 className="text-5xl font-extrabold text-cyan-600 drop-shadow-xl">
+            Dashboard
+          </h1>
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0px 5px 20px rgba(0, 255, 255, 0.6)",
+            }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-2 bg-blue-500 rounded-lg text-white"
+            onClick={() => refetch()}
+            className="px-6 py-3 bg-gradient-to-r from-cyan-700 to-blue-500 text-white rounded-xl shadow-2xl hover:shadow-cyan-500/50"
           >
             Refresh Data
           </motion.button>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {["Total Sales", "Active Users", "Revenue"].map((title, index) => (
-            <motion.div
-              key={title}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div className="p-6 bg-gray-800/50 backdrop-blur-sm border-gray-700">
-                <h3 className="text-lg font-medium text-gray-200">{title}</h3>
-                <p className="text-3xl font-bold text-white mt-2">
-                  {isLoading ? "..." : `${Math.floor(Math.random() * 10000)}`}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Charts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="bg-gray-800/50 p-6 rounded-xl"
+        {isLoading && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+            className="text-center text-xl text-gray-700"
           >
-            <h3 className="text-xl font-bold text-white mb-4">
-              Sales Overview
-            </h3>
-          </motion.div>
+            Loading data...
+          </motion.p>
+        )}
+        {error && (
+          <p className="text-center text-xl text-red-500">Error loading data</p>
+        )}
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="bg-gray-800/50 p-6 rounded-xl"
-          >
-            <h3 className="text-xl font-bold text-white mb-4">Profit Trends</h3>
-          </motion.div>
-        </div>
+        {!isLoading && !error && data && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <StatCard
+              onRouter={() => {}}
+              title="Total Users"
+              count={data.users.length}
+              icon={<FaUsers />}
+              color="bg-cyan-800"
+            />
+            <StatCard
+              onRouter={() => router("/dashboard/Products")}
+              title="Total Products"
+              count={data.products.length}
+              icon={<FaBox />}
+              color="bg-green-800"
+            />
+            <StatCard
+              onRouter={() => router("/dashboard/UserOrder")}
+              title="Total Orders"
+              count={data.orders.length}
+              icon={<FaClipboardList />}
+              color="bg-orange-800"
+            />
+            <StatCard
+              onRouter={() => {}}
+              title="Favorites"
+              count={data.products.reduce(
+                (total, item) => total + item.numberFavorite,
+                0
+              )}
+              icon={<FaHeart />}
+              color="bg-red-800"
+            />
+            <StatCard
+              onRouter={() => {}}
+              title="Saved Blogs"
+              count={
+                Array.isArray(data.savedBlogs)
+                  ? data.blogs.reduce(
+                      (total, item) => total + (item.numberOffavorites || 0),
+                      0
+                    )
+                  : 0
+              }
+              icon={<FaBookmark />}
+              color="bg-purple-800"
+            />
+            <StatCard
+              onRouter={() => {
+                router("/dashboard/aboutUs/team");
+              }}
+              title="Team Members"
+              count={data.team.length}
+              icon={<FaUserTie />}
+              color="bg-indigo-800"
+            />
+          </div>
+        )}
       </motion.div>
     </div>
+  );
+};
+
+const StatCard = ({ title, count, icon, color, onRouter }) => {
+  return (
+    <motion.div
+      onClick={onRouter}
+      className={`p-8 md:hover:scale-105 active:scale-75 transition-all duration-300  rounded-2xl shadow-2xl ${color} text-white flex items-center space-x-6 relative overflow-hidden border border-gray-600`}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="text-5xl drop-shadow-lg"
+      >
+        {icon}
+      </motion.div>
+      <div>
+        <h2 className="text-3xl font-bold drop-shadow-lg">{title}</h2>
+        <CountUp className="text-24" start={0} end={count} duration={4} />
+      </div>
+      <motion.div
+        className="absolute inset-0 bg-white/30 blur-3xl opacity-10"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      />
+    </motion.div>
   );
 };
 

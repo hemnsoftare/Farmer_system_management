@@ -387,14 +387,7 @@ export const setMemeber = async (
     imageUrl,
   });
 };
-export const getTeam = async (): Promise<teamProps[]> => {
-  const data = await getDocs(collection(db, "team"));
-  const result: teamProps[] = [];
-  data.forEach((item) =>
-    result.push({ ...(item.data() as teamProps), id: item.id })
-  );
-  return result;
-};
+
 export const deleteTeam = async (id: string) => {
   await deleteDoc(doc(db, "team", id)).then((res) =>
     console.log("delete the team ")
@@ -456,6 +449,7 @@ export const getBlogs = async (): Promise<BlogProps[]> => {
   );
   return results;
 };
+
 export const setComments = async ({
   comments,
   id,

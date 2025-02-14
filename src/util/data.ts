@@ -39,7 +39,7 @@ import {
   MdOutlineVerified,
   MdShoppingBasket,
 } from "react-icons/md";
-import { MenuItemProps } from "@nextui-org/react";
+import { MenuItemProps, User } from "@nextui-org/react";
 import { BiCategoryAlt, BiSolidTimer } from "react-icons/bi";
 import { FaUsersLine } from "react-icons/fa6";
 
@@ -284,6 +284,11 @@ const menuItems: propsMenuItem[] = [
     name: "Personal Data",
     icon: FaUser,
     url: "/dashboard/PersonalData",
+  },
+  {
+    name: "User",
+    icon: FaUser,
+    url: "/dashboard/user",
   },
   {
     name: "Category",

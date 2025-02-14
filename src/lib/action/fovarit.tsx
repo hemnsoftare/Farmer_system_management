@@ -7,7 +7,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { blogFavriteProps, favorite } from "@/lib/action";
+import { blogFavriteProps, BlogProps, favorite } from "@/lib/action";
 import { app } from "@/config/firebaseConfig";
 
 const db = getFirestore(app);
@@ -50,7 +50,7 @@ export const addfavorite = async ({
   }
 };
 
-export const getfavorite = async (userId) => {
+export const getfavorite = async (userId): Promise<favorite[]> => {
   try {
     // Reference to the user's `items` subcollection
     const itemsRef = collection(db, "favorite", userId, "items");
@@ -60,8 +60,8 @@ export const getfavorite = async (userId) => {
 
     // Extract data from each document
     const items = querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
       id: doc.id,
+      ...(doc.data() as favorite),
     }));
 
     return items;
@@ -79,9 +79,7 @@ export const deleteFavorite = async (
     await deleteDoc(doc(db, "favorite", userId, "items", id)).then((res) =>
       console.log("delete the products in favorite")
     );
-    console.log(numberFavorite);
     const nmf = numberFavorite - 1;
-    console.log(nmf);
     await updateDoc(doc(db, "Products", id), {
       numberFavorite: nmf,
     }).then((res) => console.log("update in number favorite"));
@@ -95,7 +93,6 @@ export const getAllItemNames = async (userId: string): Promise<string[]> => {
     const itemsRef = collection(db, "favorite", userId, "items");
     const querySnapshot = await getDocs(itemsRef);
     const itemNames = querySnapshot.docs.map((doc) => doc.id);
-    console.log(itemNames);
     return itemNames;
   } catch (error) {
     console.error("Error fetching item names:", error);
@@ -106,25 +103,16 @@ export const getAllItemNames = async (userId: string): Promise<string[]> => {
 export const addFavoriteBlog = async ({ item }: { item: blogFavriteProps }) => {
   try {
     const itemsRef = collection(db, "saveBlog", item.userId, "items");
-    console.log("itemsRef initialized:", itemsRef);
 
     const querySnapshot = await getDocs(itemsRef);
-    console.log("Query Snapshot:", querySnapshot);
 
     const updatedFavorites = item.numberOffavorites + 1;
 
     // Update blogs collection
-    console.log("Updating blogs collection for blogId:", item.blogId);
     await updateDoc(doc(db, "blogs", item.blogId), {
       numberOffavorites: updatedFavorites,
     });
-    console.log("Updated numberOffavorites in blogs");
 
-    // Save item in saveBlog
-    console.log(
-      "Saving item in saveBlog subcollection for userId:",
-      item.userId
-    );
     await setDoc(doc(db, "saveBlog", item.userId, "items", item.id), {
       ...item,
       numberOffavorites: updatedFavorites,
@@ -139,7 +127,6 @@ export const getallsaveid = async (userId: string): Promise<string[]> => {
     const itemsRef = collection(db, "saveBlog", userId, "items");
     const querySnapshot = await getDocs(itemsRef);
     const itemNames = querySnapshot.docs.map((doc) => doc.id);
-    console.log(itemNames);
     return itemNames;
   } catch (error) {
     console.error("Error fetching item names:", error);
@@ -159,9 +146,7 @@ export const deleteSave = async ({
     await deleteDoc(doc(db, "saveBlog", userId, "items", id)).then((res) =>
       console.log("delete the products in favorite")
     );
-    console.log(numberOffavorites);
     const nmf = numberOffavorites - 1;
-    console.log(nmf);
     await updateDoc(doc(db, "blos", id), {
       numberOffavorites: nmf,
     }).then((res) => console.log("update in number favorite"));
@@ -169,7 +154,7 @@ export const deleteSave = async ({
     console.error("Error deleting favorite item:", error);
   }
 };
-export const getSaveBlog = async (userId: any) => {
+export const getSaveBlog = async (userId: any): Promise<blogFavriteProps[]> => {
   try {
     // Reference to the user's `items` subcollection
     const itemsRef = collection(db, "saveBlog", userId, "items");
@@ -179,11 +164,25 @@ export const getSaveBlog = async (userId: any) => {
 
     // Extract data from each document
     const items = querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
+      ...(doc.data() as blogFavriteProps),
       id: doc.id,
     }));
-    console.log(items);
     return items;
+  } catch (error) {
+    console.error("Error fetching favorite items:", error);
+    return [];
+  }
+};
+export const getAllSaveBlog = async (): Promise<blogFavriteProps[]> => {
+  try {
+    const itemsRef = collection(db, "saveBlog", "items");
+    const querySnapshot = await getDocs(itemsRef);
+    const item: blogFavriteProps[] = [];
+    const items = querySnapshot.docs.map((doc) =>
+      item.push({ ...(doc.data() as blogFavriteProps), id: doc.id })
+    );
+
+    return item;
   } catch (error) {
     console.error("Error fetching favorite items:", error);
     return [];

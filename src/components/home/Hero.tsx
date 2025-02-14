@@ -38,7 +38,7 @@ const Hero = () => {
         />
       </div> 
       */}
-      <motion.div className="flex sm:mt-12 relative md:flex-row m-0 flex-col-reverse min-h-[410px] md:min-h-fit overflow-hidden above-405:px-3 mt-0 md:items-center items-start w-full justify-center md:justify-between ">
+      <motion.div className="flex md:px-12 sm:mt-12 relative md:flex-row m-0 flex-col-reverse min-h-[410px] md:min-h-fit overflow-hidden above-405:px-3 mt-0 md:items-center items-start w-full justify-center md:justify-between ">
         <motion.div
           transition={{ duration: 0.3 }}
           initial={{ x: -150, opacity: 0 }}
@@ -73,12 +73,12 @@ const Hero = () => {
           initial={{ opacity: 0, x: 200 }}
           whileInView={{ opacity: 1, x: 1 }}
           transition={{ duration: 0.8 }}
-          className=" mr-0 xl:w-[60%] opacity-75 md:opacity-100 md:static brightness-95 absolute left-0 right-0 -top-7 scale-[1.24] w-screen h-[370px] sm:scale-[1] sm:h-auto md:self-end lg:w-[50%] sm:w-[60%]"
+          className=" mr-0 xl:w-[60%] opacity-75 md:opacity-100 md:static  absolute left-0 right-0 -top-7 scale-[1.24] w-screen h-[370px] sm:scale-[1] sm:h-auto md:self-end lg:w-[50%] sm:w-[60%]"
         >
           <Image
             src="/hero.svg"
             alt="image hero"
-            className="w-full h-full"
+            className="w-full h-full brightness-95"
             width={628}
             height={400}
           />

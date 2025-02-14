@@ -16,7 +16,7 @@ const ForProducts = ({
 }: {
   load?: boolean;
   products?: ProductFormInput[];
-  title?: "dashboard";
+  title?: "dashboard" | "viewAll";
 }) => {
   const [startProducts, setStartProducts] = useState(0);
   const [pro, setpro] = useState(products);
@@ -44,18 +44,7 @@ const ForProducts = ({
     getdata();
   }, [user]);
   const maxProducts = products ? products.length : newProdcuts.length;
-
-  const handleNext = () => {
-    if (startProducts + limit < maxProducts) {
-      setStartProducts((prev) => Math.min(prev + 1, maxProducts - limit));
-    }
-  };
-
-  const handlePrev = () => {
-    if (startProducts > 0) {
-      setStartProducts((prev) => Math.max(prev - 1, 0));
-    }
-  };
+  console.log("favorete", favoriteId);
   if (load)
     return (
       <div className="flex mt-4 px-3 py-8  justify-center w-full items-center gap-4">
@@ -70,22 +59,24 @@ const ForProducts = ({
       </div>
     );
   return (
-    <motion.div
-      initial={{ y: 100, x: 40, opacity: 0 }}
-      whileInView={{ y: 0, x: 0, opacity: 1 }}
-      exit={{ y: -100, opacity: 0.2 }}
-      transition={{ duration: 0.6, type: "spring" }}
-      className=" mt-3 w-full   overflow-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-6 relative px- justify-center  items-center"
-    >
+    <motion.div className=" mt-3 w-full md:flex-wrap  overflow-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-6 relative px- justify-center  items-center">
       {products &&
         products
           .slice(
-            title !== "dashboard" ? startProducts : 0,
-            title !== "dashboard" ? startProducts + limit : products.length
+            !title ? startProducts : 0,
+            !title ? startProducts + limit : products.length
           )
           .map((product, index) => (
-            <div
-              key={product.name}
+            <motion.div
+              initial={{
+                y: 200,
+                x: index % 2 === 0 ? -40 : 40,
+                opacity: 0,
+              }}
+              whileInView={{ y: 0, x: 0, opacity: 1 }}
+              exit={{ y: -100, opacity: 0.2 }}
+              transition={{ duration: 0.6, type: "spring" }}
+              key={index}
               className={`${index === 4 && "hidden sm:block"} py-2 md:py-6   `}
             >
               <NewProducts
@@ -100,7 +91,8 @@ const ForProducts = ({
                         : { ...item, numberFavorite: item.numberFavorite + 1 }
                     )
                   );
-                  setfavoriteId((pre) => [...pre, product.id]);
+                  console.log(product.id);
+                  setfavoriteId((pre) => [product.id, ...pre]);
                 }}
                 deleteFavoriteId={() => {
                   setpro((pre) =>
@@ -118,7 +110,7 @@ const ForProducts = ({
                   );
                 }}
               />
-            </div>
+            </motion.div>
           ))}
     </motion.div>
   );

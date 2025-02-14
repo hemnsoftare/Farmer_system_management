@@ -39,7 +39,10 @@ const Sales = () => {
       );
       const querysnapshot = await getDocs(q);
       querysnapshot.forEach((item) => {
-        setproducts((pre) => [...pre, item.data() as ProductFormInput]);
+        setproducts((pre) => [
+          ...pre,
+          { id: item.id, ...(item.data() as ProductFormInput) },
+        ]);
       });
       setload(false);
     };

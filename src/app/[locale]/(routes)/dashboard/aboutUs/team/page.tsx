@@ -4,7 +4,6 @@ import { useToast } from "@/hooks/use-toast";
 import {
   deleteTeam,
   getAboutUs,
-  getTeam,
   setMemeber,
   UpdateTeam,
   uploadImage,
@@ -15,6 +14,7 @@ import { ref } from "firebase/storage";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { set, z } from "zod";
+import { getAllTeam } from "@/lib/action/dashboard";
 const Page = () => {
   const reffullName = React.useRef<HTMLInputElement>(null);
   const refposition = React.useRef<HTMLInputElement>(null);
@@ -126,7 +126,7 @@ const Page = () => {
   };
   useEffect(() => {
     const getdata = async () => {
-      const data = await getTeam();
+      const data = await getAllTeam();
 
       setteam(data);
     };
@@ -136,7 +136,7 @@ const Page = () => {
   return (
     <div className="w-screen flex mt-8 px-5 py-2 items-center justify-center flex-col ">
       <h1 className="self-start text-30 font-semibold">My team</h1>
-      <div className="w-full h-full flex flex-wrap gap-4">
+      <div className="w-full h-full items-center justify-center flex flex-wrap gap-4">
         {team.map((item) => (
           <CardTeam
             key={item.id}
@@ -163,7 +163,7 @@ const Page = () => {
       <form
         action=""
         onSubmit={handleSubmit}
-        className="w-full mt-6 flex flex-col rounded-2xl items-center justify-center p-4 bg-gradient-to-br from-blue-600 to-purple-700 text-white shadow-md"
+        className="w-full md:w-1/2 mt-6 flex flex-col rounded-2xl items-center justify-center p-4 bg-gradient-to-br from-blue-600 to-purple-700 text-white shadow-md"
       >
         <h1 className="text-xl font-bold mb-4">
           {id ? "Edit Member" : "Add Member"}

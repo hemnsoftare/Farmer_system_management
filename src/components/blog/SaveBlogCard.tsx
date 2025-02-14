@@ -7,12 +7,14 @@ const SaveBlogCard = ({
   blog,
   onSave,
   onUnsave,
+  type,
   disabledBtn,
 }: {
   blog: blogFavriteProps;
-  onSave: () => void;
-  onUnsave: () => void;
-  disabledBtn: boolean;
+  type?: "dashboard";
+  onSave?: () => void;
+  onUnsave?: () => void;
+  disabledBtn?: boolean;
 }) => {
   return (
     <div className="flex flex-col border md:hover:shadow-xl md:hover:scale-[1.04] duration-300 transition-all backdrop-blur-lg md:hover:z-40 shadow-md px-3 rounded-xl pb-3 pt-3 gap-3 w-full">
@@ -47,23 +49,25 @@ const SaveBlogCard = ({
       </p>
 
       {/* Footer with Save/Unsave Buttons */}
-      <footer className="w-full gap-3 flex items-center justify-between">
-        <button
-          disabled={disabledBtn}
-          onClick={() => onSave()}
-          className="px-6 py-1 disabled:bg-blue-300 w-[150px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
-        >
-          Save
-        </button>
+      {type !== "dashboard" && (
+        <footer className="w-full gap-3 flex items-center justify-between">
+          <button
+            disabled={disabledBtn}
+            onClick={() => onSave()}
+            className="px-6 py-1 disabled:bg-blue-300 w-[150px] rounded-lg active:bg-blue-600 duration-300 transition-all md:hover:bg-blue-600 text-white bg-blue-800"
+          >
+            Save
+          </button>
 
-        <button
-          onClick={() => onUnsave()}
-          disabled={!disabledBtn}
-          className="px-6 disabled:text-blue-300 py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
-        >
-          Unsave
-        </button>
-      </footer>
+          <button
+            onClick={() => onUnsave()}
+            disabled={!disabledBtn}
+            className="px-6 disabled:text-blue-300 py-1 w-[150px] active:bg-blue-100 duration-300 transition-all md:hover:bg-blue-100 rounded-lg border text-blue-700 border-blue-500"
+          >
+            Unsave
+          </button>
+        </footer>
+      )}
     </div>
   );
 };

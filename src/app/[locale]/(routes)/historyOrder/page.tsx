@@ -13,6 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import CardHistory from "./_compoents/CardHistory";
 import { motion } from "framer-motion";
+import { getOrder } from "@/lib/action/dashboard";
 
 const Page = () => {
   const db = getFirestore(app);
@@ -24,17 +25,8 @@ const Page = () => {
     const getorder = async () => {
       setload(true);
       if (user?.id) {
-        const q = query(
-          collection(db, "order"),
-          where("userId", "==", user?.id)
-        );
-        const querySnapshot = await getDocs(q);
-
-        const newProducts: OrderType[] = [];
-        querySnapshot.forEach((doc) => {
-          newProducts.push(doc.data() as OrderType);
-        });
-        setProducts(newProducts);
+        const getorder = await getOrder(user.id);
+        setProducts(getorder);
         setload(false);
       }
     };

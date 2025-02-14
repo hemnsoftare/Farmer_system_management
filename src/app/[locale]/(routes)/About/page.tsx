@@ -1,12 +1,13 @@
 "use client";
 import CardTeam from "@/components/about/CardTeam";
-import { getAboutUs, getTeam } from "@/lib/action/uploadimage";
+import { getAboutUs } from "@/lib/action/uploadimage";
 import { teamProps } from "@/lib/action";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { getAllTeam } from "@/lib/action/dashboard";
 const Page = () => {
   const t = useTranslations("about");
   const [about, setabout] = useState({
@@ -26,7 +27,7 @@ const Page = () => {
   }, []);
   const getdata = async () => {
     const data = await getAboutUs();
-    const datateam = await getTeam();
+    const datateam = await getAllTeam();
     setteam(datateam);
     setabout(data as any);
   };
