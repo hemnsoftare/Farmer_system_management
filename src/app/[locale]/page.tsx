@@ -56,6 +56,7 @@ export default function Home() {
     }
   }, [user]);
   const lan = lang().startsWith("ar") || lang().startsWith("ku");
+  // add comeetnete
   return (
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
       <SearchComponent />
