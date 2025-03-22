@@ -28,20 +28,14 @@ export async function clear_data_user({
       );
       await Promise.all(deletePromises);
       await deleteDoc(userDocRef);
-      console.log(`User document and subcollection deleted for ID: ${userid}`);
     } catch (error) {
       console.error("Error deleting user and items:", error);
     }
   } else {
-    console.log("order");
-    console.log(userid);
     const q = query(collection(db, "order"), where("userId", "==", userid));
     const qSnapshot = await getDocs(q);
     qSnapshot.forEach(async (item) => {
-      console.log(item.id);
-      await deleteDoc(doc(db, "order", item.id)).then((res) =>
-        console.log("delelte order")
-      );
+      await deleteDoc(doc(db, "order", item.id)).then((res) => {});
     });
   }
 }
@@ -53,8 +47,6 @@ export const search_setting = async ({
   userid?: string;
   search: ("category" | "product" | "blog" | "team_member")[];
 }) => {
-  console.log("User ID: ", userid);
-
   if (!userid) {
     // Save to localStorage if userid exists
     localStorage.setItem("search", JSON.stringify({ search }));
@@ -65,12 +57,7 @@ export const search_setting = async ({
         docRef,
         { search },
         { merge: true } // Merges with existing data or creates a new doc
-      )
-        .then((res) => console.log("update"))
-        .catch((err) => console.log(err));
-      console.log("Search settings updated or created successfully.");
-    } catch (error) {
-      console.error("Error updating or creating search settings:", error);
-    }
+      );
+    } catch (error) {}
   }
 };

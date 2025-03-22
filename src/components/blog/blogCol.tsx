@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 const BlogCol = ({ blog }: { blog: BlogProps }) => {
   const formattedDate = new Date(blog.date).toLocaleDateString(); // Format date for better readability
   const l = lang().startsWith("ar") || lang().startsWith("ku");
-  console.log(l);
   return (
     <motion.div
       initial={{ opacity: 0 }}

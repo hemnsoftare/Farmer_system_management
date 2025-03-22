@@ -29,12 +29,10 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const [show, setShow] = useState(true);
   const [showCart, setShowCart] = useState(false);
   const handleShow = () => {
-    console.log("Showing slider");
     setShow(true);
     setShowCart(false);
   };
   const handleHide = () => {
-    console.log("Hiding slider");
     setShow(false);
   };
   const hnaldeShowCart = () => {

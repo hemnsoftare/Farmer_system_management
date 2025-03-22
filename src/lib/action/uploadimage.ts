@@ -83,10 +83,13 @@ export const getProducts = async (
   if (filter.discount === true)
     conditions.push(where("isDiscount", "==", true));
 
+  if (category !== "") {
+    console.log("in if category");
+    conditions.push(where("category", "==", category));
+  }
   // Add price conditions
   conditions.push(where("price", ">=", filter.price[0])); // Set minimum price
   conditions.push(where("price", "<=", filter.price[1])); // Set maximum price
-  conditions.push(where("category", "==", category));
 
   // Build the query with dynamic conditions
   const q = query(
@@ -152,9 +155,9 @@ export const setUser = async (user: UserType) => {
     primaryEmailAddressId: user.primaryEmailAddressId || "",
   };
 
-  await setDoc(doc(db, "user", user.id), sanitizedUser)
-    .then(() => console.log("User saved"))
-    .catch((error) => console.error("Error saving user", error));
+  await setDoc(doc(db, "user", user.id), sanitizedUser).catch((error) =>
+    console.error("Error saving user", error)
+  );
 };
 
 export const setOrder = async (order: OrderType): Promise<string> => {
@@ -204,7 +207,7 @@ export const setOrder = async (order: OrderType): Promise<string> => {
       const currentNumberSale = getitem.exists() && getitem.data().numberSale;
       await updateDoc(doc(db, "Products", item.id), {
         numberSale: item.quantitiy + currentNumberSale,
-      }).then((res) => console.log("update in number sale"));
+      }).then((res) => {});
     });
 
     return refSendData.id;
@@ -294,11 +297,9 @@ export const getAllOrder = async (): Promise<OrderType[]> => {
   return data;
 };
 export const deleteProducts = async (id: string) => {
-  await deleteDoc(doc(db, "Products", id))
-    .then(() => console.log("Document successfully deleted!"))
-    .catch((error) => {
-      console.error("Error removing document: ", error);
-    });
+  await deleteDoc(doc(db, "Products", id)).catch((error) => {
+    console.error("Error removing document: ", error);
+  });
 };
 export const addContactUs = async ({
   title,
@@ -321,9 +322,7 @@ export const getConactUs = async (): Promise<contactUSProps[]> => {
   return results;
 };
 export const deleteContactUs = async (id: string) => {
-  await deleteDoc(doc(db, "ContactUs", id)).then((res) =>
-    console.log("delete the concat us ")
-  );
+  await deleteDoc(doc(db, "ContactUs", id)).then((res) => {});
 };
 export const UpdateContactUUs = async ({
   title,
@@ -389,9 +388,7 @@ export const setMemeber = async (
 };
 
 export const deleteTeam = async (id: string) => {
-  await deleteDoc(doc(db, "team", id)).then((res) =>
-    console.log("delete the team ")
-  );
+  await deleteDoc(doc(db, "team", id)).then((res) => {});
 };
 export const UpdateTeam = async ({
   description,
@@ -424,9 +421,7 @@ export const getFAQ = async (): Promise<faqProps[]> => {
   return result;
 };
 export const deleteFAQ = async (id: string) => {
-  await deleteDoc(doc(db, "FAQ", id)).then((res) =>
-    console.log("delete the team ")
-  );
+  await deleteDoc(doc(db, "FAQ", id)).then((res) => {});
 };
 export const updateFAQ = async ({ item }: { item: faqProps }) => {
   await updateDoc(doc(db, "FAQ", item.id), {
@@ -463,7 +458,6 @@ export const setComments = async ({
   await updateDoc(docRef, {
     comments: arrayUnion({ ...comments }), // This will add the new comment to the array
   });
-  console.log("in set commment su css");
 };
 // export const getAllComments = async (id: string): Promise<commentProps[]> => {
 //   const blogsSnapshot = await getDoc(doc(db, "blogs", id));

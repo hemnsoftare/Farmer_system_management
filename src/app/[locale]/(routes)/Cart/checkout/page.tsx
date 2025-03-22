@@ -10,14 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { ItemCartProps, OrderType } from "@/lib/action";
 import { setOrder } from "@/lib/action/uploadimage";
 import { useUser } from "@clerk/nextjs";
-import { removeAll } from "@/lib/action/Order";
+import { removeAll } from "@/lib/store/Order";
 import Plunk from "@plunk/node";
 import { render } from "@react-email/render";
 
 import { toast } from "@/hooks/use-toast";
 import Email from "@/emails";
 import FormCheckout from "@/components/Cart/FormCheckout";
-import { redirect } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const cartItems = useSelector(
@@ -31,12 +32,24 @@ const Page = () => {
     totalPrice: 0,
   });
   const dispatch = useDispatch();
+  const roter = useRouter().push;
+  const { mutate, data, isPending } = useMutation({
+    mutationKey: ["order"],
+    mutationFn: async ({ orders }: { orders: OrderType }) => {
+      const id = await setOrder(orders);
+      return { ...orders, id }; // Ensure the return value is structured properly
+    },
+    onSuccess: (data) => {
+      // 'data' is the returned value from mutationFn
+      sendEmail({ ...data }).then(() => dispatch(removeAll()));
+      handleWhatsAppClick({ id: data.id });
+      roter("/");
+    },
+  });
+
   const plunk = new Plunk(process.env.NEXT_PUBLIC_PLUNK_API_KEY || "");
 
-  const [showSuccess, setShowSuccess] = useState<boolean>(false);
-  const [showNotSuccess, setShowNotSuccess] = useState(false);
   const { user } = useUser();
-  const [order, setorder] = useState<OrderType>();
   const [error, seterror] = useState({
     fullName: "",
     phoneNumber: "",
@@ -68,7 +81,6 @@ const Page = () => {
 
     const datafrom = new FormData(e.currentTarget);
     const data = Object.fromEntries(datafrom.entries());
-    console.log(data);
     const validate = formSchema.safeParse({
       ...data,
       lat: markerPosition.lat,
@@ -76,7 +88,6 @@ const Page = () => {
     });
 
     if (validate.success && user && cartItems.length > 0) {
-      setShowSuccess(true);
       const orders: OrderType = {
         address: {
           city: (data.city as string) || "", // Cast to string if needed
@@ -96,12 +107,7 @@ const Page = () => {
         note: data.note ? (data.note as string) : undefined, // Use undefined if no note is provided
       };
 
-      const id = await setOrder(orders);
-      setorder({ ...orders, id });
-      handleWhatsAppClick();
-      sendEmail({ ...orders });
-      dispatch(removeAll());
-      redirect("/");
+      mutate({ orders });
     } else {
       // Initialize an empty error object with all properties as empty strings
       // setShowNotSuccess(true);
@@ -149,7 +155,6 @@ const Page = () => {
 
     // Check if email is a valid string
     if (typeof recipientEmail !== "string" || recipientEmail.trim() === "") {
-      console.log("Error: Recipient email is not a valid string.");
       return;
     }
     plunk.emails
@@ -185,25 +190,10 @@ const Page = () => {
     settotalPrice({ totalPrice: totalPriceitem, discount: totalDiscount });
   }, [cartItems]);
 
-  const handlePlaceSelect = () => {
-    if (autocomplete) {
-      const place = autocomplete.getPlace();
-      if (place.geometry && place.geometry.location) {
-        const lat = place.geometry.location.lat();
-        const lng = place.geometry.location.lng();
-        setMarkerPosition({ lat, lng });
-
-        map?.panTo({ lat, lng });
-      }
-    }
-  };
-
-  const handleWhatsAppClick = () => {
+  const handleWhatsAppClick = ({ id }: { id: string }) => {
     const phoneNumber = "9647508927181"; // Remove "+" from the phone number
-    console.log("Handle WhatsApp message send");
-
     const orderUrl = encodeURIComponent(
-      `https://tech-heim-three.vercel.app/Cart/${order.id}`
+      `https://tech-heim-three.vercel.app/Cart/${id}`
     );
     const message = encodeURIComponent(`Check your order details: ${orderUrl}`);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${orderUrl}`;
@@ -219,7 +209,6 @@ const Page = () => {
       });
     });
   }, []);
-  console.log(markerPosition);
   return (
     <div className=" flex flex-col px-1 py-8 gap-4 items-center justify-center ">
       <h1 className="font-bold text23 md:text-34">checkout</h1>
@@ -242,7 +231,7 @@ const Page = () => {
               }
             }}
             options={{
-              gestureHandling: "greedy", // Enables one-finger drag
+              // gestureHandling: "greedy", // Enables one-finger drag
               zoomControl: false, // Optional: Hide zoom buttons
             }}
           >
@@ -251,7 +240,11 @@ const Page = () => {
         </div>
       </LoadScript>
       <div className="md:w-1/2 w-full  py-5">
-        <FormCheckout errors={error} handleSubmit={handleSubmit} />
+        <FormCheckout
+          errors={error}
+          handleSubmit={handleSubmit}
+          load={isPending}
+        />
         <input type="hidden" name="lat" value={markerPosition.lat} />
         <input type="hidden" name="lng" value={markerPosition.lng} />
 

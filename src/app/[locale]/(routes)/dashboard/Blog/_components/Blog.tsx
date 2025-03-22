@@ -47,9 +47,9 @@ const Blog = ({
   return (
     <Link
       href={`/dashboard/Blog/${id}`}
-      className="flex w-full md:min-w-[400px] md:max-w-[400px] flex-col rounded-lg shadow-md overflow-hidden"
+      className="flex w-full  flex-col rounded-lg shadow-md overflow-hidden"
     >
-      <div className="relative  w-full">
+      <div className="relative overflow-hidden  w-full">
         {/* Video Display */}
         {type === "video" && video ? (
           <div className="relative w-full pb-[56.25%]">

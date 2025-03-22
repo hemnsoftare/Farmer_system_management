@@ -1,67 +1,49 @@
 "use client";
-import { newProdcuts } from "@/util/data";
 import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
-import React, { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import { ProductFormInput } from "@/lib/action";
-import { app } from "@/config/firebaseConfig";
+import React from "react";
+
+import useFilterProducts from "@/lib/store/filterProducts";
+import { useQuery } from "@tanstack/react-query";
+import { getProductsBYDiscountAndCategoryAndSale } from "@/lib/action/dashboard";
 const Page = () => {
-  const [prodcts, setproducts] = useState<ProductFormInput[]>();
-  const [category, setcategory] = useState("");
-  const [load, setload] = useState(false);
-  const db = getFirestore(app);
-
-  useEffect(() => {
-    const getData = async (col: string) => {
-      setload(true);
-      let q;
-      if (col !== "discount") {
-        q = category
-          ? query(
-              collection(db, "Products"),
-              where("category", "==", category),
-              orderBy(col, "desc")
-            )
-          : query(collection(db, "Products"), orderBy(col, "desc"));
-      } else {
-        q = category
-          ? query(
-              collection(db, "Products"),
-              where("category", "==", category),
-              where("isDiscount", "==", true)
-            )
-          : query(collection(db, "Products"), where("isDiscount", "==", true));
-      }
-
-      const snapshot = await getDocs(q);
-      const fetchedProducts: ProductFormInput[] = [];
-      snapshot.forEach((item) => {
-        fetchedProducts.push(item.data() as ProductFormInput);
+  const { setCategory: setcategory, category, resetAll } = useFilterProducts();
+  const {
+    data: prodcts,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["products" + category],
+    queryFn: async () => {
+      const pro = await getProductsBYDiscountAndCategoryAndSale({
+        category: category,
+        col: "discount",
       });
-      setload(false);
-      setproducts(fetchedProducts);
-    };
+      return pro;
+    },
+  });
 
-    getData("discount");
-  }, [db, category]);
   return (
     <div className="flex items-start gap-8 px-4 justify-start w-full flex-col">
       <h1 className="text-30 flex items-center w-full justify-between font-bold mt-8">
         Products Discount
       </h1>
       <div className="w-full flex-wrap flex items-center justify-between">
-        <CatagoryProducts handleSelected={setcategory} catagory={category} />
+        <CatagoryProducts />
       </div>
       <div className="grid lg:grid-cols-4 grid-cols-2 w-full gap-1 xl:grid-cols-5 ">
-        {prodcts && prodcts.length > 0 ? (
+        {isLoading ? (
+          <div className="col-span-full flex justify-center items-center min-h-[200px]">
+            <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : isError ? (
+          <div className="col-span-full flex justify-center items-center min-h-[200px]">
+            <p className="text-red-500">
+              Error: {error?.message || "Something went wrong"}
+            </p>
+          </div>
+        ) : prodcts && prodcts.length > 0 ? (
           prodcts.map((item) => (
             <NewProducts key={item.name} itemDb={item} title="dashboard" />
           ))

@@ -1,9 +1,11 @@
 import { db } from "@/config/firebaseConfig";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -96,22 +98,17 @@ export const getAllProducts = async (): Promise<ProductFormInput[]> => {
 
 export const getAllFavorite = async () => {
   const userDocs = await getDocs(collection(db, "favorite"));
-  console.log(userDocs);
   let allFavorites = [];
 
   if (userDocs.empty) {
-    console.log("No users found in 'favorite' collection.");
     return [];
   }
 
   for (const userDoc of userDocs.docs) {
-    console.log("Fetching for User:", userDoc.id);
-
     const itemsCollectionRef = collection(db, "favorite", userDoc.id, "items");
     const itemsSnapshot = await getDocs(itemsCollectionRef);
 
     if (itemsSnapshot.empty) {
-      console.log(`No items found for user: ${userDoc.id}`);
       continue;
     }
 
@@ -120,10 +117,8 @@ export const getAllFavorite = async () => {
       ...doc.data(),
     }));
 
-    console.log(`Fetched ${userFavorites.length} items for user ${userDoc.id}`);
     allFavorites.push(...userFavorites);
   }
-  console.log(allFavorites);
   return allFavorites;
 };
 
@@ -162,4 +157,54 @@ export const getOrder = async (userid: string): Promise<OrderType[]> => {
     newProducts.push({ ...(doc.data() as OrderType), id: doc.id });
   });
   return newProducts;
+};
+export const getProductsBYDiscountAndCategoryAndSale = async ({
+  col,
+  category,
+}: {
+  col: string;
+  category: string;
+}): Promise<ProductFormInput[]> => {
+  let q;
+  if (col === "date") {
+    q =
+      category !== ""
+        ? query(
+            collection(db, "Products"),
+            where("category", "==", category), // ✅ Correct placement
+            orderBy(col, "desc")
+          )
+        : query(collection(db, "Products"), orderBy(col, "asc"));
+  } else if (col !== "discount") {
+    q =
+      category !== ""
+        ? query(
+            collection(db, "Products"),
+            where("category", "==", category), // ✅ Correct placement
+            orderBy(col, "desc")
+          )
+        : query(collection(db, "Products"), orderBy(col, "desc"));
+  } else {
+    q =
+      category !== ""
+        ? query(
+            collection(db, "Products"),
+            where("category", "==", category), // ✅ Correct placement
+            where("isDiscount", "==", true)
+          )
+        : query(collection(db, "Products"), where("isDiscount", "==", true));
+  }
+
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map((doc) => ({
+    ...(doc.data() as ProductFormInput), // Spread item data
+    id: doc.id, // Add the `id` field
+  }));
+};
+
+export const deleteBlog = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, "blogs", id)).then(() => {});
+  } catch (error) {}
 };

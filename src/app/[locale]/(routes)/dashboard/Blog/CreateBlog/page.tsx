@@ -144,9 +144,7 @@ const Page = () => {
           toast({ title: "Blog updated successfully" });
           router.push("/dashboard/Blog");
         })
-        .catch((error) => {
-          console.log("Error updating blog", error);
-        });
+        .catch((error) => {});
       return;
     }
     // Submitting a new blog
@@ -170,18 +168,14 @@ const Page = () => {
         toast({ title: "Blog submitted successfully" });
         router.push("/dashboard/Blog");
       })
-      .catch((error) => {
-        console.log("Error submitting blog", error);
-      });
+      .catch((error) => {});
   };
 
   useEffect(() => {
-    console.log(haveId);
     if (haveId) {
       const getData = async () => {
         const data = await getDoc(doc(db, "blogs", haveId));
         const blog = data.data();
-        console.log(blog);
         if (blog) {
           settitle(blog.title);
           setdescription(blog.description);

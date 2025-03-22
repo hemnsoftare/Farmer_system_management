@@ -7,7 +7,7 @@ import { GoTrash } from "react-icons/go";
 import { Cart } from "@/lib/action";
 import { ItemCartProps } from "@/lib/action";
 import { useDispatch } from "react-redux";
-import { removeItem, updateItem } from "@/lib/action/Order";
+import { removeItem, updateItem } from "@/lib/store/Order";
 import { useToast } from "@/hooks/use-toast";
 const CartItem = ({
   item,

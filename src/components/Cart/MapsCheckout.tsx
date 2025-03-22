@@ -34,7 +34,6 @@ const MapsCheckout: React.FC = () => {
 
   const handleSubmit = () => {
     if (location) {
-      console.log("Selected Location:", location);
       // Perform the submit action, e.g., sending the location to a server
     }
   };

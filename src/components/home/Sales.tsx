@@ -22,39 +22,24 @@ import { getAllItemNames } from "@/lib/action/fovarit";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
+import { getProductsBYDiscountAndCategoryAndSale } from "@/lib/action/dashboard";
+import { queryClient } from "@/app/[locale]/ClientProviders";
 const Sales = () => {
-  const [load, setload] = useState(true);
-  const [start, setStart] = useState(0);
   const { user } = useUser();
-  const t = useTranslations("sales");
-  const [products, setproducts] = useState<ProductFormInput[]>([]);
-  const [favoriteId, setfavoriteId] = useState([]);
-  const db = getFirestore(app);
-  useEffect(() => {
-    const getdata = async () => {
-      const q = query(
-        collection(db, "Products"),
-        where("discount", ">", 0),
-        orderBy("date", "asc")
-      );
-      const querysnapshot = await getDocs(q);
-      querysnapshot.forEach((item) => {
-        setproducts((pre) => [
-          ...pre,
-          { id: item.id, ...(item.data() as ProductFormInput) },
-        ]);
+  const { data, isLoading } = useQuery({
+    queryKey: ["sale"],
+    queryFn: async () => {
+      const getAllid = await getAllItemNames(user.id);
+      const getdata = await getProductsBYDiscountAndCategoryAndSale({
+        category: "",
+        col: "discount",
       });
-      setload(false);
-    };
-    getdata();
-  }, [db]);
-  useEffect(() => {
-    const getdata = async () => {
-      const data = await getAllItemNames(user?.id);
-      setfavoriteId(data as string[]);
-    };
-    getdata();
-  }, [user]);
+      return { products: getdata, favoriteId: getAllid };
+    },
+  });
+  const t = useTranslations("sales");
+  const [start, setStart] = useState(0);
   return (
     <motion.div
       initial={{ y: 150, opacity: 0 }}
@@ -80,7 +65,7 @@ const Sales = () => {
           <Link href={"/viewAll?type=discount"}>{t("button_view_all")}</Link>
         </button>
       </div>
-      {load && (
+      {isLoading && (
         <div className="sm:grid w-full sm:w-[80%] gap-3  items-center flex overflow-x-auto  sm:overflow-hidden sm:grid-cols-4 justify-start">
           <Loader />
           <Loader />
@@ -90,35 +75,59 @@ const Sales = () => {
           </div>
         </div>
       )}
-      {!load && (
+      {!isLoading && (
         <div className="sm:grid w-full sm:w-[80%] gap-3  items-center flex overflow-x-auto  sm:overflow-hidden sm:grid-cols-4 justify-start">
-          {products.slice(start, 4 + start).map((item) => (
+          {data.products.slice(start, 4 + start).map((item) => (
             <NewProducts
-              favoriteId={favoriteId}
+              favoriteId={data.favoriteId}
               addFavoriteid={() => {
-                setproducts((prev) =>
-                  prev.map(
-                    (itemp) =>
-                      itemp.name === item.name
-                        ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
-                        : itemp // Keep other items unchanged
-                  )
-                );
-                setfavoriteId((pre) => [...pre, item.name]);
+                // setproducts((prev) =>
+                //   prev.map(
+                //     (itemp) =>
+                //       itemp.name === item.name
+                //         ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
+                //         : itemp // Keep other items unchanged
+                //   )
+                // );
+                // setfavoriteId((pre) => [...pre, item.name]);
+                queryClient.setQueryData(["sale"], (oldData: any) => {
+                  return {
+                    products: oldData.products.filter((itemp) =>
+                      itemp.id !== item.id
+                        ? itemp
+                        : { ...itemp, numberFavorite: itemp.numberFavorite + 1 }
+                    ),
+                    favoriteId: [...oldData.favoriteId, item.id],
+                  };
+                });
               }}
               deleteFavoriteId={() => {
-                setproducts((prev) =>
-                  prev.map(
-                    (itemp) =>
-                      itemp.name === item.name
-                        ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
-                        : itemp // Keep other items unchanged
-                  )
-                );
-
-                setfavoriteId(
-                  (prev) => prev.filter((itemp) => itemp !== item.name) // Remove the product name from favorites
-                );
+                // setproducts((prev) =>
+                //   prev.map(
+                //     (itemp) =>
+                //       itemp.name === item.name
+                //         ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
+                //         : itemp // Keep other items unchanged
+                //   )
+                // );
+                // setfavoriteId(
+                //   (prev) => prev.filter((itemp) => itemp !== item.name) // Remove the product name from favorites
+                // );
+                queryClient.setQueryData(["sale"], (oldData: any) => {
+                  return {
+                    products: oldData.products.filter((itemp) =>
+                      itemp.id !== item.id
+                        ? itemp
+                        : {
+                            ...itemp,
+                            numberFavorite: itemp.numberFavorite - 1,
+                          }
+                    ),
+                    favoriteId: oldData.favoriteId.filter(
+                      (prev) => prev !== item.id // Remove the product if it exists
+                    ),
+                  };
+                });
               }}
               key={item.name}
               itemDb={item}
@@ -136,7 +145,7 @@ const Sales = () => {
         <GrFormNextLink
           color="white"
           onClick={() =>
-            setStart((pre) => (pre >= products.length - 4 ? pre : pre + 1))
+            setStart((pre) => (pre >= data.products.length - 4 ? pre : pre + 1))
           }
           className="hover:bg-slate-50/15  duration-300 scale-[1.4]"
         />

@@ -31,7 +31,6 @@ const ModalCategory = () => {
   };
 
   const setDateFirebase = async () => {
-    console.log("submit add");
     await setDoc(doc(db, "category", nameRef.current?.value || ""), {
       name: nameRef.current?.value || "",
       brands,
@@ -39,7 +38,6 @@ const ModalCategory = () => {
       image: categoryImage,
     })
       .then(() => {
-        console.log("save data");
         // Optionally navigate or show success message
       })
       .catch((error) =>

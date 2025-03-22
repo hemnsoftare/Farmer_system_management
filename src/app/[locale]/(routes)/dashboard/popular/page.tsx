@@ -1,70 +1,108 @@
 "use client";
-import ForProducts from "@/components/home/ForProducts";
+import { queryClient } from "@/app/[locale]/ClientProviders";
 import NewProducts from "@/components/home/NewProducts";
-import { app } from "@/config/firebaseConfig";
+import { db } from "@/config/firebaseConfig";
 import { ProductFormInput } from "@/lib/action";
-import {
-  collection,
-  doc,
-  getDocs,
-  getFirestore,
-  orderBy,
-  query,
-} from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { FaHeart, FaSearch, FaStar, FaTag } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { useState } from "react";
+import { FaHeart, FaSearch, FaTag } from "react-icons/fa";
+
+const iconArray = [
+  { name: "Search", icon: FaSearch, order: "numSearch" },
+  { name: "Sale", icon: FaTag, order: "numberSale" },
+  { name: "Favorite", icon: FaHeart, order: "numberFavorite" },
+];
+
 const Page = () => {
   const [select, setSelect] = useState({ name: "Search", order: "numSearch" });
-  const [produts, setproduts] = useState<ProductFormInput[]>();
-  const [load, setload] = useState(false);
-  const db = getFirestore(app);
-  const iconArray = [
-    { name: "Search", icon: FaSearch, order: "numSearch" },
-    { name: "Sale", icon: FaTag, order: "numberSale" },
-    { name: "Favorite", icon: FaHeart, order: "numberFavorite" },
-  ];
 
-  useEffect(() => {
-    const getdata = async (selectedData: any) => {
-      setload(true);
-      const { name, order } = selectedData;
-      const data = query(collection(db, "Products"), orderBy(order, "desc"));
-      const qSnapShot = await getDocs(data);
-      const pro: ProductFormInput[] = [];
-      qSnapShot.forEach((item) =>
-        pro.push({ ...(item.data() as ProductFormInput), id: item.id })
+  // Fetch products based on selected category
+  const { data, isLoading } = useQuery({
+    queryKey: ["popularProducts", select],
+    queryFn: async () => {
+      const productQuery = query(
+        collection(db, "Products"),
+        orderBy(select.order, "desc")
       );
-      console.log(pro.length);
-      setload(false);
-      setproduts(pro);
-    };
+      const qSnapShot = await getDocs(productQuery);
+      const products = qSnapShot.docs.map((doc) => ({
+        ...(doc.data() as ProductFormInput),
+        id: doc.id,
+      }));
 
-    getdata(select);
-  }, [select, db]); // Dependency on `select` state
+      return { products, allProducts: products };
+    },
+  });
+
+  // Handle search functionality
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchQuery = e.target.value.trim().toLowerCase();
+
+    queryClient.setQueryData(
+      ["popularProducts", select],
+      (oldData: {
+        products: ProductFormInput[];
+        allProducts: ProductFormInput[];
+      }) => {
+        if (!oldData || !oldData.products || !searchQuery) {
+          return {
+            products: oldData.allProducts,
+            allProducts: oldData.allProducts,
+          };
+        }
+
+        return {
+          products: oldData.allProducts.filter((item) =>
+            item.name.toLowerCase().includes(searchQuery)
+          ),
+          allProducts: oldData.allProducts,
+        };
+      }
+    );
+  };
+
   return (
     <div className="flex flex-col py-7 px-4 mt-8">
-      <h1 className="text-30 font-semibold">Poplar Products</h1>
+      <h1 className="text-30 font-semibold">Popular Products</h1>
+
+      {/* Filter Buttons */}
       <div className="flex items-center mt-7 justify-center gap-3">
         {iconArray.map((item) => (
-          <div
+          <button
             key={item.name}
-            onClick={() => setSelect(item)} // Handle click to update selected item
-            className={`flex flex-col px-6 items-center justify-center gap-2 border py-2 w-[150px] rounded-lg shadow-lg duration-300 transition-all 
-            ${select.name === item.name ? "bg-orange-50 border-orange-500" : "bg-white border-transparent"} 
-            ${select.name === item.name ? "shadow-orange-300" : "shadow-slate-200"} hover:shadow-orange-200`}
+            onClick={() => setSelect(item)}
+            className={`flex flex-col px-6 items-center justify-center gap-2 border py-2 w-[150px] rounded-lg shadow-lg 
+              transition-all duration-300
+              ${select.name === item.name ? "bg-orange-50 border-orange-500 shadow-orange-300" : "bg-white border-transparent shadow-slate-200"}
+              hover:shadow-orange-200`}
           >
             <item.icon color={select.name === item.name ? "#f45e0c" : "#000"} />
             <span>{item.name}</span>
-          </div>
+          </button>
         ))}
       </div>
+
+      {/* Search Input */}
+      <input
+        type="search"
+        placeholder="Search products..."
+        className="w-full max-w-md self-center outline-none border-2 border-secondary my-6 p-2  rounded-lg"
+        onChange={handleSearch}
+      />
+
+      {/* Product List */}
       <div className="md:flex grid grid-cols-2 items-center my-9 flex-wrap justify-center gap-4">
-        {produts && produts.length > 0 ? (
-          produts.map((item) => (
+        {isLoading ? (
+          <p className="text-lg text-gray-500 text-center">
+            Loading products...
+          </p>
+        ) : data?.products.length > 0 ? (
+          data.products.map((item) => (
             <NewProducts
               itemDb={item}
               key={item.id}
-              load={load}
+              load={isLoading}
               title="dashboard"
             />
           ))
@@ -74,14 +112,8 @@ const Page = () => {
           </div>
         )}
       </div>
-      {/* <ForProducts products={produts} load={load} title="dashboard" /> */}
     </div>
   );
 };
 
 export default Page;
-
-// Compare this snippet from src/app/%5Blocale%5D/%28routes%29/dashboard/popular/page.tsx:
-// import React from "react";
-// import Layout from "../layout";
-// import Page from "./page";

@@ -148,7 +148,7 @@ const NewProducts = ({
           <h3
             className={`lg:text-16 text-14 md:text-10 w-full overflow-hidden mb-2 line-clamp-1 text-secondary-400 font-[500]`}
           >
-            {product.name}sdaffsdfsd sdf sdf sd sdaf sa sdfa
+            {product.name}
           </h3>
           <div className="w-full h-fit sm:h-[33px]">
             {title !== "dashboard" && (
@@ -179,9 +179,15 @@ const NewProducts = ({
               )}
               {title === "dashboard" && (
                 <div className="flex gap-2 item-center">
-                  <Link href={`/dashboard/AddItem?id=${product.id}`}>
+                  <button
+                    onClick={(e) => {
+                      router.push(`/dashboard/AddItem?id=${product.id}`);
+                      handleFavoriteClick(e);
+                    }}
+                    // href={`/dashboard/AddItem?id=${product.id}`}
+                  >
                     <FileEdit />
-                  </Link>
+                  </button>
 
                   <RiDeleteBin6Line
                     onClick={(e) => {

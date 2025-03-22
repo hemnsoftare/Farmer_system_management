@@ -2,26 +2,21 @@
 import CardContactUs from "@/components/contactus/CardContactUs";
 import LoadingSpinner from "@/components/contactus/LoadingSpinner";
 import { getConactUs } from "@/lib/action/uploadimage";
-import { contactUSProps } from "@/lib/action";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 
 const Page = () => {
   const t = useTranslations("contact");
-  const [load, setLoad] = useState(false);
-  const [contacts, setContacts] = useState<contactUSProps[]>([]);
-
-  useEffect(() => {
-    const getData = async () => {
-      setLoad(true);
+  const { data, isLoading } = useQuery({
+    queryKey: ["ConractUs"],
+    queryFn: async () => {
       const data = await getConactUs();
-      setLoad(false);
-      setContacts(data);
-    };
-    getData();
-  }, []);
+      return { contacts: data };
+    },
+  });
 
   return (
     <div className="flex flex-col px-3 xl:py-12 py-4 w-full gap-4">
@@ -38,8 +33,8 @@ const Page = () => {
         }}
         className="w-full flex py-7 px-1 overflow-x-auto md:flex-wrap gap-3 items-center justify-start md:justify-center"
       >
-        {!load ? (
-          contacts.map((item, index) => (
+        {!isLoading ? (
+          data.contacts.map((item, index) => (
             <motion.div
               initial={{
                 y: index % 2 === 0 ? -100 : 100,

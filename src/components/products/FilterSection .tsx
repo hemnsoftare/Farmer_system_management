@@ -1,15 +1,12 @@
 "use client";
 import { FaChevronDown } from "react-icons/fa";
 import React, { useState } from "react";
+import useFilterProducts from "@/lib/store/filterProducts";
 interface FilterSectionProps {
   title: string;
   items: { name: string; color: string }[] | string[];
   filterKey: string;
   selectedItems: string[];
-  handleCheckboxChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    item: string
-  ) => void;
 }
 
 const FilterSection = ({
@@ -17,8 +14,8 @@ const FilterSection = ({
   items,
   filterKey,
   selectedItems,
-  handleCheckboxChange,
 }: FilterSectionProps) => {
+  const { updateBrand, updateColor } = useFilterProducts();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
@@ -60,7 +57,11 @@ const FilterSection = ({
                 type="checkbox"
                 name={filterKey}
                 value={displayText}
-                onChange={(e) => handleCheckboxChange(e, filterKey)}
+                onChange={(e) => {
+                  if (filterKey === "color") updateColor(displayText);
+                  else updateBrand(displayText);
+                }}
+                // handleCheckboxChange(e, filterKey)}}
                 id={displayText}
               />
               <label htmlFor={displayText}>{displayText}</label>

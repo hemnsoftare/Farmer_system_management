@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
+import OrderCard from "../../../historyOrder/_compoents/CardHistory";
 
 const UserProfilePage = ({ params }) => {
   const param: any = use(params);
@@ -77,7 +78,7 @@ const UserProfilePage = ({ params }) => {
         {!data?.favorites ? (
           <p className="text-gray-400">Loading favorites...</p>
         ) : (
-          <div className="flex items-center justify-center w-full py-8 overflow-x-auto gap-4">
+          <div className="flex items-center justify-start w-full py-8 overflow-x-auto gap-4">
             {data?.favorites?.map((fav) => (
               <motion.div
                 key={fav.id}
@@ -131,27 +132,7 @@ const UserProfilePage = ({ params }) => {
                 (date.seconds || 0) * 1000
               ).toLocaleDateString("en-US");
               return (
-                <motion.div
-                  key={index}
-                  onClick={() => {
-                    router.push(`/dashboard/UserOrder/${order.id}`);
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="active:scale-[.6] bg-gradient-to-br from-gray-800 to-gray-700 p-4 rounded-lg shadow-lg hover:shadow-cyan-500/50 transition-shadow duration-300"
-                >
-                  <h4 className="font-semibold text-cyan-300 line-clamp-1">
-                    Order ID: {order.id}
-                  </h4>
-                  <p className="text-gray-400">Name: {order.fullName}</p>
-                  <p className="text-gray-400">Total: ${order.totalAmount}</p>
-                  <p className="text-gray-400">City: {order.address.city}</p>
-                  <p className="text-gray-400">
-                    Street: {order.address.streetName}
-                  </p>
-                  <p className="text-gray-400">Phone: {order.phoneNumber}</p>
-                  <p className="text-gray-400">Date: {formattedDate}</p>
-                </motion.div>
+                <OrderCard date={formattedDate} order={order} key={index} />
               );
             })}
           </div>

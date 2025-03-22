@@ -16,33 +16,23 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import FilterItem from "./FilterItem";
-import { typeFilter } from "@/lib/action";
-import { on } from "events";
 import { useTranslations } from "use-intl";
+import useFilterProducts from "@/lib/store/filterProducts";
 
 const HeaderDilter = ({
-  selectedSortBy,
   length,
-  onFilter,
-  filter,
   onOpen,
-  filters,
-  selected,
   openfilter,
   closeFilter,
   onClear,
 }: {
-  selectedSortBy: (sort: string) => void;
   onClear: () => void;
   length: number;
   closeFilter?: () => void;
   onOpen: (type: string) => void;
-  onFilter: (filter: typeFilter) => void;
-  filters: typeFilter;
-  selected: string;
   openfilter: boolean;
-  filter: { [key: string]: boolean };
 }) => {
+  const { category, sortBy, setSortBy } = useFilterProducts();
   const [state, setstate] = useState("new");
   const t = useTranslations("products");
   return (
@@ -72,12 +62,8 @@ const HeaderDilter = ({
               <FilterItem
                 onOpen={onOpen}
                 closeFiltered={closeFilter}
-                key={selected}
-                filter={filter}
-                selected={selected}
-                filters={filters}
+                key={category}
                 type="header"
-                onFilter={onFilter}
               />
             </SheetDescription>
           </SheetHeader>
@@ -134,7 +120,8 @@ const HeaderDilter = ({
                 className="text-10 hover:bg-slate-100 w-full  rtl:justify-end ltr:justify-start flex items-center duration-300 transition-all"
                 onClick={() => {
                   setstate(item.label);
-                  selectedSortBy(item.label);
+                  setSortBy(item.label);
+                  // selectedSortBy(item.label);
                 }}
                 key={item.key}
               >

@@ -1,6 +1,5 @@
 "use client";
 import { SignIn, SignInButton, SignUp } from "@clerk/nextjs";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 export default function Page() {
   const path = usePathname();

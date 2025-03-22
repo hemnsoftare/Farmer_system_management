@@ -1,109 +1,5 @@
 "use client";
-// import React, { useEffect, useState } from "react";
-// import { BlogColProps, BlogProps } from "../../../../type";
-// import { blogs } from "@/util/data";
-// import Image from "next/image";
-// import { LiaCommentDots } from "react-icons/lia";
-// import { AiOutlineLike } from "react-icons/ai";
-// import { BiSolidLike } from "react-icons/bi";
-// import Comments from "@/components/blog/Comments";
-// import BlogRow from "@/components/blog/BlogRow";
-// import ReactPlayer from "react-player";
-// import Link from "next/link";
-// import { getBlog } from "@/lib/action/uploadimage";
-
-// const Page = ({ params }: { params: { id: string } }) => {
-//   const data: BlogColProps = blogs[1]; // Replace with your dynamic logic
-//   const [blog, setblog] = useState<BlogProps>();
-
-//   useEffect(() => {
-//     const getData = async () => {
-//       const data = await getBlog(params.id);
-//       setblog({ ...data });
-//     };
-//     getData();
-//   }, [params.id]);
-//   if (blog)
-//     return (
-//       <div className="flex py-9 px-3 flex-col justify-start items-start lg:flex-row gap-2 sm:gap-4 w-full">
-//         <main className="flex flex-col lg:w-[65%] w-full gap-3">
-//           {/* Breadcrumb */}
-//           <span className="text-12 mb-5 font-light">
-//             <Link href={"/"} className="sm:hover:text-blue-600">
-//               {" "}
-//               home{" "}
-//             </Link>
-//             &gt;
-//             <Link href={"/blog"} className="sm:hover:text-blue-600">
-//               {" "}
-//               blog
-//             </Link>{" "}
-//           </span>
-
-//           <div className="flex overflow-hidden w-full flex-col gap-3">
-//             {/* Title and Metadata */}
-//             <h2 className="sm:text-20 text-18 font-bold">{blog.title}</h2>
-//             <p className="text-neutral-500 text-12">
-//               By {data.creator} on {new Date(blog.date).toLocaleDateString()}
-//             </p>
-
-//             {/* Conditional Rendering for Video or Image */}
-//             {blog.type === "video" ? (
-//               <ReactPlayer
-//                 url={blog.video}
-//                 width="100%"
-//                 height="100%"
-//                 controls
-//                 className="absolute top-0 left-0"
-//               />
-//             ) : (
-//               <Image
-//                 src={blog.image}
-//                 alt="Blog Cover"
-//                 width={900}
-//                 height={400}
-//                 className="object-cover shadow-lg shadow-slate-300 w-screen min-h-[400px] bg-red-50 max-h-[400px] border rounded-xl  px-3 overflow-hidden  "
-//               />
-//             )}
-
-//             {/* Description */}
-//             <p className="sm:text-12 text-10 indent-2 text-neutral-600 w-full">
-//               {blog.description}
-//             </p>
-
-//             {/* Comment and Like Section */}
-//             {/* <div className="flex cursor-pointer justify-end gap-4 px-10">
-//             <div
-//               onClick={() => setShowComments(!showComments)}
-//               className="flex gap-2 hover:bg-blue-500 duration-300 transition-all px-2 rounded-md items-center"
-//             >
-//               <LiaCommentDots />
-//               <span className="text-14">12 Comments</span>
-//             </div>
-//             <div
-//               onClick={() => setIsLike(!isLike)}
-//               className="flex hover:bg-blue-500 duration-300 transition-all px-2 rounded-md gap-2 items-center"
-//             >
-//               {isLike ? <BiSolidLike color="blue" /> : <AiOutlineLike />}
-//               <span className="text-14">123 Likes</span>
-//             </div>
-//           </div> */}
-
-//             {/* Comments Section */}
-//             {/* {showComments && <Comments />} */}
-//           </div>
-//         </main>
-
-//         {/* Blog Rows */}
-//         <div className="flex flex-col gap-2 items-center lg:mt-28 mt-2 lg:w-[43%] justify-center md:w-full"></div>
-//       </div>
-//     );
-// };
-
-// export default Page;
-
-import React, { useEffect, useState } from "react";
-import { BlogProps } from "../../../../../lib/action";
+import React from "react";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 import Link from "next/link";
@@ -119,53 +15,28 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "@/app/[locale]/ClientProviders";
 const Page = ({ params }) => {
   const { toast } = useToast();
   const t = useTranslations("blog");
   const iduse: any = React.use(params);
   const id = iduse.id;
+  const { data, isLoading } = useQuery({
+    queryKey: ["blog[id]"],
+    queryFn: async ({ pageParam }) => {
+      const data = await getBlog(id);
+      const blogList = await getBlogs();
+      const getid = await getallsaveid(user.id);
+      return { blog: data, blogs: blogList, idSave: getid };
+    },
+  });
 
-  // const id = params.id;
-  const [blog, setBlog] = useState<BlogProps>();
-
-  const [blogs, setBlogs] = useState<BlogProps[]>([]);
-  const [idSave, setidSave] = useState([]);
   const { user } = useUser();
-  console.log(user);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        console.log("in get data");
-        const data = await getBlog(id);
-        const blogList = await getBlogs();
-        setBlog({ ...data });
-        setBlogs(blogList);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    if (id) getData();
-  }, [id]);
-  console.log(blog);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        console.log(user.id);
-
-        const getid = await getallsaveid(user.id);
-        setidSave(getid);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    getData();
-  }, [user]);
-  console.log(blog);
-
-  if (blog)
+  if (!isLoading)
     return (
-      <div className="flex flex-col lg:flex-row py-9 px-3 gap-4 w-full">
+      <div className="flex flex-col lg:flex-row py-9 px-3 md:px-12 gap-4 w-full">
         {/* Main Content Section */}
         <main className="flex flex-col w-full lg:w-[65%] gap-6">
           {/* Breadcrumb */}
@@ -197,7 +68,7 @@ const Page = ({ params }) => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              {blog.title}
+              {data.blog.title}
             </motion.h2>
             <motion.p
               className="text-neutral-500 text-sm"
@@ -205,11 +76,12 @@ const Page = ({ params }) => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
-              By {blog.user} on {new Date(blog.date).toLocaleDateString()}
+              By {data.blog.user} on{" "}
+              {new Date(data.blog.date).toLocaleDateString()}
             </motion.p>
 
             {/* Conditional Rendering for Video or Image */}
-            {blog.type === "video" ? (
+            {data.blog.type === "video" ? (
               <motion.div
                 className="w-full aspect-video"
                 initial={{ opacity: 0, scale: 0.9, y: 100 }}
@@ -217,7 +89,7 @@ const Page = ({ params }) => {
                 transition={{ duration: 0.8 }}
               >
                 <ReactPlayer
-                  url={blog.video}
+                  url={data.blog.video}
                   width="100%"
                   height="100%"
                   controls
@@ -231,11 +103,11 @@ const Page = ({ params }) => {
                 transition={{ duration: 0.8 }}
               >
                 <Image
-                  src={blog.image}
+                  src={data.blog.image}
                   alt="Blog Cover"
                   width={900}
                   height={400}
-                  className="object-cover shadow-lg rounded-xl w-full max-h-[400px]"
+                  className="object-cover shadow-lg rounded-xl w-full max-h-[450px]"
                 />
               </motion.div>
             )}
@@ -246,7 +118,7 @@ const Page = ({ params }) => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9 }}
             >
-              {blog.description} Lorem ipsum dolor sit, amet consectetur
+              {data.blog.description} Lorem ipsum dolor sit, amet consectetur
               adipisicing elit. Amet, facilis. Fugiat tenetur vero ullam quasi
               aliquid vel, in fugit aperiam autem quas! Optio vel, quam labore
               omnis consectetur reiciendis consequatur doloribus adipisci
@@ -264,23 +136,27 @@ const Page = ({ params }) => {
               transition={{ duration: 1 }}
             >
               <motion.button
-                disabled={idSave.includes(id) || !user}
+                disabled={data.idSave.includes(id) || !user}
                 onClick={async () => {
                   try {
                     await addFavoriteBlog({
                       item: {
                         blogId: id,
-                        description: blog.description,
+                        description: data.blog.description,
                         id: id,
-                        numberOffavorites: blog.numberOffavorites,
-                        title: blog.title,
-                        type: blog.type,
+                        numberOffavorites: data.blog.numberOffavorites,
+                        title: data.blog.title,
+                        type: data.blog.type,
                         userId: user.id || "",
-                        image: blog.image || "",
-                        video: blog.video || "",
+                        image: data.blog.image || "",
+                        video: data.blog.video || "",
                       },
                     });
-                    setidSave((pre) => [...pre, id]);
+                    queryClient.setQueryData(["blog[id]"], (pldData: any) => {
+                      if (!pldData) return pldData;
+                      return { ...pldData, idSave: [id, ...pldData.idSave] };
+                    });
+                    // setidSave((pre) => [...pre, id]);
                     toast({ title: "Blog saved successfully!" });
                   } catch (error) {
                     console.error("Failed to save blog:", error);
@@ -295,15 +171,24 @@ const Page = ({ params }) => {
               </motion.button>
 
               <motion.button
-                disabled={!idSave.includes(id) || !user}
+                disabled={!data.idSave.includes(id) || !user}
                 onClick={async () => {
                   try {
                     await deleteSave({
                       id,
-                      numberOffavorites: blog.numberOffavorites,
+                      numberOffavorites: data.blog.numberOffavorites,
                       userId: user.id,
                     });
-                    setidSave((pre) => pre.filter((item) => item !== id));
+                    queryClient.setQueryData(["blog[id]"], (pldData: any) => {
+                      if (!pldData) return pldData;
+                      return {
+                        ...pldData,
+                        idSave: pldData.idSave.filter(
+                          (Itemid) => Itemid !== id
+                        ),
+                      };
+                    });
+                    // setidSave((pre) => pre.filter((item) => item !== id));
                     toast({ title: "Blog removed successfully!" });
                   } catch (error) {
                     console.error("Failed to remove blog:", error);
@@ -365,7 +250,7 @@ const Page = ({ params }) => {
                 },
               }}
             >
-              {blogs
+              {data.blogs
                 .filter((item) => item.type === "image")
                 .map((item) => (
                   <motion.div

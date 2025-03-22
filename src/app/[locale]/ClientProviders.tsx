@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { kurdishSoraniLocalization, kuSorani } from "@/util/data";
 import { arSA, enUS, trTR } from "@clerk/localizations";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+export const queryClient = new QueryClient();
 
 export default function ClientProviders({
   children,
@@ -22,7 +23,6 @@ export default function ClientProviders({
 }) {
   const pathName = usePathname();
   const [locale, setLocale] = useState("en"); // Default to English
-  const queryClient = new QueryClient();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -33,7 +33,6 @@ export default function ClientProviders({
 
   // Select localization object based on detected language
   const localization = locale === "ku" ? kuSorani : undefined; // Kurdish (Sorani)
-  console.log(locale, localization);
   let l =
     locale === "en"
       ? enUS

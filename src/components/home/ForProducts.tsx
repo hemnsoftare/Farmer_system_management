@@ -19,7 +19,7 @@ const ForProducts = ({
   title?: "dashboard" | "viewAll";
 }) => {
   const [startProducts, setStartProducts] = useState(0);
-  const [pro, setpro] = useState(products);
+  const [pro, setpro] = useState<ProductFormInput[]>(products);
   const [limit, setLimit] = useState(5);
   const [favoriteId, setfavoriteId] = useState<string[]>();
   const { user } = useUser();
@@ -43,13 +43,11 @@ const ForProducts = ({
     };
     getdata();
   }, [user]);
-  const maxProducts = products ? products.length : newProdcuts.length;
-  console.log("favorete", favoriteId);
   if (load)
     return (
       <div className="flex mt-4 px-3 py-8  justify-center w-full items-center gap-4">
         <Loader />
-
+        height: ,
         <Loader />
         <div className="hidden sm:flex w-full items-center justify-center gap-2">
           <Loader />
@@ -60,8 +58,8 @@ const ForProducts = ({
     );
   return (
     <motion.div className=" mt-3 w-full md:flex-wrap  overflow-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-6 relative px- justify-center  items-center">
-      {products &&
-        products
+      {pro &&
+        pro
           .slice(
             !title ? startProducts : 0,
             !title ? startProducts + limit : products.length
@@ -84,14 +82,13 @@ const ForProducts = ({
                 title={title ? title : "single_product"}
                 itemDb={product}
                 addFavoriteid={() => {
-                  setpro((pre) =>
-                    pre.map((item) =>
+                  setpro((pre) => {
+                    return pre.filter((item) =>
                       item.id !== product.id
                         ? item
                         : { ...item, numberFavorite: item.numberFavorite + 1 }
-                    )
-                  );
-                  console.log(product.id);
+                    );
+                  });
                   setfavoriteId((pre) => [product.id, ...pre]);
                 }}
                 deleteFavoriteId={() => {
@@ -105,7 +102,7 @@ const ForProducts = ({
                   setfavoriteId(
                     (prev) =>
                       prev.includes(product.id)
-                        ? prev.filter((item) => item !== product.id) // Remove the product if it exists
+                        ? prev.filter((itemid) => itemid !== product.id) // Remove the product if it exists
                         : [...prev, product.id] // Add the product if it doesn't exist
                   );
                 }}

@@ -12,12 +12,12 @@ const CardFavorite = ({
   favoriteId,
   addFavoriteid,
 }: {
-  click: () => void;
-  userId: string;
+  click?: () => void;
+  userId?: string;
   item: favorite;
-  deleteFavoriteId: () => void;
-  addFavoriteid: () => void;
-  favoriteId: string[];
+  deleteFavoriteId?: () => void;
+  addFavoriteid?: () => void;
+  favoriteId?: string[];
 }) => {
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent click event from propagating to the <Link>
@@ -26,7 +26,7 @@ const CardFavorite = ({
   return (
     <Link
       href={`/products/${item.categroy}/${item.name}`}
-      className="flex flex-col relative gap-3 w-full dark:shadow-secondary sm:max-w-[250px] sm:min-w-[250px] rounded-sm sm:rounded-lg justify-center items-center shadow-md shadow-secondary-100 p-2"
+      className="flex flex-col relative gap-3 w-full dark:shadow-secondary  rounded-sm sm:rounded-lg justify-center items-center shadow-md shadow-blue-200 p-2"
     >
       {/* Item Image */}
       {userId && (

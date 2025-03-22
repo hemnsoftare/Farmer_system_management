@@ -12,7 +12,6 @@ import LoadingProducts from "@/components/products/loadingProducts";
 import { useTranslations } from "next-intl";
 const SingleProduct = ({ params }) => {
   const param: any = use(params);
-  console.log(params);
   const [product, setProduct] = useState<ProductFormInput>();
   const [load, setload] = useState(false);
   const [similarProducts, setSimilarProducts] = useState<ProductFormInput[]>(
@@ -27,7 +26,6 @@ const SingleProduct = ({ params }) => {
       const productId = param.productsId;
       const refDoc = await getDoc(doc(db, "Products", productId));
       setProduct(refDoc.data() as ProductFormInput);
-      console.log(refDoc.data());
       const productsByCategory = await getproductByCategory(param.catagory);
       setSimilarProducts(productsByCategory);
       setload(false);

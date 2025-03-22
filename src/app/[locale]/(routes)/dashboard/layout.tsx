@@ -18,9 +18,7 @@ const Layout = ({
   const [showtabs, setshowtabs] = useState(false);
   const [showSlider, setShowSlider] = useState(true); // State for sidebar visibility
 
-  useEffect(() => {
-    console.log("Layout initialized");
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   // Functions to handle sidebar visibility
   const handleShowSlider = () => setShowSlider(true);

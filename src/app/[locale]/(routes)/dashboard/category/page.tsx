@@ -60,7 +60,6 @@ const ModalCategory = () => {
   });
 
   const setDateFirebase = async () => {
-    console.log("submit add");
     seterror({ name: "", brands: "", colors: "", image: "" });
 
     const validate = validation.safeParse({
@@ -83,7 +82,6 @@ const ModalCategory = () => {
       image: categoryImage,
     })
       .then(() => {
-        console.log("save data");
         window.location.href = "/dashboard/Products";
       })
       .catch((error) =>
@@ -101,15 +99,12 @@ const ModalCategory = () => {
       setbrand("");
     } else if (type === "color" && value) {
       const colorExists = colors.some((item) => item.color === value);
-      console.log(colorExists);
       if (!colorExists) {
         const colorName = availableColors.find(
           (item) => item.color === value
         )?.name;
-        console.log(colorName);
         setColors((prev) => [...prev, { name: colorName || "", color: value }]);
       } else {
-        console.log("delete");
         setColors((prev) => prev.filter((item) => item.color !== value));
       }
     }
@@ -149,7 +144,6 @@ const ModalCategory = () => {
     };
     getData();
   }, [db]);
-  console.log(brands);
   return (
     <div className="p-6 md:p-10  dark:bg-gray-900 min-h-screen rounded-lg shadow-md">
       <h1 className="font-bold text-2xl md:text-3xl text-center text-gray-800 dark:text-white mb-6">

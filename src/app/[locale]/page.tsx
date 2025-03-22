@@ -7,55 +7,40 @@ import Hero from "@/components/home/Hero";
 import Reklam from "@/components/home/Reklam";
 import Sales from "@/components/home/Sales";
 import Servies from "@/components/home/Servies";
-import { app } from "@/config/firebaseConfig";
 import { lang, setUser } from "@/lib/action/uploadimage";
-import { ProductFormInput } from "@/lib/action";
 import { useUser } from "@clerk/nextjs";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  orderBy,
-  query,
-} from "firebase/firestore";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import SearchComponent from "@/components/home/Search";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
+import { getProductsBYDiscountAndCategoryAndSale } from "@/lib/action/dashboard";
 export default function Home() {
-  const [productNew, setproductNew] = useState<ProductFormInput[]>([]);
-  const [productSale, setproductSale] = useState<ProductFormInput[]>([]);
-  const [loadNew, setloadNew] = useState(true);
-  const [loadBestSale, setloadBestSale] = useState(true);
+  const { data, isLoading } = useQuery({
+    queryKey: ["home"],
+    queryFn: async () => {
+      const newpro = await getProductsBYDiscountAndCategoryAndSale({
+        category: "",
+        col: "date",
+      });
+      const salepro = await getProductsBYDiscountAndCategoryAndSale({
+        category: "",
+        col: "numberSale",
+      });
+
+      return {
+        productNew: newpro,
+        productSale: salepro,
+      };
+    },
+  });
+
   const { user } = useUser();
   const t = useTranslations("newProduct");
 
-  const db = getFirestore(app);
-  useEffect(() => {
-    const getdata = async (col: string) => {
-      const q = await query(collection(db, "Products"), orderBy(col, "desc"));
-      const pro: ProductFormInput[] = [];
-      const qsanpshot = await getDocs(q);
-      qsanpshot.forEach((item) => {
-        if (col === "date") {
-          pro.push({ ...(item.data() as ProductFormInput), id: item.id });
-          setloadNew(false);
-        } else {
-          pro.push({ ...(item.data() as ProductFormInput), id: item.id });
-          setloadBestSale(false);
-        }
-        if (col === "date") {
-          setproductNew(pro);
-        } else {
-          setproductSale(pro);
-        }
-      });
-    };
-    getdata("numberSale");
-    getdata("date");
-  }, [db]);
   useEffect(() => {
     if (user) {
       setUser({
@@ -63,19 +48,19 @@ export default function Home() {
         firstName: user.firstName || "",
         lastName: user.lastName || "",
         fullName: user.fullName || "",
+        image: user?.imageUrl || "",
         username: user.username || "",
         emailAddresses: user.emailAddresses || [],
         primaryEmailAddressId: user.primaryEmailAddressId || "",
       });
     }
   }, [user]);
-  // const { inboxNotifications } = useInboxNotifications();
-  // console.log(inboxNotifications);
   const lan = lang().startsWith("ar") || lang().startsWith("ku");
   return (
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
       <SearchComponent />
-      <Hero /> <Catagory /> <Sales />
+      <Hero /> <Catagory />
+      <Sales />
       <motion.div className="flex flex-col px-3 dark:text-white w-full items-center justify-center">
         <div
           id="newProducts"
@@ -93,7 +78,9 @@ export default function Home() {
           </Link>
         </div>
 
-        <ForProducts load={loadNew} products={productNew} />
+        {!isLoading && (
+          <ForProducts load={isLoading} products={data?.productNew} />
+        )}
       </motion.div>
       <Reklam />
       <div className="flex flex-col px-3 w-full  items-center justify-center">
@@ -110,7 +97,9 @@ export default function Home() {
           </Link>
         </div>
 
-        <ForProducts load={loadBestSale} products={productSale} />
+        {!isLoading && (
+          <ForProducts load={isLoading} products={data?.productSale} />
+        )}
       </div>
       <Brand />
       <div className="w-full overflow-hidden flex items-center justify-center px-3">

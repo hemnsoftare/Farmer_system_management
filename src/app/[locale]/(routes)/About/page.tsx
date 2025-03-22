@@ -1,37 +1,29 @@
 "use client";
 import CardTeam from "@/components/about/CardTeam";
 import { getAboutUs } from "@/lib/action/uploadimage";
-import { teamProps } from "@/lib/action";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { getAllTeam } from "@/lib/action/dashboard";
+import { useQuery } from "@tanstack/react-query";
 const Page = () => {
   const t = useTranslations("about");
-  const [about, setabout] = useState({
-    description: "",
-    imageUrl: "",
-    descriptions: [
-      {
-        title: "",
-        description: "",
-      },
-    ],
+  const { data, isLoading } = useQuery({
+    queryKey: ["About"],
+    queryFn: async () => {
+      const data = await getAboutUs();
+      const datateam = await getAllTeam();
+      return { about: data, team: datateam };
+    },
   });
-  const [team, setteam] = useState<teamProps[]>([]);
-
-  useEffect(() => {
-    getdata();
-  }, []);
-  const getdata = async () => {
-    const data = await getAboutUs();
-    const datateam = await getAllTeam();
-    setteam(datateam);
-    setabout(data as any);
-  };
-
+  if (isLoading)
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   return (
     <div className="flex w-full  sm:px-40 flex-col py-8 gap-4 px-2 sm:gap-4 ">
       <h2>
@@ -45,7 +37,7 @@ const Page = () => {
         </p>{" "}
       </h2>
       <Image
-        src={about.imageUrl}
+        src={data.about.imageUrl}
         alt="about image "
         width={600}
         height={400}
@@ -57,10 +49,10 @@ const Page = () => {
         transition={{ duration: 0.9, type: "spring" }}
         className="text-neutral-400 dark:text-neutral-600 px-3  text-12 sm:text-16 line-clamp-0 indent-2 -mt-2 "
       >
-        {about.description}
+        {data.about.description}
       </motion.p>
       <div className="">
-        {about.descriptions.map((item, index) => (
+        {data.about.descriptions.map((item, index) => (
           <div key={item.title} className="flex flex-col gap-2">
             <motion.h2
               initial={{ x: index % 2 == 0 ? 80 : -80, opacity: 0 }}
@@ -87,7 +79,7 @@ const Page = () => {
         transition={{ duration: 0.9, type: "spring" }}
         className="w-full h-full flex md:flex-row flex-wrap flex-col gap-4"
       >
-        {team.map((item) => (
+        {data.team.map((item) => (
           <CardTeam
             key={item.description}
             description={item.description}

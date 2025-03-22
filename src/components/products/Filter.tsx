@@ -1,20 +1,20 @@
 import React from "react";
 import { typeFilter } from "@/lib/action";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import useFilterProducts from "@/lib/store/filterProducts";
 
 const Filtered = ({
   type,
-  onDelete,
   item,
 }: {
   type: "color" | "brand" | "discount" | "price";
   item: any;
-  onDelete?: (type: string, item: string) => void;
 }) => {
+  const { updateBrand, updateColor, updateDiscount, updatePrice } =
+    useFilterProducts();
   return (
     <>
       {type !== "price" &&
-        onDelete &&
         Array.isArray(item) &&
         item.length > 0 &&
         item.map(
@@ -27,7 +27,10 @@ const Filtered = ({
                 <span> {item} </span>
                 <IoMdCloseCircleOutline
                   className="w-4 h-4"
-                  onClick={() => onDelete(type, item)}
+                  onClick={() => {
+                    // updatePrice()
+                    type === "brand" ? updateBrand(item) : updateColor(item);
+                  }}
                 />
               </div>
             )
@@ -41,7 +44,7 @@ const Filtered = ({
       )}
       {type === "discount" && item === true ? (
         <div
-          onClick={() => onDelete && onDelete("discount", "d")}
+          onClick={() => updateDiscount()}
           className="flex items-center border-[2px] font-semibold px-2 py-1 rounded-lg pr-4 gap-2 border-neutral-400 w-fit sm:w-[120px] justify-between"
         >
           <span> {item && "Discounted"}</span>

@@ -1,6 +1,5 @@
 "use client"; // Ensure it runs on the client side
 
-const libraries: "places"[] = ["places"];
 import React, { useEffect, useState } from "react";
 import CartItem from "@/components/header/CartItem";
 

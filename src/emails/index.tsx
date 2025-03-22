@@ -25,7 +25,6 @@ interface YelpRecentLoginEmailProps {
   order: OrderType;
 }
 const Email = ({ order }: YelpRecentLoginEmailProps) => {
-  console.log(" in Email");
   return (
     <Html>
       <Head />

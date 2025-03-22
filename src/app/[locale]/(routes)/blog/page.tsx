@@ -3,28 +3,21 @@ import BlogVideo from "@/components/blog/BlogVideo";
 import BlogCol from "@/components/blog/blogCol";
 import BlogRow from "@/components/blog/BlogRow";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { BlogProps } from "@/lib/action";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { app } from "@/config/firebaseConfig";
+import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { getAllBlogs } from "@/lib/action/dashboard";
+import { useQuery } from "@tanstack/react-query";
 
 const BlogPage = () => {
-  const [blog, setblog] = useState<BlogProps[]>([]);
-  const [load, setload] = useState(false);
-  const db = getFirestore(app);
-  const t = useTranslations("blog");
-  useEffect(() => {
-    const getBlogs = async () => {
-      setload(true);
+  const { data, isLoading } = useQuery({
+    queryKey: ["blog"],
+    queryFn: async () => {
       const data = await getAllBlogs();
-      setblog(data);
-      setload(false);
-    };
-    getBlogs();
-  }, [db]);
+      return { blog: data };
+    },
+  });
+  const t = useTranslations("blog");
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 50 },
@@ -65,7 +58,7 @@ const BlogPage = () => {
             animate="visible"
             variants={fadeInUp}
           >
-            {blog
+            {data?.blog
               .filter((item) => item.type === "image")
               .slice(0, 6)
               .map((blog, index) => (
@@ -93,10 +86,10 @@ const BlogPage = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-lg font-semibold">{t("recent_posts")}</h2>
-            {!load && (
+            {!isLoading && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {blog.length > 0 &&
-                  blog
+                {data.blog.length > 0 &&
+                  data.blog
                     .filter((item) => item.type === "image")
                     .map((blog) => (
                       <motion.div
@@ -126,7 +119,7 @@ const BlogPage = () => {
         >
           <h2 className="text-lg font-semibold">{t("videos")}</h2>
           <div className="w-full flex flex-col gap-4">
-            {blog
+            {data?.blog
               .filter((item) => item.type === "video")
               .map((blog) => (
                 <motion.div

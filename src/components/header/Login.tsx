@@ -89,7 +89,6 @@ const Login = ({ type }: { type: "login" | "signUp" }) => {
             {!isSee ? (
               <FaRegEyeSlash
                 onClick={() => {
-                  console.log("click");
                   setisSee(true);
                 }}
                 color="#B4B4B4"
@@ -98,7 +97,6 @@ const Login = ({ type }: { type: "login" | "signUp" }) => {
             ) : (
               <IoEyeOutline
                 onClick={() => {
-                  console.log("click");
                   setisSee(false);
                 }}
                 color="#B4B4B4"

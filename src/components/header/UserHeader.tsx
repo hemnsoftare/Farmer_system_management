@@ -16,6 +16,7 @@ import { CiLogout } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useTranslations } from "next-intl";
 import { lang } from "@/lib/action/uploadimage";
+import { RiProfileFill } from "react-icons/ri";
 
 const UserHeader = () => {
   const { user } = useUser(); // Access the current user data
@@ -45,6 +46,17 @@ const UserHeader = () => {
             </span>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuItem
+          className={`flex  sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3`}
+        >
+          <Link
+            href={"/profile"}
+            className={`flex ${lang() === "ku" || lang() === "ar" ? "flex-row-reverse" : "flex-row"} w-full gap-2 justify-start  items-center`}
+          >
+            <RiProfileFill color="#f45e0c" className="size-[23px]" />
+            <span>{t("profile")}</span>
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem
           className={`flex  sm:dark:hover:bg-orangeMode-foreground dark:border-neutral-700 items-center gap-2 border-b-2 border-neutral-100 sm:hover:bg-neutral-100 duration-300 transition-all hover:scale-[1.08] px-3`}
         >

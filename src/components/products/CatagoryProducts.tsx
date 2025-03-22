@@ -3,20 +3,12 @@ import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { getFireBase } from "@/lib/action/uploadimage";
 import { catagoryProps } from "@/lib/action";
-import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
+import useFilterProducts from "@/lib/store/filterProducts";
 
-const CatagoryProducts = ({
-  catagory,
-  handleSelected,
-}: {
-  title?: string;
-  handleSelected?: (name: string) => void;
-  catagory?: string;
-}) => {
-  const [selected, setSelected] = useState(
-    (catagory && catagory.replace("%20", " ")) || ""
-  );
+const CatagoryProducts = ({}: {}) => {
+  const { setCategory, category: selected, resetAll } = useFilterProducts();
+
   const [category, setcategory] = useState<catagoryProps[]>([]);
   const [loadCategory, setloadCategory] = useState(true);
 
@@ -30,7 +22,7 @@ const CatagoryProducts = ({
       // console.log(selected, cate);
     };
     getdata();
-  }, [catagory]);
+  }, [selected]);
   const fadeInUp = {
     initial: { opacity: 0, translateY: 50 },
     whileInView: { opacity: 1, translateY: 0 },
@@ -56,8 +48,9 @@ const CatagoryProducts = ({
           whileTap={{ scale: 0.9 }} // Ensure active scaling works
           key={item.name}
           onClick={() => {
-            handleSelected && handleSelected(item.name);
-            setSelected(item.name);
+            resetAll();
+
+            setCategory(item.name);
           }}
           className={`${
             item.name.trim() === selected.trim()

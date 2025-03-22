@@ -10,7 +10,7 @@ import HeaderproductInfo from "./HeaderproductInfo";
 import { useUser } from "@clerk/nextjs";
 import { ProductFormInput } from "@/lib/action";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "@/lib/action/Order";
+import { addToCart } from "@/lib/store/Order";
 import { redirect, useRouter } from "next/navigation";
 import { ItemCartProps } from "@/lib/action";
 import { Toast } from "../ui/toast";

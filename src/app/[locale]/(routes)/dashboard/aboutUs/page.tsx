@@ -78,7 +78,6 @@ const Page = () => {
       description: descriptionImage.current.value,
     });
     if (!validate.success) {
-      console.log(validate.error.errors);
       validate.error.errors.map((err) => {
         seterror((prev) => ({ ...prev, [err.path[0]]: err.message }));
       });

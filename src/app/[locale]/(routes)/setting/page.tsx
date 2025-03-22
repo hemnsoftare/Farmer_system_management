@@ -18,20 +18,9 @@ import {
   MdOutlineManageAccounts,
   MdDelete,
 } from "react-icons/md";
-import { AiOutlineHome } from "react-icons/ai";
-import { BiCategory } from "react-icons/bi";
 import { useToast } from "@/hooks/use-toast";
-import {
-  addFavoriteBlog,
-  deleteSave,
-  getSaveBlog,
-  getallsaveid,
-} from "@/lib/action/fovarit";
-import { blogFavriteProps } from "@/lib/action";
-import SaveBlogCard from "@/components/blog/SaveBlogCard";
-import { Switch } from "@/components/ui/switch";
+
 import { FaBlog } from "react-icons/fa";
-import { OrganizationMembership } from "@clerk/nextjs/dist/types/server";
 import { clear_data_user, search_setting } from "../../../../lib/settingFn";
 import AcceptDelete from "./_components/AcceptDelete";
 import { IconType } from "react-icons";
@@ -41,6 +30,7 @@ import { app } from "@/config/firebaseConfig";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { Switch } from "@/components/ui/switch";
 
 const SettingsPage = () => {
   const { user, isSignedIn } = useUser();
@@ -84,7 +74,6 @@ const SettingsPage = () => {
 
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
-    console.log(`Theme set to ${newTheme}`);
   };
 
   const handleSearchOptionChange = (
@@ -136,14 +125,12 @@ const SettingsPage = () => {
       } catch (error) {
         console.error("Error fetching search settings:", error);
       }
-      console.log(searchBy);
       setSearchOption(searchBy);
       setLoading(false);
     };
 
     getData();
   }, [user, db]);
-  console.log(searchOption.length);
   const changelanguage = (lang: string) => {
     // Get the current URL
     const currentPath = window.location.pathname; // Use the browser's `pathname`

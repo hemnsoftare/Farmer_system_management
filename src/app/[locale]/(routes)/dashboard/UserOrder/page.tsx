@@ -27,7 +27,6 @@ const Page = () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getAllOrder();
-      console.log(data[0].orderDate);
       setorders(data as OrderType[]);
     };
     getData();
@@ -39,7 +38,6 @@ const Page = () => {
       (viewOrder.orderDate?.seconds || 0) * 1000
     ).toLocaleDateString("en-US");
   }
-  console.log(orders);
   return (
     <div className="flex flex-col lg:flex-row overflow-hidden justify-start w-full gap-2 px-2 items-start">
       {/* Order History Section */}

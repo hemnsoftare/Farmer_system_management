@@ -8,7 +8,6 @@ export const loadCartFromLocalStorage = (): ItemCartProps[] => {
   try {
     data = localStorage.getItem("cart");
   } catch (error) {}
-  console.log("in get local strogae");
   return data ? JSON.parse(data) : [];
 };
 

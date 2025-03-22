@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { faqProps } from "../../../../lib/action";
+import React, { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -13,20 +12,18 @@ import { getFAQ } from "@/lib/action/uploadimage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 
 const Page = () => {
-  const [load, setLoad] = useState(false);
   const [IndexItem, setIndexItem] = useState<number>(0);
-  const [faq, setFaq] = useState<faqProps[]>([]);
+  const { data, isLoading } = useQuery({
+    queryKey: ["ConractUs"],
+    queryFn: async () => {
+      const data = await getFAQ();
+      return { faq: data };
+    },
+  });
   const t = useTranslations("faq");
-  useEffect(() => {
-    const getData = async () => {
-      setLoad(true);
-      const data = await getFAQ().finally(() => setLoad(false));
-      setFaq(data);
-    };
-    getData();
-  }, []);
 
   // Framer Motion Variants
   const fadeIn = {
@@ -90,7 +87,7 @@ const Page = () => {
           <h2 className="text-lg font-semibold text-gray-800">
             {t("table_of_contents")}
           </h2>
-          {load ? (
+          {isLoading ? (
             <div className="flex w-full flex-col gap-2">
               <Skeleton className="h-6 w-3/4 rounded-md" />
               <Skeleton className="h-6 w-2/3 rounded-md" />
@@ -104,7 +101,7 @@ const Page = () => {
               animate="visible"
               variants={listVariant}
             >
-              {faq.map((item, index) => (
+              {data.faq.map((item, index) => (
                 <motion.button
                   key={item.category}
                   onClick={() => setIndexItem(index)}
@@ -135,13 +132,13 @@ const Page = () => {
           className="flex-1 bg-white p-6 rounded-lg shadow-md"
           variants={fadeIn}
         >
-          {faq.length > 0 && !load ? (
+          {data.faq.length > 0 && !isLoading ? (
             <>
               <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                {faq[IndexItem]?.category}
+                {data.faq[IndexItem]?.category}
               </h2>
               <Accordion type="single" collapsible className="w-full">
-                {faq[IndexItem]?.questionAndAnswer.map((Item, index) => (
+                {data.faq[IndexItem]?.questionAndAnswer.map((Item, index) => (
                   <AccordionItem
                     className="border-b last:border-none"
                     key={index}

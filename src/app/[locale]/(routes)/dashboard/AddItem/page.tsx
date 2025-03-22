@@ -164,7 +164,6 @@ const Page = () => {
       const validatedData = validation.safeParse(sanitizedData);
       if (!validatedData.success) {
         validatedData.error.errors.map((item) => {
-          console.log(item);
           seterror((prev) => ({
             ...prev,
             [item.path[0]]: item.message,
@@ -174,12 +173,10 @@ const Page = () => {
       }
       if (haveId) {
         await updateDoc(doc(db, "Products", haveId), { ...sanitizedData });
-        console.log("Data updated successfully");
         toast({ title: "update the product successfully" });
         window.location.href = "/dashboard/Products";
       } else {
         await addDoc(collection(db, "Products"), data);
-        console.log("Data added successfully");
       }
       window.location.href = "/dashboard/Products";
     } catch (error) {
@@ -204,7 +201,6 @@ const Page = () => {
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log("in handleSmallImageChange");
     const updatedImages = [...smallImageFile];
     const file = e.target.files?.[0];
     if (file) {
@@ -266,7 +262,6 @@ const Page = () => {
     const colorExists = prevSelected.filter(
       (item) => item.color === color.color
     ).length;
-    console.log(colorExists);
     if (colorExists) {
       // If the color exists, remove it from the selected array
       return prevSelected.filter((item) => item.color !== color.color);
@@ -292,7 +287,6 @@ const Page = () => {
     const getdata = async () => {
       const data = await getDoc(doc(db, "Products", haveId));
       // setvalue(data.data() as ProductFormInput);
-      console.log(data.data());
       setselectedCategoryy(data.data().category);
       setname(data.data().name);
       setprice(data.data().price);
@@ -603,5 +597,4 @@ const Page = () => {
     </div>
   );
 };
-
 export default Page;

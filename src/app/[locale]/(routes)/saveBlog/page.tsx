@@ -7,37 +7,26 @@ import {
   getallsaveid,
   getSaveBlog,
 } from "@/lib/action/fovarit";
-import { blogFavriteProps } from "@/lib/action";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "../../ClientProviders";
 
 const Page = () => {
-  const [saveblog, setsaveblog] = useState<blogFavriteProps[]>([]);
-  const [idBlogSave, setidBlogSave] = useState<string[]>([]);
-  const { user, isLoaded } = useUser();
   const { toast } = useToast();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { user } = useUser();
+  const { data, isLoading } = useQuery({
+    queryKey: ["saveBlog"],
+    queryFn: async () => {
+      const data = await getSaveBlog(user.id);
+      const dataId = await getallsaveid(user.id);
+      return { saveblog: data, idBlogSave: dataId };
+    },
+  });
 
-  useEffect(() => {
-    const getdata = async () => {
-      setLoading(true);
-      try {
-        const data = await getSaveBlog(user.id);
-        const dataId = await getallsaveid(user.id);
-        setidBlogSave(dataId);
-        setsaveblog(data as blogFavriteProps[]);
-      } catch (error) {
-        toast({ title: "Error fetching saved blogs", variant: "destructive" });
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (isLoaded) getdata();
-  }, [isLoaded, user, toast]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="w-full px-5 flex flex-col my-8 items-center justify-center">
         <h1 className="font-semibold text-28">Loading saved blogs...</h1>
@@ -45,7 +34,7 @@ const Page = () => {
     );
   }
 
-  if (saveblog.length === 0) {
+  if (data.saveblog.length === 0) {
     return (
       <div className="w-full px-5 flex flex-col my-8 items-center justify-center">
         <h1 className="font-semibold text-28">No saved blogs found</h1>
@@ -69,10 +58,10 @@ const Page = () => {
 
       {/* Animate the grid of cards */}
       <motion.div
-        className="w-full grid md:grid-cols-2 my-5 lg:grid-cols-3 gap-3 items-center justify-center"
+        className="w-full grid md:grid-cols-2 my-5 lg:grid-cols-4 xl:grid-cols-4 gap-3 items-center justify-center"
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        {saveblog.map((item) => (
+        {data.saveblog.map((item) => (
           <motion.div
             key={item.id}
             whileInView={{ opacity: 1, y: 0, x: 0 }}
@@ -80,11 +69,14 @@ const Page = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <SaveBlogCard
-              disabledBtn={idBlogSave.includes(item.id)}
+              disabledBtn={data.idBlogSave.includes(item.id)}
               blog={item}
               onSave={() => {
                 addFavoriteBlog({ item });
-                setidBlogSave((pre) => [...pre, item.id]);
+                queryClient.setQueryData(["saveBlog"], (old: any) => {
+                  return {};
+                });
+                // setidBlogSave((pre) => [...pre, item.id]);
                 toast({ title: "Saved the blog" });
               }}
               onUnsave={() => {
@@ -93,7 +85,7 @@ const Page = () => {
                   numberOffavorites: item.numberOffavorites,
                   userId: user.id,
                 });
-                setidBlogSave((pre) => pre.filter((id) => id !== item.id));
+                // setidBlogSave((pre) => pre.filter((id) => id !== item.id));
                 toast({ title: "Un-saved the blog" });
               }}
             />

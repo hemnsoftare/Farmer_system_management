@@ -8,9 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { blogFavriteProps, BlogProps, favorite } from "@/lib/action";
-import { app } from "@/config/firebaseConfig";
-
-const db = getFirestore(app);
+import { app, db } from "@/config/firebaseConfig";
 
 export const addfavorite = async ({
   id,
@@ -30,7 +28,7 @@ export const addfavorite = async ({
     if (!querySnapshot.empty) {
       await updateDoc(doc(db, "Products", item.id), {
         numberFavorite: nmf,
-      }).then((res) => console.log("update in number sale"));
+      }).then((res) => {});
 
       await setDoc(doc(db, "favorite", id, "items", item.id), {
         ...item,
@@ -39,7 +37,7 @@ export const addfavorite = async ({
     } else {
       await updateDoc(doc(db, "Products", item.id), {
         numberFavorite: nmf,
-      }).then((res) => console.log("update in number sale"));
+      }).then((res) => {});
       await setDoc(doc(db, "favorite", id, "items", item.id), {
         ...item,
         numberFavorite: nmf,
@@ -76,13 +74,11 @@ export const deleteFavorite = async (
   id: string
 ) => {
   try {
-    await deleteDoc(doc(db, "favorite", userId, "items", id)).then((res) =>
-      console.log("delete the products in favorite")
-    );
+    await deleteDoc(doc(db, "favorite", userId, "items", id)).then((res) => {});
     const nmf = numberFavorite - 1;
     await updateDoc(doc(db, "Products", id), {
       numberFavorite: nmf,
-    }).then((res) => console.log("update in number favorite"));
+    }).then((res) => {});
   } catch (error) {
     console.error("Error deleting favorite item:", error);
   }
@@ -117,7 +113,6 @@ export const addFavoriteBlog = async ({ item }: { item: blogFavriteProps }) => {
       ...item,
       numberOffavorites: updatedFavorites,
     });
-    console.log("Saved item in saveBlog subcollection");
   } catch (error) {
     console.error("Error in addFavoriteBlog function:", error);
   }
@@ -143,13 +138,11 @@ export const deleteSave = async ({
   id: string;
 }) => {
   try {
-    await deleteDoc(doc(db, "saveBlog", userId, "items", id)).then((res) =>
-      console.log("delete the products in favorite")
-    );
+    await deleteDoc(doc(db, "saveBlog", userId, "items", id)).then((res) => {});
     const nmf = numberOffavorites - 1;
     await updateDoc(doc(db, "blos", id), {
       numberOffavorites: nmf,
-    }).then((res) => console.log("update in number favorite"));
+    }).then((res) => {});
   } catch (error) {
     console.error("Error deleting favorite item:", error);
   }

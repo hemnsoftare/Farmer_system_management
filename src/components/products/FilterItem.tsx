@@ -6,105 +6,64 @@ import { catagoryProps, typeFilter } from "@/lib/action";
 import { Slider } from "@nextui-org/react";
 import {
   collection,
+  doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
   where,
 } from "firebase/firestore";
-import { app } from "../../config/firebaseConfig";
+import { app, db } from "../../config/firebaseConfig";
 import FilterSection from "./FilterSection ";
 import { cn } from "@/lib/utils";
 import { on } from "events";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import useFilterProducts from "@/lib/store/filterProducts";
+import { useQuery } from "@tanstack/react-query";
 
 const FilterItem = ({
-  onFilter,
-  filters,
-  selected,
-  filter,
-  onClear,
   onOpen,
   type,
   closeFiltered,
 }: {
-  onFilter: (filter: typeFilter) => void;
-  filters: typeFilter;
   closeFiltered?: () => void;
-  onClear?: () => void;
-  selected: string;
-  filter: { [key: string]: boolean };
   type?: "page" | "header";
   onOpen: (type: string) => void;
 }) => {
-  const db = getFirestore(app);
-  // const [filter, setFilter] = useState<{ [key: string]: boolean }>({});
-  const [price, setPrice] = useState<number[]>([1, 100000]); // Default price range
-  const [color, setColor] = useState<string[]>([]);
-  const [brand, setBrand] = useState<string[]>([]);
-  const [discount, setDiscount] = useState<boolean>(false);
-  const [category, setcategory] = useState<catagoryProps | undefined>();
+  const {
+    updateDiscount,
+    updatePrice,
+    filter,
+    category: selected,
+    setAllFilter,
+  } = useFilterProducts();
   const t = useTranslations("products");
+  const { data: category } = useQuery({
+    queryKey: ["category", selected],
+    queryFn: async () =>
+      (await getDoc(doc(db, "category", selected))).data() as catagoryProps,
+  });
 
-  useEffect(() => {
-    if (filters) {
-      setColor(filters.color || []);
-      setBrand(filters.brand || []);
-      setDiscount(filters.discount);
-      setPrice(filters.price || [1, 100000]);
-    }
-  }, [filters]);
+  // const handleCheckboxChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   itemName: string
+  // ) => {
+  //   const { value, checked } = e.target;
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        if (!selected) return;
-        const q = query(
-          collection(db, "category"),
-          where("name", "==", selected.trim())
-        );
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) return;
-        querySnapshot.forEach((doc) => {
-          setcategory(doc.data() as catagoryProps);
-        });
-      } catch (error) {
-        console.error("Error fetching category data:", error);
-      }
-    };
-    getData();
-  }, [selected, db]);
-
-  useEffect(() => {
-    if (type === "page") {
-      const filter: typeFilter = { brand, color, discount, price };
-      onFilter(filter); // Trigger the filter update
-    }
-  }, [brand, color, discount, price, onFilter, type]); // Avoid unnecessary rerender by only triggering when relevant state changes
-
-  const handleCheckboxChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    itemName: string
-  ) => {
-    const { value, checked } = e.target;
-
-    if (itemName === "color") {
-      setColor((prev) =>
-        checked ? [...prev, value] : prev.filter((c) => c !== value)
-      );
-    } else if (itemName === "brand") {
-      setBrand((prev) =>
-        checked ? [...prev, value] : prev.filter((b) => b !== value)
-      );
-    }
-  };
+  //   if (itemName === "color") {
+  //     updateColor(value);
+  //   } else if (itemName === "brand") {
+  //     updateBrand(value);
+  //   }
+  // };
 
   const handleSliderChange = (value: number | number[]) => {
     const newValue: [number, number] =
       Array.isArray(value) && value.length === 2
         ? (value as [number, number])
         : [1, 100000];
-    setPrice(newValue);
+    updatePrice(newValue);
   };
 
   const handleOpen = (type: string) => {
@@ -121,21 +80,21 @@ const FilterItem = ({
         title={t("brand")}
         items={category?.brands || []}
         filterKey="brand"
-        selectedItems={brand}
-        handleCheckboxChange={handleCheckboxChange}
+        selectedItems={filter.brand}
       />
       <FilterSection
         title={t("color")}
         items={category?.colors || []}
         filterKey="color"
-        selectedItems={color}
-        handleCheckboxChange={handleCheckboxChange}
+        selectedItems={filter.color}
       />
       {/* Discount */}
       <div className="flex items-center border-b-2 py-2 w-full justify-between px-4">
         <label htmlFor="discount">{t("discount")}</label>
         <Switch
-          onClick={() => setDiscount((prev) => !prev)}
+          onClick={() => {
+            updateDiscount();
+          }}
           className=" "
           id="discount"
         />
@@ -161,7 +120,7 @@ const FilterItem = ({
             label={t("priceRange")}
             maxValue={100000}
             step={100}
-            defaultValue={price}
+            defaultValue={filter.price}
             onChange={handleSliderChange}
             formatOptions={{ style: "currency", currency: "USD" }}
             classNames={{
@@ -195,8 +154,6 @@ const FilterItem = ({
         <div className="w-full flex items-center gap-3 justify-between">
           <button
             onClick={() => {
-              const filter: typeFilter = { brand, color, discount, price };
-              onFilter(filter);
               closeFiltered();
             }}
             className="w-1/2 text-center py-2 bg-secondary-400 text-white rounded-lg"

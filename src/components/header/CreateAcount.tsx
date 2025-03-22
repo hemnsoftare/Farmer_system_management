@@ -7,7 +7,6 @@ import Login from "./Login";
 
 const CreateAcount = () => {
   const [isSee, setisSee] = useState(false);
-  console.log(isSee);
   return (
     <Dialog>
       <DialogTrigger>
