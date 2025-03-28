@@ -60,7 +60,7 @@ const NewProducts = ({
             : "sm:h-fit border h-full lg:min-w-[230px] lg:max-w-[230px] sm:w-full max-w-[250px]"
         } flex sm:gap-5  border-neutral-200 shadow-lg dark:shadow-secondary-500 dark:border-secondary shadow-neutral-200 md:shadow-neutral-400 overflow-hidden flex-col group relative items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3`}
       >
-        {user && user.id && title !== "dashboard" && (
+        {user && user?.id && title !== "dashboard" && (
           <>
             {favoriteId && favoriteId.some((item) => item === itemDb.id) ? (
               <FaHeart
@@ -68,7 +68,7 @@ const NewProducts = ({
                 onClick={(e) => {
                   handleFavoriteClick(e);
                   deleteFavorite(
-                    user.id,
+                    user?.id,
                     itemDb.numberFavorite,
                     itemDb.id
                   ).finally(() => {});

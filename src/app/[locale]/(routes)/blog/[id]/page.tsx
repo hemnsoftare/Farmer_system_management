@@ -27,7 +27,7 @@ const Page = ({ params }) => {
     queryFn: async ({ pageParam }) => {
       const data = await getBlog(id);
       const blogList = await getBlogs();
-      const getid = await getallsaveid(user.id);
+      const getid = await getallsaveid(user?.id);
       return { blog: data, blogs: blogList, idSave: getid };
     },
   });
@@ -147,7 +147,7 @@ const Page = ({ params }) => {
                         numberOffavorites: data.blog.numberOffavorites,
                         title: data.blog.title,
                         type: data.blog.type,
-                        userId: user.id || "",
+                        userId: user?.id || "",
                         image: data.blog.image || "",
                         video: data.blog.video || "",
                       },
@@ -177,7 +177,7 @@ const Page = ({ params }) => {
                     await deleteSave({
                       id,
                       numberOffavorites: data.blog.numberOffavorites,
-                      userId: user.id,
+                      userId: user?.id,
                     });
                     queryClient.setQueryData(["blog[id]"], (pldData: any) => {
                       if (!pldData) return pldData;

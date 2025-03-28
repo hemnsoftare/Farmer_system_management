@@ -1,25 +1,35 @@
-import createNextInterPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from "next-intl/plugin";
+import withPWA from "next-pwa";
+
 /** @type {import('next').NextConfig} */
 
- const withnextIntl = createNextInterPlugin()
+const withNextIntl = createNextIntlPlugin();
+
 const nextConfig = {
   reactStrictMode: false,
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "img.clerk.com", // Clerk's image host
+        hostname: "img.clerk.com",
         port: "",
-        pathname: "/**", // Allow all paths from img.clerk.com
+        pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "firebasestorage.googleapis.com", // Firebase Storage host
+        hostname: "firebasestorage.googleapis.com",
         port: "",
-        pathname: "/**", // Allow all paths from Firebase Storage
+        pathname: "/**",
       },
     ],
   },
 };
 
-export default withnextIntl(nextConfig);
+// Combine both plugins (PWA & Intl)
+export default withNextIntl(
+  withPWA({
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  })(nextConfig)
+);

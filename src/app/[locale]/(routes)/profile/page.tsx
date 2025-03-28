@@ -16,9 +16,9 @@ export default function ProfilePage() {
   const { data, isLoading } = useQuery({
     queryKey: ["userProfile"],
     queryFn: async () => {
-      const getblog = await getSaveBlog(user.id);
-      const getfavoritedata = await getfavorite(user.id);
-      const getorder = await getOrder(user.id);
+      const getblog = await getSaveBlog(user?.id);
+      const getfavoritedata = await getfavorite(user?.id);
+      const getorder = await getOrder(user?.id);
       return {
         orders: getorder,
         favorites: getfavoritedata,
@@ -59,7 +59,7 @@ export default function ProfilePage() {
               {user.primaryEmailAddress?.emailAddress}
             </p>
             <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full max-w-sm text-center">
-              <p className="text-gray-600">ID: {user.id || "N/A"}</p>
+              <p className="text-gray-600">ID: {user?.id || "N/A"}</p>
               <p className="text-gray-600">
                 Phone: {user.phoneNumbers?.[0]?.phoneNumber || "N/A"}
               </p>

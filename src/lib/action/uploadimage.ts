@@ -145,7 +145,7 @@ export const getproductByCategory = async (
 export const setUser = async (user: UserType) => {
   // Sanitize the user data for Firestore
   const sanitizedUser = {
-    id: user.id,
+    id: user?.id,
     firstName: user.firstName || "",
     lastName: user.lastName || "",
     fullName: user.fullName || "",
@@ -155,7 +155,7 @@ export const setUser = async (user: UserType) => {
     primaryEmailAddressId: user.primaryEmailAddressId || "",
   };
 
-  await setDoc(doc(db, "user", user.id), sanitizedUser).catch((error) =>
+  await setDoc(doc(db, "user", user?.id), sanitizedUser).catch((error) =>
     console.error("Error saving user", error)
   );
 };

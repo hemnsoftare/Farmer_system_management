@@ -89,7 +89,7 @@ const SearchComponent = () => {
       try {
         if (user) {
           const docSnapshot = await getDoc(
-            doc(db, "searchSetting", user.id || "")
+            doc(db, "searchSetting", user?.id || "")
           );
           if (docSnapshot.exists()) {
             searchBy = docSnapshot.data() as { search: string[] };

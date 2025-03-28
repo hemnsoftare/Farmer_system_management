@@ -69,7 +69,7 @@ const SettingsPage = () => {
     },
   ];
   const clear_data = (table: string) => {
-    clear_data_user({ table, userid: user.id });
+    clear_data_user({ table, userid: user?.id });
   };
 
   const handleThemeChange = (newTheme: string) => {
@@ -106,7 +106,7 @@ const SettingsPage = () => {
       try {
         if (user) {
           const docSnapshot = await getDoc(
-            doc(db, "searchSetting", user.id || "")
+            doc(db, "searchSetting", user?.id || "")
           );
           if (docSnapshot.exists()) {
             searchBy = docSnapshot.data().search as (

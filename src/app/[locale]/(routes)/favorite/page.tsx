@@ -15,7 +15,7 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["favorite"],
     queryFn: async () => {
-      const data = await getfavorite(user.id);
+      const data = await getfavorite(user?.id);
       return {
         products: data,
         favorriteid: data.map((item) => item.id as string),
@@ -94,7 +94,7 @@ const Page = () => {
               <CardFavorite
                 // click={() => setstate((pre) => pre + 1)}
                 item={itemorder}
-                userId={user.id}
+                userId={user?.id}
                 addFavoriteid={() => {
                   // setproducts((pre) =>
                   //   pre.map((item) =>

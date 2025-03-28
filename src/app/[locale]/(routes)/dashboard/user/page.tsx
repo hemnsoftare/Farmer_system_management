@@ -70,7 +70,7 @@ const UserDashboardPage = () => {
             const email: any = user.emailAddresses[0];
             return (
               <motion.div
-                key={user.id}
+                key={user?.id}
                 // onClick={() => router(`/dashboard/user/${user.id}`)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -79,7 +79,7 @@ const UserDashboardPage = () => {
                 className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg shadow-2xl p-6 hover:shadow-cyan-500/50 transition-shadow duration-300"
               >
                 <Link
-                  href={`/dashboard/user/${user.id}`}
+                  href={`/dashboard/user/${user?.id}`}
                   className="flex flex-col space-y-4"
                 >
                   {/* User ID */}
@@ -95,7 +95,7 @@ const UserDashboardPage = () => {
                       ID:
                     </span>
                     <span className="text-sm line-clamp-1 text-gray-300">
-                      {user.id}
+                      {user?.id}
                     </span>
                   </div>
 

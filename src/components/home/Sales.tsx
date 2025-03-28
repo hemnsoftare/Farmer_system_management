@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -7,16 +7,7 @@ import { GrFormNextLink } from "react-icons/gr";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 import NewProducts from "./NewProducts";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import { app } from "../../config/firebaseConfig";
-import { ProductFormInput } from "@/lib/action";
+
 import { Loader } from "@/app/[locale]/loader";
 import { getAllItemNames } from "@/lib/action/fovarit";
 import { useUser } from "@clerk/nextjs";
@@ -27,10 +18,10 @@ import { getProductsBYDiscountAndCategoryAndSale } from "@/lib/action/dashboard"
 import { queryClient } from "@/app/[locale]/ClientProviders";
 const Sales = () => {
   const { user } = useUser();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["sale"],
     queryFn: async () => {
-      const getAllid = await getAllItemNames(user.id);
+      const getAllid = await getAllItemNames(user?.id);
       const getdata = await getProductsBYDiscountAndCategoryAndSale({
         category: "",
         col: "discount",
@@ -40,6 +31,7 @@ const Sales = () => {
   });
   const t = useTranslations("sales");
   const [start, setStart] = useState(0);
+  if (error) return <h1>{error.message}</h1>;
   return (
     <motion.div
       initial={{ y: 150, opacity: 0 }}

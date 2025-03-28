@@ -20,8 +20,8 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["saveBlog"],
     queryFn: async () => {
-      const data = await getSaveBlog(user.id);
-      const dataId = await getallsaveid(user.id);
+      const data = await getSaveBlog(user?.id);
+      const dataId = await getallsaveid(user?.id);
       return { saveblog: data, idBlogSave: dataId };
     },
   });
@@ -83,7 +83,7 @@ const Page = () => {
                 deleteSave({
                   id: item.id,
                   numberOffavorites: item.numberOffavorites,
-                  userId: user.id,
+                  userId: user?.id,
                 });
                 // setidBlogSave((pre) => pre.filter((id) => id !== item.id));
                 toast({ title: "Un-saved the blog" });
