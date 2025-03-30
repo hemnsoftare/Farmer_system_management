@@ -68,11 +68,11 @@ export default function ClientProviders({
               >
                 <Header />
                 {children}
+                <PWAInstallToast />
               </div>
               <Footer />
               <FoooterMob />
               <Toaster />
-              <PWAInstallToast />
             </ContextProvider>
           </ClerkProvider>
         </ReduxProvider>

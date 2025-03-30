@@ -18,6 +18,10 @@ import SearchComponent from "@/components/home/Search";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { getProductsBYDiscountAndCategoryAndSale } from "@/lib/action/dashboard";
+import {
+  InstallPrompt,
+  // PushNotificationManager,
+} from "@/pwa/urlBase64ToUint8Array";
 export default function Home() {
   const { data, isLoading } = useQuery({
     queryKey: ["home"],
@@ -59,6 +63,8 @@ export default function Home() {
   // add comeetnete sdfasdf asdf
   return (
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
+      {/* <PushNotificationManager /> */}
+      <InstallPrompt />
       <SearchComponent />
       <Hero /> <Catagory />
       <Sales />
