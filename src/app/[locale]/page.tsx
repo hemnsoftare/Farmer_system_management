@@ -18,10 +18,8 @@ import SearchComponent from "@/components/home/Search";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { getProductsBYDiscountAndCategoryAndSale } from "@/lib/action/dashboard";
-import {
-  InstallPrompt,
-  // PushNotificationManager,
-} from "@/pwa/urlBase64ToUint8Array";
+import HomePage from "@/components/ToasterInstall";
+
 export default function Home() {
   const { data, isLoading } = useQuery({
     queryKey: ["home"],
@@ -64,7 +62,7 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
       {/* <PushNotificationManager /> */}
-      <InstallPrompt />
+      <HomePage />
       <SearchComponent />
       <Hero /> <Catagory />
       <Sales />
