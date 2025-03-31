@@ -31,20 +31,18 @@ export default function HomePage() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 z-50">
       <h1 className="text-2xl font-bold">Welcome to Saya Farmuda</h1>
 
-      {showToast && (
-        <div className="fixed bottom-4 left-4 bg-blue-600 text-white p-3 rounded-lg shadow-lg">
-          <p>Install our app for a better experience!</p>
-          <button
-            onClick={installApp}
-            className="mt-2 px-3 py-1 bg-white text-blue-600 rounded"
-          >
-            Install
-          </button>
-        </div>
-      )}
+      <div className="fixed bottom-4 left-4 bg-blue-600 text-white p-3 rounded-lg shadow-lg">
+        <p>Install our app for a better experience!</p>
+        <button
+          onClick={installApp}
+          className="mt-2 px-3 py-1 bg-white text-blue-600 rounded"
+        >
+          Install
+        </button>
+      </div>
     </div>
   );
 }
