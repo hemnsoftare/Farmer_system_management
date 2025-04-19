@@ -31,7 +31,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="p-4 z-50">
+    <div className="p-4 hidden z-50">
       <div className="fixed bottom-4 left-4 bg-blue-600 text-white p-3 rounded-lg shadow-lg">
         <p>Install our app for a better experience!</p>
         <button
