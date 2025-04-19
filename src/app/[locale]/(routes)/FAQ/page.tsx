@@ -44,7 +44,7 @@ const Page = () => {
     hidden: { opacity: 0, x: -50 },
     visible: { opacity: 1, x: 0 },
   };
-
+  if (isLoading) return <h1></h1>;
   return (
     <motion.div
       className="flex flex-col gap-10 px-5 sm:px-10 xl:px-20 justify-center py-4 items-center"
