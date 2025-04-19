@@ -344,7 +344,7 @@ const menuItems: propsMenuItem[] = [
   {
     name: "Home",
     icon: FaHome,
-    url: "/",
+    url: "/dashboard",
   },
 ];
 
