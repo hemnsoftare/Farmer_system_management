@@ -120,24 +120,30 @@ const Header = () => {
   return (
     <div
       className={` ${
-        scrollDirection === "Decreasing"
-          ? " translate-y-0 transition-all backdrop-blur-md text-black dark:backdrop-brightness-75 duration-300 sticky top-0 right-0 left-0"
-          : scrollDirection === "None"
-            ? "translate-y-0 "
-            : "-translate-y-[200px] text-black "
+        // scrollDirection === "Decreasing"
+        //   ? " translate-y-0 transition-all backdrop-blur-md text-black dark:backdrop-brightness-75 duration-300 sticky top-0 right-0 left-0"
+        //   : scrollDirection === "None"
+        //     ? "translate-y-0 "
+        //     : "-translate-y-[200px] text-black "
+        pathName === "/en" ? "text-white" : "text-black"
       } 
-         flex relative z-[50] md:px-12 top-0 right-0 left-0 bg-white/20 dark:bg-transparent  dark:text-white items-center px-3 pt-4 pb-2  justify-between`}
+         flex relative z-[50] md:px-12 top-0 right-0 left-0  dark:bg-transparent   items-center px-3 pt-4 pb-2  justify-between`}
     >
       {/* logo */}
-      <Link href={"/"} w-full className="hidden sm:block">
-        <Image
-          src={"/logo.svg"}
+      <Link
+        href={"/"}
+        w-full
+        className="hidden font-extrabold font-serif italic text-30 text-secondary sm:block"
+      >
+        {/* <Image
+          src={"/y/logo1.png"}
           w-full
           alt="logo"
           width={48}
           height={53}
-          className=" lg:w-[48px] w-[30px] h-[30px] lg:h-[53px] md:w-[39px] md:h-[43px]"
-        />
+          className=" lg:w-[48px] w-[30px] h-[50px] lg:h-[93px]  md:w-[89px] md:h-[93px]"
+        /> */}
+        FC
       </Link>
 
       {/* menu */}
@@ -159,29 +165,34 @@ const Header = () => {
       {/* center */}
       <div className="sm:flex hidden xl:gap-12 lg:gap-6 md:gap-6 py-2 justify-center w-[60%] items-center">
         <Link
-          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]"
           href={"/"}
           w-full
         >
           {t("home")}
         </Link>
-        <ProductsHeader category={category} lng={t("products")} />
+        <ProductsHeader
+          textcolor={pathName === "/en" ? "text-white" : "text-black"}
+          category={category}
+          lng={t("products")}
+        />
         <Link
-          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]"
           href={"/blog"}
           w-full
         >
           {t("blog")}
         </Link>
-        {/* <Link
-          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+        <Link
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]"
           href={"/FAQ"}
           w-full
         >
           {t("faq")}
         </Link>
+        {/* 
         <Link
-          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]"
           href={"/ContactUs"}
           w-full
         >
@@ -189,21 +200,21 @@ const Header = () => {
         </Link> */}
 
         <Link
-          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]"
           href={"/About"}
           w-full
         >
           {t("about")}
         </Link>
         <Link
-          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]"
+          className="hover:underline underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]"
           href={"/setting"}
           w-full
         >
           {t("setting")}
         </Link>
         <DropdownMenu>
-          <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
+          <DropdownMenuTrigger className="hover:underline border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]">
             {t("theme")}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white dark:text-white dark:bg-neutral-700 ">
@@ -235,8 +246,8 @@ const Header = () => {
         {/* lang()ouge */}
       </div>
       {/* right */}
-      <DropdownMenu>
-        <DropdownMenuTrigger className="hover:underline hidden md:block border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-primary text-lg font-[400]">
+      {/* <DropdownMenu>
+        <DropdownMenuTrigger className="hover:underline hidden md:block border-0 outline-none underline-offset-4 lg:text-16 md:text-12 duration-200 transition-all hover:text-secondary-100 text-lg font-[400]">
           {t("language")}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white dark:bg-neutral-700 ">
@@ -295,12 +306,12 @@ const Header = () => {
             {t("arabic")}
           </DropdownMenuItem>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
       <div className="flex gap-2 items-center">
         {isAdmin && (
           <Link
             className="bg-secondary-400 mx-3 px-3 py-1 duration-300 transition-all text-white rounded-lg hover:bg-secondary-600"
-            href={"/dashboard/PersonalData"}
+            href={"/dashboard/home"}
             w-full
           >
             {t("dashboard")}

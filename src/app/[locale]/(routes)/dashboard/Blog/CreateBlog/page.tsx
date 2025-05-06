@@ -85,7 +85,6 @@ const Page = () => {
       setvedeoUrl(url);
       settype("video");
     } catch (error) {
-      console.error("Upload failed:", error);
     } finally {
       setLoading(false);
     }

@@ -38,19 +38,19 @@ const CartHeader = ({
     <>
       <div
         onClick={onclose}
-        className={`h-screen fixed top-20   w-screen backdrop-blur-sm z-[100]`}
+        className={`h-screen fixed top-20 text-black  w-screen backdrop-blur-sm z-[100]`}
       />
       <div
         className={`flex gap-4 ${l ? "left-0" : " right-0"} z-[101] sm:h-fitc sm:w-fit w-screen overflow-hidden absolute top-full dark:bg-gray-800 bg-gray-50 px-4 pb-3 shadow-md  flex-col items-start justify-start`}
       >
         <p className="mt-3 w-full flex items-center justify-between">
-          <span>
+          <span className="text-black">
             {total} {t("items")}
           </span>
           <Link
             href="/Cart"
             onClick={onclose}
-            className="hover:underline cursor-pointer"
+            className="hover:underline text-black cursor-pointer"
           >
             {t("viewAll")}
           </Link>
@@ -70,13 +70,13 @@ const CartHeader = ({
               />
             ))
           ) : (
-            <p>{t("emptyCartMessage")}</p>
+            <p className="text-black">{t("emptyCartMessage")}</p>
           )}
         </div>
         <div className="flex w-full items-center">
           <p className="flex flex-col px-2 pr-4">
-            <span className="text-14">{t("grandtotal")}</span>
-            <span>${grandTotal.toFixed(2)}</span>
+            <span className="text-14 text-black">{t("grandtotal")}</span>
+            <span className="text-black">${grandTotal.toFixed(2)}</span>
           </p>
           <Link
             href="/Cart"

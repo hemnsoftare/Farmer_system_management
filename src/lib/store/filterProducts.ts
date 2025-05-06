@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { FilterProps, typeFilter } from "../action";
+import {
+  FilterProps,
+  OrderType,
+  ProductFormInput,
+  typeFilter,
+} from "../action";
 
 interface FilterState {
   category: string;
@@ -83,3 +88,25 @@ const useFilterProducts = create<FilterState>((set) => ({
 }));
 
 export default useFilterProducts;
+
+export const selectedProduct = create<{
+  item: ProductFormInput;
+  selectProduct: (item: ProductFormInput) => void;
+}>((set) => ({
+  item: JSON.parse(localStorage.getItem("selectedProduct")) || null,
+  selectProduct: (item) => {
+    localStorage.setItem("selectedProduct", JSON.stringify(item));
+    set(() => ({ item }));
+  },
+}));
+
+export const selectedOrder = create<{
+  order: OrderType;
+  selectOrder: (order: OrderType) => void;
+}>((set) => ({
+  order: JSON.parse(localStorage.getItem("selectedOrder")) || null,
+  selectOrder: (order) => {
+    localStorage.setItem("selectedOrder", JSON.stringify(order));
+    set(() => ({ order }));
+  },
+}));

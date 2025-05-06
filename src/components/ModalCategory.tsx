@@ -40,9 +40,7 @@ const ModalCategory = () => {
       .then(() => {
         // Optionally navigate or show success message
       })
-      .catch((error) =>
-        console.error("Error response:", error.response?.data || error)
-      );
+      .catch((error) => console.error(""));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -202,12 +200,11 @@ const ModalCategory = () => {
               {availableColors.map((item) => (
                 <div
                   key={item.name}
-                  style={{ backgroundColor: item.color }}
-                  className="w-[136px] border-neutral-500 border rounded-lg px-3 py-2 flex items-center justify-center gap-2 z-10"
+                  className="w-[136px] bg-gradient-to-l from-[] border-neutral-500 border rounded-lg px-3 py-2 flex items-center justify-center gap-2 z-10"
                 >
                   <input
                     type="checkbox"
-                    name="catagoryColors"
+                    name="colors"
                     id={item.name}
                     checked={colors.some((color) => item.name === color.name)}
                     value={item.color}

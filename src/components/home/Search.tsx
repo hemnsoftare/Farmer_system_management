@@ -100,9 +100,7 @@ const SearchComponent = () => {
             searchBy = JSON.parse(localData);
           }
         }
-      } catch (error) {
-        console.error("Error fetching search settings:", error);
-      }
+      } catch (error) {}
       setSearchBy(searchBy);
     };
 
@@ -119,7 +117,7 @@ const SearchComponent = () => {
   ) => {
     return (
       <>
-        <p className="px-3 py-2 w-full flex justify-between font-semibold items-center duration-300 bg-gray-300 cursor-pointer">
+        <p className="w-full px-5 py-3 text-sm font-bold text-neutral-700 dark:text-white bg-gray-100/40 dark:bg-neutral-700/40 tracking-wide uppercase backdrop-blur-sm">
           {t(
             title === "Products"
               ? "product"
@@ -136,14 +134,18 @@ const SearchComponent = () => {
               href={link(item)}
               key={keyExtractor(item)}
               onClick={() => setSearchValue(displayValue(item))}
-              className="px-3 py-2 w-full flex justify-between items-center bg-white duration-300 hover:bg-gray-100 cursor-pointer"
+              className="w-full px-5 py-3 flex items-center justify-between text-sm hover:bg-white/20 dark:hover:bg-neutral-700/30 transition-colors backdrop-blur-sm"
             >
-              <span>{displayValue(item)}</span>
-              {extraValue && <span>{extraValue(item)}</span>}
+              <span className="truncate">{displayValue(item)}</span>
+              {extraValue && (
+                <span className="text-xs text-neutral-500">
+                  {extraValue(item)}
+                </span>
+              )}
             </Link>
           ))
         ) : (
-          <p className="px-3 py-2 w-full text-center bg-gray-50 text-neutral-500">
+          <p className="w-full px-5 py-6 text-center text-neutral-400 text-sm">
             {t(title)}
           </p>
         )}
@@ -155,7 +157,7 @@ const SearchComponent = () => {
     <>
       {searchValue.length > 0 && (
         <div
-          className="w-screen z-[3] h-screen fixed top-0 left-0 right-0 backdrop-blur-md"
+          className="w-screen z-[3] h-screen fixed top-0 left-0 right-0 "
           onClick={() => {
             setSearchValue("");
             setShow(false);
@@ -175,7 +177,7 @@ const SearchComponent = () => {
             onChange={(e) => onChangeHandle(e.target.value)}
             className={`${lang() === "ar" || lang() === "ku" ? "text-right " : "text-left "}
 
-              w-full py-2 rounded-full placeholder:text-secondary shadow-sm focus-within:shadow-md focus-within:shadow-secondary/75 shadow-secondary dark:bg-neutral-800 dark:text-white  outline-none focus:bg-secondary-100/15 duration-300 px-4 border-b-2 border-x-2 border-t-[1px] border-secondary`}
+              w-full py-2 rounded-full placeholder:text-secondary shadow-sm focus-within:shadow-md focus-within:shadow-secondary/75 shadow-secondary/50 dark:bg-neutral-800 dark:text-white bg-transparent backdrop-blur-md  outline-none focus:bg-secondary-100/15 duration-300 px-4 border-b-2 border-x-2 border-t-[1px] border-secondary/50`}
             placeholder={t("Search")}
           />
 
@@ -184,10 +186,8 @@ const SearchComponent = () => {
           />
 
           <ul
-            className={`absolute w-full bg-white pb-2 dark:text-white dark:bg-neutral-800 border shadow-xl flex flex-col items-center justify-start rounded-lg transition-all duration-300 border-gray-300 mt-12 z-[100] ${
-              show && searchValue.length
-                ? "opacity-100 h-full"
-                : "opacity-0 max-h-0"
+            className={`absolute w-full bg-white/30 dark:bg-neutral-800/30 backdrop-blur-md border border-gray-300 shadow-2xl flex flex-col items-start rounded-2xl transition-all duration-300 mt-12 z-[100] overflow-hidden ${
+              show && searchValue.length ? "opacity-100 " : "opacity-0 max-h-0"
             }`}
           >
             {show && searchValue.length > 0 ? (
@@ -215,7 +215,7 @@ const SearchComponent = () => {
                     "Team Member",
                     searchTeam,
                     (item) => item.fullName,
-                    (item) => "/About#" + item.fullName,
+                    (item) => `/About#${item.fullName}`,
                     (item) => item.fullName,
                     (item) => item.numOfSearch.toFixed(0)
                   )}
@@ -230,11 +230,11 @@ const SearchComponent = () => {
                   )}
               </>
             ) : !search_by.search.length ? (
-              <p className="px-3 z-10 py-4 w-full text-center text-neutral-500">
+              <p className="px-4 py-6 w-full text-center text-neutral-400 text-base">
                 {t("allowSearch")}
               </p>
             ) : (
-              <p className="px-3 z-10 py-4 w-full text-center text-neutral-500">
+              <p className="px-4 py-6 w-full text-center text-neutral-400 text-base">
                 {t("messageNotFound")}
               </p>
             )}

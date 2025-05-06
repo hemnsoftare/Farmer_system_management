@@ -32,7 +32,7 @@ const Page = () => {
       <div className="w-full flex-wrap flex items-center justify-between">
         <CatagoryProducts />
       </div>
-      <div className="grid lg:grid-cols-4 grid-cols-2 w-full gap-1 xl:grid-cols-5 ">
+      <div className=" w-full py-5 flex flex-wrap items-center justify-center gap-3 ">
         {isLoading ? (
           <div className="col-span-full flex justify-center items-center min-h-[200px]">
             <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>

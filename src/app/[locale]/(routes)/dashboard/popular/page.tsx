@@ -74,8 +74,8 @@ const Page = () => {
             onClick={() => setSelect(item)}
             className={`flex flex-col px-6 items-center justify-center gap-2 border py-2 w-[150px] rounded-lg shadow-lg 
               transition-all duration-300
-              ${select.name === item.name ? "bg-orange-50 border-orange-500 shadow-orange-300" : "bg-white border-transparent shadow-slate-200"}
-              hover:shadow-orange-200`}
+              ${select.name === item.name ? "bg-orange-50/50 border-orange-500 shadow-orange-300" : "bg-white border-transparent shadow-slate-200"}
+              hover:shadow-orange-200/50`}
           >
             <item.icon color={select.name === item.name ? "#f45e0c" : "#000"} />
             <span>{item.name}</span>

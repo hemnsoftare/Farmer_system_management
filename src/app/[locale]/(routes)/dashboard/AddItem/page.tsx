@@ -17,24 +17,27 @@ import {
   doc,
   getDoc,
   getFirestore,
-  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { app } from "@/config/firebaseConfig";
 import { getFireBase, uploadImage } from "@/lib/action/uploadimage";
 import { IoMdArrowDropdown } from "react-icons/io";
 import ImageSmallInput from "@/components/ImageSmallInput";
-import { useSearchParams } from "next/navigation";
 import { MdOutlineDelete } from "react-icons/md";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
-import { colors } from "@nextui-org/react";
+import { EditIcon, Trash2 } from "lucide-react";
 const initialProductFormInput: ProductFormInput = {
   id: undefined, // Optional ID
   colorsName: [], // Default empty array
   name: "", // Default empty string
   price: 0, // Default price to 0
   brand: "", // Default empty string
+  iniPrice: 0,
+  isev: false,
+  stock: 0,
+  isProduction: true,
+
   colors: [], // Default empty array
   category: "", // Default empty string
   Bigimage: null, // Default null
@@ -57,6 +60,8 @@ const initialState = {
   Bigimage: "",
   colors: "",
   bigimageUrl: "",
+  stock: "",
+  iniPrice: "",
   smallimageUrl: "",
   details: "",
   date: "",
@@ -97,13 +102,17 @@ const Page = () => {
   const [name, setname] = useState("");
   const [price, setprice] = useState(0);
   const [brand, setbrand] = useState("");
+  const [stock, setstock] = useState(0);
+  const [iniPrice, setiniPrice] = useState(0);
   const [error, seterror] = useState(initialState);
+  const [isProduction, setisProduction] = useState(true);
   const { toast } = useToast();
   const db = getFirestore(app);
 
   const validation = z.object({
     name: z.string().min(3),
     price: z.number().min(1),
+    iniPrice: z.number().min(1),
     brand: z.string(),
     category: z.string(),
     Bigimage: z.string(),
@@ -118,6 +127,7 @@ const Page = () => {
       )
       .nonempty(),
     date: z.date(),
+    stock: z.number().min(1),
     colors: z
       .array(
         z.object({
@@ -133,15 +143,19 @@ const Page = () => {
     e.preventDefault();
     seterror(initialState);
     const formData = new FormData(e.currentTarget);
+
     const data: ProductFormInput = {
       name: formData.get("name")?.toString().trim() || "",
+      iniPrice: parseFloat(formData.get("iniPrice").toString().trim()),
       price: parseFloat(formData.get("price") as string) || 0,
-      brand: formData.get("brand")?.toString() || "",
+      stock: parseFloat(formData.get("stock") as string) || 0,
+      isev: false,
+      brand: formData.get("brand")?.toString().trim() || "",
       colors: selectedcolor,
       numSearch: Math.floor(Math.random() * 67), // Generates a whole number between 0 and 66
-      category: formData.get("category")?.toString() || "",
+      category: formData.get("category")?.toString().trim() || "",
       Bigimage: maiinImageNmae || "",
-      colorsName: selectedcolor.map((item) => item.name),
+      colorsName: selectedcolor.map((item) => item.name.trim()),
       bigimageUrl: selectedImage, // Main image URL
       smallimageUrl: imageSmallUrl, // Small images URL array
       // imageSmall: smallImageName, // File names of small images
@@ -149,6 +163,7 @@ const Page = () => {
       numberFavorite: 0,
       numberSale: 0,
       date: new Date(),
+      isProduction,
       isDiscount: !!formData.get("discount"),
       discount: formData.get("discount")
         ? parseFloat(formData.get("discount") as string)
@@ -176,12 +191,12 @@ const Page = () => {
         toast({ title: "update the product successfully" });
         window.location.href = "/dashboard/Products";
       } else {
-        await addDoc(collection(db, "Products"), data);
+        if (isProduction) await addDoc(collection(db, "Products"), data);
+        else await addDoc(collection(db, "PrivateProducts"), data);
+        toast({ title: "add the product successfully" });
       }
       window.location.href = "/dashboard/Products";
-    } catch (error) {
-      console.error("Error saving data:", error);
-    }
+    } catch (error) {}
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,9 +206,7 @@ const Page = () => {
       try {
         const linkimage = await uploadImage(file); // Upload image and get the URL
         setSelectedImage(linkimage); // Update state with the image URL
-      } catch (error) {
-        console.error("Error uploading main image:", error);
-      }
+      } catch (error) {}
     }
   };
 
@@ -220,9 +233,7 @@ const Page = () => {
           updatedNames[index] = file.name; // Replace the file name at the specific index
           return updatedNames;
         });
-      } catch (error) {
-        console.error("Error uploading small image:", error);
-      }
+      } catch (error) {}
     }
   };
 
@@ -247,33 +258,7 @@ const Page = () => {
     }
   };
 
-  // Handle deleting product details
-  const handleDeleteDetail = (index: number) => {
-    setDetails((pre) => pre.filter((_, i) => i !== index));
-  };
-
   type Color = { name: string; color: string };
-  const handleColorSelection = (
-    color: Color,
-    filteredColors: Color[],
-    prevSelected: Color[]
-  ): Color[] => {
-    // Check if the color already exists in the selected array
-    const colorExists = prevSelected.filter(
-      (item) => item.color === color.color
-    ).length;
-    if (colorExists) {
-      // If the color exists, remove it from the selected array
-      return prevSelected.filter((item) => item.color !== color.color);
-    } else {
-      // If the color doesn't exist, add it to the selected array
-      const colorName = filteredColors.find(
-        (item) => item.color === color.color
-      )?.name;
-
-      return [...prevSelected, { name: colorName || "", color: color.color }];
-    }
-  };
 
   useEffect(() => {
     const getdata = async () => {
@@ -289,6 +274,8 @@ const Page = () => {
       // setvalue(data.data() as ProductFormInput);
       setselectedCategoryy(data.data().category);
       setname(data.data().name);
+      setiniPrice(data.data().iniPrice);
+      setstock(data.data().stock);
       setprice(data.data().price);
       setselectedcolor(data.data().colors);
       setSelectedImage(data.data().bigimageUrl);
@@ -300,42 +287,48 @@ const Page = () => {
     };
     if (haveId) getdata();
   }, [haveId, db]);
-
+  console.log(error);
   return (
-    <div className=" z-0 flex-col py-9 sm:h-screen items-center justify-center md:justify-start md:items-start lg:w-full w-full xl:max-w-[900px]  ">
-      <h2 className="text-29 font-semibold px-7">Add Product</h2>
+    <div className="z-0 flex-col w-full py-10 px-4 items-center justify-center h-full md:px-8 ">
+      <h2 className="text-2xl font-semibold mb-6">Add Product</h2>
       <form
         onSubmit={handleSubmit}
-        className="flex md:flex-row flex-col items-start gap-3 px-4    justify-start w-full py-4"
+        className=" w-full flex flex-col gap-6 items-center justify-center "
       >
-        <div className="flex sm:px-3 flex-col gap-3 bg-red-50  items-center justify-center">
+        {/* Images Section */}
+        <div className="flex flex-col items-center gap-4">
+          {/* Big Image Input */}
           <input
             type="file"
             id="imageBig"
             name="Bigimage"
             onChange={handleImageChange}
-            className="rounded-md size-[100px] hidden"
+            className="hidden"
           />
           <label
             htmlFor="imageBig"
-            className="flex items-center bg-neutral-300 justify-center text-center text-[150px] rounded-md size-[300px]"
+            className="flex items-center justify-center bg-neutral-200 hover:bg-neutral-300 text-neutral-500 text-[80px] rounded-xl size-[250px] transition duration-200 cursor-pointer overflow-hidden"
           >
             {selectedImage || value.bigimageUrl ? (
               <Image
-                src={selectedImage ? selectedImage : value.bigimageUrl} // Display selected image using URL
+                src={selectedImage || value.bigimageUrl}
                 alt="Selected Image"
-                width={300}
-                height={300}
-                className="size-[300px]"
+                width={250}
+                height={250}
+                className="object-cover w-full h-full rounded-xl"
               />
             ) : (
               "+"
             )}
           </label>
           {error.Bigimage && (
-            <span className="text-red-500 text-14">{error.Bigimage}</span>
+            <span className="text-red-500 text-sm font-medium">
+              {error.Bigimage}
+            </span>
           )}
-          <div className="flex items-center w-[300px] gap-4 justify-between">
+
+          {/* Small Images */}
+          <div className="flex flex-wrap gap-3 justify-center">
             {smallImageFile.map((image, index) => (
               <ImageSmallInput
                 key={index}
@@ -347,251 +340,237 @@ const Page = () => {
             ))}
           </div>
           {error.smallimageUrl && (
-            <span className="text-red-500 text-14">{error.smallimageUrl}</span>
+            <span className="text-red-500 text-sm font-medium">
+              {error.smallimageUrl}
+            </span>
           )}
         </div>
-        <div className="flex gap-3 my-3 mb-5 items-start w-full  justify-center flex-col">
-          <div className="w-full gap-3 flex-col sm:flex-row flex items-start h-[70px] justify-between">
-            <InputCheckout
-              label="Product Name"
-              name="name"
-              defualtValue={name}
-              placeholder="Product name"
-              error={error.name}
-            />
-            <InputCheckout
-              label="Product Price"
-              name="price"
-              type="number"
-              defualtValue={price as unknown as string}
-              placeholder="Product price"
-              error={error.price}
-            />
-          </div>
-          <br />
-          <div className="w-full mt-3 items-start flex-col justify-start gap-6 flex">
-            <div className="flex items-center justify-center gap-2">
-              <h2 className="font-semibold min-w-[80px] text-14 sm:text-18">
-                Category:
-              </h2>
-              <select
-                name="category"
-                defaultValue={selectedCategoryy}
-                value={selectedCategoryy}
-                className="py-1 px-3  bg-neutral-300 min-w-[230px] rounded-md outline-none border-none"
-                onChange={(e) => {
-                  setselectedcolor([]);
-                  setselectedCategoryy(e.target.value);
-                }}
-              >
-                {catagory &&
-                  catagory.map((item) => (
-                    <option
-                      className="text-14 sm:text-18"
-                      key={item.name}
-                      value={item.name}
-                    >
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
-              {error.category && (
-                <span className="text-red-500 text-14">{error.category}</span>
-              )}
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <h2 className="font-semibold text-14 min-w-[80px] sm:text-18">
-                Brand:
-              </h2>
-              <select
-                name="brand"
-                className="py-1 px-3 bg-neutral-300 min-w-[230px] rounded-md outline-none border-none"
-              >
-                <option
-                  className="text-14  sm:text-18"
-                  key={brand}
-                  value={brand}
-                >
-                  {brand}
-                </option>
-                {catagory?.map((item) => {
-                  if (item.name === selectedCategoryy) {
-                    return item.brands.map((branditem) => (
-                      <option
-                        className="text-14  sm:text-18"
-                        key={branditem}
-                        value={branditem}
-                      >
-                        {branditem}
-                      </option>
-                    ));
-                  }
-                })}
-              </select>
-              {error.brand && (
-                <span className="text-red-500 text-14">{error.brand}</span> // Display error message
-              )}
-            </div>
-            {/* color  */}
-            <div className="flex items-center  w-full justify-start gap-2">
-              <h2 className="font-semibold text-14 sm:text-18 in-range:">
-                Colors:
-              </h2>
-              <div className="flex overflow-x-auto w-full items-center gap-5">
-                {catagory
-                  ?.filter((item) => item.name === selectedCategoryy)
-                  .map((filteredItem) => (
-                    <div
-                      key={filteredItem.name}
-                      className="flex items-center overflow-x-auto w-full justify-start gap-3"
-                    >
-                      {filteredItem.colors.map((color) => (
-                        <div
-                          key={color.name}
-                          className="flex gap-1 items-center"
-                          onClick={() =>
-                            setselectedcolor((prev) =>
-                              prev.some((item) => item.color === color.color)
-                                ? prev.filter(
-                                    (item) => item.color !== color.color
-                                  )
-                                : [
-                                    ...prev,
-                                    { name: color.name, color: color.color },
-                                  ]
-                            )
-                          }
-                        >
-                          <input
-                            type="checkbox"
-                            value={color.name}
-                            name="colors"
-                            checked={selectedcolor.some(
-                              (item) => item.color === color.color
-                            )}
-                            id={color.name}
-                          />
-                          <label
-                            htmlFor={color.name}
-                            className="text-14 sm:text-18"
-                          >
-                            {color.name}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-              </div>
-            </div>
-            {error.colors && (
-              <span className="text-red-500 text-14">{error.colors}</span>
-            )}
-          </div>
 
-          {/* discount */}
-          <div className="flex h-[60px] items-center py-2 w-full justify-between">
-            <div className="w-[49%] flex items-center justify-between">
-              <label
-                htmlFor="discount"
-                className="text-14 font-semibold sm:text-18"
-              >
-                Discount
-              </label>
-              <Switch id="discount" onCheckedChange={(e) => setdiscount(e)} />
-            </div>
-            {discount && (
-              <div className="w-1/2">
-                <InputCheckout
-                  label="Discount"
-                  name="discount"
-                  defualtValue={discount.toString()}
-                  placeholder="Product discount"
-                  error={error.discount}
-                  type="number"
-                />
-              </div>
-            )}
-          </div>
+        {/* Basic Info Section */}
+        <div className="flex w-full md:w-1/2 flex-col gap-4">
+          <InputCheckout
+            label="Product Name"
+            name="name"
+            defaultValue={name}
+            placeholder="Product name"
+            error={error.name}
+          />
+          <InputCheckout
+            label="Initial Product Price"
+            name="iniPrice"
+            type="number"
+            defaultValue={iniPrice === 0 ? "" : String(iniPrice)}
+            placeholder="Initial price"
+            error={error.iniPrice}
+          />
+          <InputCheckout
+            label="Last Product Price"
+            name="price"
+            type="number"
+            defaultValue={price === 0 ? "" : String(price)}
+            placeholder="Last price"
+            error={error.price}
+          />
+          <InputCheckout
+            label="Stock"
+            name="stock"
+            type="number"
+            defaultValue={stock === 0 ? "" : String(stock)}
+            placeholder="Stock amount"
+            error={error.stock}
+          />{" "}
+          <InputCheckout
+            label="Discount"
+            name="discount"
+            defaultValue={discount.toString()}
+            placeholder="Discount amount"
+            error={error.discount}
+            type="number"
+          />
+        </div>
 
-          <div className=" py-1 w-full  cursor-pointer rounded-md flex-col items-center justify-center flex gap-2">
-            <div className="flex justify-between  w-full items-center">
-              <h2 className="text-14 w-full sm:text-18 font-semibold">
-                product details
-              </h2>
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center w-[70%] outline-none border-none text-14 sm:text-18 justify-center gap-2">
-                  Details <IoMdArrowDropdown />
-                </DropdownMenuTrigger>
-                {(Details.length > 0 || value.details.length > 0) && (
-                  <DropdownMenuContent className="bg-white -translate-x-[90px] w-screen sm:max-w-[400px]">
-                    {(Details.length > 0 ? Details : value.details).map(
-                      (item, index) => (
-                        <DropdownMenuItem
-                          key={item.description}
-                          className={`${
-                            index % 2 === 0 ? "bg-neutral-50" : "bg-neutral-200"
-                          } flex items-center justify-between px-4`}
-                        >
-                          <span className="text-neutral-600">{item.title}</span>
-                          <p className="flex items-center gap-3">
-                            <span className="text-neutral-500 ">
-                              {item.description}
-                            </span>
-                            <span
-                              onClick={() => handleDeleteDetail(index)}
-                              className=" hover:bg-red-200 rounded-full   transition-all duration-300 cursor-pointer p-2 box-content"
-                            >
-                              <MdOutlineDelete color="red" />
-                            </span>
-                          </p>
-                        </DropdownMenuItem>
-                      )
-                    )}
-                  </DropdownMenuContent>
-                )}
-              </DropdownMenu>
-            </div>
-            <div className="flex flex-col items-center gap-2 w-full justify-between">
-              <div className="w-full flex flex-col   items-center gap-4 ">
-                <InputCheckout
-                  label="Title Detials"
-                  name="titleDetial"
-                  placeholder=" enter the title details"
-                  ref={titleRef}
-                />
-                <InputCheckout
-                  label="description  Detials"
-                  name="descriptionDetial"
-                  placeholder="description details"
-                  ref={descriptionRef}
-                />
-              </div>
-              <button
-                type="button"
-                onClick={handleAdddetail}
-                className="px-5 py-2 bg-blue-500 w-full  text-white rounded-lg "
-              >
-                add
-              </button>
-            </div>
-            {error.details && (
-              <span className="text-red-500 text-14">{error.details}</span>
-            )}
-          </div>
-          <div className="flex justify-end items-center w-full gap-4 ">
-            <button
-              type="button"
-              onClick={() => {
-                window.location.href = "/dashboard/Products";
+        {/* Category & Brand */}
+        <div className="flex w-full md:w-1/2 flex-col gap-4">
+          <div className="flex justify-between items-center gap-3">
+            <label className="font-semibold text-sm sm:text-base min-w-[80px]">
+              Category:
+            </label>
+            <select
+              title="asdf"
+              name="category"
+              value={selectedCategoryy}
+              onChange={(e) => {
+                setselectedcolor([]);
+                setselectedCategoryy(e.target.value);
               }}
-              className="px-5 py-2 rounded-lg border w-full sm:w-fit border-black hover:bg-neutral-200 duration-300 transition-all"
+              className="bg-neutral-200 rounded-md px-3 py-2 w-full max-w-xs"
             >
-              Back
-            </button>
-            <button className=" px-5 py-2  border w-full sm:w-fit border-black text-white bg-black rounded-lg hover:bg-neutral-200 hover:text-black duration-300 transition-all ">
-              {haveId ? "Update Products" : "Add Products"}
-            </button>
+              {catagory?.map((item) => (
+                <option key={item.name} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
           </div>
+          {error.category && (
+            <span className="text-red-500 text-sm">{error.category}</span>
+          )}
+
+          <div className="flex items-center justify-between gap-3">
+            <label className="font-semibold text-sm sm:text-base min-w-[80px]">
+              Brand:
+            </label>
+            <select
+              title="fds"
+              name="brand"
+              className="bg-neutral-200 rounded-md px-3 py-2 w-full max-w-xs"
+              value={brand}
+              onChange={(e) => setbrand(e.target.value)}
+            >
+              {catagory
+                ?.find((item) => item.name === selectedCategoryy)
+                ?.brands.map((branditem) => (
+                  <option key={branditem} value={branditem}>
+                    {branditem}
+                  </option>
+                ))}
+            </select>
+          </div>
+          {error.brand && (
+            <span className="text-red-500 text-sm">{error.brand}</span>
+          )}
+        </div>
+        <div className="flex items-center justify-between w-full md:w-1/2 gap-2">
+          <label className="font-semibold text-sm sm:text-base">
+            Add to Production:
+          </label>
+          <Switch
+            checked={isProduction}
+            onClick={() => setisProduction((pre) => !pre)}
+          />
+        </div>
+        {/* Colors */}
+        <div className="flex w-full md:w-1/2 flex-col gap-2">
+          <label className="font-semibold text-sm sm:text-base">Colors:</label>
+          <div className="flex flex-wrap gap-4">
+            {catagory
+              ?.find((item) => item.name === selectedCategoryy)
+              ?.colors.map((color) => (
+                <div
+                  key={color.name}
+                  className="flex gap-2 items-center cursor-pointer"
+                  onClick={() =>
+                    setselectedcolor((prev) =>
+                      prev.some((item) => item.color === color.color)
+                        ? prev.filter((item) => item.color !== color.color)
+                        : [...prev, { name: color.name, color: color.color }]
+                    )
+                  }
+                >
+                  <input
+                    type="checkbox"
+                    name="colors"
+                    id={color.name}
+                    checked={selectedcolor.some(
+                      (item) => item.color === color.color
+                    )}
+                    readOnly
+                  />
+                  <label htmlFor={color.name}>{color.name}</label>
+                </div>
+              ))}
+          </div>
+          {error.colors && (
+            <span className="text-red-500 text-sm">{error.colors}</span>
+          )}
+        </div>
+
+        {/* Production Switch */}
+
+        {/* Product Details */}
+        <div className="flex w-full md:w-1/2 flex-col gap-3">
+          <div className="flex flex-col w-full  sm:flex-row gap-3">
+            <InputCheckout
+              label="Title"
+              name="titleDetial"
+              placeholder="Enter title"
+              ref={titleRef}
+            />
+            <InputCheckout
+              label="Description"
+              name="descriptionDetial"
+              placeholder="Enter description"
+              ref={descriptionRef}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={handleAdddetail}
+            className="bg-blue-500 text-white rounded-lg px-4 py-2 mt-2 sm:mt-6"
+          >
+            Add
+          </button>
+          {Details.length > 0 && (
+            <div className="gird w-full border bg-slate-200 rounded-lg  gap-y-2 items-center ">
+              <div className="flex items-center px-2 w-full justify-between">
+                <span>Title</span>
+                <span>Description</span>
+                <div className="flex items-center  justify-between gap-3">
+                  <span>Edite</span>
+                  <span>Delete</span>
+                </div>
+              </div>
+
+              {Details?.map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex ${
+                    index % 2 === 0 ? "bg-slate-50" : "bg-slate-100"
+                  } items-center py-1 px-2 w-full justify-between`}
+                >
+                  <span>{item.title}</span>{" "}
+                  <span className="text-center">{item.description}</span>{" "}
+                  <div className="flex items-center justify-center gap-4 px-5">
+                    <EditIcon
+                      onClick={() => {
+                        titleRef.current.value = item.title;
+                        descriptionRef.current.value = item.description;
+                        setDetails((pre) =>
+                          pre.filter((det) => det.title !== item.title)
+                        );
+                      }}
+                      color="green"
+                    />
+                    <Trash2
+                      color="red"
+                      onClick={() =>
+                        setDetails((pre) =>
+                          pre.filter((det) => det.title !== item.title)
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {error.details && (
+            <span className="text-red-500 text-sm">{error.details}</span>
+          )}
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row justify-end gap-3 w-full md:w-1/2 mt-6">
+          <button
+            type="button"
+            onClick={() => (window.location.href = "/dashboard/Products")}
+            className="px-5 py-2 border border-black rounded-lg hover:bg-neutral-200 transition"
+          >
+            Back
+          </button>
+          <button className="px-5 py-2 flex-1 bg-black text-white border border-black rounded-lg hover:bg-neutral-200 hover:text-black transition">
+            {haveId ? "Update Product" : "Add Product"}
+          </button>
         </div>
       </form>
     </div>

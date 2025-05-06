@@ -122,9 +122,7 @@ const SettingsPage = () => {
             searchBy = JSON.parse(localData);
           }
         }
-      } catch (error) {
-        console.error("Error fetching search settings:", error);
-      }
+      } catch (error) {}
       setSearchOption(searchBy);
       setLoading(false);
     };

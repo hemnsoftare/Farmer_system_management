@@ -12,6 +12,9 @@ import useFilterProducts from "@/lib/store/filterProducts";
 
 const Page = () => {
   const { category } = useFilterProducts();
+  const [activeTab, setActiveTab] = useState<"in-stock" | "out-stock">(
+    "in-stock"
+  );
 
   const { data, isLoading } = useQuery({
     queryKey: ["products", category],
@@ -24,82 +27,101 @@ const Page = () => {
     },
   });
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchQuery = e.target.value.trim().toLowerCase();
+    queryClient.setQueryData(["products", category], (oldData: any) => {
+      if (!oldData || !oldData.allProducts || !searchQuery)
+        return {
+          prodcts: oldData.allProducts,
+          allProducts: oldData.allProducts,
+        };
+      return {
+        prodcts: oldData.allProducts.filter((item: ProductFormInput) =>
+          item.name.toLowerCase().includes(searchQuery)
+        ),
+        allProducts: oldData.allProducts,
+      };
+    });
+  };
+
   return (
-    <div className="flex items-start gap-8 px-2 mt-3 justify-start w-full flex-col">
-      <h1 className="sm:text-30 text-20 flex items-center w-full justify-between font-bold mt-8">
-        <span>Products</span>
-        <div className="flex items-center gap-2 justify-center">
-          <Link href={"/dashboard/category"}>
-            <button className="rounded-lg text-12 sm:text-18 bg-black text-white px-2 sm:px-6 py-2 hover:bg-slate-800 duration-300 transition-all">
+    <div className="flex flex-col md:px-12 w-full px-4 py-6 gap-6">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-2xl font-bold">Manage Products</h1>
+        <div className="flex gap-2">
+          <Link href="/dashboard/category">
+            <button className="bg-black text-white px-4 py-2 rounded-md text-sm hover:bg-gray-800 transition-all">
               Add Category
             </button>
           </Link>
-          <Link href={"/dashboard/AddItem"}>
-            <button className="rounded-lg text-12 sm:text-18 bg-black text-white px-2 sm:px-6 py-2 hover:bg-slate-800 duration-300 transition-all">
+          <Link href="/dashboard/AddItem">
+            <button className="bg-black text-white px-4 py-2 rounded-md text-sm hover:bg-gray-800 transition-all">
               Create Product
             </button>
           </Link>
         </div>
-      </h1>
+      </div>
 
-      <div className="w-full flex-wrap flex items-center justify-center gap-3">
+      {/* Category Selector */}
+      <div className="w-full flex flex-wrap items-center justify-start">
         <CatagoryProducts />
       </div>
 
-      <input
-        type="search"
-        placeholder="Search products..."
-        className="w-full self-center outline-none border-2 border-cyan-700 max-w-md p-2 mt-4 rounded-lg focus:outline-none focus:ring-0"
-        onChange={(e) => {
-          const searchQuery = e.target.value.trim().toLowerCase();
-          queryClient.setQueryData(
-            ["products", category],
-            (oldData: {
-              prodcts: ProductFormInput[];
-              allProducts: ProductFormInput[];
-            }) => {
-              if (!oldData || !oldData.prodcts || !searchQuery)
-                return {
-                  prodcts: oldData.allProducts,
-                  allProducts: oldData.allProducts,
-                };
-              return {
-                prodcts: oldData.allProducts.filter((item: ProductFormInput) =>
-                  item.name.toLowerCase().includes(searchQuery)
-                ),
-                allProducts: oldData.allProducts,
-              };
-            }
-          );
-        }}
-      />
+      {/* Search Input */}
+      <div className="w-full flex justify-center mt-4">
+        <input
+          type="search"
+          placeholder="Search products..."
+          onChange={handleSearch}
+          className="w-full max-w-md border-2 focus-within:border-cyan-700 border-cyan-400 rounded-lg p-2 focus:outline-none"
+        />
+      </div>
 
+      {/* Tabs */}
+      <div className="flex gap-4 mt-4 justify-center">
+        <button
+          onClick={() => setActiveTab("in-stock")}
+          className={`px-4 py-2 rounded-full font-medium ${
+            activeTab === "in-stock"
+              ? "bg-cyan-700 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          In Stock
+        </button>
+        <button
+          onClick={() => setActiveTab("out-stock")}
+          className={`px-4 py-2 rounded-full font-medium ${
+            activeTab === "out-stock"
+              ? "bg-cyan-700 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Out of Stock
+        </button>
+      </div>
+
+      {/* Products Section */}
       {isLoading ? (
-        <p className="text-center text-lg text-gray-500">Loading products...</p>
-      ) : !data?.prodcts?.length ? (
-        <p className="text-center text-lg text-gray-500">
+        <p className="text-center text-lg text-gray-500 mt-8">
+          Loading products...
+        </p>
+      ) : !data.prodcts?.length ? (
+        <p className="text-center text-lg text-gray-500 mt-8">
           No products available
         </p>
       ) : (
-        <div className="md:flex grid grid-cols-2 flex-wrap gap-4 justify-center items-center w-full">
-          {data.prodcts.map((item) => (
-            <NewProducts
-              deleteProducts={() => {
-                deleteProducts(item.id);
-                queryClient.setQueryData(
-                  ["products", category],
-                  (oldData: any) => ({
-                    prodcts: oldData?.prodcts?.filter(
-                      (i) => i.name !== item.name
-                    ),
-                  })
-                );
-              }}
-              key={item.name}
-              itemDb={item}
-              title="dashboard"
-            />
-          ))}
+        <div className="flex items-center justify-center py-6 flex-wrap gap-6 w-full">
+          {data.prodcts
+            .filter((item) =>
+              activeTab === "in-stock"
+                ? item.stock > 0
+                : item.stock === 0 || item.stock === undefined
+            )
+            .map((item) => (
+              <NewProducts key={item.id} itemDb={item} title="dashboard" />
+            ))}
         </div>
       )}
     </div>

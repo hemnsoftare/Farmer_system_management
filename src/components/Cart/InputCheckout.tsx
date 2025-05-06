@@ -8,10 +8,9 @@ export interface InputCheckoutProps {
   error?: string;
   isdisabled?: boolean;
   type?: string;
-  defualtValue?: string;
+  defaultValue?: string;
 }
 
-// Use forwardRef to forward the ref to the input element
 const InputCheckout = forwardRef<HTMLInputElement, InputCheckoutProps>(
   (
     {
@@ -19,38 +18,47 @@ const InputCheckout = forwardRef<HTMLInputElement, InputCheckoutProps>(
       placeholder = "Enter your name",
       name,
       error,
-      type,
+      type = "text",
       isdisabled = true,
-      defualtValue = "",
+      defaultValue = "",
     },
     ref
   ) => {
     return (
-      <div className="relative w-full group flex items-start  flex-col">
-        <span className="absolute text-14 sm:text-16 px-1 opacity-0 group-focus-within:opacity-100 duration-200 transition-all bg-white text-blue-400 -top-3 left-5 rounded-lg">
+      <div className="w-full flex flex-col gap-1 relative">
+        <label
+          htmlFor={name}
+          className="text-sm font-medium text-blue-500 px-1"
+        >
           {label}
-        </span>
+        </label>
 
         <input
-          disabled={!isdisabled}
-          type={type ? type : "text"}
+          id={name}
           ref={ref}
+          type={type}
           name={name}
-          defaultValue={defualtValue}
+          defaultValue={defaultValue}
           placeholder={placeholder}
-          className={`${
-            !isdisabled ? "border-neutral-300" : "border-neutral-400"
-          } outline-none placeholder:text-neutral-500 group-focus-within:placeholder:text-blue-500 focus:border-blue-600 shadow-inner border-2  rounded-lg text-blue-500 px-5 py-2 w-full focus:shadow-blue-100 shadow-neutral-100`}
+          disabled={!isdisabled}
+          className={`peer transition-all duration-200 border-2 rounded-xl px-4 py-2 w-full shadow-sm text-blue-600 placeholder:text-neutral-400 outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 ${
+            !isdisabled
+              ? "border-neutral-300 bg-neutral-100"
+              : "border-neutral-400 bg-white"
+          }`}
         />
-        {/* <IoIosCloseCircleOutline className="absolute scale-[1.05] right-5 top-[15px]" /> */}
-        <p className="text-red-700 ml-2 text-12 text-shadow-lg">
-          {error ? error : ""}
-        </p>
+
+        {error && (
+          <div className="flex items-center gap-1 text-red-600 text-sm mt-1 px-1">
+            <IoIosCloseCircleOutline className="text-base" />
+            {error}
+          </div>
+        )}
       </div>
     );
   }
 );
 
-InputCheckout.displayName = "InputCheckout"; // Set the displayName for better debugging
+InputCheckout.displayName = "InputCheckout";
 
 export default InputCheckout;

@@ -40,7 +40,7 @@ import {
   MdShoppingBasket,
 } from "react-icons/md";
 import { MenuItemProps, User } from "@nextui-org/react";
-import { BiCategoryAlt, BiSolidTimer } from "react-icons/bi";
+import { BiCategoryAlt, BiLogOut, BiSolidTimer } from "react-icons/bi";
 import { FaUsersLine } from "react-icons/fa6";
 
 const newProdcuts: Productsprops[] = [
@@ -153,20 +153,12 @@ const bestSellers: Productsprops[] = [
   },
 ];
 const brand: [
-  "/Apple.webp",
-  "/sony.svg",
-  "/samsung.svg",
-  "/canon.svg",
-  "/huawei.svg",
-  "/lenovo.svg",
-] = [
-  "/Apple.webp",
-  "/sony.svg",
-  "/samsung.svg",
-  "/canon.svg",
-  "/huawei.svg",
-  "/lenovo.svg",
-];
+  "/y/top1.png",
+  "/y/top2.jpg",
+  "/y/top3.png",
+  "/y/top4.png",
+  "/y/top5.svg",
+] = ["/y/top1.png", "/y/top2.jpg", "/y/top3.png", "/y/top4.png", "/y/top5.svg"];
 
 const user: userProps = {
   name: "hemnsoftware",
@@ -306,6 +298,11 @@ const menuItems: propsMenuItem[] = [
     url: "/dashboard/AddItem",
   },
   {
+    name: "manufactor",
+    icon: FaDesktop,
+    url: "/dashboard/manufactori",
+  },
+  {
     name: "Products",
     icon: MdShoppingBasket,
     url: "/dashboard/Products",
@@ -344,7 +341,17 @@ const menuItems: propsMenuItem[] = [
   {
     name: "Home",
     icon: FaHome,
-    url: "/dashboard",
+    url: "/dashboard/home",
+  },
+  {
+    name: "Accounting",
+    icon: BiSolidTimer,
+    url: "/dashboard/Accounting",
+  },
+  {
+    name: "Sign Out",
+    icon: BiLogOut,
+    url: "/home",
   },
 ];
 

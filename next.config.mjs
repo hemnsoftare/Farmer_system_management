@@ -1,5 +1,4 @@
 import createNextIntlPlugin from "next-intl/plugin";
-import withPWA from "next-pwa";
 
 /** @type {import('next').NextConfig} */
 
@@ -25,11 +24,4 @@ const nextConfig = {
   },
 };
 
-// Combine both plugins (PWA & Intl)
-export default withNextIntl(
-  withPWA({
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-  })(nextConfig)
-);
+export default withNextIntl(nextConfig);

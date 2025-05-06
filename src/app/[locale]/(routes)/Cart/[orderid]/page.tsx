@@ -12,6 +12,7 @@ import {
   Autocomplete,
 } from "@react-google-maps/api";
 import { useQuery } from "@tanstack/react-query";
+import { selectedOrder } from "@/lib/store/filterProducts";
 
 const libraries: "places"[] = ["places"];
 export type OrderType = {
@@ -45,24 +46,9 @@ export interface ItemCartProps {
 }
 
 const OrderPage = ({ params }) => {
-  const param: { orderid: string } = React.use(params);
-  const { data, isLoading } = useQuery({
-    queryKey: ["Cart[ordreid]"],
-    queryFn: async () => {
-      const refdoc: OrderType = (
-        await getDoc(doc(db, "order", param.orderid))
-      ).data() as OrderType;
-      return { order: refdoc };
-    },
-  });
-  // const [order, setOrder] = useState<OrderType | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
+  const { order } = selectedOrder();
 
-  if (isLoading) {
-    return (
-      <p className="text-center text-gray-500">Loading order details...</p>
-    );
-  }
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       {/* Order Summary */}
@@ -73,7 +59,7 @@ const OrderPage = ({ params }) => {
       >
         <div className="relative  w-full  h-[450px]  mx-auto rounded-lg shadow-xl overflow-hidden">
           <GoogleMap
-            center={{ lat: data.order.lat, lng: data.order.lng }}
+            center={{ lat: order.lat, lng: order.lng }}
             zoom={12}
             mapContainerStyle={{ width: "100%", height: "100%" }}
             onLoad={setMap}
@@ -82,7 +68,7 @@ const OrderPage = ({ params }) => {
               zoomControl: false, // Optional: Hide zoom buttons
             }}
           >
-            <Marker position={{ lat: data.order.lat, lng: data.order.lng }} />
+            <Marker position={{ lat: order.lat, lng: order.lng }} />
           </GoogleMap>
         </div>
       </LoadScript>
@@ -90,32 +76,31 @@ const OrderPage = ({ params }) => {
         <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <p>
-            <strong>Name:</strong> {data.order.fullName}
+            <strong>Name:</strong> {order.fullName}
           </p>
           <p>
-            <strong>Phone:</strong> {data.order.phoneNumber}
+            <strong>Phone:</strong> {order.phoneNumber}
           </p>
           <p>
-            <strong>Email:</strong> {data.order.email as any}
+            <strong>Email:</strong> {order.email as any}
           </p>
           <p>
-            <strong>Address:</strong> {data.order.address.streetName},{" "}
-            {data.order.address.city}, {data.order.address.region}
+            <strong>Address:</strong> {order.address.streetName},{" "}
+            {order.address.city}, {order.address.region}
           </p>
           <p>
             <strong>Order Date:</strong>{" "}
-            {new Date(data.order.orderDate).toLocaleString()}
+            {new Date(order.orderDate).toLocaleString()}
           </p>
           <p>
-            <strong>Total Amount:</strong> ${data.order.totalAmount.toFixed(2)}
+            <strong>Total Amount:</strong> ${order.totalAmount.toFixed(2)}
           </p>
           <p>
-            <strong>Discount:</strong> $
-            {data.order.totaldiscountPrice.toFixed(2)}
+            <strong>Discount:</strong> ${order.totaldiscountPrice.toFixed(2)}
           </p>
-          {data.order.note && (
+          {order.note && (
             <p>
-              <strong>Note:</strong> {data.order.note}
+              <strong>Note:</strong> {order.note}
             </p>
           )}
         </div>
@@ -125,7 +110,7 @@ const OrderPage = ({ params }) => {
       <div className="p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Ordered Items</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {data.order.orderItems.map((item) => (
+          {order.orderItems.map((item) => (
             <div
               key={item.id}
               className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm"

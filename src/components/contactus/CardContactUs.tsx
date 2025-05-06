@@ -8,8 +8,8 @@ interface CardContactUsProps {
   title: string;
   formMessage: string;
   imageUrl: string;
-  onDelete?: () => void;
-  onEdit?: () => void;
+  onDelete?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onEdit?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   showActions: boolean; // Condition to show "edit" and "delete" buttons
 }
 
@@ -49,13 +49,13 @@ const CardContactUs: React.FC<CardContactUsProps> = ({
       {showActions && (
         <footer className="flex gap-4 mt-1">
           <button
-            onClick={() => onDelete()}
+            onClick={(e) => onDelete(e)}
             className="bg-red-500 text-white py-2 md:px-4 px-2  text-12 md:text-19 rounded-full hover:bg-red-600 transition-colors duration-200"
           >
             Delete
           </button>
           <button
-            onClick={onEdit}
+            onClick={(e) => onEdit(e)}
             className="bg-blue-500 text-white py-2 md:px-4 px-2 rounded-full hover:bg-blue-600 text-12 md:text-19 transition-colors duration-200"
           >
             Edit

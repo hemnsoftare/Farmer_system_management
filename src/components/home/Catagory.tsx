@@ -9,33 +9,38 @@ const Catagory = () => {
   const t = useTranslations("category");
   const catagory: { name: string; image: string; path: string }[] = [
     {
-      name: t("accessories"),
-      image: "/a.png",
+      // name: t("accessories"),
+      name: "wheat",
+      image: "/y/ganm.jpg",
       path: "accessoiries",
     },
     {
-      name: t("camera"),
-      image: "/c.png",
+      // name: t("camera"),
+      name: "egg",
+      image: "/y/egg.png",
       path: "camera",
     },
     {
-      name: t("laptop"),
-      image: "/l.png",
+      // name: t("laptop"),
+      name: "checken",
+      image: "/y/chicken.jpeg",
       path: "laptop",
     },
     {
-      name: t("smart Phone"),
-      image: "/s.png",
+      name: "crow",
+      image: "/y/14091.jpg",
       path: "smartPhone",
     },
     {
-      name: t("gaming"),
-      image: "/g.png",
+      // name: t("gaming"),
+      name: "turkey",
+      image: "/y/halashish.jpg",
       path: "gaming",
     },
     {
-      name: t("smart Watch"),
-      image: "/sw.png",
+      // name: t("smart Watch"),
+      name: "butter",
+      image: "/y/panir1.jpg",
       path: "smartWatch",
     },
   ];
@@ -55,7 +60,7 @@ const Catagory = () => {
             src={item.image}
             width={148}
             height={148}
-            className=" sm:w-full sm:h-full w-[70px] h-[80px]"
+            className=" sm:w-full sm:h-full max-w-[100px] max-h-[110px] min-w-[100px] min-h-[110px]"
           />
           <h3 className="capitalize lg:text-sm text-12  text-center  md:text-10 w-full ">
             {item.name}

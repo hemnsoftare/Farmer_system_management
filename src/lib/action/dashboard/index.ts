@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import {
   BlogProps,
+  catagoryProps,
   favorite,
   OrderType,
   ProductFormInput,
@@ -72,9 +73,13 @@ export const getAllProducts = async (): Promise<ProductFormInput[]> => {
         name: data.name ?? "", // Ensure required fields have default values
         price: data.price ?? 0,
         brand: data.brand ?? "",
+        isProduction: data.isProduction ?? true,
         colors: data.colors ?? [], // Ensure it's an array
         category: data.category ?? "",
         Bigimage: data.Bigimage ?? null,
+        iniPrice: data.iniPrice ?? 0,
+        isev: data.isev ?? false,
+        stock: data.stock ?? 0,
         imageSmall: data.imageSmall ?? [],
         discount: data.discount ?? 0,
         details: data.details ?? [],
@@ -162,28 +167,27 @@ export const getProductsBYDiscountAndCategoryAndSale = async ({
   col,
   category,
 }: {
-  col: string;
+  col: "date" | "discount";
   category: string;
 }): Promise<ProductFormInput[]> => {
   let q;
   if (col === "date") {
-    q =
-      category !== ""
-        ? query(
-            collection(db, "Products"),
-            where("category", "==", category), // ✅ Correct placement
-            orderBy(col, "desc")
-          )
-        : query(collection(db, "Products"), orderBy(col, "asc"));
+    console.log(col);
+    q = category
+      ? query(
+          collection(db, "Products"),
+          where("category", "==", category), // ✅ Correct placement
+          orderBy(col, "desc")
+        )
+      : query(collection(db, "Products"), orderBy(col, "asc"));
   } else if (col !== "discount") {
-    q =
-      category !== ""
-        ? query(
-            collection(db, "Products"),
-            where("category", "==", category), // ✅ Correct placement
-            orderBy(col, "desc")
-          )
-        : query(collection(db, "Products"), orderBy(col, "desc"));
+    q = category
+      ? query(
+          collection(db, "Products"),
+          where("category", "==", category), // ✅ Correct placement
+          orderBy(col, "desc")
+        )
+      : query(collection(db, "Products"), orderBy(col, "desc"));
   } else {
     q =
       category !== ""
@@ -207,4 +211,16 @@ export const deleteBlog = async (id: string) => {
   try {
     await deleteDoc(doc(db, "blogs", id)).then(() => {});
   } catch (error) {}
+};
+
+export const getAllCategories = async (): Promise<catagoryProps[]> => {
+  try {
+    const cate = await getDocs(collection(db, "category"));
+    let cateData = [];
+    cate.forEach((doc) => cateData.push(doc.data()));
+    return cateData;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw new Error("Failed to fetch categories");
+  }
 };

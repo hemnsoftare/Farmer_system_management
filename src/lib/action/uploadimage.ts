@@ -83,7 +83,7 @@ export const getProducts = async (
   if (filter.discount === true)
     conditions.push(where("isDiscount", "==", true));
 
-  if (category !== "") {
+  if (category) {
     console.log("in if category");
     conditions.push(where("category", "==", category));
   }
@@ -155,6 +155,9 @@ export const setUser = async (user: UserType) => {
     primaryEmailAddressId: user.primaryEmailAddressId || "",
   };
 
+  await updateDoc(doc(db, "user", user?.id), {
+    ...sanitizedUser,
+  });
   await setDoc(doc(db, "user", user?.id), sanitizedUser).catch((error) =>
     console.error("Error saving user", error)
   );
@@ -163,6 +166,9 @@ export const setUser = async (user: UserType) => {
 export const setOrder = async (order: OrderType): Promise<string> => {
   type quantity = { id: string; quantitiy: number }[];
   let update: quantity = [];
+
+  // get quatity
+  console.log(order.orderItems, "orderitemes");
   order.orderItems.map((item) => {
     let sum = 0;
     order.orderItems.filter((orderitem) =>
@@ -173,6 +179,7 @@ export const setOrder = async (order: OrderType): Promise<string> => {
       update.push(itemupdate);
     }
   });
+
   try {
     const refSendData = await addDoc(collection(db, "order"), {
       address: {
@@ -180,6 +187,7 @@ export const setOrder = async (order: OrderType): Promise<string> => {
         region: order.address.region || "",
         streetName: order.address.streetName || "",
       },
+
       email: order.email.map((email) => email.emailAddress) || [],
       fullName: order.fullName || "",
       orderDate: new Date(),
@@ -200,13 +208,20 @@ export const setOrder = async (order: OrderType): Promise<string> => {
       totaldiscountPrice: order.totaldiscountPrice || 0,
       userId: order.userId || "",
       note: order.note || "",
-    });
+      view: order.view,
+      lat: order.lat || 0,
 
+      lng: order.lng || 0,
+    });
+    console.log(update, "update");
     update.map(async (item) => {
       const getitem = await getDoc(doc(db, "Products", item.id));
       const currentNumberSale = getitem.exists() && getitem.data().numberSale;
+      const currentstock = getitem.exists() && getitem.data().stock;
+
       await updateDoc(doc(db, "Products", item.id), {
         numberSale: item.quantitiy + currentNumberSale,
+        stock: currentstock - item.quantitiy,
       }).then((res) => {});
     });
 

@@ -21,7 +21,7 @@ const BlogVideo = ({ item, more }: { item: BlogProps; more: string }) => {
         <source src="https://youtu.be/PDNdgLByktE?si=U3QTKfKhg3Dy8lbr" />
       </video> */}
       <p className="absolute text-18 items-center justify-between flex sm:group-hover:opacity-0 duration-300 transition-all bottom-0 left-0 right-0 backdrop-blur-md text-white px-4 py-1 ">
-        <span> {item.title}</span>
+        <span className="line-clamp-1"> {item.title}</span>
         <Link
           href={`/blog/${item.id}`}
           className="px-5 py-1 text-white rounded-lg bg-secondary-400 active:bg-secondary-600 duration-300 transition-all md:hover:bg-secondary-600"

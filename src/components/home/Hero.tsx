@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import SearchComponent from "./Search";
 const Hero = () => {
   const t = useTranslations("hero");
   return (
@@ -38,20 +39,26 @@ const Hero = () => {
         />
       </div> 
       */}
-      <motion.div className="flex md:px-12 sm:mt-12 relative md:flex-row m-0 flex-col-reverse min-h-[410px] md:min-h-fit overflow-hidden above-405:px-3 mt-0 md:items-center items-start w-full justify-center md:justify-between ">
+      <motion.div className="flex flex-col md:px-12 sm:mt-12 bg-red-300  m-0  h-fit mb-32  w-full ">
+        <SearchComponent />
         <motion.div
           transition={{ duration: 0.3 }}
           initial={{ x: -150, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          className="flex w-full  md:w-[300px] z-[2] justify-between   md:justify-center flex-col md:py-4 h-full items-center gap-8"
+          className="flex justify-center items-center z-[2]  flex-col "
         >
           <h1 className="lg:text-35 mt-8 text-secondary dark:text-primary-200 xl:text-60 relative  text-48 md:text-29 font-bold capitalize ">
-            {t("title")}
+            {/* {t("title")} */}
+            Empower Your Farming Future
           </h1>
-          <div className=" flex items-center gap-2 -mb-[190px] md:mb-0 box-content md:justify-center justify-between h-full flex-col">
-            <h3 className="font-[500] dark:text-neutral-500 text-22  text-center w-full md:text-20 lg:text-24">
-              {t("quote")}
 
+          <div className=" flex items-center gap-2  md:mb-0 box-content md:justify-center justify-between h-full flex-col">
+            <h3 className="font-[500] dark:text-neutral-500 text-22 text-white  text-center w-full md:text-20 lg:text-24">
+              {/* {t("quote")} */}
+              Manage your land, livestock, <br /> and harvests smarter, faster,
+              and better{" "}
+              <span className="text-secondary font-extrabold"> — </span> all in
+              one place.
               {/* &quot;Join
               <span className="text-secondary">
                 {" "}
@@ -60,29 +67,21 @@ const Hero = () => {
             </h3>
             <Link
               href={"#newProducts"}
-              className="transition-all w-full md:w-fit duration-300"
+              className="transition-all w-full md:w-fit mt-24 duration-300"
             >
-              <button className="capitalize px-7 w-full  md:w-fit py-2 text-15 lg:text-16 sm:text-20 -mb-6 above-405:px-7 sm:hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-10 bg-secondary text-white sm:py-4 rounded-lg mt-auto">
+              <button className="capitalize px-7 w-full  md:w-fit py-2 text-15 lg:text-16 sm:text-20  above-405:px-7 sm:hover:bg-red-800 duration-300 transition-all md:px-12 lg:px-10 bg-secondary text-white sm:py-4 rounded-lg mt-auto">
                 {t("buttonText")}
               </button>
             </Link>
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 200 }}
-          whileInView={{ opacity: 1, x: 1 }}
-          transition={{ duration: 0.8 }}
-          className=" mr-0 xl:w-[60%] opacity-75 md:opacity-100 md:static  absolute left-0 right-0 -top-7 scale-[1.24] w-screen h-[370px] sm:scale-[1] sm:h-auto md:self-end lg:w-[50%] sm:w-[60%]"
-        >
-          <Image
-            src="/hero.svg"
-            alt="image hero"
-            className="w-full h-full brightness-95"
-            width={628}
-            height={400}
-          />
-        </motion.div>
+        <Image
+          src="/y/hero.png"
+          alt="image hero"
+          className="w-screen h-screen absolute top-0 left-0 brightness-95"
+          fill
+        />
       </motion.div>
     </>
   );

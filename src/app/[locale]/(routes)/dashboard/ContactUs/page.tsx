@@ -221,13 +221,17 @@ const Page = () => {
               imageUrl={item.imageUrl}
               id={item.id}
               showActions={true}
-              onDelete={() => {
+              onDelete={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 setContacts((pre) =>
                   pre.filter((contact) => contact.id !== item.id)
                 );
                 deleteContactUs(item.id);
               }}
-              onEdit={() => {
+              onEdit={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 setTitle(item.title);
                 setFormMessage(item.formMessage);
                 setImageUrl(item.imageUrl);

@@ -16,7 +16,8 @@ const Banner = () => {
           transition={{ duration: 0.8, type: "spring" }}
           className="lg:text-[44px] md:text-34 font-semibold uppercase text-white dark:text-gray-200"
         >
-          {t("smartWatch")}
+          {/* {t("smartWatch")} */}
+          Raise the Pride of the Farm
         </motion.h1>
         <motion.p
           initial={{ x: 300 }}

@@ -39,7 +39,6 @@ export default async function RootLayout({
   return (
     <html lang={params.locale} dir={dir}>
       <head>
-        <link rel="manifest" href="/manifest.json" />
         <style>
           {`
           html {

@@ -25,9 +25,10 @@ const Layout = ({
   const handleHideSlider = () => setShowSlider(false);
 
   return (
-    <div className="flex relative h-screen bg-gray-50 min-w-screen">
+    <div className="flex relative bg-gray-50/5 min-w-screen min-h-screen">
       {/* Mobile Tabs Toggle */}
       <button
+        title="f"
         onClick={() => setshowtabs((pre) => !pre)}
         className="z-50 md:hidden"
       >
@@ -37,10 +38,9 @@ const Layout = ({
           } transition-transform duration-300 bg-secondary`}
         />
       </button>
-
       {/* Mobile Sidebar */}
       <div
-        className={`transition-all  md:hidden duration-500 flex-col gap-3 z-50 absolute top-12 left-3 ${
+        className={`transition-all md:hidden duration-500 flex-col gap-3 z-50 absolute top-12 left-3 ${
           showtabs ? "max-w-[220px] opacity-100 flex" : "max-w-0 opacity-0"
         }`}
       >
@@ -74,27 +74,39 @@ const Layout = ({
           </Link>
         ))}
       </div>
-
       {/* Sidebar Toggle Button */}
-      <button
+      {/* <button
+        title="fd"
         className={`absolute top-2 transition-all md:block hidden bg-white p-0 rounded-full duration-300 z-50 ${
           showSlider ? "rotate-180 left-[200px]" : "rotate-0 left-[110px]"
         }`}
         onClick={showSlider ? handleHideSlider : handleShowSlider}
       >
         <IoMdArrowDroprightCircle size={35} color="black" />
-      </button>
-
+      </button> */}
       {/* Desktop Sidebar */}
+
+      <div className={`${showSlider ? "sm:w-[260px]" : "w-[90px]"}`}></div>
       <div
         style={{
-          boxShadow: showSlider ? "11px 0 19px #083344" : "7px 0 9px #083344",
+          boxShadow: showSlider ? "6px 0 9px #083344" : "7px 0 9px #083344",
         }}
         className={`${
-          showSlider ? "sm:w-[260px] " : ""
-        } hidden md:flex transition-all duration-300  overflow-y-auto h-screen px-3 gap-5 py-9 flex-col bg-gradient-to-bl to-cyan-950 from-cyan-800 items-start`}
+          showSlider ? "sm:w-[260px]" : ""
+        } hidden md:block  transition-all duration-300 overflow-y-auto py-5 h-full min-h-screen px-3 gap-5 bg-gradient-to-bl to-cyan-950 from-cyan-800 fixed left-0 top-0  items-start`}
       >
-        <div className="flex text-white gap-3 items-center mb-4 justify-center">
+        {" "}
+        <div className="flex text-white gap-3 relative items-center my-8 justify-center">
+          {" "}
+          <button
+            title="fd"
+            className={`absolute -top-8 transition-all md:block hidden bg-white p-0 rounded-full duration-300 z-50 ${
+              showSlider ? "rotate-180 left-[200px]" : "rotate-0 left-[55px]"
+            }`}
+            onClick={showSlider ? handleHideSlider : handleShowSlider}
+          >
+            <IoMdArrowDroprightCircle size={35} color="black" />
+          </button>
           {user && (
             <>
               <Image
@@ -112,21 +124,21 @@ const Layout = ({
         </div>
         {menuItems.map((item) => (
           <Link
-            href={item.url || ""}
+            href={item.url === "/home" ? "/" : item.url}
             key={item.name}
             className={`${
-              item.name !== "Home" && pathname.includes(item.url || "null")
-                ? "rounded-l-lg border-l-4 bg-gradient-to-l from-cyan-400 to-transparent border-l-cyan-400"
-                : "border-r-2 bg-cyan-700"
-            } w-full text-white flex text-md py-2 cursor-pointer rounded-lg hover:bg-cyan-500 transition-all items-center px-5 gap-2`}
+              item.url !== "/home" && pathname.includes(item.url || "null")
+                ? "rounded-l-md border-l-4 bg-grdadient-to-l from-cyadn-400 to-transparent bordedr-l-cyan-400"
+                : "border-r-2d bg-cyan-d700"
+            } w-full text-white flex text-md my-3 py-2 cursor-pointer rounded-lg hover:bg-cyan-500 transition-all items-center px-5 gap-2`}
           >
             <item.icon
               color="white"
               className={`${
-                item.name !== "Home" && pathname.includes(item.url || "null")
-                  ? "bg-gradient-to-b from-white to-cyan-950 to-85% text-black"
-                  : "bg-gradient-to-b from-white to-cyan-950 to-45%"
-              } w-[20px] shadow-sm shadow-white  rounded-full p-2 box-content`}
+                item.url !== "/home" && pathname.includes(item.url || "null")
+                  ? "bg-gradient-to-b from-whxite to-cyan-950 to-85% text-black"
+                  : "bg-gradient-tdo-b frodm-white tdo-cyan-950 tdo-45%"
+              } w-[20px] shadow-sm shadow-white rounded-full p-2 box-content`}
             />
 
             {showSlider && (
@@ -143,12 +155,11 @@ const Layout = ({
           </Link>
         ))}
       </div>
-
       {/* Main Content */}
       <div
-        className={`transition-all duration-300 ${
-          showSlider ? "w-full md:w-[calc(100%-260px)]" : "w-full   "
-        }  h-screen overflow-auto`}
+        className={`transition-all duration-300 overflow-y-auto h-full ${
+          showSlider ? "w-full md:w-[calc(100%-260px)]" : "w-full"
+        }`}
       >
         {children}
       </div>

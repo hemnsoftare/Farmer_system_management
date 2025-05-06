@@ -36,12 +36,13 @@ const Reklam = () => {
         />
         <div className="flex w-full flex-col items-start justify-between gap-2">
           <h2 className="font-bold p-2 mt-[100px] text-[20px] sm:text-2xl dark:text-white">
-            {t("iphone")}
+            {/* {t("iphone")} */}
+            Wheat Farming Season
             {/* iPhone{" "}
             <span className="text-white dark:text-[#30BCCE]">15 Series</span> */}
           </h2>
           <Image
-            src={"/5iphone.svg"}
+            src={"/y/g.webp"}
             alt="image"
             width={300}
             height={300}
@@ -74,7 +75,10 @@ const Reklam = () => {
               className={`text-neutral-700  dark:text-gray-300 sm:text-16 text-justify sm:text-start text-12
                ${l ? "pr-3" : "pl-3"}`}
             >
-              {t("message")}
+              Get ready for a fruitful season. Discover the best practices and
+              tools for growing wheat. Stay tuned for our upcoming wheat farming
+              guide and pre-season tips
+              {/* {t("message")} */}
             </p>
           </div>
         </main>

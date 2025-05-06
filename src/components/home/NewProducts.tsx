@@ -2,16 +2,15 @@
 import React from "react";
 import Image from "next/image";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { ProductFormInput, Productsprops } from "@/lib/action";
+import { ProductFormInput } from "@/lib/action";
 import { Loader } from "@/app/[locale]/loader";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { addfavorite, deleteFavorite } from "@/lib/action/fovarit";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { FileEdit } from "lucide-react";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { selectedProduct } from "@/lib/store/filterProducts";
 const NewProducts = ({
   title,
   itemDb,
@@ -34,9 +33,10 @@ const NewProducts = ({
     e.stopPropagation(); // Prevent click event from propagating to the <Link>
     e.preventDefault(); // Prevent default behavior of the <Link>
   };
-  const router = useRouter();
+  const router = useRouter().push;
   const product: ProductFormInput | undefined = itemDb;
   const { user } = useUser();
+  const { selectProduct } = selectedProduct();
   if (load) return <Loader />;
   if (product) {
     return (
@@ -45,12 +45,11 @@ const NewProducts = ({
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         onClick={() => {
-          router.push(
-            `${
-              title !== "dashboard"
-                ? `/products/${product.category}/${product.id}`
-                : `/dashboard/Products/${product.id}`
-            }`
+          selectProduct(product);
+          router(
+            title === "dashboard"
+              ? "/dashboard/Products/id"
+              : `/products/${product.category}/${product.id}`
           );
         }}
         key={product.name}
@@ -58,7 +57,7 @@ const NewProducts = ({
           title === "sale"
             ? "bg-white border dark:bg-neutral-900/90 h-full min-w-[190px]"
             : "sm:h-fit border h-full lg:min-w-[230px] lg:max-w-[230px] sm:w-full max-w-[250px]"
-        } flex sm:gap-5  border-neutral-200 shadow-lg dark:shadow-secondary-500 dark:border-secondary shadow-neutral-200 md:shadow-neutral-400 overflow-hidden flex-col group relative items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3`}
+        } flex sm:gap-5  border-neutral-200 shadow-md dark:shadow-secondary-500 dark:border-secondary shadow-neutral-200/50 md:shadow-neutral-400 overflow-hidden flex-col group relative items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3`}
       >
         {user && user?.id && title !== "dashboard" && (
           <>
@@ -146,7 +145,7 @@ const NewProducts = ({
         <div className="flex gap-2 pt-1 sm:pt-0 p-2 sm:p-[2px] w-full flex-col">
           <hr className="h-[2px] bg-gradient-to-r dark:hidden from-white via-slate-500 to-white border-0" />
           <h3
-            className={`lg:text-16 text-14 md:text-10 w-full overflow-hidden mb-2 line-clamp-1 text-secondary-400 font-[500]`}
+            className={`lg:text-16 text-14 md:text-10 w-full overflow-hidden  line-clamp-1 text-secondary-400 font-[500]`}
           >
             {product.name}
           </h3>
@@ -171,33 +170,11 @@ const NewProducts = ({
                 {product.price}$
               </span>
               {product.isDiscount && (
-                <span className="line-through text-11 sm:text-12 dark:text-neutral-400 decoration-secondary group-hover:opacity-0 text-neutral-600">
+                <span className="line-through  text-16 dark:text-neutral-400 decoration-secondary group-hover:opacity-0 text-neutral-600">
                   $
                   {product.discount &&
                     (product.discount * 0.01 * product.price).toFixed(2)}
                 </span>
-              )}
-              {title === "dashboard" && (
-                <div className="flex gap-2 item-center">
-                  <button
-                    onClick={(e) => {
-                      router.push(`/dashboard/AddItem?id=${product.id}`);
-                      handleFavoriteClick(e);
-                    }}
-                    // href={`/dashboard/AddItem?id=${product.id}`}
-                  >
-                    <FileEdit />
-                  </button>
-
-                  <RiDeleteBin6Line
-                    onClick={(e) => {
-                      handleFavoriteClick(e);
-                      deleteProducts();
-                    }}
-                    size={24}
-                    color="red"
-                  />
-                </div>
               )}
             </div>
           </div>

@@ -63,7 +63,6 @@ export default function Home() {
     <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
       {/* <PushNotificationManager /> */}
       <HomePage />
-      <SearchComponent />
       <Hero /> <Catagory />
       <Sales />
       <motion.div className="flex flex-col px-3 dark:text-white w-full items-center justify-center">
@@ -87,7 +86,7 @@ export default function Home() {
           <ForProducts load={isLoading} products={data?.productNew} />
         )}
       </motion.div>
-      <Reklam />
+      <Brand />
       <div className="flex flex-col px-3 w-full  items-center justify-center">
         <div className="flex justify-between px-2 dark:text-white items-center border-b-4 w-full pb-4 border-neutral-400">
           <h3 className="text-[20px] sm:text-30 flex items-center justify-center ">
@@ -106,9 +105,8 @@ export default function Home() {
           <ForProducts load={isLoading} products={data?.productSale} />
         )}
       </div>
-      <Brand />
       <div className="w-full overflow-hidden flex items-center justify-center px-3">
-        <Banner />
+        {/* <Banner /> */}
       </div>
       <Servies />
       {/*

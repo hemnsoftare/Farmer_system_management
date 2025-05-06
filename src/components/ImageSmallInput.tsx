@@ -31,15 +31,15 @@ const ImageSmallInput: React.FC<ImageSmallInputProps> = ({
       />
       <label
         htmlFor={name}
-        className="bg-neutral-300 flex items-center justify-center text-center text-[30px] rounded-md size-[60px]"
+        className="bg-neutral-200 hover:bg-neutral-300 flex items-center justify-center text-center text-3xl rounded-lg size-[70px] cursor-pointer transition duration-200 overflow-hidden"
       >
         {image || value ? (
           <Image
             src={image ? URL.createObjectURL(image) : value}
             alt="Small Image Preview"
-            width={60}
-            height={60}
-            className="size-[60px] object-cover rounded"
+            width={70}
+            height={70}
+            className="object-cover w-full h-full rounded-lg"
           />
         ) : (
           "+"

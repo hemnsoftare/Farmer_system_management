@@ -43,72 +43,70 @@ const ForProducts = ({
     };
     getdata();
   }, [user]);
+  console.log(
+    pro,
+    "jhdsjkfhkajsdhfjkasdhfafdhahajdhasdkjfhaskdjfhasdkjasdjkhfjkhfdjk",
+    products
+  );
   if (load)
     return (
       <div className="flex mt-4 px-3 py-8  justify-center w-full items-center gap-4">
         <Loader />
-        height: ,
         <Loader />
-        <div className="hidden sm:flex w-full items-center justify-center gap-2">
-          <Loader />
-
-          <Loader />
-        </div>
       </div>
     );
   return (
     <motion.div className=" mt-3 w-full md:flex-wrap  overflow-hidden sm:flex  grid grid-cols-2 bg-blue-10 gap-2 md:gap-6 relative px- justify-center  items-center">
-      {pro &&
-        pro
-          .slice(
-            !title ? startProducts : 0,
-            !title ? startProducts + limit : products.length
-          )
-          .map((product, index) => (
-            <motion.div
-              initial={{
-                y: 200,
-                x: index % 2 === 0 ? -40 : 40,
-                opacity: 0,
+      {pro
+        .slice(
+          !title ? startProducts : 0,
+          !title ? startProducts + limit : products.length
+        )
+        .map((product, index) => (
+          <motion.div
+            initial={{
+              y: 200,
+              x: index % 2 === 0 ? -40 : 40,
+              opacity: 0,
+            }}
+            whileInView={{ y: 0, x: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0.2 }}
+            transition={{ duration: 0.6, type: "spring" }}
+            key={product.id}
+            className={`${index === 4 && "hidden sm:block"} py-2 md:py-6   `}
+          >
+            <NewProducts
+              favoriteId={favoriteId}
+              title={title ? title : "single_product"}
+              itemDb={product}
+              addFavoriteid={() => {
+                setpro((pre) => {
+                  return pre.filter((item) =>
+                    item.id !== product.id
+                      ? item
+                      : { ...item, numberFavorite: item.numberFavorite + 1 }
+                  );
+                });
+                setfavoriteId((pre) => [product.id, ...pre]);
               }}
-              whileInView={{ y: 0, x: 0, opacity: 1 }}
-              exit={{ y: -100, opacity: 0.2 }}
-              transition={{ duration: 0.6, type: "spring" }}
-              key={index}
-              className={`${index === 4 && "hidden sm:block"} py-2 md:py-6   `}
-            >
-              <NewProducts
-                favoriteId={favoriteId}
-                title={title ? title : "single_product"}
-                itemDb={product}
-                addFavoriteid={() => {
-                  setpro((pre) => {
-                    return pre.filter((item) =>
-                      item.id !== product.id
-                        ? item
-                        : { ...item, numberFavorite: item.numberFavorite + 1 }
-                    );
-                  });
-                  setfavoriteId((pre) => [product.id, ...pre]);
-                }}
-                deleteFavoriteId={() => {
-                  setpro((pre) =>
-                    pre.map((item) =>
-                      item.id !== product.id
-                        ? item
-                        : { ...item, numberFavorite: item.numberFavorite - 1 }
-                    )
-                  );
-                  setfavoriteId(
-                    (prev) =>
-                      prev.includes(product.id)
-                        ? prev.filter((itemid) => itemid !== product.id) // Remove the product if it exists
-                        : [...prev, product.id] // Add the product if it doesn't exist
-                  );
-                }}
-              />
-            </motion.div>
-          ))}
+              deleteFavoriteId={() => {
+                setpro((pre) =>
+                  pre.map((item) =>
+                    item.id !== product.id
+                      ? item
+                      : { ...item, numberFavorite: item.numberFavorite - 1 }
+                  )
+                );
+                setfavoriteId(
+                  (prev) =>
+                    prev.includes(product.id)
+                      ? prev.filter((itemid) => itemid !== product.id) // Remove the product if it exists
+                      : [...prev, product.id] // Add the product if it doesn't exist
+                );
+              }}
+            />
+          </motion.div>
+        ))}
     </motion.div>
   );
 };

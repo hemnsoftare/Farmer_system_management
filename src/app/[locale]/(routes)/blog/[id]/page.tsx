@@ -23,7 +23,7 @@ const Page = ({ params }) => {
   const iduse: any = React.use(params);
   const id = iduse.id;
   const { data, isLoading } = useQuery({
-    queryKey: ["blog[id]"],
+    queryKey: [params],
     queryFn: async ({ pageParam }) => {
       const data = await getBlog(id);
       const blogList = await getBlogs();
@@ -152,14 +152,13 @@ const Page = ({ params }) => {
                         video: data.blog.video || "",
                       },
                     });
-                    queryClient.setQueryData(["blog[id]"], (pldData: any) => {
+                    queryClient.setQueryData([params], (pldData: any) => {
                       if (!pldData) return pldData;
                       return { ...pldData, idSave: [id, ...pldData.idSave] };
                     });
                     // setidSave((pre) => [...pre, id]);
                     toast({ title: "Blog saved successfully!" });
                   } catch (error) {
-                    console.error("Failed to save blog:", error);
                     toast({ title: "Failed to save blog" });
                   }
                 }}
@@ -179,7 +178,7 @@ const Page = ({ params }) => {
                       numberOffavorites: data.blog.numberOffavorites,
                       userId: user?.id,
                     });
-                    queryClient.setQueryData(["blog[id]"], (pldData: any) => {
+                    queryClient.setQueryData([params], (pldData: any) => {
                       if (!pldData) return pldData;
                       return {
                         ...pldData,
@@ -191,7 +190,6 @@ const Page = ({ params }) => {
                     // setidSave((pre) => pre.filter((item) => item !== id));
                     toast({ title: "Blog removed successfully!" });
                   } catch (error) {
-                    console.error("Failed to remove blog:", error);
                     toast({ title: "Failed to remove blog" });
                   }
                 }}

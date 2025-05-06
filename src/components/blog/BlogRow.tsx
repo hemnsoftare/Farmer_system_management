@@ -14,7 +14,7 @@ const BlogRow = ({
   const l = lang().startsWith("ar") || lang().startsWith("ku");
   return (
     <div
-      className={`w-full text-left h-[146px] flex-row-reverse flex items-center border overflow-hidden rounded-xl group dark:shadow-neutral-700 shadow-gray-200 shadow-md md:shadow-lg justify-start gap-0
+      className={`w-full text-left h-[146px]  flex items-center border overflow-hidden rounded-xl group dark:shadow-neutral-700 shadow-gray-200 shadow-md md:shadow-lg justify-start gap-0
         `}
     >
       {/* Dynamic Image */}
@@ -23,7 +23,7 @@ const BlogRow = ({
         alt={item.title} // Dynamic alt text
         width={240}
         height={156}
-        className={`min-w-[130px] max-w-[130px] min-h-[160px] max-h-[160px] bg-blue-100 border-dashed`}
+        className={`min-w-[180px] max-w-[180px] min-h-[160px] max-h-[160px] bg-blue-100 border-dashed`}
       />
 
       {/* Content Section */}

@@ -77,7 +77,17 @@ const HeaderproductInfo = ({
           <span>{t("freeDelivery")}</span>
         </motion.span>
       </div>
-
+      <div className="flex items-center rounded-lg flex-col gap-3 w-full">
+        {productinfos.infos.map((item, index) => (
+          <div
+            key={item.title}
+            className={`flex items-center w-1/2 px-3 rounded-lg  justify-between text-black ${index % 2 == 0 ? "bg-gray-300" : "bg-gray-200"}`}
+          >
+            <span>{item.title}</span>
+            <span>{item.description}</span>
+          </div>
+        ))}
+      </div>
       {/* Select Color */}
       <motion.div
         className="flex md:text-14 lg:text-16 items-center gap-5"

@@ -126,7 +126,11 @@ interface ProductFormInput {
   isDiscount: boolean;
   bigimageUrl: string;
   numSearch: number;
+  stock: number;
+  iniPrice: number;
+  isev: boolean;
   smallimageUrl: string[];
+  isProduction: boolean;
 }
 type CategoryImage = {
   fileName: string;
@@ -252,7 +256,7 @@ export type UserType = {
   lastName?: string | null;
   fullName: string | null;
   username: string;
-  emailAddresses?: { emailAddress: string }[]; // Array of objects with emailAddress field
+  emailAddresses?: { emailAddress: string }[] | any; // Array of objects with emailAddress field
   primaryEmailAddressId?: string;
 };
 
@@ -278,12 +282,13 @@ export type OrderType = {
     city: string; // User's city
     region: string; // User-selected region
   };
-  email: { emailAddress: string }[]; // Keep this as an array of objects
+  email: { emailAddress: string }[] | any; // Keep this as an array of objects
   orderItems: ItemCartProps[]; // Ensure this is an array of simple objects
   orderDate: Date; // Use Timestamp for Firestore compatibility
   totalAmount: number; // Total cost for the order
   totaldiscountPrice: number;
   note?: string; // Optional notes provided by the user
+  view: boolean;
 };
 export interface favorite {
   id?: string;

@@ -25,15 +25,16 @@ const SingleProduct = ({ params }) => {
       setload(true);
       const productId = param.productsId;
       const refDoc = await getDoc(doc(db, "Products", productId));
-      setProduct(refDoc.data() as ProductFormInput);
-      const productsByCategory = await getproductByCategory(param.catagory);
+      setProduct({ ...(refDoc.data() as ProductFormInput), id: productId });
+      const productsByCategory = await getproductByCategory(
+        refDoc.data().category
+      );
       setSimilarProducts(productsByCategory);
       setload(false);
     };
 
     getProduct();
   }, [db, param.catagory, param.productsId]); // Add dependencies here
-
   return (
     <div className="flex flex-col w-full py-4">
       <span className="lg:text-12 mb-4 px-3 md:text-12">
@@ -42,12 +43,12 @@ const SingleProduct = ({ params }) => {
         </Link>{" "}
         &gt;
         <Link
-          href={`/products/${param.catagory}`}
+          href={`/products/${product?.category}`}
           className="hover:text-blue-800 hover:underline"
         >
           {t("products")}
         </Link>{" "}
-        &gt; {param.catagory}
+        &gt; {product?.name}
       </span>
       <header className="flex flex-col dark:text-gray-600 sm:flex-row w-full sm:items-start justify-center items-center sm:justify-start gap-4">
         {load ? (
@@ -64,7 +65,9 @@ const SingleProduct = ({ params }) => {
             {t("similarProducts")}
           </h2>
           <div className="flex flex-nowrap w-full px-3 items-center overflow-x-auto sm:overflowx-x-hidden   justify-start">
-            <ForProducts products={similarProducts} />
+            {similarProducts.length > 0 && (
+              <ForProducts products={similarProducts} title="viewAll" />
+            )}
           </div>
           {/* <ForProducts products={similarProducts} /> */}
         </div>
@@ -104,7 +107,7 @@ export default SingleProduct;
 //         doc(db, "Products", params.productsId.replaceAll("%20", " ").trim())
 //       );
 //       console.log(refdoc.data());
-//       setproduct(refdoc.data() as ProductFormInput);
+//       setprod  uct(refdoc.data() as ProductFormInput);
 //       const getProducts = await getproductByCategory(params.catagory);
 //       setsmilierProducts(getProducts);
 //     };

@@ -5,7 +5,7 @@ import { MdOutlineDateRange } from "react-icons/md";
 import { BlogProps } from "@/lib/action";
 import { lang } from "@/lib/action/uploadimage";
 import { motion } from "framer-motion";
-const BlogCol = ({ blog }: { blog: BlogProps }) => {
+const BlogCol = ({ blog }: { blog: any }) => {
   const formattedDate = new Date(blog.date).toLocaleDateString(); // Format date for better readability
   const l = lang().startsWith("ar") || lang().startsWith("ku");
   return (
@@ -23,7 +23,7 @@ const BlogCol = ({ blog }: { blog: BlogProps }) => {
         alt={blog.title}
         width={350}
         height={200}
-        className=" w-full md:min-h-[300px] min-h-[170px] max-h-[170px] md:max-h-[300px] object-cover"
+        className=" w-full md:min-h-[230px] min-h-[170px] max-h-[170px] md:max-h-[230px] object-cover"
       />
 
       {/* Metadata */}

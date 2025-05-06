@@ -96,6 +96,7 @@ const Page = () => {
         },
         totaldiscountPrice: totalPrice.discount || 0,
         lat: markerPosition.lat || 0,
+
         lng: markerPosition.lng || 0,
         email: user.emailAddresses || [],
         fullName: user.fullName || "", // Ensure user is defined
@@ -105,6 +106,7 @@ const Page = () => {
         totalAmount: totalPrice?.totalPrice || 0, // Default to 0 if totalPrice is not defined
         userId: user?.id || "", // Ensure user is defined
         note: data.note ? (data.note as string) : undefined, // Use undefined if no note is provided
+        view: false,
       };
 
       mutate({ orders });
@@ -168,7 +170,6 @@ const Page = () => {
       })
       .catch((error) => {
         toast({ title: "Email send failed" });
-        console.error("Error sending email:", error);
       });
   };
 
@@ -191,14 +192,13 @@ const Page = () => {
   }, [cartItems]);
 
   const handleWhatsAppClick = ({ id }: { id: string }) => {
-    const phoneNumber = "9647508927181"; // Remove "+" from the phone number
-    const orderUrl = encodeURIComponent(
-      `https://tech-heim-three.vercel.app/Cart/${id}`
-    );
-    const message = encodeURIComponent(`Check your order details: ${orderUrl}`);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${orderUrl}`;
-
-    window.open(whatsappUrl, "_blank");
+    // const phoneNumber = "9647508927181"; // Remove "+" from the phone number
+    // const orderUrl = encodeURIComponent(
+    //   `https://tech-heim-three.vercel.app/Cart/${id}`
+    // );
+    // const message = encodeURIComponent(`Check your order details: ${orderUrl}`);
+    // const whatsappUrl = `https://wa.me/${phoneNumber}?text=${orderUrl}`;
+    // window.open(whatsappUrl, "_blank");
   };
 
   useEffect(() => {

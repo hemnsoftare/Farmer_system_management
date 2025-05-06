@@ -134,7 +134,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="w-screen flex mt-8 px-5 py-2 items-center justify-center flex-col ">
+    <div className="w-full flex mt-8 px-5 py-2 items-center justify-center flex-col ">
       <h1 className="self-start text-30 font-semibold">My team</h1>
       <div className="w-full h-full items-center justify-center flex flex-wrap gap-4">
         {team.map((item) => (

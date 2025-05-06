@@ -1,7 +1,21 @@
-import { useUser } from "@clerk/nextjs";
-import { authMiddleware, clerkMiddleware } from "@clerk/nextjs/server";
-import { create } from "domain";
 import createMiddleware from "next-intl/middleware";
+
+export default createMiddleware({
+  locales: ["en", "ku", "tr", "ar"],
+  defaultLocale: "en",
+});
+
+export const config = {
+  matcher: [
+    // Skip Next.js internals and static files
+    "/((?!_next|.*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip)).*)",
+
+    // Always include API routes and internationalized paths
+    "/(api|trpc)(.*)",
+    "/(en|ku|tr|ar)/:path*",
+  ],
+};
+
 // const {user}=useUser()
 // const isAdmin = user?.publicMetadata?.role === "admin";
 // import { NextResponse } from "next/server";
@@ -17,20 +31,6 @@ import createMiddleware from "next-intl/middleware";
 //   // Continue to the requested page
 //   return NextResponse.next();
 // }
-
-export default createMiddleware({
-  locales: ["en", "ku", "tr", "ar"],
-  defaultLocale: "en",
-});
-export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
-    "/(en|kurd|ar)/:path*",
-  ],
-};
 
 // import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 // import { NextResponse } from "next/server";

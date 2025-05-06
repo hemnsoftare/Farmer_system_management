@@ -26,11 +26,7 @@ const Brand = () => {
               alt=""
               width={60}
               height={70}
-              className={` ${
-                item === "/Apple.webp"
-                  ? "w-[55px] lg:min-w-[100px] lg:min-h-[60px] h-[40px]"
-                  : "lg:min-w-[140px] lg:min-h-[90px]  above-405:w-[70px] above-405:h-[60] w-[60px] h-[50px] xl:w-[150px] xl:h-[90px] mt-4 md:w-[100px] md:h-[80px]"
-              } ${item === "/canon.svg" ? "hidden sm:block" : "block"}  `}
+              className={` ${"lg:min-w-[140px] lg:min-h-[90px]  above-405:w-[70px] above-405:h-[60] w-[60px] h-[50px] xl:w-[150px] xl:h-[90px] mt-4 md:w-[100px] md:h-[80px]"}   `}
             />
           );
         })}
