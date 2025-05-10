@@ -28,26 +28,16 @@ import {
   teamProps,
   typeFilter,
   UserType,
-  // commentProps,
 } from "@/lib/action";
 import { app, storage } from "@/config/firebaseConfig";
 import { OrderType } from "@/lib/action";
-import { number, string } from "zod";
-import { title } from "process";
 
 const db = getFirestore(app);
-// Function to upload the image
 export async function uploadImage(file: File): Promise<string> {
   try {
-    // Create a storage reference
     const storageRef = ref(storage, `images/${file.name}`);
-
-    // Upload the file
     const snapshot = await uploadBytes(storageRef, file);
-
-    // Get the download URL
     const downloadURL = await getDownloadURL(snapshot.ref);
-
     return downloadURL;
   } catch (error) {
     console.error("Error uploading image:", error);
@@ -122,7 +112,7 @@ export const getProducts = async (
     });
   });
 
-  return products;
+  return products.map((item) => item.stock > 0 && item);
 };
 
 export const getproductByCategory = async (

@@ -161,8 +161,8 @@ const brand: [
 ] = ["/y/top1.png", "/y/top2.jpg", "/y/top3.png", "/y/top4.png", "/y/top5.svg"];
 
 const user: userProps = {
-  name: "hemnsoftware",
-  email: "hamnfarhad14@gmail.com",
+  name: "yousif software",
+  email: "yousifS14@gmail.com",
   image: "/",
 };
 const carts: Cart[] = [
@@ -421,8 +421,8 @@ export const kuSorani: any = {
       resendButton: "کۆدەکە نەگەیشتووە؟ دووبارە بنێرە",
     },
     restrictedAccess: {
-      actionLink: "hemn ",
-      actionText: "hemn hemn text",
+      actionLink: "yousif ",
+      actionText: "yousif yousif text",
       blockButton__emailSupport: "hi hih ihihihi",
     },
     username: {

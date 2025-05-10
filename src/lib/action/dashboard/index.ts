@@ -167,7 +167,7 @@ export const getProductsBYDiscountAndCategoryAndSale = async ({
   col,
   category,
 }: {
-  col: "date" | "discount";
+  col: "date" | "discount" | "numberSale";
   category: string;
 }): Promise<ProductFormInput[]> => {
   let q;
@@ -201,10 +201,12 @@ export const getProductsBYDiscountAndCategoryAndSale = async ({
 
   const snapshot = await getDocs(q);
 
-  return snapshot.docs.map((doc) => ({
-    ...(doc.data() as ProductFormInput), // Spread item data
-    id: doc.id, // Add the `id` field
-  }));
+  return snapshot.docs
+    .map((doc) => ({
+      ...(doc.data() as ProductFormInput), // Spread item data
+      id: doc.id, // Add the `id` field
+    }))
+    .map((item) => item.stock > 0 && item);
 };
 
 export const deleteBlog = async (id: string) => {

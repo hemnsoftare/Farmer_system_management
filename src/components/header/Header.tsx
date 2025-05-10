@@ -354,7 +354,10 @@ export default Header;
 export const LoginButton = () => {
   const t = useTranslations("header");
   return (
-    <Link href={"/sign-in"} className="flex items-center gap-2">
+    <Link
+      href={"/sign-in"}
+      className="flex text-23 text-white items-center gap-2"
+    >
       <span>{t("login")}</span>
     </Link>
   );
@@ -362,7 +365,10 @@ export const LoginButton = () => {
 export const SingUp = () => {
   const t = useTranslations("header");
   return (
-    <Link href={"/sign-up"} className="flex items-center gap-2">
+    <Link
+      href={"/sign-up"}
+      className="flex text-23 text-white items-center gap-2"
+    >
       <span>{t("signup")}</span>
     </Link>
   );

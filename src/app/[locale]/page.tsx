@@ -32,10 +32,9 @@ export default function Home() {
         category: "",
         col: "numberSale",
       });
-
       return {
-        productNew: newpro,
-        productSale: salepro,
+        productNew: newpro.map((item) => item.stock > 0 && item),
+        productSale: salepro.map((item) => item.stock > 0 && item),
       };
     },
   });

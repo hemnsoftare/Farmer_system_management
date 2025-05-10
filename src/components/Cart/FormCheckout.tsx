@@ -22,7 +22,7 @@ export default function FormCheckout({
       <InputCheckout
         label="full name"
         name="fullName"
-        placeholder="hemn software"
+        placeholder="yousif software"
         error={errors.fullName}
       />
       <InputCheckout

@@ -2,15 +2,19 @@
 import React from "react";
 import Image from "next/image";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FileEdit } from "lucide-react";
 import { ProductFormInput } from "@/lib/action";
 import { Loader } from "@/app/[locale]/loader";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { addfavorite, deleteFavorite } from "@/lib/action/fovarit";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { IoMdWarning } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { selectedProduct } from "@/lib/store/filterProducts";
+
 const NewProducts = ({
   title,
   itemDb,
@@ -21,7 +25,6 @@ const NewProducts = ({
   deleteProducts,
 }: {
   title?: string;
-  // item?: Productsprops;
   itemDb?: ProductFormInput;
   load?: boolean;
   favoriteId?: string[];
@@ -30,20 +33,26 @@ const NewProducts = ({
   deleteProducts?: () => void;
 }) => {
   const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent click event from propagating to the <Link>
-    e.preventDefault(); // Prevent default behavior of the <Link>
+    e.stopPropagation();
+    e.preventDefault();
   };
+
   const router = useRouter().push;
   const product: ProductFormInput | undefined = itemDb;
   const { user } = useUser();
   const { selectProduct } = selectedProduct();
+
   if (load) return <Loader />;
+
+  // Check if stock is low (less than 10)
+  const isLowStock = product?.stock && product.stock < 10;
+
   if (product) {
     return (
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         onClick={() => {
           selectProduct(product);
           router(
@@ -56,14 +65,14 @@ const NewProducts = ({
         className={`${
           title === "sale"
             ? "bg-white border dark:bg-neutral-900/90 h-full min-w-[190px]"
-            : "sm:h-fit border h-full lg:min-w-[230px] lg:max-w-[230px] sm:w-full max-w-[250px]"
-        } flex sm:gap-5  border-neutral-200 shadow-md dark:shadow-secondary-500 dark:border-secondary shadow-neutral-200/50 md:shadow-neutral-400 overflow-hidden flex-col group relative items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3`}
+            : "bg-white dark:bg-neutral-800/40 backdrop-blur-sm sm:h-fit border h-full lg:min-w-[230px] lg:max-w-[230px] sm:w-full max-w-[250px]"
+        } flex sm:gap-3 border-neutral-200 dark:border-neutral-700 shadow-lg hover:shadow-xl dark:shadow-secondary-600/20 overflow-hidden flex-col group relative items-center justify-center hover:border-primary/30 dark:hover:border-secondary/50 duration-300 transition-all rounded-xl sm:p-2`}
       >
+        {/* Favorite Icon with improved styling */}
         {user && user?.id && title !== "dashboard" && (
           <>
             {favoriteId && favoriteId.some((item) => item === itemDb.id) ? (
-              <FaHeart
-                color="#f45e0c"
+              <button
                 onClick={(e) => {
                   handleFavoriteClick(e);
                   deleteFavorite(
@@ -73,11 +82,12 @@ const NewProducts = ({
                   ).finally(() => {});
                   deleteFavoriteId();
                 }}
-                className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-[2] right-1"
-              />
+                className="absolute top-2 right-2 z-10 size-10 flex items-center justify-center bg-white/80 dark:bg-neutral-800/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 group-hover:scale-110"
+              >
+                <FaHeart className="size-5 text-rose-500 hover:text-rose-600 transition-colors" />
+              </button>
             ) : (
-              <FaRegHeart
-                color="#f45e0c"
+              <button
                 onClick={(e) => {
                   handleFavoriteClick(e);
                   addfavorite({
@@ -94,253 +104,152 @@ const NewProducts = ({
                   });
                   addFavoriteid();
                 }}
-                className="absolute p-3 size-[23px] sm:size-[23px] box-content top-1 z-[2] right-1"
-              />
+                className="absolute top-2 right-2 z-10 size-10 flex items-center justify-center bg-white/80 dark:bg-neutral-800/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+              >
+                <FaRegHeart className="size-5 text-rose-500 hover:text-rose-600 transition-colors" />
+              </button>
             )}
           </>
         )}
-        <div className="relative flex items-center p-[2px]  flex-col justify-center w-full">
-          <Image
-            src={product?.bigimageUrl}
-            alt="image"
-            width={167}
-            height={111}
-            className={`rounded-lg  ${
-              title === "sale"
-                ? "w-full above-405:h-[170px] min-h-[160px] max-h-[160px] sm:h-[211px]"
-                : " w-full above-405:h-[190px] min-h-[190px] max-h-[190px] sm:h-[211px]"
-            } bg-red-50 sm:group-hover:scale-[1.03] duration-300 transition-all`}
-          />{" "}
-          {product.isDiscount && product.discount && product.discount > 0 && (
-            <p
-              className={`group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute ${
-                title === "dashboard" ? "flex" : "flex "
-              } text-12 left-1 bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-[2] duration-300 transition-all top-3 p-2 rounded-full text-secondary-500`}
-            >
-              {product?.discount} $
-            </p>
-          )}
-          {product.colors && (
-            <div className="sm:flex hidden group-hover:opacity-0 duration-300 transition-all mt-2 flex-row sm:flex-col gap-1 sm:absolute sm:top-12 sm:-right-1">
-              {product.colors.map((color: any, index: number) => {
-                if (index < 3)
-                  return (
-                    <span
-                      key={color.name}
-                      className="w-4 h-4 rounded-full"
-                      style={{ backgroundColor: color.color }}
-                    ></span>
-                  );
-                else if (index === 3) {
-                  return (
-                    <span key={index} className="rounded-full text-18">
-                      +
-                    </span>
-                  );
-                }
-              })}
-            </div>
-          )}
-        </div>
-        <div className="flex gap-2 pt-1 sm:pt-0 p-2 sm:p-[2px] w-full flex-col">
-          <hr className="h-[2px] bg-gradient-to-r dark:hidden from-white via-slate-500 to-white border-0" />
-          <h3
-            className={`lg:text-16 text-14 md:text-10 w-full overflow-hidden  line-clamp-1 text-secondary-400 font-[500]`}
-          >
-            {product.name}
-          </h3>
-          <div className="w-full h-fit sm:h-[33px]">
-            {title !== "dashboard" && (
-              <Link
-                className="w-full hidden group px-3 dark:bg-blue-900 dark:hover:bg-blue-800 border opacity-0 rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all hover:bg-blue-900 text-white bg-primary hover:text-white items-center sm:group-hover:flex justify-center gap-2"
-                href={`/products/${product.category}/${product.id}`}
-              >
-                <MdOutlineShoppingCart color="white" />
-                <span>Add to Cart</span>
-              </Link>
+
+        {/* Stock Warning Badge with improved styling */}
+        {title === "dashboard" && isLowStock && (
+          <div className="absolute top-2 right-2 z-10 flex items-center gap-1 bg-red-100 dark:bg-red-900/70 text-red-600 dark:text-red-200 px-3 py-1.5 rounded-lg shadow-md backdrop-blur-sm">
+            <IoMdWarning className="text-red-600 dark:text-red-300 size-4" />
+            <span className="text-xs font-semibold">
+              Stock: {product.stock}sdfa
+            </span>
+          </div>
+        )}
+
+        {/* Main Image Container with improved styling */}
+        <div className="relative w-full overflow-hidden rounded-lg group-hover:rounded-xl transition-all duration-300">
+          <div className="w-full aspect-[4/3] relative">
+            <Image
+              src={product?.bigimageUrl}
+              alt={product.name || "Product image"}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out rounded-lg"
+            />
+
+            {/* Overlay gradient for better text visibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+            {/* Discount Badge with improved styling */}
+            {product.isDiscount && product.discount && product.discount > 0 && (
+              <div className="absolute top-2 left-2 z-10 flex items-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full shadow-lg">
+                <span className="text-xs font-bold">-{product?.discount}%</span>
+              </div>
             )}
-            <div
-              className={`${
-                title === "dashboard"
-                  ? "opacity-100"
-                  : " sm:group-hover:opacity-0 opacity-100 sm:group-hover:hidden"
-              } flex relative text-black mt-1 sm:mt-4 justify-between`}
-            >
-              <span className="text-12 dark:text-neutral-500 sm:text-16">
-                {product.price}$
-              </span>
-              {product.isDiscount && (
-                <span className="line-through  text-16 dark:text-neutral-400 decoration-secondary group-hover:opacity-0 text-neutral-600">
-                  $
-                  {product.discount &&
-                    (product.discount * 0.01 * product.price).toFixed(2)}
+          </div>
+
+          {/* Color Options with improved styling */}
+          {product.colors && product.colors.length > 0 && (
+            <div className="absolute bottom-2 right-2 flex flex-row gap-1.5 z-10">
+              {product.colors.slice(0, 3).map((color: any, index: number) => (
+                <span
+                  key={color.name || index}
+                  className="size-4 rounded-full ring-1 ring-white dark:ring-neutral-700 shadow-md transform group-hover:translate-y-0 translate-y-10 transition-transform duration-300 delay-100"
+                  style={{
+                    backgroundColor: color.color,
+                    transitionDelay: `${index * 50}ms`,
+                  }}
+                ></span>
+              ))}
+              {product.colors.length > 3 && (
+                <span className="size-4 flex items-center justify-center bg-white dark:bg-neutral-800 rounded-full ring-1 ring-white dark:ring-neutral-700 shadow-md text-xs font-medium transform group-hover:translate-y-0 translate-y-10 transition-transform duration-300 delay-300">
+                  +{product.colors.length - 3}
                 </span>
               )}
             </div>
+          )}
+        </div>
+
+        {/* Product Details Container with improved styling */}
+        <div className="flex flex-col gap-2 w-full p-3 pt-2">
+          {/* Product Name */}
+          <h3 className="text-sm sm:text-base font-medium text-neutral-800 dark:text-neutral-200 line-clamp-1">
+            {product.name}
+          </h3>
+
+          {/* Stock Indicator for Dashboard */}
+          {title === "dashboard" && product.stock !== undefined && (
+            <div
+              className={`inline-flex items-center gap-1.5 ${
+                isLowStock
+                  ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20"
+                  : "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20"
+              } py-1 px-2 rounded-md w-fit`}
+            >
+              <span className="size-2 rounded-full bg-current"></span>
+              <span className="text-xs font-medium">
+                Stock: {product.stock}
+              </span>
+            </div>
+          )}
+
+          {/* Price Section with improved styling */}
+          <div className="flex items-center justify-between mt-1">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-base font-semibold text-neutral-900 dark:text-white">
+                ${product.price}
+              </span>
+
+              {product.isDiscount && product.discount && (
+                <span className="line-through text-xs text-neutral-500 dark:text-neutral-400">
+                  $
+                  {(
+                    product.price +
+                    (product.price * product.discount) / 100
+                  ).toFixed(2)}
+                </span>
+              )}
+            </div>
+
+            {/* Dashboard Actions */}
+            {/* {title === "dashboard" && (
+              <div className="flex gap-2">
+                <Link
+                  href={`/dashboard/AddItem?id=${product.id}`}
+                  className="p-1.5 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800/50 transition-colors"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <FileEdit className="size-4 text-blue-600 dark:text-blue-400" />
+                </Link>
+
+                <button
+                  onClick={(e) => {
+                    handleFavoriteClick(e);
+                    deleteProducts && deleteProducts();
+                  }}
+                  className="p-1.5 bg-red-50 dark:bg-red-900/30 rounded-lg hover:bg-red-100 dark:hover:bg-red-800/50 transition-colors"
+                >
+                  <RiDeleteBin6Line className="size-4 text-red-600 dark:text-red-400" />
+                </button>
+              </div>
+            )} */}
           </div>
+
+          {/* Add to Cart Button with improved styling */}
+          {title !== "dashboard" && (
+            <div className="mt-2 w-full transition-all duration-300">
+              <Link
+                href={`/products/${product.category}/${product.id}`}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 opacity-0 group-hover:opacity-100 shadow-md hover:shadow-lg"
+              >
+                <MdOutlineShoppingCart className="size-4" />
+                <span>Add to Cart</span>
+              </Link>
+            </div>
+          )}
         </div>
       </motion.div>
-      // <motion.div
-      //   initial={{ opacity: 0 }}
-      //   whileInView={{ opacity: 1 }}
-      //   transition={{ duration: 0.5 }}
-      //   // href={
-      //   //   title !== "dashboard"
-      //   //     ? `/products/${product.category}/${product.id}`
-      //   //     : "#"
-      //   // }
-      //   // style={{ boxShadow: shadowColor }} // Apply custom shadow here
-
-      //   onClick={() => {
-      //     router.push(
-      //       `${
-      //         title !== "dashboard"
-      //           ? `/products/${product.category}/${product.id}`
-      //           : "#"
-      //       }`
-      //     );
-      //   }}
-      //   key={product.name}
-      //   className={`${
-      //     title === "sale"
-      //       ? "bg-white border dark:bg-neutral-900/90 max-h-[300px] min-w-[180px]"
-      //       : "sm:h-fit border h-full lg:min-w-[250px] lg:max-w-[250px] sm:w-full max-w-[300px]"
-      //   } flex sm:gap-5  py-9 border-neutral-200 shadow-lg    dark:shadow-secondary-500 dark:border-secondary  shadow-neutral-400 overflow-hidden flex-col group relative  items-center justify-center dark:hover:shadow-lg dark:hover:shadow-secondary duration-300 transition-all rounded-lg sm:p-2 sm:pb-3 `}
-      // >
-      //   {user && user.id && title !== "dashboard" && (
-      //     <>
-      //       {favoriteId && favoriteId.some((item) => item === itemDb.id) ? (
-      //         <FaHeart
-      //           color="#f45e0c"
-      //           onClick={(e) => {
-      //             handleFavoriteClick(e);
-      //             deleteFavorite(
-      //               user.id,
-      //               itemDb.numberFavorite,
-      //               itemDb.id
-      //             ).finally(() => {});
-      //             deleteFavoriteId();
-      //           }}
-      //           className="absolute p-3 size-[23px] box-content sm:size-[23px] top-1 z-[2] right-1"
-      //         />
-      //       ) : (
-      //         <FaRegHeart
-      //           color="#f45e0c"
-      //           onClick={(e) => {
-      //             handleFavoriteClick(e);
-      //             addfavorite({
-      //               id: user.id,
-      //               item: {
-      //                 name: itemDb.name,
-      //                 categroy: itemDb.category,
-      //                 price: itemDb.price,
-      //                 colors: itemDb.colors,
-      //                 id: itemDb.id,
-      //                 image: itemDb.bigimageUrl,
-      //                 numberFavorite: itemDb.numberFavorite,
-      //               },
-      //             });
-      //             addFavoriteid();
-      //           }}
-      //           className="absolute p-3 size-[23px] sm:size-[23px] box-content top-1 z-[2] right-1"
-      //         />
-      //       )}
-      //     </>
-      //   )}
-      //   <div className="relative flex items-center  p-[2px] flex-col justify-center w-full">
-      //     <Image
-      //       src={product?.bigimageUrl}
-      //       alt="image"
-      //       width={217}
-      //       height={161}
-      //       className="sm:w-[217px] rounded-lg w-full above-405:h-[160px] h-[190px] sm:h-[241px] sm:group-hover:scale-[1.03] duration-300 transition-all"
-      //     />{" "}
-      //     {product.isDiscount && product.discount && product.discount > 0 && (
-      //       <p
-      //         className={`group-hover:opacity-0 backdrop-blur-md min-w-[30px] absolute ${title === "dashboard" ? "flex" : "flex "}  text-12 left-1  bg-gradient-to-l dark:to-transparent to-red-50 from-red-400 dark:from-red-400 dark:text-red-100 z-[2] duration-300  transition-all top-3 p-2 rounded-full text-secondary-500 `}
-      //       >
-      //         {product?.discount} $
-      //       </p>
-      //     )}
-      //     {product.colors && (
-      //       <div className="sm:flex  hidden group-hover:opacity-0 duration-300 transition-all mt-2 flex-row sm:flex-col gap-1 sm:absolute sm:top-12 sm:-right-1">
-      //         {product.colors.map((color: any, index: number) => {
-      //           if (index < 3)
-      //             return (
-      //               <span
-      //                 key={color.name}
-      //                 className="w-4 h-4 rounded-full"
-      //                 style={{ backgroundColor: color.color }}
-      //               ></span>
-      //             );
-      //           else if (index === 3) {
-      //             return (
-      //               <span key={index} className="rounded-full text-18">
-      //                 +
-      //               </span>
-      //             );
-      //           }
-      //         })}
-      //       </div>
-      //     )}
-      //   </div>
-      //   <div className="flex gap-2 pt-1 sm:pt-0 p-2 sm:p-[2px] w-full flex-col">
-      //     <hr className="h-[2px] bg-gradient-to-r dark:hidden from-white via-slate-500 to-white border-0" />
-      //     <h3
-      //       className={`lg:text-16 text-14 md:text-10  w-full overflow-hidden mb-2 line-clamp-1 text-secondary-400 font-[500]`}
-      //     >
-      //       {product.name}sdaffsdfsd sdf sdf sd sdaf sa sdfa
-      //     </h3>
-      //     <div className="w-full h-fit sm:h-[33px]">
-      //       {title !== "dashboard" && (
-      //         <Link
-      //           className="w-full hidden group px-3 dark:bg-blue-900  dark:hover:bg-blue-800 border opacity-0  rounded-lg py-2 group-hover:opacity-100 border-black hover:border-blue-700 duration-300 transition-all hover:bg-blue-900 text-white bg-primary hover:text-white items-center sm:group-hover:flex justify-center gap-2"
-      //           href={`/products/${product.category}/${product.id}`}
-      //         >
-      //           <MdOutlineShoppingCart color="white" />
-      //           <span>Add to Cart</span>
-      //         </Link>
-      //       )}
-      //       <div
-      //         className={`${
-      //           title === "dashboard"
-      //             ? "opacity-100"
-      //             : " sm:group-hover:opacity-0 opacity-100 sm:group-hover:hidden"
-      //         } flex relative text-black mt-1 sm:mt-4 justify-between`}
-      //       >
-      //         <span className="text-12 dark:text-neutral-500 sm:text-16">
-      //           {product.price}$
-      //         </span>
-      //         {product.isDiscount && (
-      //           <span className="line-through text-11 sm:text-12  dark:text-neutral-400 decoration-secondary  group-hover:opacity-0  text-neutral-600">
-      //             $
-      //             {product.discount &&
-      //               (product.discount * 0.01 * product.price).toFixed(2)}
-      //           </span>
-      //         )}
-      //         {/* mobile btn add yui to cart */}
-      //         {title === "dashboard" && (
-      //           <div className="flex gap-2 item-center">
-      //             <Link href={`/dashboard/AddItem?id=${product.id}`}>
-      //               <FileEdit />
-      //             </Link>
-
-      //             <RiDeleteBin6Line
-      //               onClick={(e) => {
-      //                 handleFavoriteClick(e);
-      //                 deleteProducts();
-      //               }}
-      //               size={24}
-      //               color="red"
-      //             />
-      //           </div>
-      //         )}
-      //       </div>
-      //     </div>
-      //   </div>
-      // </motion.div>
     );
   }
+
+  return null;
 };
 
 export default NewProducts;
