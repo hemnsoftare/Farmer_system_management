@@ -420,6 +420,7 @@ export const kuSorani: any = {
       formSubtitle: "کۆدی نێردراو بە ژمارەی مۆبایلەکەت بنووسە",
       resendButton: "کۆدەکە نەگەیشتووە؟ دووبارە بنێرە",
     },
+    //y
     restrictedAccess: {
       actionLink: "yousif ",
       actionText: "yousif yousif text",
