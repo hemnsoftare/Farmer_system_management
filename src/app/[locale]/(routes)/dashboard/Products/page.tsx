@@ -7,7 +7,10 @@ import { queryClient } from "@/app/[locale]/ClientProviders";
 import { motion } from "framer-motion";
 import NewProducts from "@/components/home/NewProducts";
 import CatagoryProducts from "@/components/products/CatagoryProducts";
-import useFilterProducts from "@/lib/store/filterProducts";
+import useFilterProducts, {
+  deleteProduct,
+  getProductsFromFirebase,
+} from "@/lib/store/filterProducts";
 import {
   MdOutlineInventory2,
   MdOutlineLock,
@@ -21,10 +24,6 @@ import { BsFilterLeft } from "react-icons/bs";
 
 // Import types
 import type { ProductFormInput } from "@/lib/action";
-import {
-  deleteProduct,
-  getProductsFromFirebase,
-} from "@/lib/firebase/productUtils";
 
 // Define the ProductTab type
 type ProductTab = "in-stock" | "out-stock" | "private" | "manufacturer";

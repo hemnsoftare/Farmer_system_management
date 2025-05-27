@@ -7,8 +7,8 @@ import React from "react";
 import { lang } from "@/lib/action/uploadimage";
 
 export const metadata: Metadata = {
-  title: "Tech-Hiem",
-  description: "Tech-Hiem",
+  title: "Farmar-City",
+  description: "Farmar-City",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",

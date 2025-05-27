@@ -117,7 +117,7 @@ const SearchComponent = () => {
   ) => {
     return (
       <>
-        <p className="w-full px-5 py-3 text-sm font-bold text-neutral-700 dark:text-white bg-gray-100/40 dark:bg-neutral-700/40 tracking-wide uppercase backdrop-blur-sm">
+        <p className="w-full px-5  text-sm font-bold text-neutral-700 dark:text-white bg-gray-100/40 dark:bg-neutral-700/40 tracking-wide uppercase backdrop-blur-sm">
           {t(
             title === "Products"
               ? "product"
@@ -169,7 +169,7 @@ const SearchComponent = () => {
         ></div>
       )}
 
-      <div className="w-full relative md:flex mt-3 justify-center px-5 items-center z-[4]">
+      <div className="w-full relative md:flex  justify-center px-5 items-center z-[4]">
         <div className="flex relative group w-full md:w-1/2">
           <input
             type="text"

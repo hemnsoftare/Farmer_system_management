@@ -19,6 +19,19 @@ import {
   serviesProps,
   userProps,
 } from "../lib/action";
+// Import all required icons from their respective libraries
+import {
+  FaUsers,
+  FaShoppingBag,
+  FaBox,
+  FaBoxOpen,
+  FaPercent,
+  FaNewspaper,
+  FaInfoCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
+import { MdCategory, MdAddCircle, MdAccountBalance } from "react-icons/md";
+import { BiSolidFactory } from "react-icons/bi";
 
 import { IconType } from "react-icons";
 import {
@@ -272,45 +285,16 @@ const filterItems: FilterProps[] = [
 ];
 
 const menuItems: propsMenuItem[] = [
+  // Primary navigation - most frequently used
   {
-    name: "Personal Data",
-    icon: FaUser,
-    url: "/dashboard/PersonalData",
-  },
-  {
-    name: "User",
-    icon: FaUser,
-    url: "/dashboard/user",
-  },
-  {
-    name: "Category",
-    icon: BiCategoryAlt,
-    url: "/dashboard/category",
-  },
-  {
-    name: "FAQ",
-    icon: FaQuestionCircle,
-    url: "/dashboard/faq",
-  },
-  {
-    name: "Add Item",
-    icon: MdAddCircleOutline,
-    url: "/dashboard/AddItem",
-  },
-  {
-    name: "manufactor",
-    icon: FaDesktop,
-    url: "/dashboard/manufactori",
+    name: "Home",
+    icon: FaHome,
+    url: "/dashboard/home",
   },
   {
     name: "Products",
-    icon: MdShoppingBasket,
+    icon: FaShoppingBag,
     url: "/dashboard/Products",
-  },
-  {
-    name: "Popular Products",
-    icon: FaShoppingCart,
-    url: "/dashboard/popular",
   },
   {
     name: "User Orders",
@@ -318,39 +302,74 @@ const menuItems: propsMenuItem[] = [
     url: "/dashboard/UserOrder",
   },
   {
-    name: "Blog",
-    icon: FaUser,
-    url: "/dashboard/Blog",
+    name: "Popular Products",
+    icon: FaShoppingCart,
+    url: "/dashboard/popular",
+  },
+  {
+    name: "Add Item",
+    icon: MdAddCircle,
+    url: "/dashboard/AddItem",
+  },
+  {
+    name: "Category",
+    icon: MdCategory,
+    url: "/dashboard/category",
   },
 
+  // Administrative section
+  {
+    name: "User",
+    icon: FaUser,
+    url: "/dashboard/user",
+  },
+  {
+    name: "Personal Data",
+    icon: FaUsers,
+    url: "/dashboard/PersonalData",
+  },
+  {
+    name: "Accounting",
+    icon: MdAccountBalance,
+    url: "/dashboard/Accounting",
+  },
+  {
+    name: "Discounts",
+    icon: FaPercent,
+    url: "/dashboard/discount",
+  },
+  {
+    name: "Manufacturer",
+    icon: BiSolidFactory,
+    url: "/dashboard/manufactori",
+  },
+
+  // Content management
+  {
+    name: "Blog",
+    icon: FaNewspaper,
+    url: "/dashboard/Blog",
+  },
+  {
+    name: "FAQ",
+    icon: FaQuestionCircle,
+    url: "/dashboard/faq",
+  },
+  {
+    name: "About Us",
+    icon: FaInfoCircle,
+    url: "/dashboard/aboutUs",
+  },
   {
     name: "Contact Us",
     icon: FaEnvelope,
     url: "/dashboard/ContactUs",
   },
-  {
-    name: "Discounts",
-    icon: FaGift,
-    url: "/dashboard/discount",
-  },
-  {
-    name: "About Us",
-    icon: FaUsersLine,
-    url: "/dashboard/aboutUs",
-  },
-  {
-    name: "Home",
-    icon: FaHome,
-    url: "/dashboard/home",
-  },
-  {
-    name: "Accounting",
-    icon: BiSolidTimer,
-    url: "/dashboard/Accounting",
-  },
+
+  // Always at the bottom
   {
     name: "Sign Out",
-    icon: BiLogOut,
+    icon: FaSignOutAlt,
     url: "/home",
   },
 ];

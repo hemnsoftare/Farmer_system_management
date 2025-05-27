@@ -45,7 +45,7 @@ const Catagory = () => {
     },
   ];
   return (
-    <motion.ul className=" flex overflow-x-auto w-full   gap-2  px-1 xl:gap-6 items-center lg:gap-3 md:gap-2 py-6 sm:justify-center justify-start">
+    <motion.ul className=" flex overflow-x-auto w-full   gap-2  px-1 xl:gap-6 items-center lg:gap-3 md:gap-2  py-3 sm:justify-center justify-start">
       {catagory.map((item, index) => (
         <motion.li
           initial={{ opacity: 0, y: 50 }}

@@ -151,7 +151,7 @@ const Header = () => {
         <Mune category={category} />
       </div>
       <Link href="/" className="font-bold block sm:hidden text-secondary-300">
-        Tech - Hiem
+        Farmar - City
       </Link>
       {/* dark mode and light mode  */}
       <MdOutlineDarkMode

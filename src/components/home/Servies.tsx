@@ -16,7 +16,7 @@ const Servies = () => {
     { name: t("support"), image: BiSolidTimer },
   ];
   return (
-    <motion.div className="flex items-center overflow-hidden mb-3 px-2 w-full justify-between dark:text-gray-100">
+    <motion.div className="flex items-center overflow-hidden mb-3 px-12 w-full justify-between dark:text-gray-100">
       {servies.map((item, index) => {
         return (
           <motion.div

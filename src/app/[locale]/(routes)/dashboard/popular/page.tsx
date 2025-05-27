@@ -63,52 +63,91 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col py-7 px-4 mt-8">
-      <h1 className="text-30 font-semibold">Popular Products</h1>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50/90 to-white">
+      {/* Header Section */}
+      <div className="flex flex-col items-center py-8 px-6">
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          Popular Products
+        </h1>
+        <p className="text-gray-600 text-center max-w-2xl">
+          Discover trending products sorted by popularity, sales, and customer
+          favorites
+        </p>
+      </div>
 
       {/* Filter Buttons */}
-      <div className="flex items-center mt-7 justify-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-4 px-6 mb-8">
         {iconArray.map((item) => (
           <button
             key={item.name}
             onClick={() => setSelect(item)}
-            className={`flex flex-col px-6 items-center justify-center gap-2 border py-2 w-[150px] rounded-lg shadow-lg 
-              transition-all duration-300
-              ${select.name === item.name ? "bg-orange-50/50 border-orange-500 shadow-orange-300" : "bg-white border-transparent shadow-slate-200"}
-              hover:shadow-orange-200/50`}
+            className={`flex flex-col items-center justify-center gap-1 px-6 py-2 min-w-[140px] rounded-xl 
+              transition-all duration-300 transform hover:scale-105 active:scale-95
+              ${
+                select.name === item.name
+                  ? "bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg shadow-orange-300/50 border-2 border-orange-400"
+                  : "bg-white text-gray-700 shadow-md border-2 border-gray-200 hover:border-orange-300 hover:shadow-lg"
+              }`}
           >
-            <item.icon color={select.name === item.name ? "#f45e0c" : "#000"} />
-            <span>{item.name}</span>
+            <item.icon
+              size={24}
+              className={`${
+                select.name === item.name ? "text-white" : "text-gray-600"
+              } transition-colors duration-300`}
+            />
+            <span className="font-medium text-sm">{item.name}</span>
           </button>
         ))}
       </div>
 
       {/* Search Input */}
-      <input
-        type="search"
-        placeholder="Search products..."
-        className="w-full max-w-md self-center outline-none border-2 border-secondary my-6 p-2  rounded-lg"
-        onChange={handleSearch}
-      />
+      <div className="flex justify-center px-6 mb-8">
+        <div className="relative w-full max-w-md">
+          <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="search"
+            placeholder="Search products..."
+            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl 
+              focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100
+              transition-all duration-300 bg-white shadow-sm"
+            onChange={handleSearch}
+          />
+        </div>
+      </div>
 
       {/* Product List */}
-      <div className="md:flex grid grid-cols-2 items-center my-9 flex-wrap justify-center gap-4">
+      <div className="flex-1 px-6 pb-8">
         {isLoading ? (
-          <p className="text-lg text-gray-500 text-center">
-            Loading products...
-          </p>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="flex flex-col items-center gap-4">
+              <div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-500 border-t-transparent"></div>
+              <p className="text-lg text-gray-600 font-medium">
+                Loading products...
+              </p>
+            </div>
+          </div>
         ) : data?.products.length > 0 ? (
-          data.products.map((item) => (
-            <NewProducts
-              itemDb={item}
-              key={item.id}
-              load={isLoading}
-              title="dashboard"
-            />
-          ))
+          <div className="flex flex-wrap justify-center gap-6">
+            {data.products.map((item) => (
+              <div key={item.id} className="flex-shrink-0">
+                <NewProducts itemDb={item} load={isLoading} title="dashboard" />
+              </div>
+            ))}
+          </div>
         ) : (
-          <div className="flex items-center justify-center w-full h-96">
-            <h1 className="text-2xl text-gray-400">No products found</h1>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center">
+                <FaSearch className="text-3xl text-gray-400" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-700">
+                No products found
+              </h2>
+              <p className="text-gray-500 max-w-md">
+                Try adjusting your search criteria or browse different
+                categories
+              </p>
+            </div>
           </div>
         )}
       </div>

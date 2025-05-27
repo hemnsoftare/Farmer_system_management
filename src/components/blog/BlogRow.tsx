@@ -14,7 +14,7 @@ const BlogRow = ({
   const l = lang().startsWith("ar") || lang().startsWith("ku");
   return (
     <div
-      className={`w-full text-left h-[146px]  flex items-center border overflow-hidden rounded-xl group dark:shadow-neutral-700 shadow-gray-200 shadow-md md:shadow-lg justify-start gap-0
+      className={`w-full text-left h-[146px]  flex items-center border overflow-hidden rounded-xl group dark:shadow-neutral-700 shadow-sm justify-start gap-0
         `}
     >
       {/* Dynamic Image */}
@@ -30,7 +30,7 @@ const BlogRow = ({
       <div className="flex flex-col w-full sm:px-4 px-2 py-2 h-full justify-between">
         {/* Dynamic Title */}
         <h3
-          className={`lg:text-[16px] text-10 md:text-13 font-semibold sm:group-hover:text-red-500 duration-300`}
+          className={`lg:text-[16px] line-clamp-2 text-10 md:text-13 font-semibold sm:group-hover:text-red-500 duration-300`}
         >
           {item.title}
         </h3>

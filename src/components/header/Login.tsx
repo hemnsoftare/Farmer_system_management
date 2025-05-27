@@ -40,7 +40,7 @@ const Login = ({ type }: { type: "login" | "signUp" }) => {
     <form action="" onSubmit={submit}>
       <div className="flex flex-col items-center mt-6  justify-center w-full gap-3">
         <h2 className="text-28  font-semibold">
-          {type === "login" ? "Log in to Tech Heim" : "Create your account"}
+          {type === "login" ? "Log in to Farmar City" : "Create your account"}
         </h2>
         {type === "signUp" && (
           <div className="w-full flex-col flex  overflow-hidden relative">

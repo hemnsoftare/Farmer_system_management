@@ -121,7 +121,7 @@ interface ProductFormInput {
   details: { title: string; description: string }[];
   numberFavorite: number;
   numberSale: number;
-  date: Date;
+  date: any;
   colorsName: string[];
   isDiscount: boolean;
   bigimageUrl: string;

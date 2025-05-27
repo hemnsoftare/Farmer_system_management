@@ -13,7 +13,7 @@ const BlogCol = ({ blog }: { blog: any }) => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className={`flex border w-full text-left  flex-col gap-2 rounded-xl overflow-hidden shadow-lg  
+      className={`flex border w-full text-left   flex-col gap-2 rounded-xl overflow-hidden shadow-lg  
        `}
     >
       {/* Image */}
@@ -40,7 +40,7 @@ const BlogCol = ({ blog }: { blog: any }) => {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col px-3 pb-1">
+      <div className="flex flex-col px-3 pb-3">
         <h2 className="md:text-xl text-14 capitalize font-semibold text-gray-800 truncate">
           {blog.title}
         </h2>

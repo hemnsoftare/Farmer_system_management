@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 const Brand = () => {
   const t = useTranslations("topBrand");
   return (
-    <motion.div className="flex flex-col px-3 overflow-hidden    dark:bg-neutral-800 rounded-lg items-center w-full justify-center">
+    <motion.div className="flex flex-col px-12 overflow-hidden    dark:bg-neutral-800 rounded-lg items-center w-full justify-center">
       <div className="flex justify-between border-b-4 w-full  pb-4 border-neutral-400">
         <h3 className="sm:text-[32px] text-[20px] pl-3 dark:text-white ">
           {t("title")}

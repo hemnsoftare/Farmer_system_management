@@ -14,7 +14,7 @@ const Page = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["products" + category],
+    queryKey: ["productsDiscount" + category],
     queryFn: async () => {
       const pro = await getProductsBYDiscountAndCategoryAndSale({
         category: category,

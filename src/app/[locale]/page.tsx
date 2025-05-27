@@ -59,12 +59,12 @@ export default function Home() {
   const lan = lang().startsWith("ar") || lang().startsWith("ku");
   // add comeetnete sdfasdf asdf
   return (
-    <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-12">
+    <div className="flex flex-col justify-center w-full overflow-hidden items-center gap-4">
       {/* <PushNotificationManager /> */}
       <HomePage />
       <Hero /> <Catagory />
       <Sales />
-      <motion.div className="flex flex-col px-3 dark:text-white w-full items-center justify-center">
+      <motion.div className="flex flex-col px-12 dark:text-white w-full items-center justify-center">
         <div
           id="newProducts"
           className="flex transition-all px-2 duration-300 items-center justify-between w-full border-b-4 pb-4 border-neutral-400"
@@ -86,7 +86,7 @@ export default function Home() {
         )}
       </motion.div>
       <Brand />
-      <div className="flex flex-col px-3 w-full  items-center justify-center">
+      <div className="flex flex-col px-12 w-full  items-center justify-center">
         <div className="flex justify-between px-2 dark:text-white items-center border-b-4 w-full pb-4 border-neutral-400">
           <h3 className="text-[20px] sm:text-30 flex items-center justify-center ">
             {t("bestSalary")}

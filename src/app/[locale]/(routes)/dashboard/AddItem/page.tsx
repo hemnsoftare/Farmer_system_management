@@ -251,8 +251,8 @@ const Page = () => {
         numberSale: 0,
         date: new Date(),
         isProduction,
-        isDiscount: !!formData.get("discount"),
-        discount: dis,
+        isDiscount: discount && dis > 0,
+        discount: dis > 0 && dis,
       };
 
       const sanitizedData = {
