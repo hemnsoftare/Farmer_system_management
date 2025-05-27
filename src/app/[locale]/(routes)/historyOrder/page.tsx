@@ -97,11 +97,7 @@ const Page = () => {
                 whileInView={{ opacity: 1, y: 0, scale: 1, x: 0 }}
                 transition={{ duration: 0.4 }}
               >
-                <OrderCard
-                  order={itemorder}
-                  date={formattedDate}
-                  title="user"
-                />
+                <OrderCard order={itemorder} date={formattedDate} />
               </motion.div>
             );
           })}

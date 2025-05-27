@@ -121,12 +121,7 @@ export default function ProfilePage() {
                     (date.seconds || 0) * 1000
                   ).toLocaleDateString("en-US");
                   return (
-                    <OrderCard
-                      key={index}
-                      order={order}
-                      date={formattedDate}
-                      title="user"
-                    />
+                    <OrderCard key={index} order={order} date={formattedDate} />
                   );
                 })}
               </div>
