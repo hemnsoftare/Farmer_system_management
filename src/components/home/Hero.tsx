@@ -211,7 +211,7 @@ const Hero = () => {
         {/* Content Container */}
         <div className="relative z-10 flex flex-col h-full">
           {/* Search Component */}
-          <div ref={searchRef} className="w-full">
+          <div ref={searchRef} className="w-full z-50">
             <SearchComponent />
           </div>
 

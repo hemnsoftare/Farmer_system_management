@@ -255,19 +255,21 @@ const SettingsPage = () => {
           </motion.div>
 
           {/* Language Selection */}
-          <motion.div
+          {/* <motion.div
             className="w-full max-w-1/2 p-6 dark:bg-gray-700 bg-white shadow-lg rounded-lg mb-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            aria-disabled="true"
           >
             <h2 className="text-2xl font-semibold dark:text-gray-400 text-gray-800 text-center mb-6">
               {t("language.title")}
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              {/* English */}
+       
               <button
                 onClick={() => changelanguage("en")}
+                disabled
                 className="p-4 rounded-lg dark:shadow-lg dark:shadow-neutral-700 active:bg-neutral-200 dark:text-white dark:bg-gray-600 md:hover:bg-neutral-300 duration-200 transition-all text-black flex items-center justify-center gap-2 shadow-md active:scale-[1.2] md:hover:scale-105"
               >
                 <Image
@@ -280,9 +282,10 @@ const SettingsPage = () => {
                 {t("language.english")}
               </button>
 
-              {/* Kurdish */}
+        
               <button
                 onClick={() => changelanguage("ku")}
+                disabled
                 className="p-4 rounded-lg dark:shadow-lg dark:shadow-neutral-700 active:bg-neutral-200 dark:text-white dark:bg-gray-600 md:hover:bg-neutral-300 duration-200 transition-all text-black flex items-center justify-center gap-2 shadow-md active:scale-[1.2] md:hover:scale-105"
               >
                 <Image
@@ -295,9 +298,10 @@ const SettingsPage = () => {
                 {t("language.kurdish")}
               </button>
 
-              {/* Turkish */}
+    
               <button
                 onClick={() => changelanguage("tr")}
+                disabled
                 className="p-4 rounded-lg dark:shadow-lg dark:shadow-neutral-700 active:bg-neutral-200 dark:text-white dark:bg-gray-600 md:hover:bg-neutral-300 duration-200 transition-all text-black flex items-center justify-center gap-2 shadow-md active:scale-[1.2] md:hover:scale-105"
               >
                 <Image
@@ -310,7 +314,6 @@ const SettingsPage = () => {
                 {t("language.turkish")}
               </button>
 
-              {/* Arabic */}
               <button
                 onClick={() => changelanguage("ar")}
                 className="p-4 rounded-lg dark:shadow-lg dark:shadow-neutral-700 active:bg-neutral-200 dark:text-white dark:bg-gray-600 md:hover:bg-neutral-300 duration-200 transition-all text-black flex items-center justify-center gap-2 shadow-md active:scale-[1.2] md:hover:scale-105"
@@ -325,9 +328,8 @@ const SettingsPage = () => {
                 {t("language.arabic")}
               </button>
             </div>
-          </motion.div>
+          </motion.div> */}
 
-          {/* Manage Data */}
           <motion.div
             className="w-full max-w-1/2 p-6 bg-white dark:bg-gray-700 shadow-lg rounded-lg mb-10"
             initial={{ opacity: 0, y: 20 }}

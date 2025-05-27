@@ -46,15 +46,15 @@ const ProductsHeader = ({
                 <NavigationMenuLink
                   key={item.name}
                   href={`/products/${item.name}`}
-                  className="flex w-full dark:bg-secondary text-[12px] items-center gap-2 hover:scale-[1.08] duration-300 transition-all hover:bg-slate-100 p-2 rounded-md"
+                  className="flex w-full dark:bg-secondary border-b text-[12px] items-center gap-2 hover:scale-[1.08] duration-300 transition-all hover:bg-slate-100 p-2 rounded-md"
                 >
-                  <Image
+                  {/* <Image
                     src={item.image.link}
                     alt="image"
                     width={40}
                     height={40}
                     className="w-[40px] h-[40px]"
-                  />
+                  /> */}
                   <span>{item.name}</span>
                 </NavigationMenuLink>
               ))}

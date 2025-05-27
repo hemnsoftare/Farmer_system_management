@@ -15,7 +15,6 @@ import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "@/app/[locale]/ClientProviders";
 import useFilterProducts from "@/lib/store/filterProducts";
-import ForProducts from "@/components/home/ForProducts";
 const MyComponent = ({ params }) => {
   const cate: any = use(params);
   const {
@@ -37,14 +36,25 @@ const MyComponent = ({ params }) => {
     error,
   } = useQuery({
     queryKey: ["products" + category, cate.category, filterProduacts, sortBy],
+    enabled: !!filterProduacts || cate.category || sortBy || category,
     queryFn: async () => {
-      console.log(category);
+      console.log("in query");
+      console.log(sortBy, filterProduacts);
       const pro = await getProducts(category.trim(), sortBy, filterProduacts);
-      console.log(pro);
+      console.log("pro");
       return pro;
     },
   });
-
+  // favoriteId
+  const { data: favoriteId, isLoading: saleisLoading } = useQuery({
+    queryKey: ["products" + category, filterProduacts, sortBy],
+    queryFn: async () => {
+      console.log("in query");
+      const pro = await getAllItemNames(user?.id);
+      console.log("pro");
+      return pro;
+    },
+  });
   const handleOpen = (type: string) => {
     setFilter((prev) => ({ ...prev, [type]: !prev[type] }));
   };
@@ -96,13 +106,82 @@ const MyComponent = ({ params }) => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              {products.length > 0 && (
-                <ForProducts
-                  key={products[0].id || ""}
-                  products={products}
-                  title="viewAll"
-                />
-              )}
+              {products.map((item) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, scale: 0.4 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <NewProducts
+                    favoriteId={favoriteId}
+                    addFavoriteid={() => {
+                      // setproducts((prev) =>
+                      //   prev.map(
+                      //     (itemp) =>
+                      //       itemp.name === item.name
+                      //         ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
+                      //         : itemp // Keep other items unchanged
+                      //   )
+                      // );
+                      // setfavoriteId((pre) => [...pre, item.name]);
+                      queryClient.setQueryData(["products"], (oldData: any) =>
+                        oldData?.products.map((itemp) =>
+                          itemp.id === item.id
+                            ? {
+                                ...itemp,
+                                numberFavorite: itemp.numberFavorite + 1,
+                              }
+                            : itemp
+                        )
+                      );
+                      queryClient.setQueryData(
+                        ["favoriteId"],
+                        (oldData: any) => {
+                          return [...oldData.favoriteId, item.id];
+                        }
+                      );
+                    }}
+                    // favoriteId: [...oldData.favoriteId, item.id],
+                    deleteFavoriteId={() => {
+                      // setproducts((prev) =>
+                      //   prev.map(
+                      //     (itemp) =>
+                      //       itemp.name === item.name
+                      //         ? { ...itemp, numberFavorite: itemp.numberFavorite - 1 } // Update numberFavorite
+                      //         : itemp // Keep other items unchanged
+                      //   )
+                      // );
+                      // setfavoriteId(
+                      //   (prev) => prev.filter((itemp) => itemp !== item.name) // Remove the product name from favorites
+                      // );
+                      queryClient.setQueryData(["products"], (oldData: any) =>
+                        oldData.products.filter((itemp) =>
+                          itemp.id !== item.id
+                            ? itemp
+                            : {
+                                ...itemp,
+                                numberFavorite: itemp.numberFavorite - 1,
+                              }
+                        )
+                      );
+                      queryClient.setQueryData(
+                        ["favoriteId"],
+                        (oldData: any) => {
+                          return oldData.favoriteId.filter(
+                            (prev) => prev !== item.id
+                          );
+                        }
+                      );
+                      // favoriteId: oldData.favoriteId.filter(
+                      //   (prev) => prev !== item.id // Remove the product if it exists
+                      // ),
+                    }}
+                    itemDb={item}
+                    title="category"
+                  />
+                </motion.div>
+              ))}
             </motion.div>
           ) : (
             <h2 className="font-bold flex items-center justify-center col-span-3 text-30 text-center w-full ">

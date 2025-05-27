@@ -71,15 +71,12 @@ const CardTeam = ({
 
       {/* Description */}
       <motion.p
-        className="text-sm text-gray-600 text-center"
+        className="text-sm text-gray-600 line-clamp-3 text-justify"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
         {description || "No description provided."}
-        perferendis laboriosam eos numquam natus consectetur saepe
-        necessitatibus consequatur veniam voluptatem ab veritatis, tenetur
-        aliquam a.
       </motion.p>
 
       {/* Dashboard Buttons */}

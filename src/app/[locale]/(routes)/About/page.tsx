@@ -66,7 +66,7 @@ const Page = () => {
               initial={{ x: index % 2 == 1 ? 80 : -80, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.9, type: "spring" }}
-              className="text-14"
+              className="text-14 "
             >
               {item.description}
             </motion.p>
